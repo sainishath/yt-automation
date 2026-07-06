@@ -288,15 +288,29 @@ def generate_script(topic, category):
         }
 
 
-# =============================================================================
-# 2. EDGE TTS (Free Neural TTS)
-# =============================================================================
+def sanitize_script(text):
+    """Clean script text by stripping unicode emojis and trailing literal words."""
+    import re
+    # Removes standard emoji unicode ranges and structural brackets
+    emoji_pattern = re.compile(
+        r'[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|'
+        r'[\u2011-\u26FF]|\uD83E[\uDD00-\uDFFF]', 
+        flags=re.UNICODE
+    )
+    clean_text = emoji_pattern.sub(r'', text)
+    
+    # Also clean up any literal emoji words if the LLM generated them at the end
+    clean_text = re.sub(r'\b(books|laptop|computer|thumbs up|thumbs-up|eyes emoji|brain emoji)\b\.?$', '', clean_text, flags=re.IGNORECASE)
+    
+    return clean_text.strip()
+
 
 def generate_voiceover(text, output_audio_path, voice="en-US-AndrewNeural"):
     """
     Synthesize text with Edge TTS (Free Azure Neural), then speed it up with FFmpeg.
     Returns path to the speed-adjusted WAV.
     """
+    text = sanitize_script(text)
     raw_path  = Path(output_audio_path).with_suffix(".mp3")
     sped_path = Path(output_audio_path).with_name(Path(output_audio_path).stem + "_sped.wav")
 

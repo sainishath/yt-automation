@@ -36,9 +36,29 @@ TEMP_DIR = Path(CFG["temp_dir"])
 OUTPUT_DIR = Path(CFG["output_dir"])
 FINAL_VIDEO_PATH = OUTPUT_DIR / "final.mp4"
 
-# Task tracker database
-tasks = {}
+# Task tracker database with JSON file persistence
+import json
+TASKS_DB_PATH = TEMP_DIR / "tasks_db.json"
 tasks_lock = threading.Lock()
+
+def _load_tasks():
+    if TASKS_DB_PATH.exists():
+        try:
+            with open(TASKS_DB_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+def _save_tasks(tasks_dict):
+    try:
+        TEMP_DIR.mkdir(parents=True, exist_ok=True)
+        with open(TASKS_DB_PATH, "w", encoding="utf-8") as f:
+            json.dump(tasks_dict, f, indent=4)
+    except Exception as e:
+        logger.warning(f"Could not save tasks DB: {e}")
+
+tasks = _load_tasks()
 
 def _clean_temp_files(audio_raw, audio_path):
     """Safely remove intermediate audio and subtitle files."""
@@ -92,6 +112,7 @@ def run_pipeline_task(task_id, text, title, category, voice):
                 "duration": subtitle_data["duration"],
                 "error": None
             }
+            _save_tasks(tasks)
         logger.info(f"✓ [{task_id}] Task completed successfully!")
 
     except Exception as e:
@@ -103,6 +124,7 @@ def run_pipeline_task(task_id, text, title, category, voice):
                 "duration": 0,
                 "error": str(e)
             }
+            _save_tasks(tasks)
     finally:
         # Strict lifecycle management of temporary audio and subtitle assets
         _clean_temp_files(audio_raw, sped_audio_path)
@@ -139,6 +161,7 @@ def tts():
             # Synchronous rendering
             with tasks_lock:
                 tasks[task_id] = {"status": "processing", "video_path": None, "error": None}
+                _save_tasks(tasks)
             
             # Execute directly in request thread
             run_pipeline_task(task_id, text, title, category, voice)
@@ -161,6 +184,7 @@ def tts():
             # Asynchronous rendering - fire and forget background thread
             with tasks_lock:
                 tasks[task_id] = {"status": "processing", "video_path": None, "error": None}
+                _save_tasks(tasks)
             
             thread = threading.Thread(
                 target=run_pipeline_task,
