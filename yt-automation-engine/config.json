@@ -4,7 +4,7 @@
   "backgrounds_dir": "./data/assets/backgrounds/active",
   "output_dir": "./data/yt-automation-engine/videos",
   "temp_dir": "./data/yt-automation-engine/temp",
-  "ollama_url": "http://localhost:11434",
+  "ollama_url": "http://127.0.0.1:11434",
   "ollama_model": "llama3.2:latest",
   "whisper_model": "base",
   "whisper_device": "cpu",
@@ -19,7 +19,7 @@
     "Human Behavior"
   ],
   "long_background_source": "./data/assets/backgrounds/active/subway_surfers_1hr.webm",
-  "last_background_timestamp": 856.4551875000001,
+  "last_background_timestamp": 885.4813750000002,
   "bg_music_path": "",
   "compilation_output_name": "compilation_weekly.mp4"
 }

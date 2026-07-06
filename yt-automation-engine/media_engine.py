@@ -23,28 +23,48 @@ import requests
 from faster_whisper import WhisperModel
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 
+# -- load .env manually if exists ---------------------------------------------
+_ENV_PATH = Path(__file__).parent / ".env"
+if _ENV_PATH.exists():
+    with open(_ENV_PATH, "r", encoding="utf-8") as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _v = _line.split("=", 1)
+                os.environ[_k.strip()] = _v.strip().strip('"').strip("'")
+
 # -- config -------------------------------------------------------------------
 _CFG_PATH = Path(__file__).parent / "config.json"
 with open(_CFG_PATH, "r", encoding="utf-8") as f:
     CFG = json.load(f)
 
-PIPER_PATH      = CFG["piper_path"]
-PIPER_MODEL     = CFG["piper_model"]
-BACKGROUNDS_DIR = Path(CFG["backgrounds_dir"])
-OUTPUT_DIR      = Path(CFG["output_dir"])
-TEMP_DIR        = Path(CFG["temp_dir"])
-OLLAMA_URL      = CFG["ollama_url"]
-OLLAMA_MODEL    = CFG["ollama_model"]
-WHISPER_MODEL   = CFG["whisper_model"]
-WHISPER_DEVICE  = CFG["whisper_device"]
-AUDIO_SPEED     = CFG["audio_speed"]
-VW              = CFG["video_width"]
-VH              = CFG["video_height"]
-SUB_TOP_PCT     = CFG["subtitle_safe_zone_top_pct"]
-SUB_BOT_PCT     = CFG["subtitle_safe_zone_bottom_pct"]
+PIPER_PATH      = os.environ.get("PIPER_PATH", CFG["piper_path"])
+PIPER_MODEL     = os.environ.get("PIPER_MODEL", CFG["piper_model"])
+BACKGROUNDS_DIR = Path(os.environ.get("BACKGROUNDS_DIR", CFG["backgrounds_dir"]))
+OUTPUT_DIR      = Path(os.environ.get("OUTPUT_DIR", CFG["output_dir"]))
+TEMP_DIR        = Path(os.environ.get("TEMP_DIR", CFG["temp_dir"]))
+OLLAMA_URL      = os.environ.get("OLLAMA_URL", CFG["ollama_url"])
+OLLAMA_MODEL    = os.environ.get("OLLAMA_MODEL", CFG["ollama_model"])
+WHISPER_MODEL   = os.environ.get("WHISPER_MODEL", CFG["whisper_model"])
+WHISPER_DEVICE  = os.environ.get("WHISPER_DEVICE", CFG["whisper_device"])
+AUDIO_SPEED     = float(os.environ.get("AUDIO_SPEED", CFG["audio_speed"]))
+VW              = int(os.environ.get("VIDEO_WIDTH", CFG["video_width"]))
+VH              = int(os.environ.get("VIDEO_HEIGHT", CFG["video_height"]))
+SUB_TOP_PCT     = float(os.environ.get("SUBTITLE_SAFE_ZONE_TOP_PCT", CFG["subtitle_safe_zone_top_pct"]))
+SUB_BOT_PCT     = float(os.environ.get("SUBTITLE_SAFE_ZONE_BOTTOM_PCT", CFG["subtitle_safe_zone_bottom_pct"]))
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 TEMP_DIR.mkdir(parents=True, exist_ok=True)
+
+# Hardware acceleration codec setup
+FFMPEG_CODEC  = os.environ.get("FFMPEG_CODEC", CFG.get("ffmpeg_codec", "libx264"))
+FFMPEG_PRESET = os.environ.get("FFMPEG_PRESET", CFG.get("ffmpeg_preset", "slow"))
+FFMPEG_CRF    = os.environ.get("FFMPEG_CRF", CFG.get("ffmpeg_crf", "20"))
+
+if FFMPEG_CODEC == "h264_nvenc":
+    enc_flags = f"-c:v h264_nvenc -preset {FFMPEG_PRESET} -cq {FFMPEG_CRF} -pix_fmt yuv420p"
+else:
+    enc_flags = f"-c:v libx264 -preset {FFMPEG_PRESET} -crf {FFMPEG_CRF} -pix_fmt yuv420p"
 
 
 # -- category styling ---------------------------------------------------------
@@ -479,7 +499,7 @@ def assemble_video(video_bg_path, audio_path,
                 f'-t {duration + 0.5} '
                 f'-filter_complex "{fc}" '
                 f'-map "[v_out]" -map "[a_out]" '
-                f'-c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p '
+                f'{enc_flags} '
                 f'-c:a aac -b:a 256k '
                 f'"{out_f}"'
             )
@@ -499,7 +519,7 @@ def assemble_video(video_bg_path, audio_path,
                 f'-t {duration + 0.5} '
                 f'-filter_complex "{fc}" '
                 f'-map "[v_out]" -map "[a_out]" '
-                f'-c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p '
+                f'{enc_flags} '
                 f'-c:a aac -b:a 256k '
                 f'"{out_f}"'
             )
@@ -524,7 +544,7 @@ def assemble_video(video_bg_path, audio_path,
                 f'-t {duration + 0.5} '
                 f'-filter_complex "{fc}" '
                 f'-map "[v_out]" -map "[a_out]" '
-                f'-c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p '
+                f'{enc_flags} '
                 f'-c:a aac -b:a 256k '
                 f'"{out_f}"'
             )
@@ -540,7 +560,7 @@ def assemble_video(video_bg_path, audio_path,
                 f'-map 1:a:0 '
                 f'-t {duration + 0.5} '
                 f'-vf "{vf}" '
-                f'-c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p '
+                f'{enc_flags} '
                 f'-c:a aac -b:a 256k '
                 f'"{out_f}"'
             )
