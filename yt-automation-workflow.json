@@ -1,422 +1,752 @@
-{
-    "name": "YouTube Automation - Fully Passive (Manual + Scheduled)",
+[
+  {
+    "updatedAt": "2026-07-11T11:44:51.302Z",
+    "createdAt": "2026-07-06T07:03:49.361Z",
+    "id": "yt-shorts-automation-pipeline",
+    "name": "YT-Shorts-Verification-Pipeline",
+    "description": null,
+    "active": true,
+    "isArchived": false,
     "nodes": [
-        {
-            "parameters": {},
-            "id": "trigger-manual-001",
-            "name": "Manual Click Trigger",
-            "type": "n8n-nodes-base.manualTrigger",
-            "typeVersion": 1,
-            "position": [
-                0,
-                300
-            ]
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "trigger-yt-shorts",
+          "options": {}
         },
-        {
-            "parameters": {
-                "rule": {
-                    "interval": [
-                        {
-                            "field": "cronExpression",
-                            "expression": "0 9 * * *"
-                        }
-                    ]
+        "id": "trigger-webhook",
+        "name": "Webhook Trigger",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          -448,
+          -16
+        ],
+        "webhookId": "9d9cc94b-ee2d-494f-ad8f-dcb64dbf72a3"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "30 3 * * 2,3,4"
+              },
+              {
+                "field": "cronExpression",
+                "expression": "30 8 * * 2,3,4"
+              },
+              {
+                "field": "cronExpression",
+                "expression": "30 12 * * 6"
+              }
+            ]
+          }
+        },
+        "id": "trigger-schedule",
+        "name": "Scheduled Posts",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -448,
+          176
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "trigger-manual",
+        "name": "Manual Run",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          -448,
+          368
+        ]
+      },
+      {
+        "parameters": {
+          "url": "http://host.docker.internal:5001/get-next-topic",
+          "options": {}
+        },
+        "id": "read-sheets",
+        "name": "Read Next Content Idea",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -224,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\nconst nextRow = items.find(item => {\n  const status = item.json.Status || item.json['Video Status'] || '';\n  return !status || status.trim() === '';\n});\nif (!nextRow) {\n  throw new Error('No pending topics found in the spreadsheet!');\n}\nreturn [nextRow];"
+        },
+        "id": "filter-next-row",
+        "name": "Filter Next Row",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          0,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:11434/api/generate",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"model\": \"llama3.2\",\n  \"stream\": false,\n  \"system\": \"You are a professional YouTube Shorts script writer. Always respond with raw JSON only.\",\n  \"prompt\": \"Create a high-energy 50-second YouTube Shorts script for topic: {{ $json.Topic }}. Hook Idea: {{ $json['Hook Idea'] }}. Output JSON with keys: 'title' (YT title), 'script' (the spoken text), 'description' (include #shorts), and 'on_screen_title' (2-3 words MAX in ALL CAPS for video overlays).\"\n}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "ai-generate",
+        "name": "Write Script (Ollama)",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          224,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\nif (items.length === 0 || !items[0].json || !items[0].json.response) {\n  return [{ json: { error: 'No response from AI' } }];\n}\n\n// Strip markdown code fences (```json ... ``` or ``` ... ```)\nlet raw = items[0].json.response.trim();\nraw = raw.replace(/^```(?:json)?\\s*/i, '').replace(/\\s*```$/, '').trim();\n\nlet parsed = {};\ntry {\n  parsed = JSON.parse(raw);\n} catch(e) {\n  // Fallback: regex extract individual fields\n  function extract(key, text) {\n    const m = text.match(new RegExp('\"' + key + '\"\\\\s*:\\\\s*\"([\\\\s\\\\S]*?)(?=\"\\\\s*[,}])', ''));\n    return m ? m[1].replace(/\\\\n/g, '\\n').replace(/\\\\\"/g, '\"').trim() : '';\n  }\n  parsed = {\n    script: extract('script', raw),\n    title: extract('title', raw),\n    description: extract('description', raw),\n    on_screen_title: extract('on_screen_title', raw)\n  };\n}\n\n// If script is an array, join it\nlet script = parsed.script || '';\nif (Array.isArray(script)) script = script.join(' ');\n\nreturn [{\n  json: {\n    script: script || 'Script failed',\n    title: parsed.title || 'New Video',\n    description: parsed.description || '#shorts',\n    on_screen_title: (parsed.on_screen_title || 'TOP REVEAL').toUpperCase(),\n    row_number: $('Filter Next Row').item.json.row_number\n  }\n}];"
+        },
+        "id": "parse-ai",
+        "name": "Parse AI Output",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          448,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:5001/tts",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"text\": \"{{ $json.script }}\",\n  \"title\": \"{{ $json.on_screen_title }}\"\n}",
+          "options": {
+            "timeout": 600000
+          }
+        },
+        "id": "make-video",
+        "name": "Local Video Maker",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          672,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
+            },
+            "conditions": [
+              {
+                "id": "check-success",
+                "leftValue": "={{ $json.status }}",
+                "rightValue": "success",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
                 }
-            },
-            "id": "trigger-schedule-001",
-            "name": "Daily Automation (9 AM)",
-            "type": "n8n-nodes-base.scheduleTrigger",
-            "typeVersion": 1.1,
-            "position": [
-                0,
-                500
-            ]
-        },
-        {
-            "parameters": {
-                "jsCode": "// Niche: Money Psychology & Wealth Mindset\n// Expert-curated viral topic bank \u2014 rotates daily for freshness\nconst topics = [\n  \"The psychological reason why most people will never be rich\",\n  \"3 money habits millionaires practice before 7AM that nobody talks about\",\n  \"Why your brain is secretly wired to stay broke (and how to rewire it)\",\n  \"The dark truth about why billionaires think completely differently about time\",\n  \"The 5-second habit that separates the wealthy from everyone else\",\n  \"Why most people are one decision away from wealth but never make it\",\n  \"The psychological trap keeping 90% of people financially stuck forever\",\n  \"How the rich use boredom as a superpower to build generational wealth\",\n  \"The money mindset Warren Buffett used at age 11 that changed everything\",\n  \"3 things poor people spend money on that rich people never do\",\n  \"The silent wealth killer hiding in your daily routine right now\",\n  \"Why the richest people in the world work less than you think\",\n  \"The compound effect secret that the wealthy never teach in schools\",\n  \"How top 1% earners protect their mind to protect their money\",\n  \"The psychological reason lottery winners go broke within 5 years\",\n  \"What your relationship with money reveals about your subconscious beliefs\",\n  \"Why getting a raise actually makes most people poorer in the long run\",\n  \"The one investment the ultra-wealthy make that the middle class ignores\",\n  \"How delayed gratification literally rewires your brain for wealth\",\n  \"The dark psychology behind why banks want you to stay in debt forever\",\n  \"3 cognitive biases keeping you from building serious wealth right now\",\n  \"Why the middle class works harder but the wealthy work smarter (the math)\",\n  \"The identity shift every millionaire makes before their first million\",\n  \"What studying 1000 millionaires revealed about their morning routine\",\n  \"The financial decision you make at 22 that determines your entire future\",\n  \"How rich people use other people's money to build their wealth\",\n  \"The tax secret the ultra-wealthy use that your accountant won't tell you\",\n  \"Why most financial advice is designed to keep you middle class forever\",\n  \"The abundance mindset vs scarcity mindset: what neuroscience actually says\",\n  \"3 books that changed how millionaires think about money before age 30\"\n];\n\n// Pick today's topic based on day of year (rotates automatically)\nconst dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);\nconst topic = topics[dayOfYear % topics.length];\n\nreturn [{ json: { topic: topic } }];"
-            },
-            "id": "node-topic-bank-001",
-            "name": "Money Psychology Topic Bank",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                260,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "jsCode": "const topic = $input.first().json.topic;\n\nconst system = \"You are a viral YouTube Shorts scriptwriter specializing in Money Psychology & Wealth Mindset. You MUST return ONLY valid JSON with no extra text, markdown, or code blocks.\";\n\nconst prompt = `Create a complete YouTube Shorts package for this topic: ${topic}\\n\\nRules:\\n- Script: 60-80 words max, punchy, hook in first 3 words\\n- Title: max 60 chars, curiosity-gap style, NO emojis\\n- Description: 3-4 sentences + 15 relevant hashtags including #Shorts #MoneyPsychology #WealthMindset\\n- Tags: comma-separated list of 15 specific tags (no #)\\n- on_screen_title: 2-3 words MAX, all caps\\n\\nReturn ONLY this JSON object:\\n{\\n  \\"script\\": \\"...\\",\\n  \\"title\\": \\"...\\",\\n  \\"description\\": \\"...\\",\\n  \\"tags\\": \\"...\\",\\n  \\"on_screen_title\\": \\"...\\"\\n}`;\n\nreturn [{ \n  json: { \n    model: \"llama3\",\n    stream: false,\n    system: system,\n    prompt: prompt\n  } \n}];"
-            },
-            "id": "node-build-body-001",
-            "name": "Build Safe Ollama Body",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                520,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "method": "POST",
-                "url": "http://host.docker.internal:11434/api/generate",
-                "sendHeaders": true,
-                "headerParameters": {
-                    "parameters": [
-                        {
-                            "name": "Content-Type",
-                            "value": "application/json"
-                        }
-                    ]
-                },
-                "sendBody": true,
-                "specifyBody": "json",
-                "options": {
-                    "timeout": 300000
-                },
-                "jsonBody": "={{ $json }}"
-            },
-            "id": "b1a2c3d4-0002-0000-0000-000000000002",
-            "name": "Ollama Script & Strategy",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                780,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "jsCode": "// \ud83c\udfc6 BULLETPROOF REGEX PARSER - N8N\nconst items = $input.all();\nif (items.length === 0 || !items[0].json || !items[0].json.response) {\n  return [{ json: { error: \"No response from AI yet\" } }];\n}\n\nconst raw = items[0].json.response;\n\n// This function \"hunts\" for data even in broken JSON\nfunction extract(key, text) {\n  // Look for \"key\": \"value\" and grab the value\n  const regex = new RegExp(`\"${key}\"\\\\s*:\\\\s*\"([\\\\s\\\\S]*?)(?=\"\\\\s*[,}])`, 'g');\n  const match = regex.exec(text);\n  if (match && match[1]) {\n    return match[1]\n      .replace(/\\\\n/g, '\\n')   // Fix line breaks\n      .replace(/\\\\\"/g, '\"')    // Fix quotes\n      .replace(/\\\\r/g, '')     // Clean up\n      .trim();\n  }\n  return '';\n}\n\n// Extract every field individually\nconst script = extract('script', raw);\nconst title = extract('title', raw);\nconst description = extract('description', raw);\nconst tags = extract('tags', raw).replace(/[\\[\\]]/g, ''); // Clean arrays if AI uses them\nconst on_screen = extract('on_screen_title', raw);\n\nreturn [{\n  json: {\n    script: script || 'Script generation failed',\n    title: title || 'Deep Wealth Secret',\n    description: description || '#MoneyPsychology #WealthMindset',\n    tags: tags || 'money, psychology',\n    on_screen_title: (on_screen || 'MONEY FACT').toUpperCase(),\n    timestamp: new Date().toISOString()\n  }\n}];"
-            },
-            "id": "b1a2c3d4-0003-0000-0000-000000000003",
-            "name": "Parse AI Output",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                1040,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "method": "POST",
-                "url": "http://host.docker.internal:5001/tts",
-                "sendHeaders": true,
-                "headerParameters": {
-                    "parameters": [
-                        {
-                            "name": "Content-Type",
-                            "value": "application/json"
-                        }
-                    ]
-                },
-                "sendBody": true,
-                "specifyBody": "json",
-                "jsonBody": "={{ JSON.stringify({ \"text\": $json.script, \"title\": $json.on_screen_title }) }}",
-                "options": {
-                    "timeout": 300000
-                }
-            },
-            "id": "b1a2c3d4-0004-0000-0000-000000000004",
-            "name": "Generate Video (Flask TTS)",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                1300,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "conditions": {
-                    "options": {
-                        "caseSensitive": true,
-                        "leftValue": "",
-                        "typeValidation": "strict"
-                    },
-                    "conditions": [
-                        {
-                            "id": "cond-1",
-                            "leftValue": "={{ $json.status }}",
-                            "rightValue": "success",
-                            "operator": {
-                                "type": "string",
-                                "operation": "equals"
-                            }
-                        }
-                    ],
-                    "combinator": "and"
-                },
-                "options": {}
-            },
-            "id": "b1a2c3d4-0005-0000-0000-000000000005",
-            "name": "Video Generated OK?",
-            "type": "n8n-nodes-base.if",
-            "typeVersion": 2.1,
-            "position": [
-                1560,
-                400
-            ]
-        },
-        {
-            "parameters": {
-                "method": "GET",
-                "url": "http://host.docker.internal:5001/get-video",
-                "options": {
-                    "response": {
-                        "response": {
-                            "fullResponse": false,
-                            "responseFormat": "file"
-                        }
-                    },
-                    "timeout": 60000
-                }
-            },
-            "id": "b1a2c3d4-0006-0000-0000-000000000006",
-            "name": "Download Final Video",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                1820,
-                280
-            ]
-        },
-        {
-            "parameters": {
-                "resource": "video",
-                "operation": "upload",
-                "title": "={{ $('Parse AI Output').item.json.title + ' #Shorts' }}",
-                "description": "={{ $('Parse AI Output').item.json.description }}",
-                "categoryId": "27",
-                "privacyStatus": "public",
-                "binaryProperty": "data",
-                "options": {
-                    "tags": "={{ $('Parse AI Output').item.json.tags.split(',').map(t => t.trim()) }}",
-                    "embeddable": true,
-                    "publicStatsViewable": true,
-                    "selfDeclaredMadeForKids": false,
-                    "notifySubscribers": true
-                }
-            },
-            "id": "b1a2c3d4-0007-0000-0000-000000000007",
-            "name": "Upload to YouTube",
-            "type": "n8n-nodes-base.youTube",
-            "typeVersion": 1,
-            "position": [
-                2080,
-                280
+              }
             ],
-            "credentials": {
-                "youTubeOAuth2Api": {
-                    "id": "woqvLNlgwSXNECxd",
-                    "name": "YouTube account"
-                }
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "id": "safety-net",
+        "name": "Safety Check?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.1,
+        "position": [
+          896,
+          176
+        ]
+      },
+      {
+        "parameters": {
+          "url": "http://host.docker.internal:5001/get-video",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
             }
+          }
         },
-        {
-            "parameters": {
-                "method": "GET",
-                "url": "http://host.docker.internal:5001/get-thumbnail",
-                "options": {
-                    "response": {
-                        "response": {
-                            "fullResponse": false,
-                            "responseFormat": "file"
-                        }
-                    },
-                    "timeout": 30000
-                }
-            },
-            "id": "b1a2c3d4-0008-0000-0000-000000000008",
-            "name": "Download Thumbnail",
-            "type": "n8n-nodes-base.httpRequest",
-            "typeVersion": 4.2,
-            "position": [
-                2340,
-                280
+        "id": "download-video",
+        "name": "Download Final Video",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1120,
+          80
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:5001/upload_youtube",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {\n  \"video_path\": $('Local Video Maker').item.json.video_path,\n  \"title\": $('Parse AI Output').item.json.title,\n  \"description\": $('Parse AI Output').item.json.description,\n  \"tags\": [\"#shorts\", \"#facts\", \"#weirdscience\"]\n} }}",
+          "options": {}
+        },
+        "id": "yt-upload",
+        "name": "Upload to YouTube",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1344,
+          80
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:5001/mark-done",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"topic\": \"{{ $('Filter Next Row').item.json.Topic }}\",\n  \"status\": \"DONE\",\n  \"youtube_url\": \"{{ $json.url || '' }}\"\n}",
+          "options": {}
+        },
+        "id": "mark-done",
+        "name": "Cross it off",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1568,
+          80
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "stop-workflow",
+        "name": "Safety Net STOP",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1120,
+          272
+        ]
+      },
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "trigger-yt-shorts",
+          "options": {}
+        },
+        "id": "e5f3400c-475d-4b50-af2a-aaf404ad7e32",
+        "name": "Webhook Trigger1",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 1.1,
+        "position": [
+          -448,
+          592
+        ],
+        "webhookId": "cfcf3bf9-6fd6-47bf-b923-35ea1c30bc47"
+      },
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "cronExpression",
+                "expression": "30 3 * * 2,3,4"
+              },
+              {
+                "field": "cronExpression",
+                "expression": "30 8 * * 2,3,4"
+              },
+              {
+                "field": "cronExpression",
+                "expression": "30 12 * * 6"
+              }
             ]
+          }
         },
-        {
-            "parameters": {
-                "resource": "video",
-                "operation": "update",
-                "videoId": "={{ $('Upload to YouTube').item.json.id }}",
-                "updateFields": {
-                    "thumbnail": true
-                },
-                "binaryProperty": "data"
+        "id": "382e959f-f52a-41c2-a203-07b9f8400d83",
+        "name": "Scheduled Posts1",
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.1,
+        "position": [
+          -448,
+          784
+        ]
+      },
+      {
+        "parameters": {
+          "url": "http://host.docker.internal:5001/get-next-topic",
+          "options": {}
+        },
+        "id": "2b85cbb4-a44a-4e8e-84fe-fb2bf9a15b77",
+        "name": "Read Next Content Idea1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          -224,
+          688
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\nconst nextRow = items.find(item => {\n  const status = item.json.Status || item.json['Video Status'] || '';\n  return !status || status.trim() === '';\n});\nif (!nextRow) {\n  throw new Error('No pending topics found in the spreadsheet!');\n}\nreturn [nextRow];"
+        },
+        "id": "7cb4dde3-87c6-4708-bd24-33c50d40c77e",
+        "name": "Filter Next Row1",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          0,
+          688
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:11434/api/generate",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"model\": \"llama3.2\",\n  \"stream\": false,\n  \"system\": \"You are a professional YouTube Shorts script writer. Always respond with raw JSON only.\",\n  \"prompt\": \"Create a high-energy 50-second YouTube Shorts script structured as a dual-character debate for topic: {{ $json.Topic }}. Hook Idea: {{ $json['Hook Idea'] }}. Output JSON with keys: 'title' (YT title), 'description' (include #shorts), 'on_screen_title', and 'script' which must be an array of debate turns: [{'speaker': 'character_a'|'character_b', 'text': 'dialogue sentence', 'visual_proof_prompt': 'highly descriptive cinematic prompt for Fooocus image overlay, or null if no visual proof needed for this turn'}].\"\n}",
+          "options": {
+            "timeout": 300000
+          }
+        },
+        "id": "045672c9-07e1-44f4-b635-3be589d97ddb",
+        "name": "Write Script (Ollama)1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          224,
+          688
+        ]
+      },
+      {
+        "parameters": {
+          "jsCode": "const items = $input.all();\nif (items.length === 0 || !items[0].json || !items[0].json.response) {\n  return [{ json: { error: 'No response from AI' } }];\n}\n\n// Strip markdown code fences (```json ... ``` or ``` ... ```)\nlet raw = items[0].json.response.trim();\nraw = raw.replace(/^```(?:json)?\\s*/i, '').replace(/\\s*```$/, '').trim();\n\nlet parsed = {};\ntry {\n  parsed = JSON.parse(raw);\n} catch(e) {\n  // Fallback: regex extract individual fields\n  function extract(key, text) {\n    const m = text.match(new RegExp('\"' + key + '\"\\\\s*:\\\\s*\"([\\\\s\\\\S]*?)(?=\"\\\\s*[,}])', ''));\n    return m ? m[1].replace(/\\\\n/g, '\\n').replace(/\\\\\"/g, '\"').trim() : '';\n  }\n  parsed = {\n    script: extract('script', raw),\n    title: extract('title', raw),\n    description: extract('description', raw),\n    on_screen_title: extract('on_screen_title', raw)\n  };\n}\n\nlet script = parsed.script || '';\nif (typeof script === 'string' && script.trim().startsWith('[')) {\n  try {\n    script = JSON.parse(script);\n  } catch(e) {}\n}\n\nreturn [{\n  json: {\n    script: script || 'Script failed',\n    title: parsed.title || 'New Video',\n    description: parsed.description || '#shorts',\n    on_screen_title: (parsed.on_screen_title || 'TOP REVEAL').toUpperCase(),\n    row_number: $('Filter Next Row1').item.json.row_number\n  }\n}];"
+        },
+        "id": "7c167a41-7ce6-463e-be4d-63a5d5c7a120",
+        "name": "Parse AI Output1",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          448,
+          688
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:5001/tts",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"text\": \"{{ typeof $json.script === 'string' ? $json.script : JSON.stringify($json.script) }}\",\n  \"title\": \"{{ $json.on_screen_title }}\"\n}",
+          "options": {
+            "timeout": 600000
+          }
+        },
+        "id": "d7870b91-5fa7-49bb-957c-38379bae7440",
+        "name": "Local Video Maker1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          672,
+          688
+        ]
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict"
             },
-            "id": "b1a2c3d4-0009-0000-0000-000000000009",
-            "name": "Set Thumbnail",
-            "type": "n8n-nodes-base.youTube",
-            "typeVersion": 1,
-            "position": [
-                2600,
-                280
+            "conditions": [
+              {
+                "id": "check-success",
+                "leftValue": "={{ $json.status }}",
+                "rightValue": "success",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
             ],
-            "credentials": {
-                "youTubeOAuth2Api": {
-                    "id": "woqvLNlgwSXNECxd",
-                    "name": "YouTube account"
-                }
-            }
+            "combinator": "and"
+          },
+          "options": {}
         },
-        {
-            "parameters": {},
-            "id": "b1a2c3d4-0011-0000-0000-000000000011",
-            "name": "Return Error",
-            "type": "n8n-nodes-base.noOp",
-            "typeVersion": 1,
-            "position": [
-                1820,
-                520
-            ]
-        }
+        "id": "b17cd2d8-9583-4f8a-9794-4dbe6cfb4842",
+        "name": "Safety Check?1",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.1,
+        "position": [
+          896,
+          688
+        ]
+      },
+      {
+        "parameters": {
+          "url": "http://host.docker.internal:5001/get-video",
+          "options": {
+            "response": {
+              "response": {
+                "responseFormat": "file"
+              }
+            }
+          }
+        },
+        "id": "84abe835-2e6c-4343-9954-454c853e73e0",
+        "name": "Download Final Video1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1120,
+          592
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:5001/upload_youtube",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={{ {\n  \"video_path\": $('Local Video Maker1').item.json.video_path,\n  \"title\": $('Parse AI Output1').item.json.title,\n  \"description\": $('Parse AI Output1').item.json.description,\n  \"tags\": [\"#shorts\", \"#facts\", \"#weirdscience\"]\n} }}",
+          "options": {}
+        },
+        "id": "1d4806b7-6cc4-4927-8a74-9122ae2a64b6",
+        "name": "Upload to YouTube1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1344,
+          592
+        ]
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://host.docker.internal:5001/mark-done",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"topic\": \"{{ $('Filter Next Row1').item.json.Topic }}\",\n  \"status\": \"DONE\",\n  \"youtube_url\": \"{{ $json.url || '' }}\"\n}",
+          "options": {}
+        },
+        "id": "468013b2-4ae1-4212-86e6-2660d18f29b1",
+        "name": "Cross it off1",
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.2,
+        "position": [
+          1568,
+          592
+        ]
+      },
+      {
+        "parameters": {},
+        "id": "4b3ed571-3816-49c1-b223-e02eccf3f678",
+        "name": "Safety Net STOP1",
+        "type": "n8n-nodes-base.noOp",
+        "typeVersion": 1,
+        "position": [
+          1120,
+          784
+        ]
+      }
     ],
     "connections": {
-        "Manual Click Trigger": {
-            "main": [
-                [
-                    {
-                        "node": "Money Psychology Topic Bank",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Daily Automation (9 AM)": {
-            "main": [
-                [
-                    {
-                        "node": "Money Psychology Topic Bank",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Money Psychology Topic Bank": {
-            "main": [
-                [
-                    {
-                        "node": "Build Safe Ollama Body",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Build Safe Ollama Body": {
-            "main": [
-                [
-                    {
-                        "node": "Ollama Script & Strategy",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Ollama Script & Strategy": {
-            "main": [
-                [
-                    {
-                        "node": "Parse AI Output",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Parse AI Output": {
-            "main": [
-                [
-                    {
-                        "node": "Generate Video (Flask TTS)",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Generate Video (Flask TTS)": {
-            "main": [
-                [
-                    {
-                        "node": "Video Generated OK?",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Video Generated OK?": {
-            "main": [
-                [
-                    {
-                        "node": "Download Final Video",
-                        "type": "main",
-                        "index": 0
-                    }
-                ],
-                [
-                    {
-                        "node": "Return Error",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Download Final Video": {
-            "main": [
-                [
-                    {
-                        "node": "Upload to YouTube",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Upload to YouTube": {
-            "main": [
-                [
-                    {
-                        "node": "Download Thumbnail",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Download Thumbnail": {
-            "main": [
-                [
-                    {
-                        "node": "Set Thumbnail",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        }
+      "Webhook Trigger": {
+        "main": [
+          [
+            {
+              "node": "Read Next Content Idea",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Scheduled Posts": {
+        "main": [
+          [
+            {
+              "node": "Read Next Content Idea",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Manual Run": {
+        "main": [
+          [
+            {
+              "node": "Read Next Content Idea",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read Next Content Idea": {
+        "main": [
+          [
+            {
+              "node": "Filter Next Row",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter Next Row": {
+        "main": [
+          [
+            {
+              "node": "Write Script (Ollama)",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Write Script (Ollama)": {
+        "main": [
+          [
+            {
+              "node": "Parse AI Output",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parse AI Output": {
+        "main": [
+          [
+            {
+              "node": "Local Video Maker",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Local Video Maker": {
+        "main": [
+          [
+            {
+              "node": "Safety Check?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Safety Check?": {
+        "main": [
+          [
+            {
+              "node": "Download Final Video",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Safety Net STOP",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download Final Video": {
+        "main": [
+          [
+            {
+              "node": "Upload to YouTube",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload to YouTube": {
+        "main": [
+          [
+            {
+              "node": "Cross it off",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Webhook Trigger1": {
+        "main": [
+          [
+            {
+              "node": "Read Next Content Idea1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Scheduled Posts1": {
+        "main": [
+          [
+            {
+              "node": "Read Next Content Idea1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Read Next Content Idea1": {
+        "main": [
+          [
+            {
+              "node": "Filter Next Row1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Filter Next Row1": {
+        "main": [
+          [
+            {
+              "node": "Write Script (Ollama)1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Write Script (Ollama)1": {
+        "main": [
+          [
+            {
+              "node": "Parse AI Output1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Parse AI Output1": {
+        "main": [
+          [
+            {
+              "node": "Local Video Maker1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Local Video Maker1": {
+        "main": [
+          [
+            {
+              "node": "Safety Check?1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Safety Check?1": {
+        "main": [
+          [
+            {
+              "node": "Download Final Video1",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Safety Net STOP1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Download Final Video1": {
+        "main": [
+          [
+            {
+              "node": "Upload to YouTube1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Upload to YouTube1": {
+        "main": [
+          [
+            {
+              "node": "Cross it off1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
     },
-    "pinData": {},
     "settings": {
-        "executionOrder": "v1",
-        "saveManualExecutions": true,
-        "callerPolicy": "workflowsFromSameOwner",
-        "errorWorkflow": ""
+      "executionOrder": "v1",
+      "binaryMode": "separate"
     },
     "staticData": null,
+    "meta": null,
+    "pinData": {},
+    "versionId": "9df51bf0-8ef7-4013-b70c-7f31bf2897cf",
+    "activeVersionId": "e57b128b-b222-41f5-9ed4-fc1d1447daaf",
+    "versionCounter": 87,
+    "triggerCount": 2,
     "tags": [],
-    "triggerCount": 0,
-    "updatedAt": "2026-04-10T14:10:00.000Z",
-    "versionId": "money-psych-v1",
-    "id": "passiveYtWkflw"
-}
+    "shared": [
+      {
+        "updatedAt": "2026-07-06T07:03:49.361Z",
+        "createdAt": "2026-07-06T07:03:49.361Z",
+        "role": "workflow:owner",
+        "workflowId": "yt-shorts-automation-pipeline",
+        "projectId": "96u4HNjwGQ67j5UR",
+        "project": {
+          "updatedAt": "2026-05-28T08:10:30.726Z",
+          "createdAt": "2026-05-28T07:54:49.248Z",
+          "id": "96u4HNjwGQ67j5UR",
+          "name": "Zane zanepro6932@gmail.com <zanepro6932@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "creatorId": "e6b872ae-b175-49ed-a671-44ddfd9b3371"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": null,
+      "description": null
+    }
+  }
+]

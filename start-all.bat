@@ -7,13 +7,21 @@ echo    YouTube Automation Stack - Starting Up...
 echo ==================================================
 echo.
 
-REM ── 1. Start Flask Backend (Video Generator) ──
-echo [1/2] Starting Flask Video Backend on port 5001...
+REM ── 1. Start Ollama Server ──
+echo [1/4] Starting Ollama Server on port 11434...
+start "Ollama Server" /min cmd /k "ollama serve"
+
+REM ── 2. Start Fooocus Image Engine ──
+echo [2/4] Starting Fooocus Image Engine on port 7865...
+start "Fooocus Image Engine" /min cmd /k "cd /d D:\Projects\Fooocus && set PYTHONIOENCODING=utf-8 && python entry_with_update.py"
+
+REM ── 3. Start Flask Backend (Video Generator) ──
+echo [3/4] Starting Flask Video Backend on port 5001...
 set HF_HUB_DISABLE_SYMLINKS_WARNING=1
 start "Flask Video Backend" /min cmd /k "cd /d yt-automation-engine && python server.py"
 
-REM ── 2. Start n8n in Docker ──
-echo [2/2] Starting n8n Automation Engine on port 5678...
+REM ── 4. Start n8n in Docker ──
+echo [4/4] Starting n8n Automation Engine on port 5678...
 
 REM Check if container exists
 docker ps -a --format "{{.Names}}" | findstr /i "^n8n$" >nul 2>&1

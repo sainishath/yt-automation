@@ -39,6 +39,8 @@ yt-automation-engine/data
 *.zip
 youtube_token.pickle
 youtube_credentials.json
+client_secret*.json
+*credentials*.json
 yt-automation-engine/youtube_token.pickle
 yt-automation-engine/youtube_credentials.json
 script_queue.json

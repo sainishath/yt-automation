@@ -5,10 +5,10 @@
   "output_dir": "./data/yt-automation-engine/videos",
   "temp_dir": "./data/yt-automation-engine/temp",
   "ollama_url": "http://127.0.0.1:11434",
-  "ollama_model": "llama3.2:latest",
+  "ollama_model": "llama3.1:latest",
   "whisper_model": "base",
   "whisper_device": "cpu",
-  "audio_speed": 1.1,
+  "audio_speed": 1.25,
   "video_width": 1080,
   "video_height": 1920,
   "subtitle_safe_zone_top_pct": 0.25,
@@ -19,7 +19,14 @@
     "Human Behavior"
   ],
   "long_background_source": "./data/assets/backgrounds/active/subway_surfers_1hr.webm",
-  "last_background_timestamp": 944.2510000000003,
+  "last_background_timestamp": 1271.3088125000008,
   "bg_music_path": "",
-  "compilation_output_name": "compilation_weekly.mp4"
+  "compilation_output_name": "compilation_weekly.mp4",
+  "discord_bot_token": "YOUR_DISCORD_BOT_TOKEN_HERE",
+  "speaker_b_min_word_pct": 35.0,
+  "speaker_b_max_word_pct": 60.0,
+  "target_min_duration": 30.0,
+  "target_max_duration": 58.0,
+  "target_preferred_min": 35.0,
+  "target_preferred_max": 50.0
 }

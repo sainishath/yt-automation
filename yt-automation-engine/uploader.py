@@ -94,23 +94,42 @@ def upload_to_youtube(
     description: str,
     hashtags: list,
     category_id: str = CATEGORY_EDUCATION,
+    privacy_status: str = "private"
 ) -> dict:
     """
     Upload `video_path` to YouTube as a Short.
+    Defaults to privacyStatus="private" per production workflow requirements.
 
     Args:
-        video_path:   Absolute path to the final MP4.
-        title:        Video title — will have #Shorts appended if missing.
-        description:  Main description text. Hashtags are appended automatically.
-        hashtags:     List of hashtag strings WITH the # sign,
-                      e.g. ["#Shorts", "#WeirdScience", "#Facts"]
-        category_id:  YouTube category ID string (default: "27" = Education).
+        video_path:     Absolute path to the final MP4.
+        title:          Video title — will have #Shorts appended if missing.
+        description:    Main description text. Hashtags are appended automatically.
+        hashtags:       List of hashtag strings WITH the # sign.
+        category_id:    YouTube category ID string (default: "27" = Education).
+        privacy_status: "private" (default), "unlisted", or "public".
 
     Returns:
         {"status": "success", "video_id": str, "url": str}
         or
         {"status": "error",   "error": str}
     """
+    import json
+    
+    # ── check for existing upload in manifest (idempotency safety) ──────────────
+    manifest_p = Path(video_path).with_suffix(".manifest.json")
+    if manifest_p.exists():
+        try:
+            with open(manifest_p, "r", encoding="utf-8") as mf:
+                mdata = json.load(mf)
+            yt_data = mdata.get("youtube_deployment", {})
+            if yt_data.get("uploaded") and yt_data.get("video_id"):
+                vid_id = yt_data["video_id"]
+                url = f"https://www.youtube.com/shorts/{vid_id}"
+                print(f"[Upload] Video already uploaded to YouTube (ID: {vid_id}). Skipping re-upload.")
+                return {"status": "success", "video_id": vid_id, "url": url}
+        except Exception as me:
+            print(f"[Upload Warning] Could not parse manifest for idempotency check: {me}")
+
     # ── enforce #Shorts in title ──────────────────────────────────────────────
     if "#Shorts" not in title and "#shorts" not in title:
         title = title + " #Shorts"
@@ -124,6 +143,11 @@ def upload_to_youtube(
     if "#Shorts" not in hashtags:
         hashtags = ["#Shorts"] + hashtags
 
+    # ── synthetic media disclosure note ───────────────────────────────────────
+    synthetic_note = "\n\n[Altered or Synthetic Content: This video contains AI-generated visual and audio content.]"
+    if synthetic_note not in description:
+        description += synthetic_note
+
     try:
         youtube = _get_youtube_service()
 
@@ -136,7 +160,7 @@ def upload_to_youtube(
                 "defaultLanguage": "en",
             },
             "status": {
-                "privacyStatus":           "public",
+                "privacyStatus":           privacy_status,
                 "madeForKids":             False,
                 "selfDeclaredMadeForKids": False,
             },
@@ -160,14 +184,31 @@ def upload_to_youtube(
             status, response = insert_request.next_chunk()
             if status:
                 pct = int(status.progress() * 100)
-                print(f"[Upload] {pct}% …")
+                print(f"[Upload] {pct}% ...")
 
         vid_id = response["id"]
         url    = f"https://www.youtube.com/shorts/{vid_id}"
-        print(f"[Upload] ✓ Published → {url}")
+        print(f"[Upload] OK Uploaded ({privacy_status}) -> {url}")
+
+        # Update manifest if present
+        if manifest_p.exists():
+            try:
+                with open(manifest_p, "r", encoding="utf-8") as mf:
+                    mdata = json.load(mf)
+                mdata["youtube_deployment"] = {
+                    "privacy_status": privacy_status,
+                    "uploaded": True,
+                    "video_id": vid_id,
+                    "url": url
+                }
+                with open(manifest_p, "w", encoding="utf-8") as mf:
+                    json.dump(mdata, mf, indent=2)
+                print(f"[Upload] Updated manifest with YouTube video ID: {vid_id}")
+            except Exception as me:
+                print(f"[Upload Warning] Could not update manifest with video ID: {me}")
 
         return {"status": "success", "video_id": vid_id, "url": url}
 
     except Exception as e:
-        print(f"[Upload] ✗ Failed: {e}")
+        print(f"[Upload] FAIL: {e}")
         return {"status": "error", "error": str(e)}
