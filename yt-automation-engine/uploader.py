@@ -94,11 +94,11 @@ def upload_to_youtube(
     description: str,
     hashtags: list,
     category_id: str = CATEGORY_EDUCATION,
-    privacy_status: str = "private"
+    privacy_status: str = "public",
+    thumbnail_path: str = None
 ) -> dict:
     """
-    Upload `video_path` to YouTube as a Short.
-    Defaults to privacyStatus="private" per production workflow requirements.
+    Upload `video_path` to YouTube as a Short with Public visibility by default.
 
     Args:
         video_path:     Absolute path to the final MP4.
@@ -106,10 +106,11 @@ def upload_to_youtube(
         description:    Main description text. Hashtags are appended automatically.
         hashtags:       List of hashtag strings WITH the # sign.
         category_id:    YouTube category ID string (default: "27" = Education).
-        privacy_status: "private" (default), "unlisted", or "public".
+        privacy_status: "public" (default), "unlisted", or "private".
+        thumbnail_path: Optional path to custom thumbnail JPEG image.
 
     Returns:
-        {"status": "success", "video_id": str, "url": str}
+        {"status": "success", "video_id": str, "url": str, "privacy_status": str, "thumbnail_uploaded": bool}
         or
         {"status": "error",   "error": str}
     """
@@ -126,7 +127,13 @@ def upload_to_youtube(
                 vid_id = yt_data["video_id"]
                 url = f"https://www.youtube.com/shorts/{vid_id}"
                 print(f"[Upload] Video already uploaded to YouTube (ID: {vid_id}). Skipping re-upload.")
-                return {"status": "success", "video_id": vid_id, "url": url}
+                return {
+                    "status": "success",
+                    "video_id": vid_id,
+                    "url": url,
+                    "privacy_status": yt_data.get("privacy_status", privacy_status),
+                    "thumbnail_uploaded": yt_data.get("thumbnail_uploaded", False)
+                }
         except Exception as me:
             print(f"[Upload Warning] Could not parse manifest for idempotency check: {me}")
 
@@ -190,6 +197,27 @@ def upload_to_youtube(
         url    = f"https://www.youtube.com/shorts/{vid_id}"
         print(f"[Upload] OK Uploaded ({privacy_status}) -> {url}")
 
+        # Upload custom thumbnail if available or generated
+        thumb_uploaded = False
+        target_thumb = thumbnail_path or str(Path(video_path).with_suffix(".jpg"))
+        if not Path(target_thumb).exists():
+            try:
+                from thumbnail_generator import generate_debate_thumbnail
+                generate_debate_thumbnail(title, target_thumb)
+            except Exception as tg_err:
+                print(f"[Upload Warning] Could not generate thumbnail: {tg_err}")
+
+        if Path(target_thumb).exists():
+            try:
+                youtube.thumbnails().set(
+                    videoId=vid_id,
+                    media_body=MediaFileUpload(target_thumb, mimetype="image/jpeg")
+                ).execute()
+                thumb_uploaded = True
+                print(f"[Upload] OK Uploaded thumbnail: {target_thumb}")
+            except Exception as th_err:
+                print(f"[Upload Warning] Thumbnail upload to YouTube failed: {th_err}")
+
         # Update or create manifest (guarantees upload idempotency)
         import time
         mdata = {}
@@ -205,6 +233,8 @@ def upload_to_youtube(
             "uploaded": True,
             "video_id": vid_id,
             "url": url,
+            "thumbnail_path": target_thumb if Path(target_thumb).exists() else None,
+            "thumbnail_uploaded": thumb_uploaded,
             "uploaded_at": time.strftime("%Y-%m-%dT%H:%M:%SZ")
         }
         try:
@@ -214,7 +244,17 @@ def upload_to_youtube(
         except Exception as me:
             print(f"[Upload Warning] Could not write manifest with video ID: {me}")
 
-        return {"status": "success", "video_id": vid_id, "url": url}
+        return {
+            "status": "success",
+            "video_id": vid_id,
+            "url": url,
+            "privacy_status": privacy_status,
+            "thumbnail_uploaded": thumb_uploaded
+        }
+
+    except Exception as e:
+        print(f"[Upload] FAIL: {e}")
+        return {"status": "error", "error": str(e)}
 
     except Exception as e:
         print(f"[Upload] FAIL: {e}")

@@ -377,7 +377,8 @@ def upload_youtube():
                 "error": "YouTube not authorized. Visit http://localhost:5001/auth-youtube to authorize."
             }), 401
 
-        result = upload_to_youtube(video_path, title, description, tags, category_id)
+        privacy_status = data.get('privacy_status', 'public')
+        result = upload_to_youtube(video_path, title, description, tags, category_id, privacy_status=privacy_status)
         return jsonify(result)
     except Exception as e:
         logger.error(f"FAIL: YouTube upload failed: {str(e)}")

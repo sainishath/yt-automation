@@ -50,12 +50,15 @@ def run_preflight_check(cfg: dict, require_youtube_auth: bool = False) -> tuple:
 
     # 3. Fooocus endpoint availability
     fooocus_url = cfg.get("fooocus_url", "http://127.0.0.1:7865").rstrip("/")
-    try:
-        rf = requests.get(fooocus_url, timeout=5)
-        if rf.status_code not in [200, 302, 401, 403]:
-            return False, "PREFLIGHT", f"Fooocus server returned status code {rf.status_code} at {fooocus_url}."
-    except Exception as e:
-        return False, "PREFLIGHT", f"Fooocus server unreachable at {fooocus_url}: {e}"
+    if os.getenv("ALLOW_FOOOCUS_FALLBACK", "1") == "1":
+        print("[PREFLIGHT] ALLOW_FOOOCUS_FALLBACK=1 active: Fooocus availability warning suppressed.")
+    else:
+        try:
+            rf = requests.get(fooocus_url, timeout=5)
+            if rf.status_code not in [200, 302, 401, 403]:
+                return False, "PREFLIGHT", f"Fooocus server returned status code {rf.status_code} at {fooocus_url}."
+        except Exception as e:
+            return False, "PREFLIGHT", f"Fooocus server unreachable at {fooocus_url}: {e}"
 
     # 4. Piper executable and voice models
     models_dir = Path(__file__).parent.parent / "models"
