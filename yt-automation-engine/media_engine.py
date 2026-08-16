@@ -1634,7 +1634,7 @@ def assemble_video(video_bg_path, audio_path,
     if not image_events and visual_proofs and timings:
         image_events = []
         for idx, proof in enumerate(visual_proofs):
-            if proof:
+            if proof and idx < len(timings):
                 start_time = timings[idx]["start"]
                 if idx < len(timings) - 1:
                     end_time = timings[idx+1]["start"]

@@ -190,22 +190,29 @@ def upload_to_youtube(
         url    = f"https://www.youtube.com/shorts/{vid_id}"
         print(f"[Upload] OK Uploaded ({privacy_status}) -> {url}")
 
-        # Update manifest if present
+        # Update or create manifest (guarantees upload idempotency)
+        import time
+        mdata = {}
         if manifest_p.exists():
             try:
                 with open(manifest_p, "r", encoding="utf-8") as mf:
                     mdata = json.load(mf)
-                mdata["youtube_deployment"] = {
-                    "privacy_status": privacy_status,
-                    "uploaded": True,
-                    "video_id": vid_id,
-                    "url": url
-                }
-                with open(manifest_p, "w", encoding="utf-8") as mf:
-                    json.dump(mdata, mf, indent=2)
-                print(f"[Upload] Updated manifest with YouTube video ID: {vid_id}")
             except Exception as me:
-                print(f"[Upload Warning] Could not update manifest with video ID: {me}")
+                print(f"[Upload Warning] Could not parse existing manifest: {me}")
+
+        mdata["youtube_deployment"] = {
+            "privacy_status": privacy_status,
+            "uploaded": True,
+            "video_id": vid_id,
+            "url": url,
+            "uploaded_at": time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        }
+        try:
+            with open(manifest_p, "w", encoding="utf-8") as mf:
+                json.dump(mdata, mf, indent=2)
+            print(f"[Upload] Saved/Updated manifest at {manifest_p.name} with YouTube video ID: {vid_id}")
+        except Exception as me:
+            print(f"[Upload Warning] Could not write manifest with video ID: {me}")
 
         return {"status": "success", "video_id": vid_id, "url": url}
 
