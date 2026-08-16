@@ -173,7 +173,7 @@
         "url": "http://host.docker.internal:5001/upload_youtube",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"video_path\": \"{{ $('Generate Video').item.json.video_path }}\",\n  \"title\": \"{{ $('Limit to One').item.json.Topic }}\",\n  \"description\": \"{{ $('Limit to One').item.json.Topic }}\\n\\nSubscribe for daily mind-bending science, stoicism & psychology shorts!\\n\\n#shorts #weirdscience #humanbehavior #psychology #facts\",\n  \"tags\": [\"#shorts\", \"#weirdscience\", \"#humanbehavior\", \"#psychology\", \"#facts\", \"#stoicism\"]\n}",
+        "jsonBody": "={\n  \"video_path\": \"{{ $('Generate Video').item.json.video_path }}\",\n  \"title\": \"{{ $('Limit to One').item.json.Topic }}\",\n  \"description\": \"{{ $('Limit to One').item.json.Topic }}\\n\\nSubscribe for daily mind-bending science, stoicism & psychology shorts!\\n\\n#shorts #weirdscience #humanbehavior #psychology #facts\",\n  \"tags\": [\"#shorts\", \"#weirdscience\", \"#humanbehavior\", \"#psychology\", \"#facts\", \"#stoicism\"],\n  \"privacy_status\": \"public\"\n}",
         "options": {}
       },
       "id": "e1f8d9c5-8f64-4bfb-923f-42289f6d76bf",
