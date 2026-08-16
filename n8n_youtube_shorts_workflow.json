@@ -381,15 +381,7 @@
       ]
     },
     "Notify Rejection": {
-      "main": [
-        [
-          {
-            "node": "Generate Video",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
+      "main": []
     }
   },
   "active": true,
