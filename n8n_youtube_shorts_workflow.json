@@ -1,0 +1,399 @@
+{
+  "name": "YT Shorts Automation with Discord Review Gate",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "22fffae5-b1a7-47b2-a42e-a5796c3f30db",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        380,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "triggerAtHour": 9,
+              "triggerAtMinute": 0
+            }
+          ]
+        }
+      },
+      "id": "84897fbe-443b-4876-8cc4-3cb1be60f38c",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        380,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trigger-shorts",
+        "options": {}
+      },
+      "id": "webhook-trigger-node",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        380,
+        380
+      ],
+      "webhookId": "trigger-shorts"
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:5001/get-next-topic",
+        "options": {}
+      },
+      "id": "e8e50bdf-d2c6-4767-850c-3fb5c0d28fa6",
+      "name": "Get Next Topic",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        600,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json[\"Video Status\"] }}",
+              "operation": "isEmpty"
+            }
+          ]
+        }
+      },
+      "id": "a93be9f3-8f64-4bfb-923f-42289f6d76dd",
+      "name": "Filter Uncompleted",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        820,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "maxItems": 1
+      },
+      "id": "a93be9f3-8f64-4bfb-923f-42289f6d76de",
+      "name": "Limit to One",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5001/tts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"title\": \"{{ $json.Topic }}\",\n  \"category\": \"{{ $json.Category }}\",\n  \"sync\": true\n}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "a93be9f3-8f64-4bfb-923f-42289f6d76bb",
+      "name": "Generate Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1260,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5001/post-discord-review",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"task_id\": \"{{ $json.task_id }}\",\n  \"topic\": \"{{ $('Limit to One').item.json.Topic }}\",\n  \"resume_url\": \"{{ $execution.resumeUrl }}\"\n}",
+        "options": {}
+      },
+      "id": "e4f8d9c5-8f64-4bfb-923f-42289f6d76bc",
+      "name": "Post to Discord Review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1480,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "webhook"
+      },
+      "id": "c1f8d9c5-8f64-4bfb-923f-42289f6d76bd",
+      "name": "Wait for Approval Gate",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.query.action }}",
+              "value2": "approve"
+            }
+          ]
+        }
+      },
+      "id": "d1f8d9c5-8f64-4bfb-923f-42289f6d76be",
+      "name": "Check Action Type",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5001/upload_youtube",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_path\": \"{{ $('Generate Video').item.json.video_path }}\",\n  \"title\": \"{{ $('Limit to One').item.json.Topic }}\",\n  \"description\": \"{{ $('Limit to One').item.json.Topic }}\\n\\nSubscribe for daily mind-bending science, stoicism & psychology shorts!\\n\\n#shorts #weirdscience #humanbehavior #psychology #facts\",\n  \"tags\": [\"#shorts\", \"#weirdscience\", \"#humanbehavior\", \"#psychology\", \"#facts\", \"#stoicism\"]\n}",
+        "options": {}
+      },
+      "id": "e1f8d9c5-8f64-4bfb-923f-42289f6d76bf",
+      "name": "Upload to YouTube",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2140,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5001/mark-done",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $('Limit to One').item.json.Topic }}\",\n  \"status\": \"DONE\",\n  \"youtube_url\": \"{{ $json.url }}\"\n}",
+        "options": {}
+      },
+      "id": "m1f8d9c5-8f64-4bfb-923f-42289f6d76c2",
+      "name": "Mark Topic Done",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2360,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1528609697089982494/fv9TUyDcJOxxZn1PxKqw-ac3nBBstahSV2CpFEJi0b9sged8hWikgY6uwV8eViqw9nag",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"✅ **[CONVO-SHORTS APPROVED & PUBLISHED]**\\nUploaded successfully: **{{ $('Limit to One').item.json.Topic }}**\\nWatch on YouTube: {{ $('Mark Topic Done').item.json.youtube_url || $node[\\\"Upload to YouTube\\\"].json.url }}\"\n}",
+        "options": {}
+      },
+      "id": "f1f8d9c5-8f64-4bfb-923f-42289f6d76c0",
+      "name": "Notify YouTube Success",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2580,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1528609697089982494/fv9TUyDcJOxxZn1PxKqw-ac3nBBstahSV2CpFEJi0b9sged8hWikgY6uwV8eViqw9nag",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"❌ **[CONVO-SHORTS REJECTED]**\\nVideo rejected. Re-triggering generation for topic: **{{ $('Limit to One').item.json.Topic }}**\"\n}",
+        "options": {}
+      },
+      "id": "a2f8d9c5-8f64-4bfb-923f-42289f6d76c1",
+      "name": "Notify Rejection",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        2140,
+        340
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Next Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Next Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Next Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Next Topic": {
+      "main": [
+        [
+          {
+            "node": "Filter Uncompleted",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Uncompleted": {
+      "main": [
+        [
+          {
+            "node": "Limit to One",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit to One": {
+      "main": [
+        [
+          {
+            "node": "Generate Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Video": {
+      "main": [
+        [
+          {
+            "node": "Post to Discord Review",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post to Discord Review": {
+      "main": [
+        [
+          {
+            "node": "Wait for Approval Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Approval Gate": {
+      "main": [
+        [
+          {
+            "node": "Check Action Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Action Type": {
+      "main": [
+        [
+          {
+            "node": "Upload to YouTube",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Rejection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to YouTube": {
+      "main": [
+        [
+          {
+            "node": "Mark Topic Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Topic Done": {
+      "main": [
+        [
+          {
+            "node": "Notify YouTube Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Rejection": {
+      "main": [
+        [
+          {
+            "node": "Generate Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {},
+  "id": "N3DelK9B5ssN879H",
+  "meta": {}
+}

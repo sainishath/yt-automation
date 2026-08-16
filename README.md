@@ -1,183 +1,132 @@
-<div align="center">
+# Pipeline 2 — Conversational YouTube Shorts Suite
 
-# 🎬 piper-yt-automation
-
-**Zero-cost YouTube Shorts factory — Ollama generates scripts, Piper voices them, Whisper burns subtitles, FFmpeg assembles the video, n8n schedules the upload. No API bills.**
-
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
-[![Flask](https://img.shields.io/badge/Flask-Backend-000000?style=flat-square&logo=flask)](https://flask.palletsprojects.com)
-[![n8n](https://img.shields.io/badge/n8n-Orchestration-EA4B71?style=flat-square)](https://n8n.io)
-[![Ollama](https://img.shields.io/badge/Ollama-Local_LLM-black?style=flat-square)](https://ollama.com)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
-
-</div>
+Production-hardened, two-person conversational YouTube Shorts generator with factual QA grounding, audio-driven semantic visual timing, Fooocus visual synthesis, sidechain BGM ducking, Discord interactive approval gate, and automated YouTube private upload.
 
 ---
 
-## 🏗️ Pipeline Architecture
+## 1. Prerequisites & Environment
+
+- **OS:** Windows 10/11 (64-bit) or Linux/macOS
+- **Python:** Python 3.10+
+- **GPU:** NVIDIA GPU with CUDA support (e.g. RTX 4070 Laptop GPU / Desktop GPU)
+- **External Binaries:**
+  - `ffmpeg` & `ffprobe` (on system PATH)
+  - `piper.exe` (located in root directory or `data/piper.exe`)
+- **Daemons & Services:**
+  - **Ollama Server:** Running at `http://127.0.0.1:11434` with model `llama3.1:latest`
+  - **Fooocus Server:** Running at `http://127.0.0.1:7865` with SDXL pipeline
+
+---
+
+## 2. Voice Models & Asset Structure
+
+Ensure the following local models and assets are present:
 
 ```
-n8n Scheduler (daily 9 AM Mon–Fri)
-        │
-        ▼
-┌─────────────────────────────────────────┐
-│  Google Sheets — Topics Queue            │
-│  Reads today's row: Day / Category /    │
-│  Topic                                  │
-└───────────────┬─────────────────────────┘
-                │ POST /generate_video
-                ▼
-┌─────────────────────────────────────────┐
-│  Flask Backend  (server_ollama.py)       │
-│                                         │
-│  1. Ollama (Mistral) → Script           │
-│     Category-aware prompts:             │
-│     • Weird Science → "Your brain…"    │
-│     • Productivity  → "Millionaires…" │
-│     • Human Behavior → "If someone…"  │
-│     Output: Hook / Body / CTA          │
-│                                         │
-│  2. Piper TTS → Voiceover .wav          │
-│     Model: en_US-lessac-medium          │
-│     Sample rate: 22 050 Hz              │
-│                                         │
-│  3. Faster-Whisper → Subtitle .srt      │
-│     Word-level timestamps               │
-│     Burned as animated captions         │
-│                                         │
-│  4. OpenCV + FFmpeg → Final .mp4        │
-│     Category-coloured caption overlay   │
-│     (Cyan / Gold / Hot-pink per niche)  │
-│     9:16 vertical format for Shorts     │
-└───────────────┬─────────────────────────┘
-                │ video file path
-                ▼
-┌─────────────────────────────────────────┐
-│  n8n → YouTube Data API v3 Upload       │
-│  Sets title, tags, description, public  │
-│  Logs result back to Google Sheets      │
-└─────────────────────────────────────────┘
+convo-shorts/
+├── models/
+│   ├── voices/
+│   │   └── en_US-ryan-medium.onnx          # Speaker A Voice (Piper)
+│   └── en_US-libritts_r-medium.onnx        # Speaker B Voice (LibriTTS-R Speaker 4)
+├── assets/
+│   ├── backgrounds/active/
+│   │   └── minecraft_bg.mp4                # Gameplay / background video source
+│   └── bgm/
+│       └── lofi.mp3                        # Background music track
 ```
 
-**Why fully local?** Every component (Ollama, Piper, Whisper, FFmpeg) runs on-device. The only outbound call is the final YouTube upload — zero LLM API spend per video.
-
 ---
 
-## 📦 Components
+## 3. Configuration & Environment Setup
 
-| Component | Role | Model / Tool |
-|---|---|---|
-| **Ollama** | Script generation (Hook/Body/CTA) | Mistral (swappable: Llama 3, neural-chat) |
-| **Piper TTS** | Offline text-to-speech voiceover | `en_US-lessac-medium.onnx` |
-| **Faster-Whisper** | Audio transcription → timed subtitles | `base` model |
-| **OpenCV + PIL** | Caption rendering, thumbnail generation | — |
-| **FFmpeg** | Audio-video mux, format encoding | — |
-| **n8n** | Cron scheduler + workflow orchestrator | Self-hosted |
-| **Google Sheets** | Topic queue & upload log | — |
-| **YouTube Data API v3** | Final upload + metadata | OAuth 2.0 |
-
----
-
-## 🎯 Content Categories
-
-Three niche pipelines, each with tuned prompt personas and caption colour schemes:
-
-| Category | Hook Style | Caption Colour |
-|---|---|---|
-| Weird Science | `"Your brain…"` / `"Scientists found…"` | Cyan `#00FFFF` |
-| Productivity & Stoicism | `"Millionaires…"` / `"One habit…"` | Gold `#FFD700` |
-| Human Behavior | `"If someone does THIS…"` / `"Watch for…"` | Hot Pink `#FF007F` |
-
----
-
-## 🚀 Quick Start
-
-### 1. Prerequisites
+Copy `.env.example` to `.env` and set your credentials:
 
 ```bash
-# Python dependencies
-pip install -r requirements.txt
-
-# Install Ollama and pull a model
-# https://ollama.com/download
-ollama pull mistral
-
-# Download Piper TTS binary + voice model
-# https://github.com/rhasspy/piper/releases
-# Place piper.exe and en_US-lessac-medium.onnx in ./data/models/
-
-# FFmpeg must be on PATH
-# https://ffmpeg.org/download.html
+cp .env.example .env
 ```
 
-### 2. Start the Flask server
+Key environment variables:
+- `PYTHONIOENCODING=utf-8` (Required for Windows stdout symbol rendering)
+- `STRICT_FOOOCUS=1` (Enforces Fooocus visual generation quality gate)
 
-```bash
-python files/01_current_setup/server_ollama.py
+---
+
+## 4. Production Execution (CLI & Headless)
+
+To launch a production Short job locally or from n8n:
+
+```powershell
+$env:PYTHONIOENCODING="utf-8"; $env:STRICT_FOOOCUS="1"; python main.py --topic "Why deep ocean creatures glow in total darkness" --category "Weird Science"
 ```
 
-Server starts at `http://localhost:5000`. Verify Ollama is reachable before sending requests.
+### Optional Arguments:
+- `--topic`: Topic string for the Short (required)
+- `--category`: Category string (`"Weird Science"`, `"Human Behavior"`, `"Productivity & stoicism"`, `"Tech"`)
+- `--job_id`: Custom unique job ID (e.g. `job_20260816_144500_001`)
+- `--output_dir`: Custom output directory for final videos and manifests
+- `--upload`: Automatically trigger private YouTube upload upon QA pass
 
-### 3. Test a single video generation
+---
 
-```bash
-curl -X POST http://localhost:5000/generate_video \
-  -H "Content-Type: application/json" \
-  -d '{"topic": "Why we forget dreams", "category": "Weird Science", "video_id": "test_001"}'
-```
+## 5. Machine-Readable Result Specification
 
-Returns:
+`main.py` terminates with a deterministic exit code (`0` for success, `1` for failure) and outputs a machine-readable JSON result object on standard stdout:
+
+### Success Output (`exit code 0`):
 ```json
 {
-  "status": "success",
-  "video_path": "./data/output/test_001.mp4",
-  "script": { "hook": "...", "body": "...", "cta": "..." },
-  "cost": "$0.00"
+  "status": "qa_passed",
+  "job_id": "job_20260816_150843_002",
+  "short_id": "Short_002",
+  "video_path": "D:\\Projects\\yt-automations\\convo-shorts\\yt-automation-engine\\videos\\Short_002.mp4",
+  "manifest_path": "D:\\Projects\\yt-automations\\convo-shorts\\yt-automation-engine\\videos\\Short_002.manifest.json",
+  "duration": 50.08,
+  "qa_passed": true
 }
 ```
 
-### 4. Set up n8n automation
-
-1. Import `files/01_current_setup/n8n_advanced_workflow.json` into your n8n instance.
-2. Configure credentials: Google Sheets OAuth + YouTube OAuth.
-3. Set your `YOUTUBE_ACCESS_TOKEN` env variable.
-4. The workflow triggers daily at **9 AM Mon–Fri**, reads today's topic from your Google Sheet, calls Flask, waits 5 min for FFmpeg, then uploads.
-
----
-
-## 📁 Project Structure
-
-```text
-piper-yt-automation/
-├── files/
-│   ├── 01_current_setup/
-│   │   ├── server_ollama.py             ← Flask backend (full pipeline)
-│   │   ├── n8n_advanced_workflow.json   ← Import into n8n
-│   │   ├── n8n_workflow_ollama.md       ← Node-by-node workflow reference
-│   │   ├── OLLAMA_SETUP_GUIDE.md        ← Ollama install + model setup
-│   │   └── 100_PERCENT_FREE_COMPLETE_SETUP.md  ← End-to-end setup guide
-│   └── 02_resources_and_data/
-│       └── CONTENT_IDEAS_200_TOPICS.md  ← 200 pre-researched topic ideas
-└── README.md
+### Failure Output (`exit code 1`):
+```json
+{
+  "status": "failed",
+  "job_id": "job_20260816_150843_002",
+  "short_id": "Short_002",
+  "failed_stage": "TTS",
+  "error": "Error details...",
+  "qa_passed": false
+}
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 6. Job Lifecycle & Disposable Failure Model
 
-| Layer | Technology |
-|---|---|
-| Script Generation | Ollama (Mistral) — fully local |
-| Text-to-Speech | Piper TTS (`en_US-lessac-medium`) — fully local |
-| Transcription | Faster-Whisper — fully local |
-| Video Assembly | FFmpeg + OpenCV + Pillow |
-| Orchestration | n8n (self-hosted) |
-| Schedule | Cron via n8n (Mon–Fri 9 AM) |
-| Upload | YouTube Data API v3 |
-| Topic Queue | Google Sheets |
+1. **Preflight Check (`PREFLIGHT`):** Verifies FFmpeg, Ollama model, Fooocus port, Piper models, background assets, and directory permissions before starting AI generation.
+2. **Script Generation & Grounding (`SCRIPTING`):** Generates dual-persona co-equal script, enforcing factual grounding, initiative balance, and a brief natural outro.
+3. **TTS Synthesis (`TTS`):** Synthesizes dialogue per speaker, measures actual Whisper audio timestamps, and normalizes loudnorm levels.
+4. **Visual Generation (`VISUAL_GENERATION`):** Generates 896x896 Fooocus images mapped to semantic visual beats.
+5. **Video Assembly (`RENDERING`):** Slices background gameplay, overlays visual proofs, applies dynamic Ken-Burns movement, and renders 1080x1920 60 FPS H.264 video with sidechain BGM ducking.
+6. **Production QA Gate (`FINAL_QA`):** Validates technical specs, visual asset integrity, audio levels, and content balance. Writes production manifest.
+7. **Disposable Job Failure Model:** On unrecoverable error at any stage, the job is marked `FAILED`, intermediate files inside `temp/job_<job_id>` are safely cleaned, no fake upload is triggered, and `main.py` exits with code `1`.
 
 ---
 
-## 📄 License
+## 7. Discord Interactive Approval & YouTube Upload
 
-MIT — see [LICENSE](LICENSE).
+1. **OAuth Setup (One-time):**
+   Visit `http://localhost:5001/auth-youtube` to authorize YouTube Data API v3 access. OAuth tokens are cached in `youtube_token.pickle`.
+2. **Discord Approval Listener:**
+   Run `python discord_bot_listener.py` to listen for Discord review channel approvals.
+3. **Upload Safety:**
+   All uploads default to `privacyStatus: "private"`. Videos are uploaded only after explicit QA pass and human/n8n approval. Manifests are automatically updated with the YouTube video ID.
+
+---
+
+## 8. n8n Workflow Integration
+
+Import `n8n_youtube_shorts_workflow.json` into n8n:
+- **Schedule Trigger:** Triggers daily/weekly jobs.
+- **Execute Pipeline Node:** Executes `main.py` via shell command.
+- **Parse JSON Node:** Evaluates `qa_passed == true`.
+- **Discord Review Node:** Posts preview video to Discord channel with interactive approval links.
+- **Upload Node:** On approval, triggers `POST /upload_youtube` to publish private video to YouTube.
