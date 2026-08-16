@@ -16,12 +16,16 @@ echo [2/4] Starting Fooocus Image Engine on port 7865...
 start "Fooocus Image Engine" /min cmd /k "cd /d D:\Projects\Fooocus && set PYTHONIOENCODING=utf-8 && python entry_with_update.py"
 
 REM ── 3. Start Flask Backend (Video Generator) ──
-echo [3/4] Starting Flask Video Backend on port 5001...
+echo [3/5] Starting Flask Video Backend on port 5001...
 set HF_HUB_DISABLE_SYMLINKS_WARNING=1
 start "Flask Video Backend" /min cmd /k "cd /d yt-automation-engine && python server.py"
 
-REM ── 4. Start n8n in Docker ──
-echo [4/4] Starting n8n Automation Engine on port 5678...
+REM ── 4. Start Discord Bot Review Listener ──
+echo [4/5] Starting Discord Bot Listener...
+start "Discord Review Listener" /min cmd /k "cd /d yt-automation-engine && python discord_bot_listener.py"
+
+REM ── 5. Start n8n in Docker ──
+echo [5/5] Starting n8n Automation Engine on port 5678...
 
 REM Check if container exists
 docker ps -a --format "{{.Names}}" | findstr /i "^n8n$" >nul 2>&1
