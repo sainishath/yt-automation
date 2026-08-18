@@ -1,0 +1,13 @@
+{
+  "A": {
+    "model": "models/voices/en_US-ryan-medium.onnx",
+    "length_scale": 1.0,
+    "speed": 1.0
+  },
+  "B": {
+    "model": "models/en_US-libritts_r-medium.onnx",
+    "speaker": 4,
+    "length_scale": 0.95,
+    "speed": 1.05
+  }
+}

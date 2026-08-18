@@ -1,0 +1,392 @@
+{
+  "name": "Master Video Production Pipeline (Dual Channel)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-manual",
+      "name": "Manual Run Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-600, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "produce-video",
+        "options": {}
+      },
+      "id": "trigger-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [-600, 400],
+      "webhookId": "produce-video-webhook"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * 1,3,5"
+            }
+          ]
+        }
+      },
+      "id": "trigger-schedule",
+      "name": "Scheduled Production",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [-600, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ingest payload and set defaults\nconst input = $input.item.json || {};\nconst topic = input.topic || input.Topic || 'Default Topic';\nconst category = input.category || input.Category || 'Tech';\nconst contentType = (input.content_type || input.contentType || 'alternate_history').toLowerCase();\n\nreturn [{\n  json: {\n    topic,\n    category,\n    content_type: contentType,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "ingest-payload",
+      "name": "Ingest & Normalize Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-360, 200]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.content_type }}",
+                    "rightValue": "alternate_history",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Alternate History Pipeline"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": false,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.content_type }}",
+                    "rightValue": "factual_discussions",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Factual Discussions Pipeline"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": true,
+          "fallbackOutputKey": "Alternate History Pipeline (Default)"
+        }
+      },
+      "id": "switch-pipeline",
+      "name": "Route by Content Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [-120, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/generate-alternate-history",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $json.topic }}\",\n  \"category\": \"History What-If\"\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "gen-alt-history",
+      "name": "Generate Alternate History Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, 60]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/generate-factual-discussion",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $json.topic }}\",\n  \"category\": \"{{ $json.category }}\"\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "gen-factual-discussion",
+      "name": "Generate Factual Debate Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, 340]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video_url || 'http://127.0.0.1:8000/get-video?id=' + $json.video_id }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "fetch-alt-history-video",
+      "name": "Fetch Alternate History Video File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [420, 60]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video_url || 'http://127.0.0.1:8001/get-video?id=' + $json.video_id }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "fetch-factual-video",
+      "name": "Fetch Factual Discussion Video File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [420, 340]
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('gen-alt-history').item.json.title || 'What If: ' + $json.topic }}",
+        "description": "={{ $('gen-alt-history').item.json.description || 'Alternate History Short #shorts #whatif #history' }}",
+        "tags": "whatif,alternatehistory,history,shorts",
+        "categoryId": "27",
+        "privacyStatus": "public",
+        "binaryPropertyName": "data"
+      },
+      "id": "youtube-alt-history-upload",
+      "name": "Upload to YouTube (Account 1: Alternate History)",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [680, 60],
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "youtube_oauth2_alternate_history",
+          "name": "Google Account 1 - Alternate History Channel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('gen-factual-discussion').item.json.title || 'Debate: ' + $json.topic }}",
+        "description": "={{ $('gen-factual-discussion').item.json.description || 'Factual Discussion Short #shorts #science #facts' }}",
+        "tags": "science,facts,debate,tech,shorts",
+        "categoryId": "28",
+        "privacyStatus": "public",
+        "binaryPropertyName": "data"
+      },
+      "id": "youtube-factual-upload",
+      "name": "Upload to YouTube (Account 2: Factual Discussions)",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [680, 340],
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "youtube_oauth2_factual_discussions",
+          "name": "Google Account 2 - Factual Discussions Channel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    pipeline: 'Alternate History',\n    youtube_account: 'Account 1 (Alternate History Channel)',\n    video_id: $('youtube-alt-history-upload').item.json.id,\n    title: $('youtube-alt-history-upload').item.json.snippet.title,\n    status: 'SUCCESS',\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "log-alt-history-success",
+      "name": "Log Alternate History Success",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [940, 60]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    pipeline: 'Factual Discussions',\n    youtube_account: 'Account 2 (Factual Discussions Channel)',\n    video_id: $('youtube-factual-upload').item.json.id,\n    title: $('youtube-factual-upload').item.json.snippet.title,\n    status: 'SUCCESS',\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "log-factual-success",
+      "name": "Log Factual Discussion Success",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [940, 340]
+    }
+  ],
+  "connections": {
+    "Scheduled Production": {
+      "main": [
+        [
+          {
+            "node": "Ingest & Normalize Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Run Trigger": {
+      "main": [
+        [
+          {
+            "node": "Ingest & Normalize Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Ingest & Normalize Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ingest & Normalize Payload": {
+      "main": [
+        [
+          {
+            "node": "Route by Content Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Content Type": {
+      "main": [
+        [
+          {
+            "node": "Generate Alternate History Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Factual Debate Video",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Generate Alternate History Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Alternate History Video": {
+      "main": [
+        [
+          {
+            "node": "Fetch Alternate History Video File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Alternate History Video File": {
+      "main": [
+        [
+          {
+            "node": "Upload to YouTube (Account 1: Alternate History)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to YouTube (Account 1: Alternate History)": {
+      "main": [
+        [
+          {
+            "node": "Log Alternate History Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Factual Debate Video": {
+      "main": [
+        [
+          {
+            "node": "Fetch Factual Discussion Video File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Factual Discussion Video File": {
+      "main": [
+        [
+          {
+            "node": "Upload to YouTube (Account 2: Factual Discussions)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to YouTube (Account 2: Factual Discussions)": {
+      "main": [
+        [
+          {
+            "node": "Log Factual Discussion Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "master-video-pipeline-v1",
+  "id": "master-video-pipeline"
+}

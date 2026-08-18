@@ -1,0 +1,13 @@
+{
+  "style_name": "cinematic_historical",
+  "base_style_keywords": "cinematic composition, painterly-realistic, warm golden hour lighting, dramatic side lighting, epic framing, movie-poster style composition, highly detailed, volumetric light, realistic historical texture",
+  "negative_prompt": "modern vehicles, tanks, firearms, guns, missiles, planes, modern military, machinery, satellites, phones, modern architecture, anachronistic technology, modern clothes, modern armor, modern, flat illustration, cartoon, low quality, blurry, distorted text, low resolution, 3d render, plastic skin, uncanny",
+  "aspect_ratio": "768*1344",
+  "performance": "Speed",
+  "styles": [
+    "Fooocus Cinematic",
+    "Fooocus V2",
+    "Fooocus Enhance",
+    "Fooocus Sharp"
+  ]
+}
