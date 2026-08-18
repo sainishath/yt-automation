@@ -1,0 +1,212 @@
+{
+  "id": "Jst73fiHDTmDmxPS",
+  "name": "Fooocus-YT-Shorts-Debate-Pipeline",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trigger-yt-shorts",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "trigger-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [-448, 592],
+      "webhookId": "cfcf3bf9-6fd6-47bf-b923-35ea1c30bc47"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 3 * * 2,3,4"
+            },
+            {
+              "field": "cronExpression",
+              "expression": "30 8 * * 2,3,4"
+            },
+            {
+              "field": "cronExpression",
+              "expression": "30 12 * * 6"
+            }
+          ]
+        }
+      },
+      "id": "trigger-schedule",
+      "name": "Scheduled Posts",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [-448, 784]
+    },
+    {
+      "parameters": {},
+      "id": "trigger-manual",
+      "name": "Manual Run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-448, 960]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:5001/get-next-topic",
+        "options": {}
+      },
+      "id": "read-sheets",
+      "name": "Read Next Content Idea",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-224, 688]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Find the first topic with an empty Video Status (pending)\nconst items = $input.all();\nconst nextRow = items.find(item => {\n  const status = item.json['Video Status'] || item.json.Status || '';\n  return !status || status.trim() === '';\n});\n\nif (!nextRow) {\n  throw new Error('No pending topics found in the queue! All topics have been processed.');\n}\n\n// Pass all fields forward cleanly\nreturn [{\n  json: {\n    Topic: nextRow.json.Topic || '',\n    Hook: nextRow.json.Hook || nextRow.json['Hook Idea'] || '',\n    Category: nextRow.json.Category || 'Tech',\n    row_number: nextRow.json.row_number || 0\n  }\n}];"
+      },
+      "id": "filter-next-row",
+      "name": "Filter Next Row",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [0, 688]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama3.2\",\n  \"stream\": false,\n  \"format\": \"json\",\n  \"system\": \"You are a YouTube Shorts debate script writer. You MUST respond with ONLY a valid JSON object, no other text.\",\n  \"prompt\": \"Write a 50-second YouTube Shorts debate script about: {{ $json.Topic }}.\\n\\nYou MUST output ONLY this JSON (no markdown, no explanation):\\n{\\n  \\\"title\\\": \\\"short catchy title\\\",\\n  \\\"description\\\": \\\"brief desc #shorts\\\",\\n  \\\"on_screen_title\\\": \\\"3-5 WORD CAPS\\\",\\n  \\\"topic\\\": \\\"{{ $json.Topic }}\\\",\\n  \\\"row_number\\\": {{ $json.row_number }},\\n  \\\"script\\\": [\\n    {\\\"speaker\\\": \\\"character_a\\\", \\\"text\\\": \\\"opening statement\\\", \\\"visual_proof_prompt\\\": \\\"cinematic image description\\\"},\\n    {\\\"speaker\\\": \\\"character_b\\\", \\\"text\\\": \\\"counter argument\\\", \\\"visual_proof_prompt\\\": null}\\n  ]\\n}\\n\\nMake 8-10 alternating turns between character_a and character_b. Output only the JSON.\"\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "ai-generate",
+      "name": "Write Script (Ollama)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [224, 688]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Ollama response - robust handling for JSON and plain text\nconst item = $input.first();\nif (!item || !item.json) {\n  throw new Error('No item from Ollama node');\n}\n\nlet raw = (item.json.response || '').trim();\nif (!raw) {\n  throw new Error('Ollama returned empty response field');\n}\n\n// Strip markdown fences if present\nraw = raw.replace(/^```(?:json)?\\s*/i, '').replace(/\\s*```\\s*$/i, '').trim();\n\n// Try to parse as JSON\nlet parsed = null;\ntry {\n  parsed = JSON.parse(raw);\n} catch (e1) {\n  // Try extracting the first complete JSON object\n  const match = raw.match(/\\{[\\s\\S]+\\}/);\n  if (match) {\n    try { parsed = JSON.parse(match[0]); } catch (e2) { parsed = null; }\n  }\n}\n\n// If still no parsed JSON, build a simple debate from the plain text\nif (!parsed || !Array.isArray(parsed.script) || parsed.script.length === 0) {\n  // Ollama returned plain text - split into sentences and alternate speakers\n  const sentences = raw\n    .replace(/[\"]/g, '')\n    .split(/[.!?]+/)\n    .map(s => s.trim())\n    .filter(s => s.length > 10)\n    .slice(0, 10);\n\n  if (sentences.length === 0) {\n    throw new Error('Could not extract any usable content from AI response: ' + raw.substring(0, 300));\n  }\n\n  const topic = item.json.prompt_topic || 'this topic';\n  parsed = {\n    title: 'The TRUTH About ' + topic.substring(0, 40),\n    description: topic + ' debate #shorts #facts #debate',\n    on_screen_title: 'TRUTH REVEALED',\n    topic: topic,\n    row_number: 0,\n    script: sentences.map((text, i) => ({\n      speaker: i % 2 === 0 ? 'character_a' : 'character_b',\n      text: text,\n      visual_proof_prompt: i % 3 === 0 ? 'cinematic dramatic shot illustrating: ' + text.substring(0, 80) : null\n    }))\n  };\n}\n\n// Validate and normalize the script array\nconst scriptArray = (parsed.script || []).map((turn, i) => ({\n  speaker: turn.speaker || (i % 2 === 0 ? 'character_a' : 'character_b'),\n  text: (turn.text || turn.dialogue || '').trim(),\n  visual_proof_prompt: turn.visual_proof_prompt || null\n})).filter(t => t.text.length > 0);\n\nif (scriptArray.length === 0) {\n  throw new Error('Script has no valid lines after parsing');\n}\n\nreturn [{\n  json: {\n    script: scriptArray,\n    title: (parsed.title || 'Mind-Blowing Debate').substring(0, 100),\n    description: parsed.description || '#shorts #debate #facts',\n    on_screen_title: (parsed.on_screen_title || 'TOP REVEAL').toUpperCase().substring(0, 50),\n    topic: parsed.topic || '',\n    row_number: typeof parsed.row_number === 'number' ? parsed.row_number : 0\n  }\n}];"
+      },
+      "id": "parse-ai",
+      "name": "Parse AI Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [448, 688]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5001/tts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": {{ JSON.stringify($json.script) }},\n  \"title\": {{ JSON.stringify($json.on_screen_title) }},\n  \"sync\": true\n}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "make-video",
+      "name": "Local Video Maker",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [672, 688]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate video was created and pass all metadata downstream\nconst item = $input.first();\nif (!item || !item.json) {\n  throw new Error('No response from Local Video Maker');\n}\n\nconst status = item.json.status || '';\nconst videoPath = item.json.video_path || '';\n\nif (status === 'error') {\n  throw new Error('Video generation failed: ' + (item.json.error || 'unknown error'));\n}\n\nif (!videoPath) {\n  throw new Error('No video_path in response: ' + JSON.stringify(item.json).substring(0, 300));\n}\n\nreturn [{\n  json: {\n    status: 'success',\n    video_path: videoPath,\n    task_id: item.json.task_id || '',\n    title: item.json.title || '',\n    description: item.json.description || '#shorts',\n    topic: item.json.topic || '',\n    row_number: item.json.row_number || 0,\n    duration: item.json.duration || 0\n  }\n}];"
+      },
+      "id": "check-video-result",
+      "name": "Check Video Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [896, 688]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5001/upload_youtube",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"video_path\": $json.video_path, \"title\": $json.title || $('Parse AI Output').first().json.title, \"description\": $json.description || $('Parse AI Output').first().json.description, \"tags\": ['#shorts', '#debate', '#history', '#facts'] } }}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "yt-upload",
+      "name": "Upload to YouTube",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 688]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5001/mark-done",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"topic\": $('Parse AI Output').first().json.topic || $('Filter Next Row').first().json.Topic || '', \"status\": \"DONE\", \"youtube_url\": $json.url || $json.video_id || $json.youtube_url || '' } }}",
+        "options": {}
+      },
+      "id": "mark-done",
+      "name": "Cross it off",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1344, 688]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [{"node": "Read Next Content Idea", "type": "main", "index": 0}]
+      ]
+    },
+    "Scheduled Posts": {
+      "main": [
+        [{"node": "Read Next Content Idea", "type": "main", "index": 0}]
+      ]
+    },
+    "Manual Run": {
+      "main": [
+        [{"node": "Read Next Content Idea", "type": "main", "index": 0}]
+      ]
+    },
+    "Read Next Content Idea": {
+      "main": [
+        [{"node": "Filter Next Row", "type": "main", "index": 0}]
+      ]
+    },
+    "Filter Next Row": {
+      "main": [
+        [{"node": "Write Script (Ollama)", "type": "main", "index": 0}]
+      ]
+    },
+    "Write Script (Ollama)": {
+      "main": [
+        [{"node": "Parse AI Output", "type": "main", "index": 0}]
+      ]
+    },
+    "Parse AI Output": {
+      "main": [
+        [{"node": "Local Video Maker", "type": "main", "index": 0}]
+      ]
+    },
+    "Local Video Maker": {
+      "main": [
+        [{"node": "Check Video Result", "type": "main", "index": 0}]
+      ]
+    },
+    "Check Video Result": {
+      "main": [
+        [{"node": "Cross it off", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "n8n-workflow-v9"
+}

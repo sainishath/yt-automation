@@ -1,0 +1,905 @@
+Loaded as API: http://127.0.0.1:7865/ ✔
+Client.predict() Usage Info
+---------------------------
+Named API endpoints: 0
+
+Unnamed API endpoints: 77
+
+ - predict(fn_index=0) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(fn_index=1) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(type, fn_index=2) -> (stop_at, weight)
+    Parameters:
+     - [Radio] type: str 
+    Returns:
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+
+ - predict(type, fn_index=3) -> (stop_at, weight)
+    Parameters:
+     - [Radio] type: str 
+    Returns:
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+
+ - predict(type, fn_index=4) -> (stop_at, weight)
+    Parameters:
+     - [Radio] type: str 
+    Returns:
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+
+ - predict(type, fn_index=5) -> (stop_at, weight)
+    Parameters:
+     - [Radio] type: str 
+    Returns:
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+
+ - predict(advanced, fn_index=6) -> (type, type, type, type, stop_at, stop_at, stop_at, stop_at, weight, weight, weight, weight)
+    Parameters:
+     - [Checkbox] advanced: bool 
+    Returns:
+     - [Radio] type: str 
+     - [Radio] type: str 
+     - [Radio] type: str 
+     - [Radio] type: str 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+
+ - predict(fn_index=7) -> inpaint_additional_prompt
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+
+ - predict(fn_index=8) -> detection_prompt
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] detection_prompt: str 
+
+ - predict(mask_generation_model, fn_index=9) -> (cloth_category, detection_prompt)
+    Parameters:
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+    Returns:
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Textbox] detection_prompt: str 
+
+ - predict(image, fn_index=10) -> image_size_and_recommended_size
+    Parameters:
+     - [Image] image: str (filepath or URL to image) 
+    Returns:
+     - [Textbox] image_size_and_recommended_size: str 
+
+ - predict(for_images_created_by_fooocus, fn_index=11) -> metadata
+    Parameters:
+     - [Image] for_images_created_by_fooocus: str (filepath or URL to image) 
+    Returns:
+     - [Json] metadata: str (filepath to JSON file) 
+
+ - predict(order_of_processing, fn_index=12) -> prompt
+    Parameters:
+     - [Radio] order_of_processing: str 
+    Returns:
+     - [Radio] prompt: str 
+
+ - predict(fn_index=13) -> detection_prompt
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] detection_prompt: str 
+
+ - predict(method, fn_index=14) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(mask_generation_model, fn_index=15) -> (cloth_category, detection_prompt)
+    Parameters:
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+    Returns:
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Textbox] detection_prompt: str 
+
+ - predict(fn_index=16) -> detection_prompt
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] detection_prompt: str 
+
+ - predict(method, fn_index=17) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(mask_generation_model, fn_index=18) -> (cloth_category, detection_prompt)
+    Parameters:
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+    Returns:
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Textbox] detection_prompt: str 
+
+ - predict(fn_index=19) -> detection_prompt
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] detection_prompt: str 
+
+ - predict(method, fn_index=20) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(mask_generation_model, fn_index=21) -> (cloth_category, detection_prompt)
+    Parameters:
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+    Returns:
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Textbox] detection_prompt: str 
+
+ - predict(input_image, fn_index=22) -> 
+    Parameters:
+     - [Checkbox] input_image: bool 
+    Returns:
+     - None
+
+ - predict(fn_index=23) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(fn_index=24) -> value_212
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] value_212: str 
+
+ - predict(fn_index=25) -> value_212
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] value_212: str 
+
+ - predict(fn_index=26) -> value_212
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] value_212: str 
+
+ - predict(fn_index=27) -> value_212
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] value_212: str 
+
+ - predict(fn_index=28) -> value_212
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] value_212: str 
+
+ - predict(fn_index=29) -> value_212
+    Parameters:
+     - None
+    Returns:
+     - [Textbox] value_212: str 
+
+ - predict(enhance, fn_index=30) -> 
+    Parameters:
+     - [Checkbox] enhance: bool 
+    Returns:
+     - None
+
+ - predict(aspect_ratios, fn_index=31) -> 
+    Parameters:
+     - [Radio] aspect_ratios: str 
+    Returns:
+     - None
+
+ - predict(aspect_ratios, fn_index=32) -> 
+    Parameters:
+     - [Radio] aspect_ratios: str 
+    Returns:
+     - None
+
+ - predict(random, fn_index=33) -> seed
+    Parameters:
+     - [Checkbox] random: bool 
+    Returns:
+     - [Textbox] seed: str 
+
+ - predict(fn_index=34) -> value_226
+    Parameters:
+     - None
+    Returns:
+     - [Html] value_226: str 
+
+ - predict(fn_index=35) -> selected_styles
+    Parameters:
+     - None
+    Returns:
+     - [Checkboxgroup] selected_styles: List[str] 
+
+ - predict(selected_styles, search_styles, fn_index=36) -> selected_styles
+    Parameters:
+     - [Checkboxgroup] selected_styles: List[str] 
+     - [Textbox] search_styles: str 
+    Returns:
+     - [Checkboxgroup] selected_styles: List[str] 
+
+ - predict(fn_index=37) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(selected_styles, fn_index=38) -> selected_styles
+    Parameters:
+     - [Checkboxgroup] selected_styles: List[str] 
+    Returns:
+     - [Checkboxgroup] selected_styles: List[str] 
+
+ - predict(fn_index=39) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(refiner_sdxl_or_sd_15, fn_index=40) -> refiner_switch_at
+    Parameters:
+     - [Dropdown] refiner_sdxl_or_sd_15: str (Option from: ['None', 'juggernautXL_v8Rundiffusion.safetensors']) 
+    Returns:
+     - [Slider] refiner_switch_at: int | float (numeric value between 0.1 and 1.0) 
+
+ - predict(black_out_nsfw, fn_index=41) -> disable_preview
+    Parameters:
+     - [Checkbox] black_out_nsfw: bool 
+    Returns:
+     - [Checkbox] disable_preview: bool 
+
+ - predict(save_metadata_to_images, fn_index=42) -> metadata_scheme
+    Parameters:
+     - [Checkbox] save_metadata_to_images: bool 
+    Returns:
+     - [Radio] metadata_scheme: str 
+
+ - predict(enable_advanced_masking_features, fn_index=43) -> mask_upload
+    Parameters:
+     - [Checkbox] enable_advanced_masking_features: bool 
+    Returns:
+     - [Image] mask_upload: str (filepath or URL to image) 
+
+ - predict(inpaint_brush_color, fn_index=44) -> image
+    Parameters:
+     - [Colorpicker] inpaint_brush_color: str 
+    Returns:
+     - [Image] image: str (filepath or URL to image) 
+
+ - predict(developer_debug_mode, fn_index=45) -> 
+    Parameters:
+     - [Checkbox] developer_debug_mode: bool 
+    Returns:
+     - None
+
+ - predict(fn_index=46) -> (base_model_sdxl_only, refiner_sdxl_or_sd_15, vae, preset, enable, lora_1, weight, enable, lora_2, weight, enable, lora_3, weight, enable, lora_4, weight, enable, lora_5, weight)
+    Parameters:
+     - None
+    Returns:
+     - [Dropdown] base_model_sdxl_only: str (Option from: ['juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Dropdown] refiner_sdxl_or_sd_15: str (Option from: ['None', 'juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Dropdown] vae: str (Option from: ['Default (model)']) 
+     - [Dropdown] preset: str (Option from: ['initial', 'anime', 'default', 'lcm', 'lightning', 'playground_v2.5', 'pony_v6', 'realistic', 'sai']) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_1: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_2: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_3: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_4: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_5: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+
+ - predict(preset, method, fn_index=47) -> (advanced, image_number, value_12, negative_prompt, selected_styles, performance, forced_overwrite_of_sampling_step, forced_overwrite_of_refiner_switch_step, aspect_ratios, forced_overwrite_of_generating_width, forced_overwrite_of_generating_height, guidance_scale, image_sharpness, positive_adm_guidance_scaler, negative_adm_guidance_scaler, adm_guidance_end_at_step, refiner_swap_method, cfg_mimicking_from_tsnr, clip_skip, base_model_sdxl_only, refiner_sdxl_or_sd_15, refiner_switch_at, sampler, scheduler, vae, random, seed, inpaint_engine, method, method, method, method, value_15, value_17, enabled, b1, b2, s1, s2, enable, lora_1, weight, enable, lora_2, weight, enable, lora_3, weight, enable, lora_4, weight, enable, lora_5, weight)
+    Parameters:
+     - [Dropdown] preset: str (Option from: ['initial', 'anime', 'default', 'lcm', 'lightning', 'playground_v2.5', 'pony_v6', 'realistic', 'sai']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Checkbox] advanced: bool 
+     - [Slider] image_number: int | float (numeric value between 1 and 32) 
+     - [Textbox] value_12: str 
+     - [Textbox] negative_prompt: str 
+     - [Checkboxgroup] selected_styles: List[str] 
+     - [Radio] performance: str 
+     - [Slider] forced_overwrite_of_sampling_step: int | float (numeric value between -1 and 200) 
+     - [Slider] forced_overwrite_of_refiner_switch_step: int | float (numeric value between -1 and 200) 
+     - [Radio] aspect_ratios: str 
+     - [Slider] forced_overwrite_of_generating_width: int | float (numeric value between -1 and 2048) 
+     - [Slider] forced_overwrite_of_generating_height: int | float (numeric value between -1 and 2048) 
+     - [Slider] guidance_scale: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] image_sharpness: int | float (numeric value between 0.0 and 30.0) 
+     - [Slider] positive_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] negative_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] adm_guidance_end_at_step: int | float (numeric value between 0.0 and 1.0) 
+     - [Dropdown] refiner_swap_method: str (Option from: ['joint', 'separate', 'vae']) 
+     - [Slider] cfg_mimicking_from_tsnr: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] clip_skip: int | float (numeric value between 1 and 12) 
+     - [Dropdown] base_model_sdxl_only: str (Option from: ['juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Dropdown] refiner_sdxl_or_sd_15: str (Option from: ['None', 'juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Slider] refiner_switch_at: int | float (numeric value between 0.1 and 1.0) 
+     - [Dropdown] sampler: str (Option from: ['euler', 'euler_ancestral', 'heun', 'heunpp2', 'dpm_2', 'dpm_2_ancestral', 'lms', 'dpm_fast', 'dpm_adaptive', 'dpmpp_2s_ancestral', 'dpmpp_sde', 'dpmpp_sde_gpu', 'dpmpp_2m', 'dpmpp_2m_sde', 'dpmpp_2m_sde_gpu', 'dpmpp_3m_sde', 'dpmpp_3m_sde_gpu', 'ddpm', 'lcm', 'tcd', 'restart', 'ddim', 'uni_pc', 'uni_pc_bh2']) 
+     - [Dropdown] scheduler: str (Option from: ['normal', 'karras', 'exponential', 'sgm_uniform', 'simple', 'ddim_uniform', 'lcm', 'turbo', 'align_your_steps', 'tcd', 'edm_playground_v2.5']) 
+     - [Dropdown] vae: str (Option from: ['Default (model)']) 
+     - [Checkbox] random: bool 
+     - [Textbox] seed: str 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Button] value_15: str 
+     - [Button] value_17: str 
+     - [Checkbox] enabled: bool 
+     - [Slider] b1: int | float (numeric value between 0 and 2) 
+     - [Slider] b2: int | float (numeric value between 0 and 2) 
+     - [Slider] s1: int | float (numeric value between 0 and 4) 
+     - [Slider] s2: int | float (numeric value between 0 and 4) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_1: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_2: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_3: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_4: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_5: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+
+ - predict(selected_styles, fn_index=48) -> selected_styles
+    Parameters:
+     - [Checkboxgroup] selected_styles: List[str] 
+    Returns:
+     - [Checkboxgroup] selected_styles: List[str] 
+
+ - predict(fn_index=49) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(method, method, method, fn_index=50) -> (inpaint_engine, inpaint_engine, inpaint_engine)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+
+ - predict(performance, fn_index=51) -> (guidance_scale, image_sharpness, adm_guidance_end_at_step, positive_adm_guidance_scaler, negative_adm_guidance_scaler, refiner_switch_at, refiner_sdxl_or_sd_15, sampler, scheduler, cfg_mimicking_from_tsnr, refiner_swap_method, negative_prompt, disable_intermediate_results)
+    Parameters:
+     - [Radio] performance: str 
+    Returns:
+     - [Slider] guidance_scale: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] image_sharpness: int | float (numeric value between 0.0 and 30.0) 
+     - [Slider] adm_guidance_end_at_step: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] positive_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] negative_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] refiner_switch_at: int | float (numeric value between 0.1 and 1.0) 
+     - [Dropdown] refiner_sdxl_or_sd_15: str (Option from: ['None', 'juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Dropdown] sampler: str (Option from: ['euler', 'euler_ancestral', 'heun', 'heunpp2', 'dpm_2', 'dpm_2_ancestral', 'lms', 'dpm_fast', 'dpm_adaptive', 'dpmpp_2s_ancestral', 'dpmpp_sde', 'dpmpp_sde_gpu', 'dpmpp_2m', 'dpmpp_2m_sde', 'dpmpp_2m_sde_gpu', 'dpmpp_3m_sde', 'dpmpp_3m_sde_gpu', 'ddpm', 'lcm', 'tcd', 'restart', 'ddim', 'uni_pc', 'uni_pc_bh2']) 
+     - [Dropdown] scheduler: str (Option from: ['normal', 'karras', 'exponential', 'sgm_uniform', 'simple', 'ddim_uniform', 'lcm', 'turbo', 'align_your_steps', 'tcd', 'edm_playground_v2.5']) 
+     - [Slider] cfg_mimicking_from_tsnr: int | float (numeric value between 1.0 and 30.0) 
+     - [Dropdown] refiner_swap_method: str (Option from: ['joint', 'separate', 'vae']) 
+     - [Textbox] negative_prompt: str 
+     - [Checkbox] disable_intermediate_results: bool 
+
+ - predict(output_format, fn_index=52) -> 
+    Parameters:
+     - [Radio] output_format: str 
+    Returns:
+     - None
+
+ - predict(advanced, fn_index=53) -> 
+    Parameters:
+     - [Checkbox] advanced: bool 
+    Returns:
+     - None
+
+ - predict(fn_index=54) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(method, fn_index=55) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(method, fn_index=56) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(method, fn_index=57) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(method, fn_index=58) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(method, fn_index=59) -> (inpaint_additional_prompt, outpaint_direction, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field)
+    Parameters:
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+
+ - predict(image, mask_generation_model, cloth_category, detection_prompt, sam_model, box_threshold, text_threshold, maximum_number_of_detections, groundingdino_box_erode_or_dilate, debug_groundingdino, fn_index=60) -> mask_upload
+    Parameters:
+     - [Image] image: str (filepath or URL to image) 
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Textbox] detection_prompt: str 
+     - [Dropdown] sam_model: str (Option from: ['vit_b', 'vit_l', 'vit_h']) 
+     - [Slider] box_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] text_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] maximum_number_of_detections: int | float (numeric value between 0 and 10) 
+     - [Slider] groundingdino_box_erode_or_dilate: int | float (numeric value between -64 and 64) 
+     - [Checkbox] debug_groundingdino: bool 
+    Returns:
+     - [Image] mask_upload: str (filepath or URL to image) 
+
+ - predict(parameter_12, fn_index=61) -> (value_12, value_15, value_17)
+    Parameters:
+     - [Textbox] parameter_12: str 
+    Returns:
+     - [Textbox] value_12: str 
+     - [Button] value_15: str 
+     - [Button] value_17: str 
+
+ - predict(parameter_12, method, fn_index=62) -> (advanced, image_number, value_12, negative_prompt, selected_styles, performance, forced_overwrite_of_sampling_step, forced_overwrite_of_refiner_switch_step, aspect_ratios, forced_overwrite_of_generating_width, forced_overwrite_of_generating_height, guidance_scale, image_sharpness, positive_adm_guidance_scaler, negative_adm_guidance_scaler, adm_guidance_end_at_step, refiner_swap_method, cfg_mimicking_from_tsnr, clip_skip, base_model_sdxl_only, refiner_sdxl_or_sd_15, refiner_switch_at, sampler, scheduler, vae, random, seed, inpaint_engine, method, method, method, method, value_15, value_17, enabled, b1, b2, s1, s2, enable, lora_1, weight, enable, lora_2, weight, enable, lora_3, weight, enable, lora_4, weight, enable, lora_5, weight)
+    Parameters:
+     - [Textbox] parameter_12: str 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+    Returns:
+     - [Checkbox] advanced: bool 
+     - [Slider] image_number: int | float (numeric value between 1 and 32) 
+     - [Textbox] value_12: str 
+     - [Textbox] negative_prompt: str 
+     - [Checkboxgroup] selected_styles: List[str] 
+     - [Radio] performance: str 
+     - [Slider] forced_overwrite_of_sampling_step: int | float (numeric value between -1 and 200) 
+     - [Slider] forced_overwrite_of_refiner_switch_step: int | float (numeric value between -1 and 200) 
+     - [Radio] aspect_ratios: str 
+     - [Slider] forced_overwrite_of_generating_width: int | float (numeric value between -1 and 2048) 
+     - [Slider] forced_overwrite_of_generating_height: int | float (numeric value between -1 and 2048) 
+     - [Slider] guidance_scale: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] image_sharpness: int | float (numeric value between 0.0 and 30.0) 
+     - [Slider] positive_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] negative_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] adm_guidance_end_at_step: int | float (numeric value between 0.0 and 1.0) 
+     - [Dropdown] refiner_swap_method: str (Option from: ['joint', 'separate', 'vae']) 
+     - [Slider] cfg_mimicking_from_tsnr: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] clip_skip: int | float (numeric value between 1 and 12) 
+     - [Dropdown] base_model_sdxl_only: str (Option from: ['juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Dropdown] refiner_sdxl_or_sd_15: str (Option from: ['None', 'juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Slider] refiner_switch_at: int | float (numeric value between 0.1 and 1.0) 
+     - [Dropdown] sampler: str (Option from: ['euler', 'euler_ancestral', 'heun', 'heunpp2', 'dpm_2', 'dpm_2_ancestral', 'lms', 'dpm_fast', 'dpm_adaptive', 'dpmpp_2s_ancestral', 'dpmpp_sde', 'dpmpp_sde_gpu', 'dpmpp_2m', 'dpmpp_2m_sde', 'dpmpp_2m_sde_gpu', 'dpmpp_3m_sde', 'dpmpp_3m_sde_gpu', 'ddpm', 'lcm', 'tcd', 'restart', 'ddim', 'uni_pc', 'uni_pc_bh2']) 
+     - [Dropdown] scheduler: str (Option from: ['normal', 'karras', 'exponential', 'sgm_uniform', 'simple', 'ddim_uniform', 'lcm', 'turbo', 'align_your_steps', 'tcd', 'edm_playground_v2.5']) 
+     - [Dropdown] vae: str (Option from: ['Default (model)']) 
+     - [Checkbox] random: bool 
+     - [Textbox] seed: str 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Button] value_15: str 
+     - [Button] value_17: str 
+     - [Checkbox] enabled: bool 
+     - [Slider] b1: int | float (numeric value between 0 and 2) 
+     - [Slider] b2: int | float (numeric value between 0 and 2) 
+     - [Slider] s1: int | float (numeric value between 0 and 4) 
+     - [Slider] s2: int | float (numeric value between 0 and 4) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_1: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_2: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_3: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_4: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_5: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+
+ - predict(for_images_created_by_fooocus, fn_index=63) -> (advanced, image_number, value_12, negative_prompt, selected_styles, performance, forced_overwrite_of_sampling_step, forced_overwrite_of_refiner_switch_step, aspect_ratios, forced_overwrite_of_generating_width, forced_overwrite_of_generating_height, guidance_scale, image_sharpness, positive_adm_guidance_scaler, negative_adm_guidance_scaler, adm_guidance_end_at_step, refiner_swap_method, cfg_mimicking_from_tsnr, clip_skip, base_model_sdxl_only, refiner_sdxl_or_sd_15, refiner_switch_at, sampler, scheduler, vae, random, seed, inpaint_engine, method, method, method, method, value_15, value_17, enabled, b1, b2, s1, s2, enable, lora_1, weight, enable, lora_2, weight, enable, lora_3, weight, enable, lora_4, weight, enable, lora_5, weight)
+    Parameters:
+     - [Image] for_images_created_by_fooocus: str (filepath or URL to image) 
+    Returns:
+     - [Checkbox] advanced: bool 
+     - [Slider] image_number: int | float (numeric value between 1 and 32) 
+     - [Textbox] value_12: str 
+     - [Textbox] negative_prompt: str 
+     - [Checkboxgroup] selected_styles: List[str] 
+     - [Radio] performance: str 
+     - [Slider] forced_overwrite_of_sampling_step: int | float (numeric value between -1 and 200) 
+     - [Slider] forced_overwrite_of_refiner_switch_step: int | float (numeric value between -1 and 200) 
+     - [Radio] aspect_ratios: str 
+     - [Slider] forced_overwrite_of_generating_width: int | float (numeric value between -1 and 2048) 
+     - [Slider] forced_overwrite_of_generating_height: int | float (numeric value between -1 and 2048) 
+     - [Slider] guidance_scale: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] image_sharpness: int | float (numeric value between 0.0 and 30.0) 
+     - [Slider] positive_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] negative_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] adm_guidance_end_at_step: int | float (numeric value between 0.0 and 1.0) 
+     - [Dropdown] refiner_swap_method: str (Option from: ['joint', 'separate', 'vae']) 
+     - [Slider] cfg_mimicking_from_tsnr: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] clip_skip: int | float (numeric value between 1 and 12) 
+     - [Dropdown] base_model_sdxl_only: str (Option from: ['juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Dropdown] refiner_sdxl_or_sd_15: str (Option from: ['None', 'juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Slider] refiner_switch_at: int | float (numeric value between 0.1 and 1.0) 
+     - [Dropdown] sampler: str (Option from: ['euler', 'euler_ancestral', 'heun', 'heunpp2', 'dpm_2', 'dpm_2_ancestral', 'lms', 'dpm_fast', 'dpm_adaptive', 'dpmpp_2s_ancestral', 'dpmpp_sde', 'dpmpp_sde_gpu', 'dpmpp_2m', 'dpmpp_2m_sde', 'dpmpp_2m_sde_gpu', 'dpmpp_3m_sde', 'dpmpp_3m_sde_gpu', 'ddpm', 'lcm', 'tcd', 'restart', 'ddim', 'uni_pc', 'uni_pc_bh2']) 
+     - [Dropdown] scheduler: str (Option from: ['normal', 'karras', 'exponential', 'sgm_uniform', 'simple', 'ddim_uniform', 'lcm', 'turbo', 'align_your_steps', 'tcd', 'edm_playground_v2.5']) 
+     - [Dropdown] vae: str (Option from: ['Default (model)']) 
+     - [Checkbox] random: bool 
+     - [Textbox] seed: str 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Dropdown] method: str (Option from: ['Inpaint or Outpaint (default)', 'Improve Detail (face, hand, eyes, etc.)', 'Modify Content (add objects, change background, etc.)']) 
+     - [Button] value_15: str 
+     - [Button] value_17: str 
+     - [Checkbox] enabled: bool 
+     - [Slider] b1: int | float (numeric value between 0 and 2) 
+     - [Slider] b2: int | float (numeric value between 0 and 2) 
+     - [Slider] s1: int | float (numeric value between 0 and 4) 
+     - [Slider] s2: int | float (numeric value between 0 and 4) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_1: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_2: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_3: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_4: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_5: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+
+ - predict(selected_styles, fn_index=64) -> selected_styles
+    Parameters:
+     - [Checkboxgroup] selected_styles: List[str] 
+    Returns:
+     - [Checkboxgroup] selected_styles: List[str] 
+
+ - predict(fn_index=65) -> (value_19, value_18, value_15, gallery)
+    Parameters:
+     - None
+    Returns:
+     - [Button] value_19: str 
+     - [Button] value_18: str 
+     - [Button] value_15: str 
+     - [Gallery] gallery: str (path to directory with images and a file associating images with captions called captions.json) 
+
+ - predict(random, seed, fn_index=66) -> seed
+    Parameters:
+     - [Checkbox] random: bool 
+     - [Textbox] seed: str 
+    Returns:
+     - [Textbox] seed: str 
+
+ - predict(generate_image_grid_for_each_batch, parameter_12, negative_prompt, selected_styles, performance, aspect_ratios, image_number, output_format, seed, read_wildcards_in_order, image_sharpness, guidance_scale, base_model_sdxl_only, refiner_sdxl_or_sd_15, refiner_switch_at, enable, lora_1, weight, enable, lora_2, weight, enable, lora_3, weight, enable, lora_4, weight, enable, lora_5, weight, input_image, parameter_212, upscale_or_variation, image, outpaint_direction, image, inpaint_additional_prompt, mask_upload, disable_preview, disable_intermediate_results, disable_seed_increment, black_out_nsfw, positive_adm_guidance_scaler, negative_adm_guidance_scaler, adm_guidance_end_at_step, cfg_mimicking_from_tsnr, clip_skip, sampler, scheduler, vae, forced_overwrite_of_sampling_step, forced_overwrite_of_refiner_switch_step, forced_overwrite_of_generating_width, forced_overwrite_of_generating_height, forced_overwrite_of_denoising_strength_of_vary, forced_overwrite_of_denoising_strength_of_upscale, mixing_image_prompt_and_varyupscale, mixing_image_prompt_and_inpaint, debug_preprocessors, skip_preprocessors, canny_low_threshold, canny_high_threshold, refiner_swap_method, softness_of_controlnet, enabled, b1, b2, s1, s2, debug_inpaint_preprocessing, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field, enable_advanced_masking_features, invert_mask_when_generating, mask_erode_or_dilate, save_only_final_enhanced_image, save_metadata_to_images, metadata_scheme, image, stop_at, weight, type, image, stop_at, weight, type, image, stop_at, weight, type, image, stop_at, weight, type, debug_groundingdino, groundingdino_box_erode_or_dilate, debug_enhance_masks, use_with_enhance_skips_image_generation, enhance, upscale_or_variation, order_of_processing, prompt, enable, detection_prompt, enhancement_positive_prompt, enhancement_negative_prompt, mask_generation_model, cloth_category, sam_model, text_threshold, box_threshold, maximum_number_of_detections, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field, mask_erode_or_dilate, invert_mask, enable, detection_prompt, enhancement_positive_prompt, enhancement_negative_prompt, mask_generation_model, cloth_category, sam_model, text_threshold, box_threshold, maximum_number_of_detections, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field, mask_erode_or_dilate, invert_mask, enable, detection_prompt, enhancement_positive_prompt, enhancement_negative_prompt, mask_generation_model, cloth_category, sam_model, text_threshold, box_threshold, maximum_number_of_detections, disable_initial_latent_in_inpaint, inpaint_engine, inpaint_denoising_strength, inpaint_respective_field, mask_erode_or_dilate, invert_mask, fn_index=67) -> 
+    Parameters:
+     - [Checkbox] generate_image_grid_for_each_batch: bool 
+     - [Textbox] parameter_12: str 
+     - [Textbox] negative_prompt: str 
+     - [Checkboxgroup] selected_styles: List[str] 
+     - [Radio] performance: str 
+     - [Radio] aspect_ratios: str 
+     - [Slider] image_number: int | float (numeric value between 1 and 32) 
+     - [Radio] output_format: str 
+     - [Textbox] seed: str 
+     - [Checkbox] read_wildcards_in_order: bool 
+     - [Slider] image_sharpness: int | float (numeric value between 0.0 and 30.0) 
+     - [Slider] guidance_scale: int | float (numeric value between 1.0 and 30.0) 
+     - [Dropdown] base_model_sdxl_only: str (Option from: ['juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Dropdown] refiner_sdxl_or_sd_15: str (Option from: ['None', 'juggernautXL_v8Rundiffusion.safetensors']) 
+     - [Slider] refiner_switch_at: int | float (numeric value between 0.1 and 1.0) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_1: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_2: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_3: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_4: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] enable: bool 
+     - [Dropdown] lora_5: str (Option from: ['None', 'sd_xl_offset_example-lora_1.0.safetensors']) 
+     - [Slider] weight: int | float (numeric value between -2 and 2) 
+     - [Checkbox] input_image: bool 
+     - [Textbox] parameter_212: str 
+     - [Radio] upscale_or_variation: str 
+     - [Image] image: str (filepath or URL to image) 
+     - [Checkboxgroup] outpaint_direction: List[str] 
+     - [Image] image: str (filepath or URL to image) 
+     - [Textbox] inpaint_additional_prompt: str 
+     - [Image] mask_upload: str (filepath or URL to image) 
+     - [Checkbox] disable_preview: bool 
+     - [Checkbox] disable_intermediate_results: bool 
+     - [Checkbox] disable_seed_increment: bool 
+     - [Checkbox] black_out_nsfw: bool 
+     - [Slider] positive_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] negative_adm_guidance_scaler: int | float (numeric value between 0.1 and 3.0) 
+     - [Slider] adm_guidance_end_at_step: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] cfg_mimicking_from_tsnr: int | float (numeric value between 1.0 and 30.0) 
+     - [Slider] clip_skip: int | float (numeric value between 1 and 12) 
+     - [Dropdown] sampler: str (Option from: ['euler', 'euler_ancestral', 'heun', 'heunpp2', 'dpm_2', 'dpm_2_ancestral', 'lms', 'dpm_fast', 'dpm_adaptive', 'dpmpp_2s_ancestral', 'dpmpp_sde', 'dpmpp_sde_gpu', 'dpmpp_2m', 'dpmpp_2m_sde', 'dpmpp_2m_sde_gpu', 'dpmpp_3m_sde', 'dpmpp_3m_sde_gpu', 'ddpm', 'lcm', 'tcd', 'restart', 'ddim', 'uni_pc', 'uni_pc_bh2']) 
+     - [Dropdown] scheduler: str (Option from: ['normal', 'karras', 'exponential', 'sgm_uniform', 'simple', 'ddim_uniform', 'lcm', 'turbo', 'align_your_steps', 'tcd', 'edm_playground_v2.5']) 
+     - [Dropdown] vae: str (Option from: ['Default (model)']) 
+     - [Slider] forced_overwrite_of_sampling_step: int | float (numeric value between -1 and 200) 
+     - [Slider] forced_overwrite_of_refiner_switch_step: int | float (numeric value between -1 and 200) 
+     - [Slider] forced_overwrite_of_generating_width: int | float (numeric value between -1 and 2048) 
+     - [Slider] forced_overwrite_of_generating_height: int | float (numeric value between -1 and 2048) 
+     - [Slider] forced_overwrite_of_denoising_strength_of_vary: int | float (numeric value between -1 and 1.0) 
+     - [Slider] forced_overwrite_of_denoising_strength_of_upscale: int | float (numeric value between -1 and 1.0) 
+     - [Checkbox] mixing_image_prompt_and_varyupscale: bool 
+     - [Checkbox] mixing_image_prompt_and_inpaint: bool 
+     - [Checkbox] debug_preprocessors: bool 
+     - [Checkbox] skip_preprocessors: bool 
+     - [Slider] canny_low_threshold: int | float (numeric value between 1 and 255) 
+     - [Slider] canny_high_threshold: int | float (numeric value between 1 and 255) 
+     - [Dropdown] refiner_swap_method: str (Option from: ['joint', 'separate', 'vae']) 
+     - [Slider] softness_of_controlnet: int | float (numeric value between 0.0 and 1.0) 
+     - [Checkbox] enabled: bool 
+     - [Slider] b1: int | float (numeric value between 0 and 2) 
+     - [Slider] b2: int | float (numeric value between 0 and 2) 
+     - [Slider] s1: int | float (numeric value between 0 and 4) 
+     - [Slider] s2: int | float (numeric value between 0 and 4) 
+     - [Checkbox] debug_inpaint_preprocessing: bool 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+     - [Checkbox] enable_advanced_masking_features: bool 
+     - [Checkbox] invert_mask_when_generating: bool 
+     - [Slider] mask_erode_or_dilate: int | float (numeric value between -64 and 64) 
+     - [Checkbox] save_only_final_enhanced_image: bool 
+     - [Checkbox] save_metadata_to_images: bool 
+     - [Radio] metadata_scheme: str 
+     - [Image] image: str (filepath or URL to image) 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+     - [Radio] type: str 
+     - [Image] image: str (filepath or URL to image) 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+     - [Radio] type: str 
+     - [Image] image: str (filepath or URL to image) 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+     - [Radio] type: str 
+     - [Image] image: str (filepath or URL to image) 
+     - [Slider] stop_at: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] weight: int | float (numeric value between 0.0 and 2.0) 
+     - [Radio] type: str 
+     - [Checkbox] debug_groundingdino: bool 
+     - [Slider] groundingdino_box_erode_or_dilate: int | float (numeric value between -64 and 64) 
+     - [Checkbox] debug_enhance_masks: bool 
+     - [Image] use_with_enhance_skips_image_generation: str (filepath or URL to image) 
+     - [Checkbox] enhance: bool 
+     - [Radio] upscale_or_variation: str 
+     - [Radio] order_of_processing: str 
+     - [Radio] prompt: str 
+     - [Checkbox] enable: bool 
+     - [Textbox] detection_prompt: str 
+     - [Textbox] enhancement_positive_prompt: str 
+     - [Textbox] enhancement_negative_prompt: str 
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Dropdown] sam_model: str (Option from: ['vit_b', 'vit_l', 'vit_h']) 
+     - [Slider] text_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] box_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] maximum_number_of_detections: int | float (numeric value between 0 and 10) 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] mask_erode_or_dilate: int | float (numeric value between -64 and 64) 
+     - [Checkbox] invert_mask: bool 
+     - [Checkbox] enable: bool 
+     - [Textbox] detection_prompt: str 
+     - [Textbox] enhancement_positive_prompt: str 
+     - [Textbox] enhancement_negative_prompt: str 
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Dropdown] sam_model: str (Option from: ['vit_b', 'vit_l', 'vit_h']) 
+     - [Slider] text_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] box_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] maximum_number_of_detections: int | float (numeric value between 0 and 10) 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] mask_erode_or_dilate: int | float (numeric value between -64 and 64) 
+     - [Checkbox] invert_mask: bool 
+     - [Checkbox] enable: bool 
+     - [Textbox] detection_prompt: str 
+     - [Textbox] enhancement_positive_prompt: str 
+     - [Textbox] enhancement_negative_prompt: str 
+     - [Dropdown] mask_generation_model: str (Option from: ['u2net', 'u2netp', 'u2net_human_seg', 'u2net_cloth_seg', 'silueta', 'isnet-general-use', 'isnet-anime', 'sam']) 
+     - [Dropdown] cloth_category: str (Option from: ['full', 'upper', 'lower']) 
+     - [Dropdown] sam_model: str (Option from: ['vit_b', 'vit_l', 'vit_h']) 
+     - [Slider] text_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] box_threshold: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] maximum_number_of_detections: int | float (numeric value between 0 and 10) 
+     - [Checkbox] disable_initial_latent_in_inpaint: bool 
+     - [Dropdown] inpaint_engine: str (Option from: ['None', 'v1', 'v2.5', 'v2.6']) 
+     - [Slider] inpaint_denoising_strength: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] inpaint_respective_field: int | float (numeric value between 0.0 and 1.0) 
+     - [Slider] mask_erode_or_dilate: int | float (numeric value between -64 and 64) 
+     - [Checkbox] invert_mask: bool 
+    Returns:
+     - None
+
+ - predict(fn_index=68) -> (value_8, preview, finished_images, gallery)
+    Parameters:
+     - None
+    Returns:
+     - [Html] value_8: str 
+     - [Image] preview: str (filepath or URL to image) 
+     - [Gallery] finished_images: str (path to directory with images and a file associating images with captions called captions.json) 
+     - [Gallery] gallery: str (path to directory with images and a file associating images with captions called captions.json) 
+
+ - predict(fn_index=69) -> (value_15, value_19, value_18)
+    Parameters:
+     - None
+    Returns:
+     - [Button] value_15: str 
+     - [Button] value_19: str 
+     - [Button] value_18: str 
+
+ - predict(fn_index=70) -> value_226
+    Parameters:
+     - None
+    Returns:
+     - [Html] value_226: str 
+
+ - predict(fn_index=71) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(fn_index=72) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+
+ - predict(fn_index=73) -> (value_15, value_16, value_19, value_18, value_8, preview, finished_images, gallery)
+    Parameters:
+     - None
+    Returns:
+     - [Button] value_15: str 
+     - [Button] value_16: str 
+     - [Button] value_19: str 
+     - [Button] value_18: str 
+     - [Html] value_8: str 
+     - [Image] preview: str (filepath or URL to image) 
+     - [Gallery] finished_images: str (path to directory with images and a file associating images with captions called captions.json) 
+     - [Gallery] gallery: str (path to directory with images and a file associating images with captions called captions.json) 
+
+ - predict(content_type, image, apply_styles, fn_index=74) -> (value_12, selected_styles)
+    Parameters:
+     - [Checkboxgroup] content_type: List[str] 
+     - [Image] image: str (filepath or URL to image) 
+     - [Checkbox] apply_styles: bool 
+    Returns:
+     - [Textbox] value_12: str 
+     - [Checkboxgroup] selected_styles: List[str] 
+
+ - predict(selected_styles, fn_index=75) -> selected_styles
+    Parameters:
+     - [Checkboxgroup] selected_styles: List[str] 
+    Returns:
+     - [Checkboxgroup] selected_styles: List[str] 
+
+ - predict(fn_index=76) -> 
+    Parameters:
+     - None
+    Returns:
+     - None
+

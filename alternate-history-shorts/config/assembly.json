@@ -1,0 +1,16 @@
+{
+  "resolution": "1080x1920",
+  "zoom_range": [1.0, 1.1],
+  "crossfade_duration": 0.2,
+  "caption_style": {
+    "font": "Arial Bold",
+    "size": 64,
+    "color": "white",
+    "outline_color": "black",
+    "outline_width": 3,
+    "position": "center-lower-safe-zone",
+    "margin_v": 320
+  },
+  "music_volume_db": -22,
+  "whisper_model": "base.en"
+}

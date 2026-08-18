@@ -1,0 +1,156 @@
+{
+  "name": "Alternate History Video Production & Upload Pipeline",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-manual",
+      "name": "Manual Run Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-400, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trigger-alternate-history",
+        "options": {}
+      },
+      "id": "trigger-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [-400, 360],
+      "webhookId": "trigger-alternate-history-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const topic = $input.item.json.topic || 'What if the Library of Alexandria survived?';\nreturn [{\n  json: {\n    topic,\n    content_type: 'alternate_history',\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "parse-topic",
+      "name": "Parse Topic",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-180, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/generate-alternate-history",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $json.topic }}\",\n  \"category\": \"History What-If\"\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "gen-video",
+      "name": "Generate Alternate History Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [40, 200]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video_url || 'http://127.0.0.1:8000/get-video?id=' + $json.video_id }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "fetch-video",
+      "name": "Fetch Rendered Video File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 200]
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('gen-video').item.json.title || 'What If: ' + $json.topic }}",
+        "description": "={{ $('gen-video').item.json.description || 'Alternate History Short #shorts #whatif #history' }}",
+        "tags": "whatif,alternatehistory,history,shorts",
+        "categoryId": "27",
+        "privacyStatus": "public",
+        "binaryPropertyName": "data"
+      },
+      "id": "youtube-upload",
+      "name": "Upload to YouTube (Account 1: Alternate History Channel)",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [480, 200],
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "youtube_oauth2_alternate_history",
+          "name": "Google Account 1 - Alternate History Channel"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Run Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Topic": {
+      "main": [
+        [
+          {
+            "node": "Generate Alternate History Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Alternate History Video": {
+      "main": [
+        [
+          {
+            "node": "Fetch Rendered Video File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Rendered Video File": {
+      "main": [
+        [
+          {
+            "node": "Upload to YouTube (Account 1: Alternate History Channel)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "alternate-history-pipeline-v1",
+  "id": "alternate-history-pipeline"
+}

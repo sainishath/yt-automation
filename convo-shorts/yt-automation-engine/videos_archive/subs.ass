@@ -1,0 +1,58 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial Black,95,&H0000D7FF,&H000000FF,&H00FFFFFF,&H80000000,-1,0,0,0,100,100,0,0,1,3,2,5,50,50,960,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:00.50,Default,,0,0,0,,{\fad(100,200)}BILLIONAIRE
+Dialogue: 0,0:00:00.20,0:00:00.86,Default,,0,0,0,,{\fad(100,200)}FOCUSED
+Dialogue: 0,0:00:00.56,0:00:01.28,Default,,0,0,0,,{\fad(100,200)}TRICK,
+Dialogue: 0,0:00:01.22,0:00:01.80,Default,,0,0,0,,{\fad(100,200)}ELON
+Dialogue: 0,0:00:01.50,0:00:02.10,Default,,0,0,0,,{\fad(100,200)}AND
+Dialogue: 0,0:00:01.80,0:00:02.30,Default,,0,0,0,,{\fad(100,200)}BEZOS'
+Dialogue: 0,0:00:02.24,0:00:02.70,Default,,0,0,0,,{\fad(100,200)}SECRET
+Dialogue: 0,0:00:02.40,0:00:03.02,Default,,0,0,0,,{\fad(100,200)}WEAPON,
+Dialogue: 0,0:00:03.04,0:00:03.46,Default,,0,0,0,,{\fad(100,200)}THEY
+Dialogue: 0,0:00:03.16,0:00:03.70,Default,,0,0,0,,{\fad(100,200)}USE
+Dialogue: 0,0:00:03.40,0:00:03.84,Default,,0,0,0,,{\fad(100,200)}THE
+Dialogue: 0,0:00:03.54,0:00:04.18,Default,,0,0,0,,{\fad(100,200)}POMODORO
+Dialogue: 0,0:00:03.88,0:00:04.56,Default,,0,0,0,,{\fad(100,200)}TECHNIQUE,
+Dialogue: 0,0:00:04.68,0:00:05.04,Default,,0,0,0,,{\fad(100,200)}A
+Dialogue: 0,0:00:04.74,0:00:05.18,Default,,0,0,0,,{\fad(100,200)}TIME
+Dialogue: 0,0:00:04.88,0:00:05.60,Default,,0,0,0,,{\fad(100,200)}MANAGEMENT
+Dialogue: 0,0:00:05.30,0:00:06.10,Default,,0,0,0,,{\fad(100,200)}STRATEGY,
+Dialogue: 0,0:00:06.20,0:00:06.70,Default,,0,0,0,,{\fad(100,200)}BREAKING
+Dialogue: 0,0:00:06.40,0:00:06.92,Default,,0,0,0,,{\fad(100,200)}WORK
+Dialogue: 0,0:00:06.62,0:00:07.16,Default,,0,0,0,,{\fad(100,200)}INTO
+Dialogue: 0,0:00:06.86,0:00:07.62,Default,,0,0,0,,{\fad(100,200)}25
+Dialogue: 0,0:00:07.32,0:00:07.86,Default,,0,0,0,,{\fad(100,200)}-MINUTE
+Dialogue: 0,0:00:07.56,0:00:08.28,Default,,0,0,0,,{\fad(100,200)}INTERVALS
+Dialogue: 0,0:00:07.98,0:00:08.56,Default,,0,0,0,,{\fad(100,200)}WITH
+Dialogue: 0,0:00:08.26,0:00:08.80,Default,,0,0,0,,{\fad(100,200)}SHORT
+Dialogue: 0,0:00:08.50,0:00:09.22,Default,,0,0,0,,{\fad(100,200)}BREAKS.
+Dialogue: 0,0:00:09.44,0:00:10.12,Default,,0,0,0,,{\fad(100,200)}STANFORD
+Dialogue: 0,0:00:09.82,0:00:10.66,Default,,0,0,0,,{\fad(100,200)}RESEARCHERS
+Dialogue: 0,0:00:10.36,0:00:11.02,Default,,0,0,0,,{\fad(100,200)}FOUND
+Dialogue: 0,0:00:10.72,0:00:11.20,Default,,0,0,0,,{\fad(100,200)}THIS
+Dialogue: 0,0:00:10.90,0:00:11.58,Default,,0,0,0,,{\fad(100,200)}METHOD
+Dialogue: 0,0:00:11.28,0:00:11.92,Default,,0,0,0,,{\fad(100,200)}ENHANCES
+Dialogue: 0,0:00:11.62,0:00:12.50,Default,,0,0,0,,{\fad(100,200)}PRODUCTIVITY
+Dialogue: 0,0:00:12.20,0:00:12.78,Default,,0,0,0,,{\fad(100,200)}AND
+Dialogue: 0,0:00:12.48,0:00:13.18,Default,,0,0,0,,{\fad(100,200)}REDUCES
+Dialogue: 0,0:00:12.88,0:00:13.56,Default,,0,0,0,,{\fad(100,200)}BURNOUT.
+Dialogue: 0,0:00:13.88,0:00:14.38,Default,,0,0,0,,{\fad(100,200)}TRY
+Dialogue: 0,0:00:14.08,0:00:14.50,Default,,0,0,0,,{\fad(100,200)}IT
+Dialogue: 0,0:00:14.20,0:00:14.74,Default,,0,0,0,,{\fad(100,200)}TODAY.
+Dialogue: 0,0:00:14.44,0:00:15.54,Default,,0,0,0,,{\fad(100,200)}MASTER
+Dialogue: 0,0:00:15.24,0:00:15.74,Default,,0,0,0,,{\fad(100,200)}FOCUS
+Dialogue: 0,0:00:15.44,0:00:16.08,Default,,0,0,0,,{\fad(100,200)}LIKE
+Dialogue: 0,0:00:15.78,0:00:16.78,Default,,0,0,0,,{\fad(100,200)}BILLIONAIRE'S
+Dialogue: 0,0:00:16.48,0:00:16.96,Default,,0,0,0,,{\fad(100,200)}HASH
+Dialogue: 0,0:00:16.66,0:00:17.42,Default,,0,0,0,,{\fad(100,200)}POMODORO
+Dialogue: 0,0:00:17.12,0:00:17.98,Default,,0,0,0,,{\fad(100,200)}PRODUCTIVITY.
