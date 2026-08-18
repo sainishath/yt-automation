@@ -1,0 +1,165 @@
+{
+  "name": "Closed-Loop Growth & Content Intelligence Orchestrator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24
+            }
+          ]
+        }
+      },
+      "id": "node_schedule_trigger",
+      "name": "Daily Growth Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:8010/api/growth/plan-next?channel=channel_a",
+        "method": "GET"
+      },
+      "id": "node_fetch_plan_p1",
+      "name": "Fetch Channel A Plan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [420, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:8010/api/growth/plan-next?channel=channel_b",
+        "method": "GET"
+      },
+      "id": "node_fetch_plan_p2",
+      "name": "Fetch Channel B Plan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [420, 400]
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:8000/generate-alternate-history",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $json.plan.topic }}\",\n  \"video_id\": \"gen_{{ $now.format('yyyyMMdd_HHmmss') }}_p1\"\n}"
+      },
+      "id": "node_trigger_p1_generation",
+      "name": "Trigger Pipeline 1 Generation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:5001/tts",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $json.plan.topic }}\",\n  \"category\": \"{{ $json.plan.category }}\"\n}"
+      },
+      "id": "node_trigger_p2_generation",
+      "name": "Trigger Pipeline 2 Generation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:8010/api/growth/record-upload",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_id\": \"{{ $json.video_id }}\",\n  \"channel_id\": \"channel_a\",\n  \"youtube_video_id\": \"{{ $json.youtube_video_id }}\",\n  \"title\": \"{{ $json.title }}\",\n  \"duration\": {{ $json.duration || 45.0 }}\n}"
+      },
+      "id": "node_record_p1_upload",
+      "name": "Record Channel A Upload",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, 200]
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:8010/api/growth/run-learning-cycle",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"channel_id\": \"channel_a\"\n}"
+      },
+      "id": "node_learning_cycle_p1",
+      "name": "Run Channel A Learning",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1160, 200]
+    }
+  ],
+  "connections": {
+    "Daily Growth Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Channel A Plan",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Channel B Plan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Channel A Plan": {
+      "main": [
+        [
+          {
+            "node": "Trigger Pipeline 1 Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Channel B Plan": {
+      "main": [
+        [
+          {
+            "node": "Trigger Pipeline 2 Generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Pipeline 1 Generation": {
+      "main": [
+        [
+          {
+            "node": "Record Channel A Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record Channel A Upload": {
+      "main": [
+        [
+          {
+            "node": "Run Channel A Learning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
