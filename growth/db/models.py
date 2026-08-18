@@ -84,6 +84,21 @@ class PerformanceSnapshotModel:
     snapshot_id: Optional[int] = None
 
 
+@dataclass
+class JobModel:
+    job_id: str
+    channel_id: str
+    pipeline_id: str
+    topic_text: str
+    status: str
+    video_id: Optional[str] = None
+    strategy_version: Optional[str] = None
+    experiment_id: Optional[str] = None
+    variant_id: Optional[str] = None
+    error_message: Optional[str] = None
+    attempt_count: int = 1
+
+
 class GrowthRepository:
     def __init__(self, db_path: Path = DEFAULT_DB_PATH):
         self.db_path = db_path
@@ -194,6 +209,21 @@ class GrowthRepository:
                     subscriber_conversion_rate, relative_performance_score,
                     data_source, data_freshness
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(video_id, window_name) DO UPDATE SET
+                    views=excluded.views,
+                    likes=excluded.likes,
+                    comments=excluded.comments,
+                    shares=excluded.shares,
+                    subscribers_gained=excluded.subscribers_gained,
+                    watch_time_minutes=excluded.watch_time_minutes,
+                    avg_view_duration_seconds=excluded.avg_view_duration_seconds,
+                    avg_percentage_viewed=excluded.avg_percentage_viewed,
+                    views_per_hour=excluded.views_per_hour,
+                    engagement_rate=excluded.engagement_rate,
+                    subscriber_conversion_rate=excluded.subscriber_conversion_rate,
+                    relative_performance_score=excluded.relative_performance_score,
+                    data_source=excluded.data_source,
+                    data_freshness=excluded.data_freshness
             """, (
                 snap.video_id, snap.window_name, snap.views, snap.likes, snap.comments,
                 snap.shares, snap.subscribers_gained, snap.watch_time_minutes,
@@ -206,4 +236,37 @@ class GrowthRepository:
     def get_snapshots_for_video(self, video_id: str) -> List[Dict[str, Any]]:
         with get_db(self.db_path) as conn:
             rows = conn.execute("SELECT * FROM performance_snapshots WHERE video_id = ? ORDER BY snapshot_id ASC", (video_id,)).fetchall()
+            return [dict(r) for r in rows]
+
+    def upsert_job(self, job: JobModel) -> None:
+        with get_db(self.db_path) as conn:
+            conn.execute("""
+                INSERT INTO jobs (
+                    job_id, channel_id, pipeline_id, video_id, topic_text,
+                    status, strategy_version, experiment_id, variant_id,
+                    error_message, attempt_count, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                ON CONFLICT(job_id) DO UPDATE SET
+                    status=excluded.status,
+                    video_id=excluded.video_id,
+                    error_message=excluded.error_message,
+                    attempt_count=excluded.attempt_count,
+                    updated_at=CURRENT_TIMESTAMP
+            """, (
+                job.job_id, job.channel_id, job.pipeline_id, job.video_id, job.topic_text,
+                job.status, job.strategy_version, job.experiment_id, job.variant_id,
+                job.error_message, job.attempt_count
+            ))
+
+    def get_job(self, job_id: str) -> Optional[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            row = conn.execute("SELECT * FROM jobs WHERE job_id = ?", (job_id,)).fetchone()
+            return dict(row) if row else None
+
+    def list_jobs(self, channel_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            if channel_id:
+                rows = conn.execute("SELECT * FROM jobs WHERE channel_id = ? ORDER BY created_at DESC LIMIT ?", (channel_id, limit)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM jobs ORDER BY created_at DESC LIMIT ?", (limit,)).fetchall()
             return [dict(r) for r in rows]

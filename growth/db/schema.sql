@@ -1,5 +1,8 @@
 -- schema.sql: Growth & Content Intelligence Database Schema
 
+PRAGMA journal_mode = WAL;
+PRAGMA foreign_keys = ON;
+
 CREATE TABLE IF NOT EXISTS channels (
     channel_id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
@@ -73,6 +76,7 @@ CREATE TABLE IF NOT EXISTS performance_snapshots (
     relative_performance_score REAL DEFAULT 0.0,
     data_source TEXT NOT NULL, -- 'YOUTUBE_API' or 'MOCK_ENGINE'
     data_freshness TEXT NOT NULL,
+    UNIQUE(video_id, window_name),
     FOREIGN KEY(video_id) REFERENCES videos(video_id)
 );
 
@@ -84,7 +88,7 @@ CREATE TABLE IF NOT EXISTS topic_candidates (
     cluster TEXT,
     score REAL DEFAULT 0.0,
     score_breakdown TEXT, -- JSON
-    status TEXT NOT NULL, -- 'candidate', 'approved', 'generated', 'published', 'retired'
+    status TEXT NOT NULL, -- 'DISCOVERED', 'SCORED', 'QUEUED', 'ASSIGNED', 'PRODUCED', 'PUBLISHED', 'MEASURED', 'LEARNED', 'ARCHIVED'
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(channel_id) REFERENCES channels(channel_id)
 );
@@ -121,10 +125,27 @@ CREATE TABLE IF NOT EXISTS strategy_versions (
 CREATE TABLE IF NOT EXISTS learning_events (
     event_id INTEGER PRIMARY KEY AUTOINCREMENT,
     channel_id TEXT NOT NULL,
-    event_type TEXT NOT NULL, -- 'WEEKLY_REPORT', 'AUTOPSY', 'STRATEGY_PROPOSAL'
+    event_type TEXT NOT NULL, -- 'WEEKLY_REPORT', 'AUTOPSY', 'STRATEGY_PROPOSAL', 'STRATEGY_MUTATION'
     summary TEXT NOT NULL,
     details TEXT,
     confidence TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(channel_id) REFERENCES channels(channel_id)
+);
+
+CREATE TABLE IF NOT EXISTS jobs (
+    job_id TEXT PRIMARY KEY,
+    channel_id TEXT NOT NULL,
+    pipeline_id TEXT NOT NULL,
+    video_id TEXT,
+    topic_text TEXT NOT NULL,
+    status TEXT NOT NULL, -- 'PLANNED', 'GENERATING', 'GENERATED', 'QA_FAILED', 'AWAITING_REVIEW', 'REJECTED', 'APPROVED', 'UPLOADING', 'PUBLISHED', 'ANALYTICS_PENDING', 'COMPLETED', 'FAILED', 'RETRY_PENDING'
+    strategy_version TEXT,
+    experiment_id TEXT,
+    variant_id TEXT,
+    error_message TEXT,
+    attempt_count INTEGER DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(channel_id) REFERENCES channels(channel_id)
 );

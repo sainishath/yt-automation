@@ -3,6 +3,7 @@
 cli.py
 ------
 Command-line interface for Content Intelligence and Growth Operations.
+Supports initialization, planning, learning, dry-run simulation, and observability dashboard.
 """
 
 import sys
@@ -22,11 +23,41 @@ from growth.planner.content_planner import ContentPlanner
 from growth.channels.channel_identity_check import load_channel_config, verify_channel_identity
 
 
+def display_dashboard(repo: GrowthRepository):
+    """Renders a rich terminal dashboard with channel metrics, active experiments, and next queue."""
+    vids_a = repo.list_videos_by_channel("channel_a")
+    vids_b = repo.list_videos_by_channel("channel_b")
+
+    print("\n" + "╔" + "═" * 68 + "╗")
+    print("║        📊 YOUTUBE CONTENT INTELLIGENCE DASHBOARD                  ║")
+    print("╚" + "═" * 68 + "╝")
+
+    print("\n┌── 🏛️ CHANNEL A: Chronos Shift (Alternate History) " + "─" * 20 + "┐")
+    print(f"│  • Published Videos: {len(vids_a):<4} | Active Strategy: v1.0 | Frequency: 3-4/wk │")
+    if vids_a:
+        top_v = vids_a[0]
+        print(f"│  • Latest Video: {top_v['title'][:48]:<48} │")
+    print("└" + "─" * 68 + "┘")
+
+    print("\n┌── 🎙️ CHANNEL B: Debate Protocol (Conversational Debates) " + "─" * 15 + "┐")
+    print(f"│  • Published Videos: {len(vids_b):<4} | Active Strategy: v1.0 | Frequency: 5-7/wk │")
+    if vids_b:
+        top_vb = vids_b[0]
+        print(f"│  • Latest Video: {top_vb['title'][:48]:<48} │")
+    print("└" + "─" * 68 + "┘")
+
+    print("\n┌── 🧪 ACTIVE A/B EXPERIMENT QUEUE " + "─" * 37 + "┐")
+    print("│  • EXP_A_HOOK_01: Question Hook vs Active Counterfactual Statement │")
+    print("│  • EXP_B_HOOK_01: Direct Provocation vs Neutral Habit Question     │")
+    print("└" + "─" * 68 + "┘\n")
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Content Intelligence & Learning CLI")
+    parser = argparse.ArgumentParser(description="Content Intelligence & Growth CLI")
     parser.add_argument("--init-db", action="store_true", help="Initialize growth database schema")
     parser.add_argument("--plan-next", choices=["channel_a", "channel_b"], help="Plan the next video recommendation for a channel")
     parser.add_argument("--run-learning", choices=["channel_a", "channel_b"], help="Execute learning cycle and produce weekly report")
+    parser.add_argument("--dashboard", action="store_true", help="Display visual terminal metrics dashboard")
     parser.add_argument("--dry-run-loop", action="store_true", help="Execute complete end-to-end closed-loop dry run")
     args = parser.parse_args()
 
@@ -50,6 +81,9 @@ def main():
             audience_definition=cfg_b["audience_definition"], posting_frequency=cfg_b["posting_frequency"]
         ))
         print("[Growth CLI] Database initialized and channels seeded.")
+
+    if args.dashboard:
+        display_dashboard(repo)
 
     if args.plan_next:
         planner = ContentPlanner(repo)
