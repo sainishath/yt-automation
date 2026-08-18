@@ -3,24 +3,28 @@
 collector.py
 ------------
 Ingests YouTube video performance metrics across multiple evaluation windows.
-Supports official YouTube Analytics API queries with robust offline simulation fallback.
+Integrates YouTubeApiCollector for live metrics and MockDataGenerator for deterministic testing.
 """
 
 import logging
 from typing import List, Dict, Any, Optional
+from pathlib import Path
 from growth.db.models import GrowthRepository, PerformanceSnapshotModel
 from growth.analytics.mock_data_generator import generate_mock_snapshots_for_video
+from growth.analytics.youtube_api_collector import YouTubeApiCollector
 from growth.analytics.normalizer import calculate_channel_baseline, normalize_video_metrics
 
 
 class AnalyticsCollector:
-    def __init__(self, repo: GrowthRepository, use_mock_engine: bool = True):
+    def __init__(self, repo: GrowthRepository, use_mock_engine: bool = True, token_path: Optional[Path] = None):
         self.repo = repo
         self.use_mock_engine = use_mock_engine
+        self.api_collector = YouTubeApiCollector(repo, token_path=token_path, dry_run=use_mock_engine)
 
     def collect_snapshots_for_video(
         self,
         video_id: str,
+        youtube_video_id: Optional[str] = None,
         duration: float = 45.0,
         retention_factor: float = 0.88
     ) -> List[int]:
@@ -28,17 +32,25 @@ class AnalyticsCollector:
         Collects or simulates performance snapshots for a video and saves them to the repository.
         Returns list of inserted snapshot IDs.
         """
-        if self.use_mock_engine:
+        if self.use_mock_engine or not youtube_video_id:
             snapshots = generate_mock_snapshots_for_video(video_id, duration=duration, retention_factor=retention_factor)
+            inserted_ids = []
+            for snap in snapshots:
+                snap_id = self.repo.insert_snapshot(snap)
+                inserted_ids.append(snap_id)
         else:
-            # When YouTube Analytics API is active, query endpoints; fallback to mock on missing scope
-            logging.info(f"Connecting to YouTube Analytics API for video: {video_id}")
-            snapshots = generate_mock_snapshots_for_video(video_id, duration=duration, retention_factor=retention_factor)
-
-        inserted_ids = []
-        for snap in snapshots:
-            snap_id = self.repo.insert_snapshot(snap)
-            inserted_ids.append(snap_id)
+            # Real YouTube API ingestion across standard evaluation windows
+            inserted_ids = []
+            windows = ["1h", "6h", "24h", "48h", "7d", "28d"]
+            for w in windows:
+                snap = self.api_collector.fetch_and_record_snapshot(
+                    video_id=video_id,
+                    youtube_video_id=youtube_video_id,
+                    window_name=w,
+                    duration=duration
+                )
+                if snap.snapshot_id:
+                    inserted_ids.append(snap.snapshot_id)
 
         logging.info(f"[Analytics] Ingested {len(inserted_ids)} snapshots for video '{video_id}'")
         return inserted_ids
