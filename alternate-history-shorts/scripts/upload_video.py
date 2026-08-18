@@ -25,8 +25,8 @@ QUOTA_TRACKER_FILE = _CONFIG_DIR / "quota_tracker.json"
 
 # OAuth scopes required for upload
 YOUTUBE_UPLOAD_SCOPE = ["https://www.googleapis.com/auth/youtube.upload"]
-CLIENT_SECRETS_FILE = _CONFIG_DIR / "client_secrets.json"
-TOKEN_FILE = _CONFIG_DIR / "token.json"
+CLIENT_SECRETS_FILE = Path(os.getenv("P1_YOUTUBE_CLIENT_SECRETS", str(_CONFIG_DIR / "client_secrets.json")))
+TOKEN_FILE = Path(os.getenv("P1_YOUTUBE_TOKEN", str(_CONFIG_DIR / "token.json")))
 
 CATEGORY_EDUCATION = "27"
 
@@ -167,6 +167,11 @@ def upload_video(video_id: str, output_dir: str = "output", privacy: str = "priv
     # Ensure #Shorts is in the description
     if "#Shorts" not in description and "#shorts" not in description:
         description += "\n\n#Shorts"
+
+    # Synthetic media disclosure note
+    synthetic_note = "\n\n[Altered or Synthetic Content: This video contains AI-generated visual and audio content.]"
+    if synthetic_note not in description:
+        description += synthetic_note
 
     # Check quota before uploading
     tracker = load_quota_tracker()
