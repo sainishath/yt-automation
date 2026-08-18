@@ -23,8 +23,12 @@ QUOTA_UNITS_PER_UPLOAD = 1600
 QUOTA_DAILY_LIMIT = 10000
 QUOTA_TRACKER_FILE = _CONFIG_DIR / "quota_tracker.json"
 
-# OAuth scopes required for upload
-YOUTUBE_UPLOAD_SCOPE = ["https://www.googleapis.com/auth/youtube.upload"]
+# OAuth scopes required for upload and analytics
+YOUTUBE_UPLOAD_SCOPE = [
+    "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/youtube.readonly",
+    "https://www.googleapis.com/auth/yt-analytics.readonly",
+]
 CLIENT_SECRETS_FILE = Path(os.getenv("P1_YOUTUBE_CLIENT_SECRETS", str(_CONFIG_DIR / "client_secrets.json")))
 TOKEN_FILE = Path(os.getenv("P1_YOUTUBE_TOKEN", str(_CONFIG_DIR / "token.json")))
 
