@@ -1,0 +1,17 @@
+{
+  "channel_id": "channel_b",
+  "pipeline_id": "convo-shorts",
+  "channel_name": "Debate Protocol",
+  "channel_handle": "@DebateProtocol",
+  "channel_purpose": "Socratic Debates, Psychology Paradoxes, and AI Dilemmas",
+  "content_category": "Education/Entertainment",
+  "audience_definition": "Ages 16-30; tech enthusiasts, psychology fans, casual scrollers looking for thought-provoking debates",
+  "ai_disclosure_policy": "MANDATORY_DISCLOSURE",
+  "upload_policy": "PRIVATE_INITIAL_OR_DISCORD_APPROVED",
+  "posting_frequency": "5_to_7_shorts_per_week",
+  "expected_youtube_channel_id": "UC_CHANNEL_B_PLACEHOLDER",
+  "analytics_profile": "channel_b_profile",
+  "strategy_profile": "channel_b_strategy_v1",
+  "default_privacy": "public",
+  "default_category_id": "27"
+}

@@ -1,0 +1,25 @@
+{
+  "channel_id": "channel_a",
+  "strategy_version": "v1.0",
+  "name": "Chronos Shift Baseline Strategy",
+  "audience_profile": {
+    "demographics": "Ages 18-35; history buffs, strategy gamers, sci-fi/what-if fans",
+    "core_interest": "Historical turning points, empire counterfactuals, lost knowledge"
+  },
+  "winning_patterns": {
+    "topics": ["Fallen empires", "Ancient lost knowledge", "Classical antiquity", "Industrial counterfactuals"],
+    "hooks": ["Active counterfactual framing (If X had not occurred, Y would be true)", "Polar questions"],
+    "narrative_structure": "8_beat_divergence",
+    "optimal_duration_seconds": [40, 52],
+    "visual_style": "SDXL Photorealistic oil/cinematic digital art",
+    "camera_motion": "Candidate A Linear Ken Burns (8% zoom/pan)"
+  },
+  "losing_patterns": {
+    "topics": ["Obscure local civil disputes without global stakes", "Pure fantasy topics lacking RAG evidence"],
+    "hooks": ["Weak declarative opening without tension"]
+  },
+  "active_experiments": [
+    "EXP_A_HOOK_01"
+  ],
+  "posting_frequency": "3_to_4_shorts_per_week"
+}
