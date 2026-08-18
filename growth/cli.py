@@ -3,7 +3,7 @@
 cli.py
 ------
 Command-line interface for Content Intelligence and Growth Operations.
-Supports initialization, planning, learning, dry-run simulation, and observability dashboard.
+Supports initialization, planning, learning, snapshot collection, and observability dashboard.
 """
 
 import sys
@@ -18,6 +18,7 @@ if str(ROOT_DIR) not in sys.path:
 from growth.db.database import init_db
 from growth.db.models import GrowthRepository, ChannelModel, VideoModel, VideoFeaturesModel
 from growth.analytics.collector import AnalyticsCollector
+from growth.analytics.snapshot_scheduler import SnapshotScheduler
 from growth.learning.learning_engine import LearningEngine
 from growth.planner.content_planner import ContentPlanner
 from growth.channels.channel_identity_check import load_channel_config, verify_channel_identity
@@ -57,6 +58,7 @@ def main():
     parser.add_argument("--init-db", action="store_true", help="Initialize growth database schema")
     parser.add_argument("--plan-next", choices=["channel_a", "channel_b"], help="Plan the next video recommendation for a channel")
     parser.add_argument("--run-learning", choices=["channel_a", "channel_b"], help="Execute learning cycle and produce weekly report")
+    parser.add_argument("--check-snapshots", action="store_true", help="Check and collect pending analytics snapshots")
     parser.add_argument("--dashboard", action="store_true", help="Display visual terminal metrics dashboard")
     parser.add_argument("--dry-run-loop", action="store_true", help="Execute complete end-to-end closed-loop dry run")
     args = parser.parse_args()
@@ -84,6 +86,11 @@ def main():
 
     if args.dashboard:
         display_dashboard(repo)
+
+    if args.check_snapshots:
+        scheduler = SnapshotScheduler(repo, dry_run=True)
+        res = scheduler.run_pending_snapshot_checks()
+        print(f"\n[Growth CLI] Snapshot Check Results: Collected {res['collected_count']}, Skipped {res['already_present_count']}, Errors: {len(res['errors'])}\n")
 
     if args.plan_next:
         planner = ContentPlanner(repo)

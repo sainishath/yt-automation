@@ -4,6 +4,7 @@ learning_engine.py
 ------------------
 Coordinates historical analysis, calculates winner/loser patterns,
 evaluates A/B experiments, and mutates strategy versions upon proven evidence.
+Records structured learning events with explicit evidence and confidence levels.
 """
 
 import json
@@ -64,7 +65,7 @@ class LearningEngine:
             exp_results.append(eval_res)
 
             if eval_res["decision"] == "ACCEPT_VARIANT" and eval_res["confidence"] == "HIGH":
-                promoted_strategy = self._promote_strategy(channel_id, eval_res)
+                promoted_strategy = self._promote_strategy(channel_id, eval_res, [v["video_id"] for v in videos])
         except Exception:
             pass
 
@@ -82,6 +83,13 @@ class LearningEngine:
         )
 
         # Log learning event in database
+        event_details = {
+            "evaluated_videos": [v["video_id"] for v in videos],
+            "autopsies_count": len(autopsies),
+            "experiment_results": exp_results,
+            "promoted_strategy": promoted_strategy
+        }
+
         with get_db(self.repo.db_path) as conn:
             conn.execute("""
                 INSERT INTO learning_events (channel_id, event_type, summary, details, confidence)
@@ -89,7 +97,7 @@ class LearningEngine:
             """, (
                 channel_id,
                 f"Evaluated {len(videos)} videos with {len(exp_results)} experiment conclusions",
-                report_md
+                json.dumps(event_details)
             ))
 
         return {
@@ -103,7 +111,7 @@ class LearningEngine:
             "report_markdown": report_md
         }
 
-    def _promote_strategy(self, channel_id: str, experiment_result: Dict[str, Any]) -> str:
+    def _promote_strategy(self, channel_id: str, experiment_result: Dict[str, Any], supporting_vids: List[str]) -> str:
         """Promotes and records a new version of the channel strategy."""
         current_strat = self.strat_mgr.get_active_strategy(channel_id)
         curr_ver = current_strat.get("strategy_version", "v1.0")
@@ -124,6 +132,23 @@ class LearningEngine:
                 new_ver,
                 json.dumps(updated_strat),
                 f"Adopted variant from {experiment_result['experiment_id']}"
+            ))
+
+            # Record strategy mutation learning event
+            mutation_details = {
+                "experiment_id": experiment_result["experiment_id"],
+                "delta_percentage": experiment_result["delta_percentage"],
+                "supporting_video_ids": supporting_vids,
+                "previous_strategy_version": curr_ver,
+                "new_strategy_version": new_ver
+            }
+            conn.execute("""
+                INSERT INTO learning_events (channel_id, event_type, summary, details, confidence)
+                VALUES (?, 'STRATEGY_MUTATION', ?, ?, 'HIGH')
+            """, (
+                channel_id,
+                f"Promoted {channel_id} strategy to {new_ver} based on {experiment_result['experiment_id']}",
+                json.dumps(mutation_details)
             ))
 
         return new_ver

@@ -41,6 +41,7 @@ class VideoModel:
     qa_score: Optional[float] = None
     experiment_id: Optional[str] = None
     variant_id: Optional[str] = None
+    publish_timestamp: Optional[str] = None
 
 
 @dataclass
@@ -130,8 +131,9 @@ class GrowthRepository:
                 INSERT INTO videos (
                     video_id, channel_id, pipeline_id, topic_id, title, description,
                     duration, youtube_video_id, youtube_url, upload_status, privacy_status,
-                    qa_score, review_status, strategy_version, experiment_id, variant_id
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    qa_score, review_status, strategy_version, experiment_id, variant_id,
+                    publish_timestamp
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, CURRENT_TIMESTAMP))
                 ON CONFLICT(video_id) DO UPDATE SET
                     title=excluded.title,
                     description=excluded.description,
@@ -144,12 +146,14 @@ class GrowthRepository:
                     review_status=excluded.review_status,
                     strategy_version=excluded.strategy_version,
                     experiment_id=excluded.experiment_id,
-                    variant_id=excluded.variant_id
+                    variant_id=excluded.variant_id,
+                    publish_timestamp=COALESCE(excluded.publish_timestamp, videos.publish_timestamp)
             """, (
                 video.video_id, video.channel_id, video.pipeline_id, video.topic_id,
                 video.title, video.description, video.duration, video.youtube_video_id,
                 video.youtube_url, video.upload_status, video.privacy_status, video.qa_score,
-                video.review_status, video.strategy_version, video.experiment_id, video.variant_id
+                video.review_status, video.strategy_version, video.experiment_id, video.variant_id,
+                video.publish_timestamp
             ))
 
     def get_video(self, video_id: str) -> Optional[Dict[str, Any]]:
