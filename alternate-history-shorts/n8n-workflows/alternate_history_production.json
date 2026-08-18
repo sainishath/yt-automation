@@ -1,0 +1,276 @@
+{
+  "name": "Alternate History Shorts — Production Pipeline with Discord Review Gate",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-manual",
+      "name": "Manual Run Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * 1,3,5"
+            }
+          ]
+        }
+      },
+      "id": "trigger-schedule",
+      "name": "Scheduled Production",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trigger-alternate-history",
+        "options": {}
+      },
+      "id": "trigger-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        460
+      ],
+      "webhookId": "trigger-alternate-history"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.item.json || {};\nconst topic = input.topic || input.Topic || 'What if the Library of Alexandria never burned?';\nconst videoId = input.video_id || ('prod_' + Math.random().toString(36).substring(2, 10));\n\nreturn [{\n  json: {\n    topic,\n    video_id: videoId,\n    content_type: 'alternate_history',\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "parse-topic",
+      "name": "Parse Topic & Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/generate-alternate-history",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $json.topic }}\",\n  \"video_id\": \"{{ $json.video_id }}\"\n}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "id": "gen-alt-history",
+      "name": "Generate & QA Alternate History Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {}
+      },
+      "id": "wait-for-approval",
+      "name": "Wait for Discord Approval Gate",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        920,
+        300
+      ],
+      "webhookId": "alt-history-approval-gate"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.query.action || $json.body.action }}",
+              "value2": "approve"
+            }
+          ]
+        }
+      },
+      "id": "check-approval-action",
+      "name": "Check Approval Action",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8000/upload-youtube",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_id\": \"{{ $('Generate & QA Alternate History Video').item.json.video_id }}\",\n  \"privacy\": \"public\"\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "upload-youtube",
+      "name": "Upload to YouTube (Account 1)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1400,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1528622690980724807/0LU5dDQwTA3bd2nbnx4DIUix_DJq3tYH0KykuMYqu67XVWupfrS_7KB5hK5uZWdUkQv0",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"✅ **[ALTERNATE HISTORY APPROVED & PUBLISHED]**\\n**Title:** {{ $('Generate & QA Alternate History Video').item.json.title }}\\n**Watch on YouTube:** {{ $json.url || $json.youtube_id }}\\n**Status:** {{ $json.upload_status }}\"\n}",
+        "options": {}
+      },
+      "id": "notify-discord-success",
+      "name": "Notify Discord Success",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1640,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://discord.com/api/webhooks/1528622690980724807/0LU5dDQwTA3bd2nbnx4DIUix_DJq3tYH0KykuMYqu67XVWupfrS_7KB5hK5uZWdUkQv0",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"content\": \"❌ **[ALTERNATE HISTORY REJECTED]**\\nVideo was rejected for topic: **{{ $('Parse Topic & Metadata').item.json.topic }}**\\nExecution stopped. No video was published.\"\n}",
+        "options": {}
+      },
+      "id": "notify-discord-rejection",
+      "name": "Notify Discord Rejection",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1400,
+        420
+      ]
+    }
+  ],
+  "connections": {
+    "Manual Run Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Topic & Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scheduled Production": {
+      "main": [
+        [
+          {
+            "node": "Parse Topic & Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Topic & Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Topic & Metadata": {
+      "main": [
+        [
+          {
+            "node": "Generate & QA Alternate History Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate & QA Alternate History Video": {
+      "main": [
+        [
+          {
+            "node": "Wait for Discord Approval Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Discord Approval Gate": {
+      "main": [
+        [
+          {
+            "node": "Check Approval Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Approval Action": {
+      "main": [
+        [
+          {
+            "node": "Upload to YouTube (Account 1)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Discord Rejection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to YouTube (Account 1)": {
+      "main": [
+        [
+          {
+            "node": "Notify Discord Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

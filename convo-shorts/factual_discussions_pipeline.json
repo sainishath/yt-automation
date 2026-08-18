@@ -1,0 +1,156 @@
+{
+  "name": "Factual Discussions Video Production & Upload Pipeline",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-manual",
+      "name": "Manual Run Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [-400, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trigger-factual-discussions",
+        "options": {}
+      },
+      "id": "trigger-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [-400, 360],
+      "webhookId": "trigger-factual-discussions-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const topic = $input.item.json.topic || 'Is AI sentient?';\nconst category = $input.item.json.category || 'Tech';\nreturn [{\n  json: {\n    topic,\n    category,\n    content_type: 'factual_discussions',\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "parse-topic",
+      "name": "Parse Topic & Category",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-180, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/generate-factual-discussion",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"topic\": \"{{ $json.topic }}\",\n  \"category\": \"{{ $json.category }}\"\n}",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "id": "gen-video",
+      "name": "Generate Factual Debate Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [40, 200]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.video_url || 'http://127.0.0.1:8001/get-video?id=' + $json.video_id }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "fetch-video",
+      "name": "Fetch Rendered Video File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 200]
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $('gen-video').item.json.title || 'Debate: ' + $json.topic }}",
+        "description": "={{ $('gen-video').item.json.description || 'Factual Discussion Short #shorts #science #facts' }}",
+        "tags": "science,facts,debate,tech,shorts",
+        "categoryId": "28",
+        "privacyStatus": "public",
+        "binaryPropertyName": "data"
+      },
+      "id": "youtube-upload",
+      "name": "Upload to YouTube (Account 2: Factual Discussions Channel)",
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [480, 200],
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "youtube_oauth2_factual_discussions",
+          "name": "Google Account 2 - Factual Discussions Channel"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Run Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Topic & Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Topic & Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Topic & Category": {
+      "main": [
+        [
+          {
+            "node": "Generate Factual Debate Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Factual Debate Video": {
+      "main": [
+        [
+          {
+            "node": "Fetch Rendered Video File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Rendered Video File": {
+      "main": [
+        [
+          {
+            "node": "Upload to YouTube (Account 2: Factual Discussions Channel)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "factual-discussions-pipeline-v1",
+  "id": "factual-discussions-pipeline"
+}

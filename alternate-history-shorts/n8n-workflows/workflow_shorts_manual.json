@@ -1,0 +1,166 @@
+{
+  "name": "YT-Shorts-Verification-Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyXDays",
+              "value": 2
+            }
+          ]
+        }
+      },
+      "id": "7",
+      "name": "Interval 2 Days",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        240
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "On-Demand Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "command": "python scripts/run_tests.py --skip_upload"
+      },
+      "id": "2",
+      "name": "Run Generation (Stage 1-3)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        180,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "path": "verify-images",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Manual Verification Hook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "command": "python scripts/assemble_video.py --video_id test_divergence_rag && python scripts/generate_metadata.py --video_id test_divergence_rag"
+      },
+      "id": "4",
+      "name": "Assemble & Generate Metadata (Stage 4)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        620,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "command": "python scripts/upload_video.py --video_id test_divergence_rag --privacy private"
+      },
+      "id": "5",
+      "name": "Upload to YouTube (Stage 5)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        840,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": "C0123456789",
+        "text": "Image validation failed. Pipeline stopped for manual regeneration."
+      },
+      "id": "6",
+      "name": "Notify Rejection / Stop",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1.1,
+      "position": [
+        620,
+        380
+      ]
+    }
+  ],
+  "connections": {
+    "Interval 2 Days": {
+      "main": [
+        [
+          {
+            "node": "Run Generation (Stage 1-3)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On-Demand Trigger": {
+      "main": [
+        [
+          {
+            "node": "Run Generation (Stage 1-3)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Generation (Stage 1-3)": {
+      "main": [
+        [
+          {
+            "node": "Manual Verification Hook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Verification Hook": {
+      "main": [
+        [
+          {
+            "node": "Assemble & Generate Metadata (Stage 4)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble & Generate Metadata (Stage 4)": {
+      "main": [
+        [
+          {
+            "node": "Upload to YouTube (Stage 5)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {},
+  "versionId": "n8n-workflow-v3",
+  "id": "n8n-workflow"
+}
