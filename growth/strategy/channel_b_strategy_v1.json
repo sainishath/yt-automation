@@ -1,0 +1,25 @@
+{
+  "channel_id": "channel_b",
+  "strategy_version": "v1.0",
+  "name": "Debate Protocol Baseline Strategy",
+  "audience_profile": {
+    "demographics": "Ages 16-30; tech enthusiasts, psychology fans, casual scrollers looking for debates",
+    "core_interest": "Brain quirks, sleep psychology, AI singularity dilemmas, mind paradoxes"
+  },
+  "winning_patterns": {
+    "topics": ["Neurobiology quirks", "AI consciousness paradoxes", "Social psychology & negotiations"],
+    "hooks": ["Provocative attack on common habits", "Shocking counter-intuitive questions"],
+    "narrative_structure": "two_host_socratic_duel",
+    "speaker_balance": [0.40, 0.55],
+    "optimal_duration_seconds": [35, 45],
+    "visual_style": "Gameplay dynamic background with visual proof overlays"
+  },
+  "losing_patterns": {
+    "topics": ["Monotone textbook definitions", "Unbalanced monologues > 20s without speaker shift"],
+    "hooks": ["Generic welcome greetings"]
+  },
+  "active_experiments": [
+    "EXP_B_HOOK_01"
+  ],
+  "posting_frequency": "5_to_7_shorts_per_week"
+}

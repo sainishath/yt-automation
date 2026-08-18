@@ -1,0 +1,17 @@
+{
+  "channel_id": "channel_a",
+  "pipeline_id": "alternate-history-shorts",
+  "channel_name": "Chronos Shift",
+  "channel_handle": "@ChronosShiftAI",
+  "channel_purpose": "Cinematic Alternate History & Turning Points of Civilization",
+  "content_category": "Education/History",
+  "audience_definition": "Ages 18-35; history buffs, strategy gamers, speculative fiction fans, geopolitics followers",
+  "ai_disclosure_policy": "MANDATORY_DISCLOSURE",
+  "upload_policy": "PRIVATE_INITIAL_OR_DISCORD_APPROVED",
+  "posting_frequency": "3_to_4_shorts_per_week",
+  "expected_youtube_channel_id": "UC_CHANNEL_A_PLACEHOLDER",
+  "analytics_profile": "channel_a_profile",
+  "strategy_profile": "channel_a_strategy_v1",
+  "default_privacy": "public",
+  "default_category_id": "27"
+}
