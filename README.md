@@ -104,6 +104,16 @@ python convo-shorts/yt-automation-engine/server.py
 
 ---
 
+## 📚 Detailed Documentation Suite
+
+- 📈 [**90-Day Channel Strategy & Monetization**](file:///d:/Projects/yt-automations/docs/channel-strategy.md): Positioning, content pillars, audience profiles, 90-day rollout roadmap, and hook scoring.
+- 🏛️ [**Production Architecture & Channel Separation**](file:///d:/Projects/yt-automations/docs/production-architecture.md): Decoupled dual-channel architecture, OAuth credential isolation, and Candidate A motion freeze.
+- 📖 [**Operations & Troubleshooting Manual**](file:///d:/Projects/yt-automations/docs/operations.md): Daemon startup, Discord review operations, dry-run procedures, and failure recovery.
+- 🛡️ [**YouTube Monetization & Compliance Policy**](file:///d:/Projects/yt-automations/docs/monetization-policy.md): YPP guidelines, synthetic media disclosures, anti-repetition architecture, and copyright safety.
+- 🔒 [**Security & Secret Governance**](file:///d:/Projects/yt-automations/docs/security.md): Zero-secret commitment rules, credential scanning, and `.gitignore` governance.
+
+---
+
 ## 🛡️ Production Verification Suite
 
 To run the complete 21-axis production verification suite:

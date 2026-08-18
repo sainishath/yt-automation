@@ -26,9 +26,9 @@ from googleapiclient.http import MediaFileUpload
 
 # ── OAuth config ──────────────────────────────────────────────────────────────
 SCOPES           = ["https://www.googleapis.com/auth/youtube.upload"]
-CREDENTIALS_FILE = str(Path(__file__).parent / "youtube_credentials.json")
-TOKEN_FILE       = str(Path(__file__).parent / "youtube_token.pickle")
-AUTH_PORT        = 8090   # Local port for the one-time OAuth callback
+CREDENTIALS_FILE = os.getenv("P2_YOUTUBE_CLIENT_SECRETS", str(Path(__file__).parent / "youtube_credentials.json"))
+TOKEN_FILE       = os.getenv("P2_YOUTUBE_TOKEN", str(Path(__file__).parent / "youtube_token.pickle"))
+AUTH_PORT        = int(os.getenv("P2_YOUTUBE_AUTH_PORT", "8090"))   # Local port for OAuth callback
 
 # YouTube category IDs
 CATEGORY_EDUCATION    = "27"
