@@ -25,7 +25,11 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
 # ── OAuth config ──────────────────────────────────────────────────────────────
-SCOPES           = ["https://www.googleapis.com/auth/youtube.upload"]
+SCOPES = [
+    "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/youtube.readonly",
+    "https://www.googleapis.com/auth/yt-analytics.readonly",
+]
 CREDENTIALS_FILE = os.getenv("P2_YOUTUBE_CLIENT_SECRETS", str(Path(__file__).parent / "youtube_credentials.json"))
 TOKEN_FILE       = os.getenv("P2_YOUTUBE_TOKEN", str(Path(__file__).parent / "youtube_token.pickle"))
 AUTH_PORT        = int(os.getenv("P2_YOUTUBE_AUTH_PORT", "8090"))   # Local port for OAuth callback
