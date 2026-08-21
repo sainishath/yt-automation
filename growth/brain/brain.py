@@ -221,6 +221,12 @@ class ContentBrain:
         winners = [b.name for b in beliefs if b.status.value == "PROMOTED"]
         rejected = [b.name for b in beliefs if b.status.value == "REJECTED"]
 
+        # Channel Health & Scorecard
+        from growth.brain.channel_trajectory import ChannelTrajectoryEngine
+        traj_engine = ChannelTrajectoryEngine(repo)
+        health_snapshot = traj_engine.compute_channel_health(channel_id, tag="CURRENT")
+        scorecard = traj_engine.generate_scorecard(channel_id, current_snapshot=health_snapshot)
+
         data_quality = "HEALTHY" if missing_metrics == 0 else "DATA_PENDING"
 
         return {
@@ -228,6 +234,8 @@ class ContentBrain:
             "strategy_version": strat_ver,
             "videos_published": len(pub_vids),
             "videos_mature": mature_count,
+            "channel_health": health_snapshot.to_dict(),
+            "channel_scorecard": scorecard.to_dict(),
             "active_experiment": active_exp_info,
             "latest_video": {
                 "video_id": latest_vid.get("video_id") if latest_vid else None,
@@ -257,6 +265,36 @@ class ContentBrain:
                 "missing_metrics": missing_metrics
             }
         }
+
+    def get_channel_health(self, channel_id: str, tag: str = "CURRENT") -> Dict[str, Any]:
+        """
+        Returns longitudinal first-party channel health snapshot.
+        """
+        from growth.db.models import GrowthRepository
+        from growth.brain.channel_trajectory import ChannelTrajectoryEngine
+        repo = GrowthRepository(self.db_path)
+        traj_engine = ChannelTrajectoryEngine(repo)
+        return traj_engine.compute_channel_health(channel_id, tag=tag).to_dict()
+
+    def get_channel_scorecard(self, channel_id: str) -> Dict[str, Any]:
+        """
+        Returns deterministic channel improvement scorecard (Baseline vs Current).
+        """
+        from growth.db.models import GrowthRepository
+        from growth.brain.channel_trajectory import ChannelTrajectoryEngine
+        repo = GrowthRepository(self.db_path)
+        traj_engine = ChannelTrajectoryEngine(repo)
+        return traj_engine.generate_scorecard(channel_id).to_dict()
+
+    def record_channel_milestone(self, channel_id: str, tag: str) -> Dict[str, Any]:
+        """
+        Captures and persists a channel health milestone into SQLite.
+        """
+        from growth.db.models import GrowthRepository
+        from growth.brain.channel_trajectory import ChannelTrajectoryEngine
+        repo = GrowthRepository(self.db_path)
+        traj_engine = ChannelTrajectoryEngine(repo)
+        return traj_engine.capture_and_record_baseline(channel_id, tag=tag).to_dict()
 
     def get_learning_trace(self, video_id: str) -> Optional[Dict[str, Any]]:
         """

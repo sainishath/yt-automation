@@ -100,6 +100,9 @@ def main():
     parser.add_argument("--brain-history", nargs="?", const="channel_a", help="Display complete chronological learning events and strategy history")
     parser.add_argument("--live-learning-status", nargs="?", const="channel_a", help="Display comprehensive real-time live trial dashboard and learning status")
     parser.add_argument("--learning-trace", nargs="?", const="channel_a", help="Display causal learning trace for a video ID or channel")
+    parser.add_argument("--channel-scorecard", nargs="?", const="channel_a", help="Display deterministic channel performance scorecard (Baseline vs Current)")
+    parser.add_argument("--channel-health", nargs="?", const="channel_a", help="Display robust longitudinal channel health snapshot")
+    parser.add_argument("--trial-milestone", nargs=2, metavar=("TAG", "CHANNEL"), help="Capture channel health milestone (e.g. DAY_0 channel_a)")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -698,6 +701,39 @@ def main():
             print(f"=======================================================")
             print(json.dumps(trace, indent=2))
             print("=======================================================\n")
+
+    if args.channel_scorecard is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        ch = args.channel_scorecard
+        scorecard = brain.get_channel_scorecard(ch)
+        print(f"\n=======================================================")
+        print(f"  CHANNEL IMPROVEMENT SCORECARD: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(scorecard, indent=2))
+        print("=======================================================\n")
+
+    if args.channel_health is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        ch = args.channel_health
+        health = brain.get_channel_health(ch)
+        print(f"\n=======================================================")
+        print(f"  CHANNEL HEALTH SNAPSHOT: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(health, indent=2))
+        print("=======================================================\n")
+
+    if args.trial_milestone is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        tag, ch = args.trial_milestone
+        milestone = brain.record_channel_milestone(ch, tag=tag)
+        print(f"\n=======================================================")
+        print(f"  RECORDED CHANNEL MILESTONE: {tag.upper()} ({ch.upper()})")
+        print(f"=======================================================")
+        print(json.dumps(milestone, indent=2))
+        print("=======================================================\n")
 
 
 if __name__ == "__main__":
