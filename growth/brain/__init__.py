@@ -31,6 +31,14 @@ from growth.brain.brain import ContentBrain
 from growth.brain.cycle import DailyBrainCycle
 from growth.brain.production_recommendation import ProductionRecommendation, ProductionRecommendationEngine
 from growth.brain.backtester import BacktestReport, BrainBacktester
+from growth.brain.belief_engine import (
+    BeliefEngine,
+    VideoMaturity,
+    BeliefStatus,
+    VideoDiagnostic,
+    PatternBelief
+)
+from growth.brain.weekly_cycle import WeeklyLearningCycle
 
 __all__ = [
     "EvidenceSource",
@@ -60,4 +68,10 @@ __all__ = [
     "ProductionRecommendationEngine",
     "BacktestReport",
     "BrainBacktester",
+    "BeliefEngine",
+    "VideoMaturity",
+    "BeliefStatus",
+    "VideoDiagnostic",
+    "PatternBelief",
+    "WeeklyLearningCycle",
 ]

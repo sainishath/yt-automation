@@ -91,6 +91,13 @@ def main():
     parser.add_argument("--brain-production-plan", nargs="?", const="channel_a", help="Generate and save structured brain_production_plan.json")
     parser.add_argument("--brain-production-recommendation", nargs="?", const="channel_a", help="Generate comprehensive ProductionRecommendation payload")
     parser.add_argument("--brain-negative-knowledge", nargs="?", const="channel_a", help="Display rejected, contradicted, and uncertain institutional knowledge")
+    parser.add_argument("--brain-belief-state", nargs="?", const="channel_a", help="Display empirical belief states and Bayesian progression")
+    parser.add_argument("--brain-weekly-report", nargs="?", const="channel_a", help="Execute weekly learning cycle and output WEEKLY_LEARNING_REPORT")
+    parser.add_argument("--weekly-learning", nargs="?", const="channel_a", help="Alias for --brain-weekly-report")
+    parser.add_argument("--brain-cohort-status", nargs="?", const="channel_a", help="Display active experiment cohort sample balance and maturity")
+    parser.add_argument("--brain-learning-state", nargs="?", const="channel_a", help="Display comprehensive learning state, attribution, and negative knowledge")
+    parser.add_argument("--brain-learning-status", nargs="?", const="channel_a", help="Alias for --brain-learning-state")
+    parser.add_argument("--brain-history", nargs="?", const="channel_a", help="Display complete chronological learning events and strategy history")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -579,5 +586,88 @@ def main():
         print("=======================================================\n")
 
 
+    if args.brain_belief_state is not None:
+        from growth.brain.belief_engine import BeliefEngine
+        engine = BeliefEngine(repo)
+        ch = args.brain_belief_state
+        beliefs = [b.to_dict() for b in engine.get_channel_beliefs(ch)]
+        print(f"\n=======================================================")
+        print(f"  EMPIRICAL BELIEF STATE & PROGRESSION: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(beliefs, indent=2))
+        print("=======================================================\n")
+
+    target_weekly = args.weekly_learning or args.brain_weekly_report
+    if target_weekly is not None:
+        from growth.brain.weekly_cycle import WeeklyLearningCycle
+        cycle = WeeklyLearningCycle(repo)
+        ch = target_weekly
+        report = cycle.run_weekly_cycle(ch)
+        print(f"\n=======================================================")
+        print(f"  WEEKLY LEARNING CYCLE REPORT: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(report, indent=2))
+        print("=======================================================\n")
+
+    target_cohort = args.brain_cohort_status
+    if target_cohort is not None:
+        ch = target_cohort
+        exps = repo.list_experiments(channel_id=ch)
+        vids = repo.list_videos(channel_id=ch)
+        pub_vids = [v for v in vids if v.get("upload_status") == "UPLOADED_PUBLIC"]
+        status_data = {
+            "channel_id": ch,
+            "total_published_videos": len(pub_vids),
+            "active_experiments": [
+                {
+                    "experiment_id": e.get("experiment_id"),
+                    "name": e.get("name"),
+                    "variable_tested": e.get("variable_tested"),
+                    "control_count": e.get("control_count", 0),
+                    "treatment_count": e.get("treatment_count", 0),
+                    "target_per_arm": 4,
+                    "status": e.get("status"),
+                    "next_needed_arm": "CONTROL" if e.get("control_count", 0) < e.get("treatment_count", 0) else "TREATMENT"
+                }
+                for e in exps
+            ]
+        }
+        print(f"\n=======================================================")
+        print(f"  COHORT SAMPLE BALANCE & STATUS: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(status_data, indent=2))
+        print("=======================================================\n")
+
+    target_learning = args.brain_learning_status or args.brain_learning_state
+    if target_learning is not None:
+        from growth.brain.belief_engine import BeliefEngine
+        engine = BeliefEngine(repo)
+        ch = target_learning
+        beliefs = [b.to_dict() for b in engine.get_channel_beliefs(ch)]
+        neg = engine.get_negative_knowledge(ch)
+        learning_evts = repo.list_learning_events(channel_id=ch, limit=10)
+        state_data = {
+            "channel_id": ch,
+            "beliefs": beliefs,
+            "negative_knowledge": neg,
+            "recent_learning_events": learning_evts
+        }
+        print(f"\n=======================================================")
+        print(f"  COMPREHENSIVE LEARNING STATE: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(state_data, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_history is not None:
+        ch = args.brain_history
+        events = repo.list_learning_events(channel_id=ch, limit=50)
+        print(f"\n=======================================================")
+        print(f"  CHRONOLOGICAL LEARNING HISTORY: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(events, indent=2))
+        print("=======================================================\n")
+
+
 if __name__ == "__main__":
     main()
+
