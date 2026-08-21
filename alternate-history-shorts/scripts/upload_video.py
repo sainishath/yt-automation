@@ -56,10 +56,10 @@ def save_quota_tracker(tracker: dict) -> None:
         json.dump(tracker, f, indent=2)
 
 
-def get_authenticated_service():
+def get_authenticated_service(force_reauth: bool = False):
     """
     Authenticates with YouTube Data API v3.
-    On first run, opens a browser for OAuth consent and saves token.json.
+    On first run or if force_reauth is True, opens a browser for OAuth consent and saves token.json.
     On subsequent runs, loads and refreshes token.json automatically.
     Returns an authenticated YouTube API service object.
     """
@@ -70,8 +70,8 @@ def get_authenticated_service():
 
     credentials = None
 
-    # Load existing token if available
-    if TOKEN_FILE.exists():
+    # Load existing token if available and not forcing reauth
+    if not force_reauth and TOKEN_FILE.exists():
         try:
             credentials = Credentials.from_authorized_user_file(
                 str(TOKEN_FILE), YOUTUBE_UPLOAD_SCOPE
@@ -94,7 +94,7 @@ def get_authenticated_service():
             credentials = None
 
     # Run full OAuth flow if needed
-    if not credentials or not credentials.valid:
+    if not credentials or not credentials.valid or force_reauth:
         if not CLIENT_SECRETS_FILE.exists():
             raise FileNotFoundError(
                 f"client_secrets.json not found at {CLIENT_SECRETS_FILE}.\n"
@@ -111,7 +111,7 @@ def get_authenticated_service():
             str(CLIENT_SECRETS_FILE),
             scopes=YOUTUBE_UPLOAD_SCOPE
         )
-        credentials = flow.run_local_server(port=0, open_browser=True)
+        credentials = flow.run_local_server(port=0, prompt="select_account consent", open_browser=True)
 
         # Save token for future runs
         TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -318,7 +318,7 @@ if __name__ == "__main__":
     if args.auth_only:
         logging.info("Running authentication-only flow...")
         try:
-            youtube = get_authenticated_service()
+            youtube = get_authenticated_service(force_reauth=True)
             logging.info("Authentication successful! token.json saved to config/.")
             print("\n  Authentication successful!")
             print(f"  token.json saved to: {TOKEN_FILE}")
