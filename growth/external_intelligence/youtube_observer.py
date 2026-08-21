@@ -34,6 +34,15 @@ def parse_iso_duration(duration_str: str) -> float:
 
 class YouTubePublicObserver:
     def __init__(self, token_path: Optional[Path] = None, dry_run: bool = False):
+        if token_path is None:
+            # Auto-discover default OAuth tokens if present on disk
+            default_p1 = Path(__file__).parent.parent.parent / "alternate-history-shorts" / "config" / "token.json"
+            default_p2 = Path(__file__).parent.parent.parent / "convo-shorts" / "yt-automation-engine" / "youtube_token.pickle"
+            if default_p1.exists():
+                token_path = default_p1
+            elif default_p2.exists():
+                token_path = default_p2
+
         self.token_path = token_path
         self.dry_run = dry_run
 
@@ -101,24 +110,52 @@ class YouTubePublicObserver:
             return {"status": "ERROR", "error": str(e), "is_simulation": False, "source_type": ProvenanceSource.PUBLIC_YOUTUBE.value}
 
     def fetch_recent_public_videos(self, channel_id: str, max_results: int = 10) -> List[ExternalVideoModel]:
-        """Fetches recent public video metadata for an analog channel."""
+        """Fetches recent public video metadata for an analog channel via playlistItems or search API."""
         yt = self._get_youtube_service()
         if not yt:
             return []
 
+        video_ids = []
+
+        # Strategy 1: Efficient 1-unit quota fetch via uploads playlist (UU...)
+        if channel_id.startswith("UC"):
+            uploads_pl_id = "UU" + channel_id[2:]
+            try:
+                pl_res = yt.playlistItems().list(
+                    part="snippet",
+                    playlistId=uploads_pl_id,
+                    maxResults=max_results
+                ).execute()
+                video_ids = [
+                    item["snippet"]["resourceId"]["videoId"]
+                    for item in pl_res.get("items", [])
+                    if "resourceId" in item.get("snippet", {}) and "videoId" in item["snippet"]["resourceId"]
+                ]
+            except Exception as pe:
+                logging.debug(f"[YouTube Observer] playlistItems fetch failed for {uploads_pl_id}: {pe}")
+
+        # Strategy 2: Fallback to search.list if playlistItems produced no video IDs
+        if not video_ids:
+            try:
+                search_res = yt.search().list(
+                    part="snippet",
+                    channelId=channel_id,
+                    order="date",
+                    type="video",
+                    maxResults=max_results
+                ).execute()
+                video_ids = [
+                    item["id"]["videoId"]
+                    for item in search_res.get("items", [])
+                    if "videoId" in item.get("id", {})
+                ]
+            except Exception as se:
+                logging.error(f"[YouTube Observer] Search API failed for {channel_id}: {se}")
+
+        if not video_ids:
+            return []
+
         try:
-            search_res = yt.search().list(
-                part="snippet",
-                channelId=channel_id,
-                order="date",
-                type="video",
-                maxResults=max_results
-            ).execute()
-
-            video_ids = [item["id"]["videoId"] for item in search_res.get("items", []) if "videoId" in item.get("id", {})]
-            if not video_ids:
-                return []
-
             vids_res = yt.videos().list(
                 part="snippet,statistics,contentDetails",
                 id=",".join(video_ids)

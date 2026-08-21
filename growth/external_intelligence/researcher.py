@@ -43,6 +43,14 @@ from growth.external_intelligence.recommendation_engine import (
 class ExternalResearcher:
     def __init__(self, repo: Optional[ExternalIntelligenceRepository] = None, token_path: Optional[Path] = None):
         self.repo = repo or ExternalIntelligenceRepository()
+        if token_path is None:
+            default_p1 = Path(__file__).parent.parent.parent / "alternate-history-shorts" / "config" / "token.json"
+            default_p2 = Path(__file__).parent.parent.parent / "convo-shorts" / "yt-automation-engine" / "youtube_token.pickle"
+            if default_p1.exists():
+                token_path = default_p1
+            elif default_p2.exists():
+                token_path = default_p2
+
         self.token_path = token_path
         self.observer = YouTubePublicObserver(token_path=token_path, dry_run=(token_path is None))
 
@@ -186,7 +194,7 @@ class ExternalResearcher:
     def run_channel_research(
         self,
         target_channel_id: str,
-        use_live_api: bool = False,
+        use_live_api: bool = True,
         max_videos_per_channel: int = 5
     ) -> Dict[str, Any]:
         """

@@ -25,9 +25,9 @@ def generate_experiment_proposal_from_prior(
     Creates a production-ready single-variable A/B experiment definition compatible with ExperimentManager.
     Enforces minimum sample size N >= 4 per cohort.
     """
-    exp_suffix = "HOOK_02" if "hook" in pattern.pattern_id else "TOPIC_02"
+    clean_pat_slug = pattern.pattern_id.replace(f"pat_{target_channel_id}_", "").upper()
     channel_letter = "A" if target_channel_id == "channel_a" else "B"
-    exp_id = f"EXP_{channel_letter}_EXT_{exp_suffix}"
+    exp_id = f"EXP_{channel_letter}_EXT_{clean_pat_slug}"
 
     if target_channel_id == "channel_a":
         control_def = "Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')"
