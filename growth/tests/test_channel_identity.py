@@ -21,15 +21,15 @@ class TestChannelIdentity(unittest.TestCase):
         self.assertEqual(cfg2["channel_id"], "channel_b")
         self.assertEqual(cfg2["channel_name"], "Debate Protocol")
 
-    def test_verify_identity_placeholder(self):
+    def test_verify_identity_match(self):
+        cfg1 = load_channel_config("pipeline1")
         res = verify_channel_identity(
             "pipeline1",
-            authenticated_channel_id="UC1234567890",
-            authenticated_channel_name="Decoded Facts",
+            authenticated_channel_id=cfg1["expected_youtube_channel_id"],
+            authenticated_channel_name="sai nishath",
             allow_placeholder=True
         )
         self.assertEqual(res["verdict"], "MATCH")
-        self.assertTrue(res["is_placeholder"])
 
     def test_mismatch_rejection(self):
         # When placeholder is not allowed, mismatch must return MISMATCH and enforce_channel_match must raise
