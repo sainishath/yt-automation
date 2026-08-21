@@ -296,11 +296,11 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
         duration = float(scene.get("actual_duration_seconds", scene.get("estimated_duration_seconds", 5.0)))
         
         audio_file = audio_dir / f"scene_{idx:03d}.mp3"
-        img_file = images_dir / f"scene_{idx:03d}.png"
-        if not img_file.exists():
-            beat_alt = images_dir / f"beat_{idx+1:03d}.png"
-            if beat_alt.exists():
-                img_file = beat_alt
+        beat_alt = images_dir / f"beat_{idx+1:03d}.png"
+        if beat_alt.exists():
+            img_file = beat_alt
+        else:
+            img_file = images_dir / f"scene_{idx:03d}.png"
         ass_file = audio_dir / f"scene_{idx:03d}.ass"
         out_clip = audio_dir / f"scene_{idx:03d}_compiled.mp4"
         
