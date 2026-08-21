@@ -69,20 +69,20 @@ class VideoFeaturesModel:
 class PerformanceSnapshotModel:
     video_id: str
     window_name: str
-    views: int
-    likes: int
-    comments: int
-    shares: int
-    subscribers_gained: int
-    watch_time_minutes: float
-    avg_view_duration_seconds: float
-    avg_percentage_viewed: float
-    views_per_hour: float
-    engagement_rate: float
-    subscriber_conversion_rate: float
-    relative_performance_score: float
-    data_source: str
-    data_freshness: str
+    views: int = 0
+    likes: int = 0
+    comments: int = 0
+    shares: int = 0
+    subscribers_gained: int = 0
+    watch_time_minutes: float = 0.0
+    avg_view_duration_seconds: float = 0.0
+    avg_percentage_viewed: float = 0.0
+    views_per_hour: float = 0.0
+    engagement_rate: float = 0.0
+    subscriber_conversion_rate: float = 0.0
+    relative_performance_score: float = 0.0
+    data_source: str = "YOUTUBE_API"
+    data_freshness: str = "CURRENT"
     snapshot_id: Optional[int] = None
 
 
@@ -162,6 +162,17 @@ class ExperimentModel:
         return asdict(self)
 
 
+@dataclass
+class LearningEventModel:
+    channel_id: str
+    event_type: str
+    summary: str
+    details: Optional[str] = None
+    confidence: Optional[str] = "MEDIUM"
+    event_id: Optional[int] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
 
 
 class GrowthRepository:
@@ -544,3 +555,19 @@ class GrowthRepository:
                 "snapshots_count": len(snapshots),
                 "snapshots": snapshots
             }
+
+    def insert_learning_event(self, evt: LearningEventModel) -> int:
+        with get_db(self.db_path) as conn:
+            cur = conn.execute("""
+                INSERT INTO learning_events (channel_id, event_type, summary, details, confidence)
+                VALUES (?, ?, ?, ?, ?)
+            """, (evt.channel_id, evt.event_type, evt.summary, evt.details, evt.confidence))
+            return cur.lastrowid
+
+    def list_learning_events(self, channel_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            if channel_id:
+                rows = conn.execute("SELECT * FROM learning_events WHERE channel_id = ? ORDER BY created_at DESC LIMIT ?", (channel_id, limit)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM learning_events ORDER BY created_at DESC LIMIT ?", (limit,)).fetchall()
+            return [dict(r) for r in rows]
