@@ -322,6 +322,16 @@ if __name__ == "__main__":
             logging.info("Authentication successful! token.json saved to config/.")
             print("\n  Authentication successful!")
             print(f"  token.json saved to: {TOKEN_FILE}")
+            try:
+                ch_res = youtube.channels().list(mine=True, part="snippet").execute()
+                items = ch_res.get("items", [])
+                if items:
+                    ch = items[0]
+                    print(f"  Authenticated Channel ID: {ch.get('id')}")
+                    print(f"  Authenticated Channel Title: {ch.get('snippet', {}).get('title')}")
+                    print(f"  Authenticated Channel Handle: {ch.get('snippet', {}).get('customUrl')}")
+            except Exception as ce:
+                print(f"  Channel query warning: {ce}")
             print("  You can now run uploads without re-authentication.")
         except Exception as e:
             logging.error(f"Authentication failed: {e}")
