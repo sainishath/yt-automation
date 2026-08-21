@@ -18,13 +18,18 @@ class StrategyManager:
         self.strategy_dir = strategy_dir
 
     def get_active_strategy(self, channel_id: str) -> Dict[str, Any]:
-        """Loads the active strategy version for a channel."""
-        filename = "channel_a_strategy_v1.json" if channel_id == "channel_a" else "channel_b_strategy_v1.json"
-        strat_path = self.strategy_dir / filename
-        if not strat_path.exists():
-            raise FileNotFoundError(f"Strategy file not found: {strat_path}")
+        """Loads the active (highest version) strategy for a channel."""
+        files = list(self.strategy_dir.glob(f"{channel_id}_strategy_*.json"))
+        if not files:
+            filename = "channel_a_strategy_v1.json" if channel_id == "channel_a" else "channel_b_strategy_v1.json"
+            strat_path = self.strategy_dir / filename
+            if not strat_path.exists():
+                raise FileNotFoundError(f"Strategy file not found: {strat_path}")
+            with open(strat_path, "r", encoding="utf-8") as f:
+                return json.load(f)
 
-        with open(strat_path, "r", encoding="utf-8") as f:
+        files.sort(key=lambda p: p.name, reverse=True)
+        with open(files[0], "r", encoding="utf-8") as f:
             return json.load(f)
 
     def validate_strategy_compatibility(self, video_plan: Dict[str, Any], strategy: Dict[str, Any]) -> Dict[str, Any]:

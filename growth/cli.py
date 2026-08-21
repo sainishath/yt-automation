@@ -81,6 +81,8 @@ def main():
     parser.add_argument("--brain-opportunities", nargs="?", const="channel_a", help="Display ranked content opportunities with factor breakdown")
     parser.add_argument("--brain-next", nargs="?", const="channel_a", help="Display next recommended strategic decision (does NOT upload)")
     parser.add_argument("--brain-explain", nargs="?", const="channel_a", help="Display deep 10-point explanation of Brain recommendation")
+    parser.add_argument("--brain-cycle", nargs="?", const="channel_a", help="Execute complete automated Daily Brain Cycle")
+    parser.add_argument("--brain-knowledge", nargs="?", const="channel_a", help="Display structured institutional knowledge summary")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -389,6 +391,27 @@ def main():
         print(f"  CONTENT BRAIN STRATEGIC EXPLANATION: {args.brain_explain.upper()}")
         print(f"=======================================================")
         print(json.dumps(expl, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_cycle is not None:
+        from growth.brain.cycle import DailyBrainCycle
+        cycle = DailyBrainCycle()
+        report = cycle.run_cycle(args.brain_cycle)
+        print(f"\n=======================================================")
+        print(f"  AUTOMATED DAILY BRAIN CYCLE: {args.brain_cycle.upper()}")
+        print(f"  (Zero auto-upload authority; Gated at Discord review)")
+        print(f"=======================================================")
+        print(json.dumps(report, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_knowledge is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        summary = brain.memory.get_knowledge_summary(args.brain_knowledge)
+        print(f"\n=======================================================")
+        print(f"  INSTITUTIONAL KNOWLEDGE SUMMARY: {args.brain_knowledge.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(summary, indent=2))
         print("=======================================================\n")
 
 

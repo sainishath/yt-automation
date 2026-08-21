@@ -11,6 +11,7 @@ from growth.brain.schemas import (
     ConfidenceLevel,
     EvidenceItem,
     KnowledgeLevel,
+    KnowledgeState,
     ContentOpportunity,
     Hypothesis,
     DecisionType,
@@ -19,17 +20,22 @@ from growth.brain.schemas import (
 )
 from growth.brain.memory import BrainMemory
 from growth.brain.evidence import EvidenceEvaluator
+from growth.brain.evaluator import MultiArmExperimentEvaluator, EvaluationReport, ExperimentDecision
+from growth.brain.learning_engine import LearningEngine
+from growth.brain.strategy_evolution import StrategyEvolutionEngine
 from growth.brain.opportunity_engine import OpportunityEngine
 from growth.brain.hypothesis_engine import HypothesisEngine
 from growth.brain.decision_engine import DecisionEngine
 from growth.brain.explanation_engine import ExplanationEngine
 from growth.brain.brain import ContentBrain
+from growth.brain.cycle import DailyBrainCycle
 
 __all__ = [
     "EvidenceSource",
     "ConfidenceLevel",
     "EvidenceItem",
     "KnowledgeLevel",
+    "KnowledgeState",
     "ContentOpportunity",
     "Hypothesis",
     "DecisionType",
@@ -37,9 +43,15 @@ __all__ = [
     "BrainMemorySnapshot",
     "BrainMemory",
     "EvidenceEvaluator",
+    "MultiArmExperimentEvaluator",
+    "EvaluationReport",
+    "ExperimentDecision",
+    "LearningEngine",
+    "StrategyEvolutionEngine",
     "OpportunityEngine",
     "HypothesisEngine",
     "DecisionEngine",
     "ExplanationEngine",
     "ContentBrain",
+    "DailyBrainCycle",
 ]
