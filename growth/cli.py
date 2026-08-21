@@ -69,6 +69,12 @@ def main():
     parser.add_argument("--experiment-status", type=str, metavar="EXP_ID", help="Display full audit status and lineage for a specific experiment")
     parser.add_argument("--experiments-ready", action="store_true", help="Display experiments ready for execution in the queue")
     parser.add_argument("--evaluate-experiment", type=str, metavar="EXP_ID", help="Evaluate experiment metrics and apply First-Party Dominance")
+    parser.add_argument("--approve-experiment", type=str, metavar="EXP_ID", help="Advance experiment from PROPOSED to APPROVED")
+    parser.add_argument("--next-experiment-job", choices=["channel_a", "channel_b"], help="Create and record a production job for an active experiment")
+    parser.add_argument("--register-upload", action="store_true", help="Register a verified YouTube upload in the database")
+    parser.add_argument("--video-id", type=str, help="Video ID for upload registration")
+    parser.add_argument("--yt-id", type=str, help="YouTube video ID for upload registration")
+    parser.add_argument("--snapshot-status", action="store_true", help="Check and report status of pending performance snapshot windows")
     parser.add_argument("--experiment-report", action="store_true", help="Generate comprehensive EXPERIMENT_STATUS_REPORT.md")
     args = parser.parse_args()
 
@@ -285,6 +291,49 @@ def main():
         report_text = generate_experiment_status_report(repo, output_path=str(report_path))
         print(f"\n[Growth CLI] Successfully generated experiment status report at: {report_path.name}")
         print(f"[Growth CLI] Report size: {len(report_text)} characters.\n")
+
+    if args.approve_experiment:
+        from growth.experiments.experiment_queue import ExperimentQueue
+        queue = ExperimentQueue(repo)
+        res = queue.approve_experiment(args.approve_experiment)
+        print(f"\n=======================================================")
+        print(f"  EXPERIMENT APPROVAL RESULT")
+        print(f"=======================================================")
+        print(json.dumps(res, indent=2))
+        print("=======================================================\n")
+
+    if args.next_experiment_job:
+        from growth.experiments.production_adapter import ProductionJobAdapter
+        adapter = ProductionJobAdapter(repo=repo)
+        job_res = adapter.create_experiment_production_job(args.next_experiment_job)
+        print(f"\n=======================================================")
+        print(f"  EXPERIMENT PRODUCTION JOB CREATED: {args.next_experiment_job.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(job_res, indent=2))
+        print("=======================================================\n")
+
+    if args.register_upload:
+        if not args.video_id or not args.yt_id:
+            print("[Growth CLI] Error: --register-upload requires --video-id and --yt-id.")
+        else:
+            from growth.experiments.sample_tracker import ExperimentSampleTracker
+            tracker = ExperimentSampleTracker(repo=repo)
+            upload_res = tracker.register_real_upload(video_id=args.video_id, youtube_video_id=args.yt_id)
+            print(f"\n=======================================================")
+            print(f"  REAL UPLOAD REGISTRATION RESULT")
+            print(f"=======================================================")
+            print(json.dumps(upload_res, indent=2))
+            print("=======================================================\n")
+
+    if args.snapshot_status:
+        from growth.analytics.snapshot_scheduler import SnapshotScheduler
+        scheduler = SnapshotScheduler(repo=repo, dry_run=False)
+        sched_res = scheduler.run_pending_snapshot_checks()
+        print(f"\n=======================================================")
+        print(f"  PERFORMANCE SNAPSHOT WINDOWS CHECK")
+        print(f"=======================================================")
+        print(json.dumps(sched_res, indent=2))
+        print("=======================================================\n")
 
 
 if __name__ == "__main__":

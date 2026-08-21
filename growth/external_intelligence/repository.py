@@ -314,6 +314,11 @@ class ExternalIntelligenceRepository:
                 prior.review_by
             ))
 
+    def get_external_prior(self, prior_id: str) -> Optional[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            row = conn.execute("SELECT * FROM external_priors WHERE prior_id = ?", (prior_id,)).fetchone()
+            return dict(row) if row else None
+
     def list_external_priors(self, target_channel_id: str, status: Optional[str] = None) -> List[Dict[str, Any]]:
         with get_db(self.db_path) as conn:
             if status:

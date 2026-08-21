@@ -282,6 +282,53 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
                 logging.error(f"External research failed: {e}")
                 self._send_json(500, {"status": "error", "message": str(e)})
 
+        elif path in ["/api/experiments/approve", "/api/growth/experiments/approve"]:
+            try:
+                exp_id = payload.get("experiment_id")
+                from growth.experiments.experiment_queue import ExperimentQueue
+                queue = ExperimentQueue(repo=repo)
+                res = queue.approve_experiment(exp_id)
+                self._send_json(200, res)
+            except Exception as e:
+                logging.error(f"Approve experiment failed: {e}")
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path in ["/api/jobs/create-experiment-job", "/api/growth/jobs/create-experiment-job"]:
+            try:
+                channel = payload.get("channel_id", "channel_a")
+                topic_override = payload.get("topic_override")
+                from growth.experiments.production_adapter import ProductionJobAdapter
+                adapter = ProductionJobAdapter(repo=repo)
+                job_res = adapter.create_experiment_production_job(channel, topic_override=topic_override)
+                self._send_json(200, {"status": "success", "job": job_res})
+            except Exception as e:
+                logging.error(f"Create experiment job failed: {e}")
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path in ["/api/videos/register-upload", "/api/growth/videos/register-upload"]:
+            try:
+                vid_id = payload.get("video_id")
+                yt_id = payload.get("youtube_video_id")
+                yt_url = payload.get("youtube_url")
+                privacy = payload.get("privacy_status", "public")
+                from growth.experiments.sample_tracker import ExperimentSampleTracker
+                tracker = ExperimentSampleTracker(repo=repo)
+                res = tracker.register_real_upload(video_id=vid_id, youtube_video_id=yt_id, youtube_url=yt_url, privacy=privacy)
+                self._send_json(200, res)
+            except Exception as e:
+                logging.error(f"Register upload failed: {e}")
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path in ["/api/snapshots/check-due", "/api/growth/snapshots/check-due"]:
+            try:
+                from growth.analytics.snapshot_scheduler import SnapshotScheduler
+                scheduler = SnapshotScheduler(repo=repo, dry_run=payload.get("dry_run", False))
+                sched_res = scheduler.run_pending_snapshot_checks()
+                self._send_json(200, sched_res)
+            except Exception as e:
+                logging.error(f"Check due snapshots failed: {e}")
+                self._send_json(500, {"status": "error", "message": str(e)})
+
         else:
             self._send_json(404, {"status": "error", "message": "Endpoint not found"})
 

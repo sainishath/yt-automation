@@ -73,7 +73,8 @@ class SnapshotScheduler:
                                 video_id=vid_id,
                                 youtube_video_id=yt_id,
                                 window_name=win_name,
-                                duration=duration
+                                duration=duration,
+                                channel_id=vid.get("channel_id")
                             )
                             collected_count += 1
                         except Exception as e:
