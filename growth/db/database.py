@@ -96,6 +96,12 @@ def init_db(db_path: Path = DEFAULT_DB_PATH) -> None:
             )
         """)
 
+        # 5. Ensure performance_snapshots has unique index for upserts
+        cursor.execute("""
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_snapshots_video_window
+            ON performance_snapshots(video_id, window_name)
+        """)
+
         conn.commit()
     finally:
         conn.close()
