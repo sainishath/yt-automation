@@ -100,6 +100,45 @@ class JobModel:
     attempt_count: int = 1
 
 
+@dataclass
+class ExperimentModel:
+    experiment_id: str
+    channel_id: str
+    name: str
+    hypothesis: str
+    variable_tested: str
+    control_definition: str
+    variant_definition: str
+    primary_metric: str
+    secondary_metrics: Optional[List[str]] = None
+    min_sample_size: int = 4
+    status: str = "PROPOSED"
+    result: Optional[str] = None
+    confidence: Optional[str] = None
+    external_pattern_id: Optional[str] = None
+    external_prior_id: Optional[str] = None
+    source_channels: Optional[List[str]] = None
+    transferability_score: Optional[float] = None
+    transferability_classification: Optional[str] = None
+    prior_weight: Optional[float] = None
+    provenance: str = "FIRST_PARTY"
+    rationale: Optional[str] = None
+    decision: Optional[str] = None
+    delta_percentage: Optional[float] = None
+    control_count: int = 0
+    treatment_count: int = 0
+    control_median: Optional[float] = None
+    treatment_median: Optional[float] = None
+    evaluated_at: Optional[str] = None
+    first_party_override_status: Optional[str] = None
+    created_at: Optional[str] = None
+    updated_at: Optional[str] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+
 class GrowthRepository:
     def __init__(self, db_path: Path = DEFAULT_DB_PATH):
         self.db_path = db_path
@@ -274,3 +313,107 @@ class GrowthRepository:
             else:
                 rows = conn.execute("SELECT * FROM jobs ORDER BY created_at DESC LIMIT ?", (limit,)).fetchall()
             return [dict(r) for r in rows]
+
+    def upsert_experiment(self, exp: ExperimentModel) -> None:
+        sec_metrics_json = json.dumps(exp.secondary_metrics) if exp.secondary_metrics else None
+        src_channels_json = json.dumps(exp.source_channels) if exp.source_channels else None
+
+        with get_db(self.db_path) as conn:
+            conn.execute("""
+                INSERT INTO experiments (
+                    experiment_id, channel_id, name, hypothesis, variable_tested,
+                    control_definition, variant_definition, primary_metric, secondary_metrics,
+                    min_sample_size, status, result, confidence, external_pattern_id,
+                    external_prior_id, source_channels, transferability_score,
+                    transferability_classification, prior_weight, provenance, rationale,
+                    decision, delta_percentage, control_count, treatment_count,
+                    control_median, treatment_median, evaluated_at, first_party_override_status,
+                    updated_at
+                ) VALUES (
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP
+                )
+                ON CONFLICT(experiment_id) DO UPDATE SET
+                    name=excluded.name,
+                    hypothesis=excluded.hypothesis,
+                    variable_tested=excluded.variable_tested,
+                    control_definition=excluded.control_definition,
+                    variant_definition=excluded.variant_definition,
+                    primary_metric=excluded.primary_metric,
+                    secondary_metrics=excluded.secondary_metrics,
+                    min_sample_size=excluded.min_sample_size,
+                    status=excluded.status,
+                    result=excluded.result,
+                    confidence=excluded.confidence,
+                    external_pattern_id=excluded.external_pattern_id,
+                    external_prior_id=excluded.external_prior_id,
+                    source_channels=excluded.source_channels,
+                    transferability_score=excluded.transferability_score,
+                    transferability_classification=excluded.transferability_classification,
+                    prior_weight=excluded.prior_weight,
+                    provenance=excluded.provenance,
+                    rationale=excluded.rationale,
+                    decision=excluded.decision,
+                    delta_percentage=excluded.delta_percentage,
+                    control_count=excluded.control_count,
+                    treatment_count=excluded.treatment_count,
+                    control_median=excluded.control_median,
+                    treatment_median=excluded.treatment_median,
+                    evaluated_at=excluded.evaluated_at,
+                    first_party_override_status=excluded.first_party_override_status,
+                    updated_at=CURRENT_TIMESTAMP
+            """, (
+                exp.experiment_id, exp.channel_id, exp.name, exp.hypothesis, exp.variable_tested,
+                exp.control_definition, exp.variant_definition, exp.primary_metric, sec_metrics_json,
+                exp.min_sample_size, exp.status, exp.result, exp.confidence, exp.external_pattern_id,
+                exp.external_prior_id, src_channels_json, exp.transferability_score,
+                exp.transferability_classification, exp.prior_weight, exp.provenance, exp.rationale,
+                exp.decision, exp.delta_percentage, exp.control_count, exp.treatment_count,
+                exp.control_median, exp.treatment_median, exp.evaluated_at, exp.first_party_override_status
+            ))
+
+    def get_experiment(self, experiment_id: str) -> Optional[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            row = conn.execute("SELECT * FROM experiments WHERE experiment_id = ?", (experiment_id,)).fetchone()
+            if not row:
+                return None
+            d = dict(row)
+            if d.get("secondary_metrics"):
+                try:
+                    d["secondary_metrics"] = json.loads(d["secondary_metrics"])
+                except Exception:
+                    pass
+            if d.get("source_channels"):
+                try:
+                    d["source_channels"] = json.loads(d["source_channels"])
+                except Exception:
+                    pass
+            return d
+
+    def list_experiments(self, channel_id: Optional[str] = None, status: Optional[str] = None) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            query = "SELECT * FROM experiments WHERE 1=1"
+            params = []
+            if channel_id:
+                query += " AND channel_id = ?"
+                params.append(channel_id)
+            if status:
+                query += " AND status = ?"
+                params.append(status)
+            query += " ORDER BY created_at DESC"
+            rows = conn.execute(query, tuple(params)).fetchall()
+            results = []
+            for r in rows:
+                d = dict(r)
+                if d.get("secondary_metrics"):
+                    try:
+                        d["secondary_metrics"] = json.loads(d["secondary_metrics"])
+                    except Exception:
+                        pass
+                if d.get("source_channels"):
+                    try:
+                        d["source_channels"] = json.loads(d["source_channels"])
+                    except Exception:
+                        pass
+                results.append(d)
+            return results
+

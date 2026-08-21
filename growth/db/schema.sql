@@ -102,12 +102,32 @@ CREATE TABLE IF NOT EXISTS experiments (
     control_definition TEXT NOT NULL,
     variant_definition TEXT NOT NULL,
     primary_metric TEXT NOT NULL,
-    min_sample_size INTEGER DEFAULT 10,
-    status TEXT NOT NULL, -- 'PROPOSED', 'ACTIVE', 'COMPLETED', 'REJECTED'
+    secondary_metrics TEXT, -- JSON array
+    min_sample_size INTEGER DEFAULT 4,
+    status TEXT NOT NULL, -- 'PROPOSED', 'APPROVED', 'SCHEDULED', 'RUNNING', 'COLLECTING_DATA', 'EVALUATED', 'ACCEPTED', 'REJECTED', 'INCONCLUSIVE', 'CANCELLED'
     result TEXT,
     confidence TEXT,
+    external_pattern_id TEXT,
+    external_prior_id TEXT,
+    source_channels TEXT, -- JSON array or comma-separated
+    transferability_score REAL,
+    transferability_classification TEXT,
+    prior_weight REAL,
+    provenance TEXT DEFAULT 'FIRST_PARTY', -- 'FIRST_PARTY', 'EXTERNAL_INTELLIGENCE'
+    rationale TEXT,
+    decision TEXT,
+    delta_percentage REAL,
+    control_count INTEGER DEFAULT 0,
+    treatment_count INTEGER DEFAULT 0,
+    control_median REAL,
+    treatment_median REAL,
+    evaluated_at TIMESTAMP,
+    first_party_override_status TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(channel_id) REFERENCES channels(channel_id)
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(channel_id) REFERENCES channels(channel_id),
+    FOREIGN KEY(external_pattern_id) REFERENCES external_patterns(pattern_id),
+    FOREIGN KEY(external_prior_id) REFERENCES external_priors(prior_id)
 );
 
 CREATE TABLE IF NOT EXISTS strategy_versions (
