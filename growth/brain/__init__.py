@@ -40,6 +40,12 @@ from growth.brain.belief_engine import (
 )
 from growth.brain.weekly_cycle import WeeklyLearningCycle
 from growth.brain.learning_trace import VideoLearningTrace, LearningTraceEngine
+from growth.brain.channel_trajectory import (
+    ChannelHealthSnapshot,
+    ScorecardMetric,
+    ChannelImprovementScorecard,
+    ChannelTrajectoryEngine
+)
 
 __all__ = [
     "EvidenceSource",
@@ -77,4 +83,8 @@ __all__ = [
     "WeeklyLearningCycle",
     "VideoLearningTrace",
     "LearningTraceEngine",
+    "ChannelHealthSnapshot",
+    "ScorecardMetric",
+    "ChannelImprovementScorecard",
+    "ChannelTrajectoryEngine",
 ]

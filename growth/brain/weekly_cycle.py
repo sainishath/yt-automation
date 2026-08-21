@@ -22,6 +22,9 @@ from growth.brain.production_recommendation import ProductionRecommendationEngin
 from growth.brain.memory import BrainMemory
 
 
+from growth.brain.channel_trajectory import ChannelTrajectoryEngine, ChannelHealthSnapshot, ChannelImprovementScorecard
+
+
 class WeeklyLearningCycle:
     """
     Executes the weekly strategic synthesis loop for Content Brain.
@@ -38,6 +41,7 @@ class WeeklyLearningCycle:
         self.evaluator = MultiArmExperimentEvaluator(repo)
         self.learning_engine = LearningEngine(repo, evaluator=self.evaluator)
         self.strategy_evolution = StrategyEvolutionEngine(repo)
+        self.trajectory_engine = ChannelTrajectoryEngine(repo)
         self.memory = BrainMemory(repo.db_path)
         self.decision_engine = DecisionEngine(self.memory)
         self.rec_engine = ProductionRecommendationEngine(output_dir=self.output_dir)
@@ -49,9 +53,10 @@ class WeeklyLearningCycle:
         2. Evaluates mature experiment cohorts (N >= 4).
         3. Emits learning events & FIRST_PARTY_OVERRIDE.
         4. Evaluates immutable strategy mutation under 7-day cooldown.
-        5. Updates negative knowledge (DO_NOT_USE registry).
-        6. Generates next week's 70/20/10 production recommendation plan.
-        7. Produces WEEKLY_LEARNING_REPORT.md.
+        5. Computes channel health & improvement scorecard.
+        6. Updates negative knowledge (DO_NOT_USE registry).
+        7. Generates next week's 70/20/10 production recommendation plan.
+        8. Produces structured two-section WEEKLY_LEARNING_REPORT.md.
         """
         start_time = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -97,17 +102,20 @@ class WeeklyLearningCycle:
 
             if report.status == "EVALUATED":
                 completed_exps.append(exp_id)
-                # Process learning events & first-party overrides
                 self.learning_engine.process_experiment_outcome(exp_id)
 
         # 3. Strategy Mutation Check (with Cooldown)
         strategy_mutation = self.strategy_evolution.evaluate_strategy_mutation(channel_id)
 
-        # 4. Belief State & Negative Knowledge
+        # 4. Channel Health & Scorecard
+        health_snapshot = self.trajectory_engine.compute_channel_health(channel_id, tag="CURRENT")
+        scorecard = self.trajectory_engine.generate_scorecard(channel_id, current_snapshot=health_snapshot)
+
+        # 5. Belief State & Negative Knowledge
         beliefs = [b.to_dict() for b in self.belief_engine.get_channel_beliefs(channel_id)]
         neg_knowledge = self.belief_engine.get_negative_knowledge(channel_id)
 
-        # 5. Next Production Decision & Plan
+        # 6. Next Production Decision & Plan
         decision = self.decision_engine.recommend_next_decision(channel_id)
         recommendation = self.rec_engine.generate_recommendation(decision, save_plan_file=True)
 
@@ -127,13 +135,15 @@ class WeeklyLearningCycle:
             "completed_experiments_count": len(completed_exps),
             "experiment_evaluations": eval_reports,
             "strategy_mutation_status": strategy_mutation,
+            "channel_health": health_snapshot.to_dict(),
+            "channel_scorecard": scorecard.to_dict(),
             "belief_states": beliefs,
             "negative_knowledge": neg_knowledge,
             "next_production_plan": recommendation.to_dict(),
             "diagnostics_summary": diagnostics[:5]
         }
 
-        # 6. Write WEEKLY_LEARNING_REPORT.md
+        # 7. Write WEEKLY_LEARNING_REPORT.md
         md_content = self._format_markdown_report(report_data)
         report_path = self.output_dir / f"WEEKLY_LEARNING_REPORT_{channel_id.upper()}.md"
         with open(report_path, "w", encoding="utf-8") as f:
@@ -146,16 +156,25 @@ class WeeklyLearningCycle:
         mb = data["maturity_breakdown"]
         strat = data["strategy_mutation_status"]
         plan = data["next_production_plan"]
+        sc = data.get("channel_scorecard", {})
+        ch_health = data.get("channel_health", {})
+
+        scorecard_rows = ""
+        for m in sc.get("metrics", []):
+            d_str = f"{m.get('delta_percentage'):+.1f}%" if m.get('delta_percentage') is not None else "N/A"
+            scorecard_rows += f"| **{m.get('name')}** | `{m.get('baseline_value')}` | `{m.get('current_value')}` | `{d_str}` | `{m.get('evidence_classification')}` |\n"
 
         return f"""# WEEKLY CONTENT INTELLIGENCE & LEARNING REPORT: {ch}
 
 **Generated At:** {data['period_end']}  
 **Channel ID:** `{data['channel_id']}`  
+**Trial Strategy Version:** `{strat.get('current_version', 'v1.0')}`  
 
 ---
 
-## 1. Executive Summary & Video Accounting
+# SECTION A — EXPERIMENTAL LEARNING (Cohort & Arm Level)
 
+### 1. Experiment Sample Accounting & Maturity
 - **Total Published Videos:** {data['total_published_videos']}
 - **Mature Videos (7d+):** {mb['mature_count']}
 - **Preliminary Videos (24h/48h):** {mb['preliminary_count']}
@@ -163,24 +182,33 @@ class WeeklyLearningCycle:
 - **Active Experiments:** {data['active_experiments_count']}
 - **Completed Experiments ($N \\ge 4$):** {data['completed_experiments_count']}
 
----
-
-## 2. Strategy & Version Evolution
-
-- **Current Version:** `{strat.get('current_version', 'v1.0')}`
+### 2. Strategy Mutation & Cooldown Guard
 - **Mutation Action:** `{strat.get('action', 'NO_MUTATION_WARRANTED')}`
 - **Reason:** {strat.get('reason', 'N/A')}
 
----
-
-## 3. Institutional Negative Knowledge (`DO_NOT_USE`)
-
+### 3. Institutional Negative Knowledge (`DO_NOT_USE`)
 - **Rejected Patterns Count:** {data['negative_knowledge']['rejected_count']}
 - **Active Uncertainties Count:** {data['negative_knowledge']['uncertain_count']}
 
 ---
 
-## 4. Next Week's Recommended Production Plan
+# SECTION B — CHANNEL TRAJECTORY (Longitudinal Performance)
+
+### 1. Robust Channel Scorecard (Baseline vs Current)
+
+| Metric | Baseline Value | Current Value | Delta % | Evidence Classification |
+|---|---|---|---|---|
+{scorecard_rows.strip()}
+
+### 2. Trajectory Verdict & Causal Attribution
+- **Channel Trajectory Status:** `{sc.get('channel_trajectory_status')}`
+- **Summary Verdict:** {sc.get('summary_verdict')}
+- **Causal Attribution Statement:** *{sc.get('causal_attribution_statement')}*
+- **Distinction Notice:** Experiment win status evaluates single-variable lift ($N \\ge 4$); channel trajectory evaluates overall robust audience reception.
+
+---
+
+# SECTION C — NEXT PRODUCTION PLAN
 
 - **Topic:** {plan.get('topic')}
 - **Packaging Title:** {plan.get('title_recommendation')}
