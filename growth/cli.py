@@ -83,6 +83,7 @@ def main():
     parser.add_argument("--brain-explain", nargs="?", const="channel_a", help="Display deep 10-point explanation of Brain recommendation")
     parser.add_argument("--brain-cycle", nargs="?", const="channel_a", help="Execute complete automated Daily Brain Cycle")
     parser.add_argument("--brain-knowledge", nargs="?", const="channel_a", help="Display structured institutional knowledge summary")
+    parser.add_argument("--brain-dashboard", nargs="?", const="channel_a", help="Display comprehensive Brain Performance & Flywheel Dashboard")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -412,6 +413,75 @@ def main():
         print(f"  INSTITUTIONAL KNOWLEDGE SUMMARY: {args.brain_knowledge.upper()}")
         print(f"=======================================================")
         print(json.dumps(summary, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_dashboard is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        ch = args.brain_dashboard
+        snapshot = brain.memory.get_snapshot(ch)
+        knowledge = brain.memory.get_knowledge_summary(ch)
+        opps = brain.get_ranked_opportunities(ch, limit=3)
+        decision = brain.recommend_next(ch)
+
+        # Get latest video and snapshots
+        vids = brain.memory.get_published_videos(ch)
+        latest_video = vids[0] if vids else None
+        latest_metrics = "PENDING"
+        if latest_video:
+            snaps = brain.memory.repo.get_snapshots_for_video(latest_video["video_id"])
+            if snaps:
+                s = snaps[-1]
+                latest_metrics = {
+                    "window": s.get("window_name"),
+                    "views": s.get("views", 0),
+                    "likes": s.get("likes", 0),
+                    "avg_percentage_viewed": s.get("avg_percentage_viewed", "PENDING"),
+                    "data_source": s.get("data_source")
+                }
+
+        dashboard = {
+            "channel": ch,
+            "current_strategy": snapshot.strategy_version,
+            "active_experiments": [
+                {
+                    "experiment_id": e.get("experiment_id"),
+                    "name": e.get("name"),
+                    "variable_tested": e.get("variable_tested"),
+                    "control_count": e.get("control_count", 0),
+                    "treatment_count": e.get("treatment_count", 0),
+                    "status": e.get("status")
+                }
+                for e in snapshot.active_experiments
+            ],
+            "arm_sample_counts": snapshot.first_party_samples_by_arm,
+            "latest_published_video": {
+                "video_id": latest_video["video_id"] if latest_video else "NONE",
+                "youtube_id": latest_video.get("youtube_video_id") if latest_video else "NONE",
+                "title": latest_video.get("title") if latest_video else "NONE",
+                "metrics": latest_metrics
+            },
+            "known_winners": knowledge.get("supported_patterns", []),
+            "known_losers": knowledge.get("rejected_patterns", []),
+            "contradicted_external_priors": knowledge.get("contradicted_external_beliefs", []),
+            "active_uncertainties": knowledge.get("active_uncertainties", []),
+            "top_ranked_opportunities": opps,
+            "next_recommended_production_decision": {
+                "decision_type": decision.decision_type.value,
+                "arm_type": decision.arm_type,
+                "variable_under_test": decision.variable_under_test,
+                "topic": decision.opportunity.topic if decision.opportunity else None,
+                "hook": decision.opportunity.proposed_hook if decision.opportunity else None,
+                "confidence": decision.confidence.value,
+                "reasoning": decision.reasoning,
+                "why_selected": decision.explanation_breakdown.get("why_this_experiment")
+            }
+        }
+
+        print(f"\n=======================================================")
+        print(f"  CONTENT BRAIN FLYWHEEL DASHBOARD: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(dashboard, indent=2))
         print("=======================================================\n")
 
 

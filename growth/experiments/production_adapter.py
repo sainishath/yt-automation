@@ -35,15 +35,50 @@ class ProductionJobAdapter:
     def create_experiment_production_job(
         self,
         channel_id: str,
-        topic_override: Optional[str] = None
+        topic_override: Optional[str] = None,
+        reuse_existing: bool = True
     ) -> Dict[str, Any]:
         """
         Plans the next video for a channel, creates a tracked JobModel record in SQLite,
         and produces the exact configuration payload for the production pipeline runner.
+        Guarantees idempotency by reusing existing unfulfilled jobs for the same arm/channel.
         """
         video_plan = self.planner.plan_next_video(channel_id)
         if topic_override:
             video_plan["topic"] = topic_override
+
+        target_arm_id = video_plan.get("arm_id")
+
+        if reuse_existing:
+            existing_jobs = self.repo.list_jobs(channel_id=channel_id, limit=20)
+            unfulfilled = [
+                j for j in existing_jobs
+                if j.get("arm_id") == target_arm_id and j.get("status") in ["PLANNED", "GENERATING", "GENERATED", "DISCORD_REVIEW_PENDING"]
+            ]
+            if unfulfilled:
+                existing_job = unfulfilled[0]
+                job_id = existing_job["job_id"]
+                manifest_metadata = {
+                    "job_id": job_id,
+                    "channel_id": channel_id,
+                    "pipeline_id": existing_job.get("pipeline_id") or video_plan["pipeline_id"],
+                    "topic": existing_job.get("topic_text") or video_plan["topic"],
+                    "strategy_version": existing_job.get("strategy_version") or video_plan.get("strategy_version", "v1.0"),
+                    "is_experiment": bool(existing_job.get("experiment_id")),
+                    "experiment_id": existing_job.get("experiment_id"),
+                    "arm_id": existing_job.get("arm_id"),
+                    "arm_type": video_plan.get("arm_type", "CONTROL"),
+                    "variant_id": existing_job.get("variant_id", "CONTROL"),
+                    "variable_under_test": video_plan.get("variable_under_test"),
+                    "allocation_tier": video_plan.get("allocation_tier", "proven"),
+                    "selection_reason": video_plan.get("selection_reason", "")
+                }
+                return {
+                    "job_id": job_id,
+                    "video_plan": video_plan,
+                    "manifest_metadata": manifest_metadata,
+                    "is_existing": True
+                }
 
         ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         suffix = os.urandom(2).hex()
