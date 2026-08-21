@@ -123,7 +123,7 @@ def get_authenticated_service(force_reauth: bool = False):
     return youtube
 
 
-def upload_video(video_id: str, output_dir: str = "output", privacy: str = "private") -> dict:
+def upload_video(video_id: str, output_dir: str = "output", privacy: str = "private", force: bool = False) -> dict:
     """
     Uploads a single video to YouTube with its generated metadata.
     Returns dict with video_id, youtube_video_id, and studio_url.
@@ -132,6 +132,8 @@ def upload_video(video_id: str, output_dir: str = "output", privacy: str = "priv
     from googleapiclient.errors import HttpError
 
     video_path = Path(output_dir) / video_id
+    if not video_path.exists():
+        video_path = Path(__file__).parent.parent / output_dir / video_id
     final_mp4 = video_path / "final" / f"{video_id}_final.mp4"
     metadata_path = video_path / "metadata.json"
 
@@ -152,10 +154,10 @@ def upload_video(video_id: str, output_dir: str = "output", privacy: str = "priv
 
     # Idempotency / Duplicate Protection Check
     existing_yt_id = metadata.get("youtube_video_id")
-    if existing_yt_id:
+    if existing_yt_id and not force:
         public_url = metadata.get("youtube_url", f"https://youtu.be/{existing_yt_id}")
         studio_url = f"https://studio.youtube.com/video/{existing_yt_id}/edit"
-        logging.info(f"[IDEMPOTENCY] Video '{video_id}' has already been uploaded (YouTube ID: {existing_yt_id}). Skipping duplicate upload.")
+        logging.info(f"[IDEMPOTENCY] Video '{video_id}' has already been uploaded (YouTube ID: {existing_yt_id}). Skipping duplicate upload (use --force to re-upload).")
         return {
             "video_id": video_id,
             "youtube_video_id": existing_yt_id,
@@ -312,6 +314,7 @@ if __name__ == "__main__":
         action="store_true",
         help="Run OAuth authentication flow only and save token.json, then exit."
     )
+    parser.add_argument("--force", action="store_true", help="Force upload even if metadata already contains a youtube_id")
     parser.add_argument("--output_dir", default="output", help="Base output directory")
     args = parser.parse_args()
 
@@ -342,7 +345,7 @@ if __name__ == "__main__":
         parser.error("--video_id is required when not using --auth_only")
 
     try:
-        result = upload_video(args.video_id, args.output_dir, args.privacy)
+        result = upload_video(args.video_id, args.output_dir, args.privacy, force=args.force)
     except Exception as e:
         logging.error(f"Upload failed: {e}")
         sys.exit(1)
