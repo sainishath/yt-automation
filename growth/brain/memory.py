@@ -230,3 +230,75 @@ class BrainMemory:
             cluster_performance=cluster_perf,
             hook_performance=hook_perf
         )
+
+    def get_knowledge_state(self, channel_id: str, variable: str, variant_value: str) -> str:
+        """
+        Determines the explicit knowledge state for a variable/variant:
+        SUPPORTED, PROMISING, UNCERTAIN, REJECTED, CONTRADICTED, UNTESTED.
+        """
+        exps = self.get_experiments(channel_id)
+        completed = exps["completed"]
+        for exp in completed:
+            if exp.get("variable_tested") == variable:
+                dec = exp.get("decision")
+                n_ctrl = exp.get("control_count", 0)
+                n_treat = exp.get("treatment_count", 0)
+                if n_ctrl >= 4 and n_treat >= 4:
+                    if dec == "ACCEPT_VARIANT":
+                        return "SUPPORTED"
+                    elif dec == "REJECT_VARIANT":
+                        return "REJECTED"
+
+        # Check if external prior is contradicted
+        priors = self.get_external_priors(channel_id)
+        for p in priors:
+            if p.get("status") == "REJECTED":
+                return "CONTRADICTED"
+            if p.get("status") == "HYPOTHESIS" and p.get("prior_weight", 0) > 0:
+                return "PROMISING"
+
+        # Check active experiments
+        active = exps["active"]
+        for exp in active:
+            if exp.get("variable_tested") == variable:
+                return "UNCERTAIN"
+
+        return "UNTESTED"
+
+    def get_knowledge_summary(self, channel_id: str) -> Dict[str, Any]:
+        """
+        Returns structured answers to the core institutional knowledge questions:
+        What do we know, what failed, what succeeded, what is uncertain, what external beliefs disproven.
+        """
+        snapshot = self.get_snapshot(channel_id)
+        exps = snapshot.completed_experiments
+
+        supported = []
+        rejected = []
+        for exp in exps:
+            dec = exp.get("decision")
+            var = exp.get("variable_tested")
+            if dec == "ACCEPT_VARIANT":
+                supported.append(f"{var}: {exp.get('variant_definition')} (+{exp.get('delta_percentage', 0):.1f}%)")
+            elif dec == "REJECT_VARIANT":
+                rejected.append(f"{var}: {exp.get('variant_definition')} ({exp.get('delta_percentage', 0):.1f}%)")
+
+        contradicted = [
+            f"{p.get('prior_id')}: {p.get('first_party_override_reason')}"
+            for p in snapshot.external_priors if p.get("status") == "REJECTED"
+        ]
+
+        active_uncertainties = [
+            f"Testing {e.get('variable_tested')} in '{e.get('name')}' (Control: {e.get('control_count', 0)}, Treatment: {e.get('treatment_count', 0)})"
+            for e in snapshot.active_experiments
+        ]
+
+        return {
+            "channel_id": channel_id,
+            "strategy_version": snapshot.strategy_version,
+            "supported_patterns": supported,
+            "rejected_patterns": rejected,
+            "contradicted_external_beliefs": contradicted,
+            "active_uncertainties": active_uncertainties,
+            "total_published_videos": snapshot.published_videos_count
+        }

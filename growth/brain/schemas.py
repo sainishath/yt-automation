@@ -58,6 +58,15 @@ class EvidenceItem:
         }
 
 
+class KnowledgeState(Enum):
+    SUPPORTED = "SUPPORTED"      # Validated by completed experiment N >= 4
+    PROMISING = "PROMISING"      # Positive emerging trend or valid external prior
+    UNCERTAIN = "UNCERTAIN"      # Untested gap or neutral outcome
+    REJECTED = "REJECTED"        # Empirically failed first-party experiment
+    CONTRADICTED = "CONTRADICTED"# Contradicted by FIRST_PARTY_OVERRIDE
+    UNTESTED = "UNTESTED"        # No empirical data yet
+
+
 @dataclass
 class ContentOpportunity:
     opportunity_id: str
@@ -77,6 +86,7 @@ class ContentOpportunity:
     repetition_penalty: float = 0.0
     overall_score: float = 0.5
     portfolio_tier: str = "proven"  # 'proven', 'adjacent', 'exploratory'
+    knowledge_state: str = "UNTESTED"
     explanation: str = ""
 
     def to_dict(self) -> Dict[str, Any]:
@@ -98,6 +108,7 @@ class ContentOpportunity:
             "repetition_penalty": round(self.repetition_penalty, 3),
             "overall_score": round(self.overall_score, 3),
             "portfolio_tier": self.portfolio_tier,
+            "knowledge_state": self.knowledge_state,
             "explanation": self.explanation
         }
 
