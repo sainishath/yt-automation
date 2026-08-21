@@ -14,13 +14,15 @@ from growth.db.models import GrowthRepository
 from growth.strategy.strategy_manager import StrategyManager
 from growth.topic_engine.topic_pool import TopicPoolManager
 from growth.experiments.experiment_manager import ExperimentManager
+from growth.experiments.experiment_queue import ExperimentQueue
 
 
 class ContentPlanner:
     def __init__(self, repo: GrowthRepository):
         self.repo = repo
         self.strat_mgr = StrategyManager()
-        self.exp_mgr = ExperimentManager()
+        self.exp_mgr = ExperimentManager(repo=repo)
+        self.exp_queue = ExperimentQueue(repo=repo)
 
     def plan_next_video(self, channel_id: str) -> Dict[str, Any]:
         """
@@ -40,15 +42,14 @@ class ContentPlanner:
             raise RuntimeError(f"No available candidate topics in topic pool for {channel_id}")
 
         selected_topic = ranked_topics[0]
+        vid_seq = len(published_vids) + 1
 
-        # Determine experiment assignment
-        active_experiments = strat.get("active_experiments", [])
-        assigned_exp = None
-        assigned_variant = "CONTROL"
-        if active_experiments:
-            assigned_exp = active_experiments[0]
-            # Simple alternating variant assignment based on existing video count
-            assigned_variant = "VARIANT" if (len(published_vids) % 2 == 1) else "CONTROL"
+        # Use ExperimentQueue for portfolio allocation and arm assignment
+        exp_assignment = self.exp_queue.select_experiment_for_topic(
+            channel_id=channel_id,
+            topic_dict=selected_topic,
+            video_sequence_number=vid_seq
+        )
 
         target_duration = 45.0 if channel_id == "channel_a" else 40.0
 
@@ -60,10 +61,14 @@ class ContentPlanner:
             "cluster": selected_topic["cluster"],
             "target_duration_seconds": target_duration,
             "strategy_version": strat.get("strategy_version", "v1.0"),
-            "experiment_id": assigned_exp,
-            "experiment_variant": assigned_variant,
+            "experiment_id": exp_assignment.get("experiment_id"),
+            "arm_id": exp_assignment.get("arm_id"),
+            "experiment_variant": exp_assignment.get("variant_id", "CONTROL"),
+            "variable_under_test": exp_assignment.get("variable_under_test"),
+            "allocation_tier": exp_assignment.get("allocation_tier", "proven"),
             "selection_reason": selected_topic.get("reason", "Top ranked topic in pool"),
             "status": "PLANNED"
         }
 
         return plan
+

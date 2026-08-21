@@ -104,6 +104,9 @@ CREATE TABLE IF NOT EXISTS experiments (
     primary_metric TEXT NOT NULL,
     secondary_metrics TEXT, -- JSON array
     min_sample_size INTEGER DEFAULT 4,
+    target_sample_size INTEGER DEFAULT 4,
+    source_type TEXT DEFAULT 'FIRST_PARTY_DISCOVERY', -- 'EXTERNAL_PRIOR', 'FIRST_PARTY_DISCOVERY', 'GENERAL_HEURISTIC'
+    underlying_principle TEXT,
     status TEXT NOT NULL, -- 'PROPOSED', 'APPROVED', 'SCHEDULED', 'RUNNING', 'COLLECTING_DATA', 'EVALUATED', 'ACCEPTED', 'REJECTED', 'INCONCLUSIVE', 'CANCELLED'
     result TEXT,
     confidence TEXT,
@@ -113,14 +116,17 @@ CREATE TABLE IF NOT EXISTS experiments (
     transferability_score REAL,
     transferability_classification TEXT,
     prior_weight REAL,
-    provenance TEXT DEFAULT 'FIRST_PARTY', -- 'FIRST_PARTY', 'EXTERNAL_INTELLIGENCE'
+    provenance TEXT DEFAULT 'FIRST_PARTY', -- 'FIRST_PARTY', 'EXTERNAL_INTELLIGENCE', 'SIMULATION'
     rationale TEXT,
     decision TEXT,
+    decision_reason TEXT,
     delta_percentage REAL,
     control_count INTEGER DEFAULT 0,
     treatment_count INTEGER DEFAULT 0,
     control_median REAL,
     treatment_median REAL,
+    started_at TIMESTAMP,
+    completed_at TIMESTAMP,
     evaluated_at TIMESTAMP,
     first_party_override_status TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -128,6 +134,18 @@ CREATE TABLE IF NOT EXISTS experiments (
     FOREIGN KEY(channel_id) REFERENCES channels(channel_id),
     FOREIGN KEY(external_pattern_id) REFERENCES external_patterns(pattern_id),
     FOREIGN KEY(external_prior_id) REFERENCES external_priors(prior_id)
+);
+
+CREATE TABLE IF NOT EXISTS experiment_arms (
+    arm_id TEXT PRIMARY KEY,
+    experiment_id TEXT NOT NULL,
+    arm_type TEXT NOT NULL, -- 'CONTROL', 'TREATMENT'
+    name TEXT NOT NULL,
+    definition TEXT NOT NULL,
+    sample_count INTEGER DEFAULT 0,
+    status TEXT DEFAULT 'ACTIVE', -- 'ACTIVE', 'PAUSED', 'COMPLETED'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(experiment_id) REFERENCES experiments(experiment_id)
 );
 
 CREATE TABLE IF NOT EXISTS strategy_versions (
@@ -145,7 +163,7 @@ CREATE TABLE IF NOT EXISTS strategy_versions (
 CREATE TABLE IF NOT EXISTS learning_events (
     event_id INTEGER PRIMARY KEY AUTOINCREMENT,
     channel_id TEXT NOT NULL,
-    event_type TEXT NOT NULL, -- 'WEEKLY_REPORT', 'AUTOPSY', 'STRATEGY_PROPOSAL', 'STRATEGY_MUTATION'
+    event_type TEXT NOT NULL, -- 'WEEKLY_REPORT', 'AUTOPSY', 'STRATEGY_PROPOSAL', 'STRATEGY_MUTATION', 'FIRST_PARTY_OVERRIDE', 'EXPERIMENT_COMPLETED'
     summary TEXT NOT NULL,
     details TEXT,
     confidence TEXT,
@@ -158,17 +176,29 @@ CREATE TABLE IF NOT EXISTS jobs (
     channel_id TEXT NOT NULL,
     pipeline_id TEXT NOT NULL,
     video_id TEXT,
+    topic_id TEXT,
     topic_text TEXT NOT NULL,
     status TEXT NOT NULL, -- 'PLANNED', 'GENERATING', 'GENERATED', 'QA_FAILED', 'AWAITING_REVIEW', 'REJECTED', 'APPROVED', 'UPLOADING', 'PUBLISHED', 'ANALYTICS_PENDING', 'COMPLETED', 'FAILED', 'RETRY_PENDING'
     strategy_version TEXT,
     experiment_id TEXT,
+    arm_id TEXT,
     variant_id TEXT,
     error_message TEXT,
     attempt_count INTEGER DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(channel_id) REFERENCES channels(channel_id)
+    FOREIGN KEY(channel_id) REFERENCES channels(channel_id),
+    FOREIGN KEY(experiment_id) REFERENCES experiments(experiment_id),
+    FOREIGN KEY(arm_id) REFERENCES experiment_arms(arm_id)
 );
+
+CREATE INDEX IF NOT EXISTS idx_experiments_channel ON experiments(channel_id);
+CREATE INDEX IF NOT EXISTS idx_experiments_status ON experiments(status);
+CREATE INDEX IF NOT EXISTS idx_experiment_arms_exp ON experiment_arms(experiment_id);
+CREATE INDEX IF NOT EXISTS idx_videos_exp ON videos(experiment_id);
+CREATE INDEX IF NOT EXISTS idx_jobs_exp ON jobs(experiment_id);
+CREATE INDEX IF NOT EXISTS idx_snapshots_vid ON performance_snapshots(video_id);
+
 
 -- ── External Intelligence Tables ──────────────────────────────────────────
 
