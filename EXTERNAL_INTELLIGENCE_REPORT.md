@@ -1,8 +1,8 @@
 # External Intelligence & Analog Channel Research Report
 
-**Generated:** 2026-08-21 05:37:03 UTC  
-**Channel A Status:** Analyzed 5 videos across 5 analog channels.  
-**Channel B Status:** Analyzed 4 videos across 4 analog channels.  
+**Generated:** 2026-08-21 05:58:34 UTC  
+**Channel A Status:** Analyzed 25 videos across 5 analog channels.  
+**Channel B Status:** Analyzed 25 videos across 5 analog channels.  
 **Evidence Hierarchy Level:** Level 3 (Hypothesis & External Prior) — First-Party Testing Required.
 
 ---
@@ -36,13 +36,21 @@ This report studies publicly observable characteristics of analogous YouTube cha
 ### Channel A Patterns
 | Pattern Name | Type | Channels | Surface Technique | Underlying Principle | Transferability |
 |---|---|:---:|---|---|:---:|
-| **Counterfactual Question Hook Pattern** | `HOOK_STRUCTURE` | 2 | Opening video with an explicit 'What if...?' question | Triggers hypothetical counterfactual curiosity and narrative anticipation | **HIGH** |
-| **Ancient Empires And Turning Points Cluster Pattern** | `TOPIC_CLUSTER` | 2 | Focusing content on ANCIENT_EMPIRES_AND_TURNING_POINTS | Audience familiarity and high baseline historical/scientific curiosity | **HIGH** |
+| **Declarative Statement Hook Pattern** | `HOOK_STRUCTURE` | 4 | Standard DECLARATIVE_STATEMENT structure | Direct topical presentation | **HIGH** |
+| **Counterfactual Question Hook Pattern** | `HOOK_STRUCTURE` | 1 | Opening video with an explicit 'What if...?' question | Triggers hypothetical counterfactual curiosity and narrative anticipation | **HIGH** |
+| **Socratic Question Hook Pattern** | `HOOK_STRUCTURE` | 2 | Posing an ethical/psychological paradox question | Invites viewer commentary and dual-perspective reflection | **HIGH** |
+| **Direct Provocation Hook Pattern** | `HOOK_STRUCTURE` | 1 | Direct second-person address ('You are doing X wrong') | Ego engagement and instant cognitive friction | **HIGH** |
+| **General Educational Cluster Pattern** | `TOPIC_CLUSTER` | 5 | Focusing content on GENERAL_EDUCATIONAL | Audience familiarity and high baseline historical/scientific curiosity | **HIGH** |
+| **Modern Warfare And Geopolitical Divergence Cluster Pattern** | `TOPIC_CLUSTER` | 3 | Focusing content on MODERN_WARFARE_AND_GEOPOLITICAL_DIVERGENCE | Audience familiarity and high baseline historical/scientific curiosity | **HIGH** |
+| **Ai Ethics And Future Dilemmas Cluster Pattern** | `TOPIC_CLUSTER` | 3 | Focusing content on AI_ETHICS_AND_FUTURE_DILEMMAS | Audience familiarity and high baseline historical/scientific curiosity | **HIGH** |
 
 ### Channel B Patterns
 | Pattern Name | Type | Channels | Surface Technique | Underlying Principle | Transferability |
 |---|---|:---:|---|---|:---:|
+| **Socratic Question Hook Pattern** | `HOOK_STRUCTURE` | 5 | Posing an ethical/psychological paradox question | Invites viewer commentary and dual-perspective reflection | **HIGH** |
+| **Declarative Statement Hook Pattern** | `HOOK_STRUCTURE` | 5 | Standard DECLARATIVE_STATEMENT structure | Direct topical presentation | **HIGH** |
 | **Direct Provocation Hook Pattern** | `HOOK_STRUCTURE` | 2 | Direct second-person address ('You are doing X wrong') | Ego engagement and instant cognitive friction | **HIGH** |
+| **General Educational Cluster Pattern** | `TOPIC_CLUSTER` | 5 | Focusing content on GENERAL_EDUCATIONAL | Audience familiarity and high baseline historical/scientific curiosity | **HIGH** |
 | **Ai Ethics And Future Dilemmas Cluster Pattern** | `TOPIC_CLUSTER` | 2 | Focusing content on AI_ETHICS_AND_FUTURE_DILEMMAS | Audience familiarity and high baseline historical/scientific curiosity | **HIGH** |
 
 ---
@@ -58,23 +66,71 @@ This report studies publicly observable characteristics of analogous YouTube cha
 ## 5. Candidate A/B Experiments Proposed for First-Party Testing
 
 ### Channel A Experiment Proposals ($N \ge 4$)
+- **`EXP_A_EXT_TOPIC_02`: External Prior Test: Declarative Statement Hook Pattern**
+  * *Hypothesis:* Implementing 'Standard production pipeline narration' (derived from external pattern 'Declarative Statement Hook Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')
+  * *Variant Arm:* Standard production pipeline narration
+  * *Primary Metric:* `avg_percentage_viewed` (Minimum $N=4$ per arm)
+
 - **`EXP_A_EXT_TOPIC_02`: External Prior Test: Counterfactual Question Hook Pattern**
   * *Hypothesis:* Implementing 'RAG v4 grounded question hook with Whisper-aligned visual beat' (derived from external pattern 'Counterfactual Question Hook Pattern') will improve channel relative performance by >= 5% in target niche.
   * *Control Arm:* Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')
   * *Variant Arm:* RAG v4 grounded question hook with Whisper-aligned visual beat
   * *Primary Metric:* `avg_percentage_viewed` (Minimum $N=4$ per arm)
 
-- **`EXP_A_EXT_TOPIC_02`: External Prior Test: Ancient Empires And Turning Points Cluster Pattern**
-  * *Hypothesis:* Implementing 'Prioritize candidate topics in ANCIENT_EMPIRES_AND_TURNING_POINTS pool allocation' (derived from external pattern 'Ancient Empires And Turning Points Cluster Pattern') will improve channel relative performance by >= 5% in target niche.
+- **`EXP_A_EXT_TOPIC_02`: External Prior Test: Socratic Question Hook Pattern**
+  * *Hypothesis:* Implementing 'Two-host split debate with Host B presenting analytical counter-argument' (derived from external pattern 'Socratic Question Hook Pattern') will improve channel relative performance by >= 5% in target niche.
   * *Control Arm:* Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')
-  * *Variant Arm:* Prioritize candidate topics in ANCIENT_EMPIRES_AND_TURNING_POINTS pool allocation
+  * *Variant Arm:* Two-host split debate with Host B presenting analytical counter-argument
+  * *Primary Metric:* `avg_percentage_viewed` (Minimum $N=4$ per arm)
+
+- **`EXP_A_EXT_TOPIC_02`: External Prior Test: Direct Provocation Hook Pattern**
+  * *Hypothesis:* Implementing 'Host A provocative debate opening challenging common assumptions' (derived from external pattern 'Direct Provocation Hook Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')
+  * *Variant Arm:* Host A provocative debate opening challenging common assumptions
+  * *Primary Metric:* `avg_percentage_viewed` (Minimum $N=4$ per arm)
+
+- **`EXP_A_EXT_TOPIC_02`: External Prior Test: General Educational Cluster Pattern**
+  * *Hypothesis:* Implementing 'Prioritize candidate topics in GENERAL_EDUCATIONAL pool allocation' (derived from external pattern 'General Educational Cluster Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')
+  * *Variant Arm:* Prioritize candidate topics in GENERAL_EDUCATIONAL pool allocation
+  * *Primary Metric:* `avg_percentage_viewed` (Minimum $N=4$ per arm)
+
+- **`EXP_A_EXT_TOPIC_02`: External Prior Test: Modern Warfare And Geopolitical Divergence Cluster Pattern**
+  * *Hypothesis:* Implementing 'Prioritize candidate topics in MODERN_WARFARE_AND_GEOPOLITICAL_DIVERGENCE pool allocation' (derived from external pattern 'Modern Warfare And Geopolitical Divergence Cluster Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')
+  * *Variant Arm:* Prioritize candidate topics in MODERN_WARFARE_AND_GEOPOLITICAL_DIVERGENCE pool allocation
+  * *Primary Metric:* `avg_percentage_viewed` (Minimum $N=4$ per arm)
+
+- **`EXP_A_EXT_TOPIC_02`: External Prior Test: Ai Ethics And Future Dilemmas Cluster Pattern**
+  * *Hypothesis:* Implementing 'Prioritize candidate topics in AI_ETHICS_AND_FUTURE_DILEMMAS pool allocation' (derived from external pattern 'Ai Ethics And Future Dilemmas Cluster Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Chronos Shift Question Hook (e.g., 'What if Rome never fell?')
+  * *Variant Arm:* Prioritize candidate topics in AI_ETHICS_AND_FUTURE_DILEMMAS pool allocation
   * *Primary Metric:* `avg_percentage_viewed` (Minimum $N=4$ per arm)
 
 ### Channel B Experiment Proposals ($N \ge 4$)
+- **`EXP_B_EXT_TOPIC_02`: External Prior Test: Socratic Question Hook Pattern**
+  * *Hypothesis:* Implementing 'Two-host split debate with Host B presenting analytical counter-argument' (derived from external pattern 'Socratic Question Hook Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Debate Protocol Neutral Opening
+  * *Variant Arm:* Two-host split debate with Host B presenting analytical counter-argument
+  * *Primary Metric:* `engagement_rate` (Minimum $N=4$ per arm)
+
+- **`EXP_B_EXT_TOPIC_02`: External Prior Test: Declarative Statement Hook Pattern**
+  * *Hypothesis:* Implementing 'Standard production pipeline narration' (derived from external pattern 'Declarative Statement Hook Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Debate Protocol Neutral Opening
+  * *Variant Arm:* Standard production pipeline narration
+  * *Primary Metric:* `engagement_rate` (Minimum $N=4$ per arm)
+
 - **`EXP_B_EXT_TOPIC_02`: External Prior Test: Direct Provocation Hook Pattern**
   * *Hypothesis:* Implementing 'Host A provocative debate opening challenging common assumptions' (derived from external pattern 'Direct Provocation Hook Pattern') will improve channel relative performance by >= 5% in target niche.
   * *Control Arm:* Standard Debate Protocol Neutral Opening
   * *Variant Arm:* Host A provocative debate opening challenging common assumptions
+  * *Primary Metric:* `engagement_rate` (Minimum $N=4$ per arm)
+
+- **`EXP_B_EXT_TOPIC_02`: External Prior Test: General Educational Cluster Pattern**
+  * *Hypothesis:* Implementing 'Prioritize candidate topics in GENERAL_EDUCATIONAL pool allocation' (derived from external pattern 'General Educational Cluster Pattern') will improve channel relative performance by >= 5% in target niche.
+  * *Control Arm:* Standard Debate Protocol Neutral Opening
+  * *Variant Arm:* Prioritize candidate topics in GENERAL_EDUCATIONAL pool allocation
   * *Primary Metric:* `engagement_rate` (Minimum $N=4$ per arm)
 
 - **`EXP_B_EXT_TOPIC_02`: External Prior Test: Ai Ethics And Future Dilemmas Cluster Pattern**

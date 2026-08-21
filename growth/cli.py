@@ -160,9 +160,10 @@ def main():
             print(f"\n=======================================================")
             print(f"  EXECUTING EXTERNAL RESEARCH: {ch.upper()}")
             print(f"=======================================================")
-            res = researcher.run_channel_research(ch, use_live_api=False)
+            res = researcher.run_channel_research(ch, use_live_api=True)
             print(f"• Channels Scanned: {res['channels_scanned']}")
             print(f"• Videos Analyzed: {res['videos_analyzed']}")
+            print(f"• Data Provenance: {'SIMULATION' if res.get('is_simulation') else 'REAL_PUBLIC_YOUTUBE'}")
             print(f"• Patterns Mined: {len(res['patterns'])}")
             print(f"• Priors Formulated: {len(res['priors'])}")
             print(f"• Recommendations: {len(res['recommendations'])}")
@@ -175,8 +176,8 @@ def main():
         from growth.external_intelligence.researcher import ExternalResearcher
         from growth.external_intelligence.research_reports import generate_external_intelligence_markdown_report
         researcher = ExternalResearcher()
-        res_a = researcher.run_channel_research("channel_a", use_live_api=False)
-        res_b = researcher.run_channel_research("channel_b", use_live_api=False)
+        res_a = researcher.run_channel_research("channel_a", use_live_api=True)
+        res_b = researcher.run_channel_research("channel_b", use_live_api=True)
         report_path = ROOT_DIR / "EXTERNAL_INTELLIGENCE_REPORT.md"
         report_text = generate_external_intelligence_markdown_report(res_a, res_b, output_path=str(report_path))
         print(f"\n[Growth CLI] Successfully generated external intelligence report at: {report_path.name}")
@@ -185,7 +186,7 @@ def main():
     if args.generate_external_experiments:
         from growth.external_intelligence.researcher import ExternalResearcher
         researcher = ExternalResearcher()
-        res = researcher.run_channel_research(args.generate_external_experiments, use_live_api=False)
+        res = researcher.run_channel_research(args.generate_external_experiments, use_live_api=True)
         print(f"\n=======================================================")
         print(f"  PROPOSED A/B EXPERIMENTS: {args.generate_external_experiments.upper()}")
         print(f"=======================================================")
