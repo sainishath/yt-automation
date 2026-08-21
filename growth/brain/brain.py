@@ -116,3 +116,27 @@ class ContentBrain:
             "explanation": decision.explanation_breakdown,
             "invariants": decision.invariants
         }
+
+    def get_belief_state(self, channel_id: str) -> List[Dict[str, Any]]:
+        """
+        Returns current empirical belief states for the channel.
+        """
+        from growth.brain.belief_engine import BeliefEngine
+        engine = BeliefEngine(self.repo, self.ext_repo)
+        return [b.to_dict() for b in engine.get_channel_beliefs(channel_id)]
+
+    def get_negative_knowledge(self, channel_id: str) -> Dict[str, Any]:
+        """
+        Returns institutional negative knowledge (DO_NOT_USE registry).
+        """
+        from growth.brain.belief_engine import BeliefEngine
+        engine = BeliefEngine(self.repo, self.ext_repo)
+        return engine.get_negative_knowledge(channel_id)
+
+    def run_weekly_learning_cycle(self, channel_id: str) -> Dict[str, Any]:
+        """
+        Executes complete weekly learning cycle and writes WEEKLY_LEARNING_REPORT.md.
+        """
+        from growth.brain.weekly_cycle import WeeklyLearningCycle
+        cycle = WeeklyLearningCycle(self.repo)
+        return cycle.run_weekly_cycle(channel_id)

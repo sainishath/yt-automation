@@ -242,6 +242,14 @@ class GrowthRepository:
             rows = conn.execute("SELECT * FROM videos WHERE channel_id = ? ORDER BY generation_timestamp DESC", (channel_id,)).fetchall()
             return [dict(r) for r in rows]
 
+    def list_videos(self, channel_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            if channel_id:
+                rows = conn.execute("SELECT * FROM videos WHERE channel_id = ? ORDER BY generation_timestamp DESC LIMIT ?", (channel_id, limit)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM videos ORDER BY generation_timestamp DESC LIMIT ?", (limit,)).fetchall()
+            return [dict(r) for r in rows]
+
     def list_videos_by_experiment(self, experiment_id: str) -> List[Dict[str, Any]]:
         with get_db(self.db_path) as conn:
             rows = conn.execute("SELECT * FROM videos WHERE experiment_id = ? ORDER BY publish_timestamp ASC", (experiment_id,)).fetchall()
@@ -326,6 +334,9 @@ class GrowthRepository:
         with get_db(self.db_path) as conn:
             rows = conn.execute("SELECT * FROM performance_snapshots WHERE video_id = ? ORDER BY snapshot_id ASC", (video_id,)).fetchall()
             return [dict(r) for r in rows]
+
+    def list_snapshots_for_video(self, video_id: str) -> List[Dict[str, Any]]:
+        return self.get_snapshots_for_video(video_id)
 
     def upsert_job(self, job: JobModel) -> None:
         with get_db(self.db_path) as conn:
