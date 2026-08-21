@@ -297,8 +297,14 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
         
         audio_file = audio_dir / f"scene_{idx:03d}.mp3"
         beat_alt = images_dir / f"beat_{idx+1:03d}.png"
+        beat_files = sorted(images_dir.glob("beat_*.png"), key=lambda p: int("".join(c for c in p.stem if c.isdigit()) or 0))
         if beat_alt.exists():
             img_file = beat_alt
+        elif (images_dir / f"scene_{idx:03d}.png").exists():
+            img_file = images_dir / f"scene_{idx:03d}.png"
+        elif beat_files:
+            clamped_idx = min(idx, len(beat_files) - 1)
+            img_file = beat_files[clamped_idx]
         else:
             img_file = images_dir / f"scene_{idx:03d}.png"
         ass_file = audio_dir / f"scene_{idx:03d}.ass"
