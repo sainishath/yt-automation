@@ -1,6 +1,6 @@
 # First-Party Experiment Status & Closed-Loop Learning Report
 
-**Generated:** 2026-08-21 07:34:01 UTC  
+**Generated:** 2026-08-21 09:23:51 UTC  
 **Total Experiments Tracked:** 4  
 **Active Experiments:** 4 | **Completed Experiments:** 0  
 **Verdict Distribution:** 0 Treatment Wins, 0 Control Wins (Prior Overrides), 0 Inconclusive  
@@ -27,7 +27,7 @@ This report tracks every controlled first-party A/B experiment operating in the 
 
 | Experiment ID | Channel | Variable Tested | Min Sample | Current Progress | Status | Source |
 |---|:---:|---|:---:|:---:|:---:|---|
-| `exp_channel_a_hook_structure_counterfactual_question_v1` | **channel_a** | `HOOK_STRUCTURE` | $N \ge 4$ | C:0/4, T:0/4 | `RUNNING` | FIRST_PARTY_DISCOVERY |
+| `exp_channel_a_hook_structure_counterfactual_question_v1` | **channel_a** | `HOOK_STRUCTURE` | $N \ge 4$ | C:0/4, T:1/4 | `RUNNING` | FIRST_PARTY_DISCOVERY |
 | `exp_channel_a_topic_cluster_modern_warfare_and_geopolitical_divergence_v1` | **channel_a** | `TOPIC_CLUSTER` | $N \ge 4$ | C:0/4, T:0/4 | `APPROVED` | FIRST_PARTY_DISCOVERY |
 | `exp_channel_b_hook_structure_socratic_question_v1` | **channel_b** | `HOOK_STRUCTURE` | $N \ge 4$ | C:0/4, T:0/4 | `APPROVED` | FIRST_PARTY_DISCOVERY |
 | `exp_channel_b_topic_cluster_ai_ethics_and_future_dilemmas_v1` | **channel_b** | `TOPIC_CLUSTER` | $N \ge 4$ | C:0/4, T:0/4 | `APPROVED` | FIRST_PARTY_DISCOVERY |
@@ -50,8 +50,8 @@ This report tracks every controlled first-party A/B experiment operating in the 
 - **Treatment Definition:** RAG v4 grounded question hook with Whisper-aligned visual beat
 - **Success Metric:** `avg_percentage_viewed` (Min $N=4$ per arm)
 - **Linked External Prior:** `prior_pat_channel_a_counterfactual_question` (Initial Weight: 0.22)
-- **Registered Arms:** CONTROL (`arm_exp_channel_a_hook_structure_counterfactual_question_v1_control`: 0 samples), TREATMENT (`arm_exp_channel_a_hook_structure_counterfactual_question_v1_treatment`: 0 samples)
-- **Lineage Status:** `INCOMPLETE` (Pending: videos_unpublished, performance_snapshots_pending, outcome_unevaluated, learning_event_unrecorded)
+- **Registered Arms:** CONTROL (`arm_exp_channel_a_hook_structure_counterfactual_question_v1_control`: 0 samples), TREATMENT (`arm_exp_channel_a_hook_structure_counterfactual_question_v1_treatment`: 1 samples)
+- **Lineage Status:** `INCOMPLETE` (Pending: insufficient_samples_(1/8_needed), performance_snapshots_pending, outcome_unevaluated, learning_event_unrecorded)
 
 --------------------------------------------------
 
