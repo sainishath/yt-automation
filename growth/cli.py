@@ -84,6 +84,13 @@ def main():
     parser.add_argument("--brain-cycle", nargs="?", const="channel_a", help="Execute complete automated Daily Brain Cycle")
     parser.add_argument("--brain-knowledge", nargs="?", const="channel_a", help="Display structured institutional knowledge summary")
     parser.add_argument("--brain-dashboard", nargs="?", const="channel_a", help="Display comprehensive Brain Performance & Flywheel Dashboard")
+    parser.add_argument("--external-ingest", action="store_true", help="Ingest 500+ structured public observations across 10 benchmark channels")
+    parser.add_argument("--external-status", action="store_true", help="Display external intelligence dataset and provenance status")
+    parser.add_argument("--external-patterns", action="store_true", help="Display mined cross-channel external patterns and priors")
+    parser.add_argument("--brain-backtest", nargs="?", const="channel_a", help="Run historical ranking backtest against external benchmark corpus")
+    parser.add_argument("--brain-production-plan", nargs="?", const="channel_a", help="Generate and save structured brain_production_plan.json")
+    parser.add_argument("--brain-production-recommendation", nargs="?", const="channel_a", help="Generate comprehensive ProductionRecommendation payload")
+    parser.add_argument("--brain-negative-knowledge", nargs="?", const="channel_a", help="Display rejected, contradicted, and uncertain institutional knowledge")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -482,6 +489,93 @@ def main():
         print(f"  CONTENT BRAIN FLYWHEEL DASHBOARD: {ch.upper()}")
         print(f"=======================================================")
         print(json.dumps(dashboard, indent=2))
+        print("=======================================================\n")
+
+    if args.external_ingest:
+        from growth.external_intelligence.dataset_builder import ExternalDatasetBuilder
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        ext_repo = ExternalIntelligenceRepository()
+        builder = ExternalDatasetBuilder(ext_repo)
+        res = builder.build_dataset(target_count_per_channel=55)
+        print(f"\n=======================================================")
+        print(f"  EXTERNAL PUBLIC INTELLIGENCE INGESTION")
+        print(f"=======================================================")
+        print(json.dumps(res, indent=2))
+        print("=======================================================\n")
+
+    if args.external_status:
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        ext_repo = ExternalIntelligenceRepository()
+        channels = ext_repo.list_external_channels()
+        videos = ext_repo.list_external_videos(limit=1000)
+        priors = ext_repo.list_external_priors()
+        patterns = ext_repo.list_external_patterns()
+        status = {
+            "channel_count": len(channels),
+            "video_count": len(videos),
+            "pattern_count": len(patterns),
+            "prior_count": len(priors),
+            "provenance": "100% PUBLIC_YOUTUBE",
+            "private_metrics_status": "EXPLICITLY_UNAVAILABLE_FIRST_PARTY_ONLY"
+        }
+        print(f"\n=======================================================")
+        print(f"  EXTERNAL INTELLIGENCE DATASET STATUS")
+        print(f"=======================================================")
+        print(json.dumps(status, indent=2))
+        print("=======================================================\n")
+
+    if args.external_patterns:
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        ext_repo = ExternalIntelligenceRepository()
+        patterns = ext_repo.list_external_patterns()
+        p_list = [p.to_dict() if hasattr(p, "to_dict") else p for p in patterns]
+        print(f"\n=======================================================")
+        print(f"  CROSS-CHANNEL EXTERNAL PATTERNS")
+        print(f"=======================================================")
+        print(json.dumps(p_list, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_backtest is not None:
+        from growth.brain.backtester import BrainBacktester
+        backtester = BrainBacktester()
+        report = backtester.run_backtest(args.brain_backtest)
+        print(f"\n=======================================================")
+        print(f"  HISTORICAL DECISION BACKTEST: {args.brain_backtest.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(report.to_dict(), indent=2))
+        print("=======================================================\n")
+
+    target_plan_ch = args.brain_production_plan or args.brain_production_recommendation
+    if target_plan_ch is not None:
+        from growth.brain.brain import ContentBrain
+        from growth.brain.production_recommendation import ProductionRecommendationEngine
+        brain = ContentBrain()
+        decision = brain.next_production_decision(target_plan_ch)
+        engine = ProductionRecommendationEngine()
+        rec = engine.generate_recommendation(decision, save_plan_file=True)
+        print(f"\n=======================================================")
+        print(f"  CONTENT BRAIN PRODUCTION RECOMMENDATION: {target_plan_ch.upper()}")
+        print(f"  (Single-Variable Enforced: {rec.experiment_variable})")
+        print(f"=======================================================")
+        print(json.dumps(rec.to_dict(), indent=2))
+        print("=======================================================\n")
+
+    if args.brain_negative_knowledge is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        ch = args.brain_negative_knowledge
+        knowledge = brain.memory.get_knowledge_summary(ch)
+        neg = {
+            "channel_id": ch,
+            "rejected_patterns": knowledge.get("rejected_patterns", []),
+            "contradicted_external_priors": knowledge.get("contradicted_external_beliefs", []),
+            "active_uncertainties": knowledge.get("active_uncertainties", []),
+            "untested_patterns": knowledge.get("untested_patterns", [])
+        }
+        print(f"\n=======================================================")
+        print(f"  INSTITUTIONAL NEGATIVE KNOWLEDGE: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(neg, indent=2))
         print("=======================================================\n")
 
 

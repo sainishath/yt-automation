@@ -1,0 +1,42 @@
+{
+  "recommendation_id": "rec_channel_a_20260821_113358",
+  "channel_id": "channel_a",
+  "topic": "What if the Cold War turned hot in 1962?",
+  "angle": "Geopolitics",
+  "title_recommendation": "What If the Cold War turned hot in 1962?",
+  "hook_recommendation": "What if the Cold War turned hot in 1962?",
+  "script_structure": [
+    "Beat 0 (0-4s): High-Stakes Counterfactual Hook Statement",
+    "Beat 1 (4-10s): The Historical Divergence Point & Context",
+    "Beat 2 (10-18s): Immediate Cascade & Technological / Military Shift",
+    "Beat 3 (18-28s): Global Geopolitical Realignment",
+    "Beat 4 (28-38s): Modern Era Consequences & Societal Contrast",
+    "Beat 5 (38-45s): Climax & Provocative Closing Reflection"
+  ],
+  "target_duration": "42s - 50s",
+  "pacing_recommendation": "Fast 3.2s average visual beat duration with zero static freeze.",
+  "visual_strategy": "SDXL Photorealistic oil/cinematic digital art with 8% linear Ken Burns camera motion.",
+  "visual_change_triggers": "Whisper phonetic word boundary transition",
+  "voice_recommendation": "ChristopherNeural (Deep authoritative documentary narration) - Pitch: +0Hz, Rate: +0%",
+  "subtitle_recommendation": "Whisper-aligned dynamic ASS subtitles, yellow keyword emphasis, center-bottom safe zone.",
+  "CTA_recommendation": "Pinned Comment Question: 'Which civilization would dominate today? Tell us below.'",
+  "ending_recommendation": "Echo consequence closing with prompt to subscribe for daily turning points.",
+  "experiment_variable": "HOOK_STRUCTURE",
+  "control_spec": "Standard Chronos Shift Question Hook (e.g. 'What if X happened?')",
+  "treatment_spec": "RAG v4 grounded question hook with Whisper-aligned visual beat",
+  "invariants": [
+    "Voice Actor Profile (e.g. ChristopherNeural)",
+    "Visual Art Architecture (SDXL / Fooocus Prompts)",
+    "Motion Profile (8% Linear Ken Burns Motion)",
+    "Video Duration Target (40s - 55s)",
+    "Subtitles & Captioning Architecture (Whisper ASS Dynamic)",
+    "Audio Loudness & Music Ducking Mix (-22dB bg)",
+    "17/17 QA Gate Verification",
+    "Mandatory Discord Human Approval Gate"
+  ],
+  "rationale": "Active experiment 'exp_channel_a_hook_structure_counterfactual_question_v1' tests 'HOOK_STRUCTURE'. Cohort balance: TREATMENT=1, CONTROL=0. Assigning CONTROL arm to balance empirical sample distribution.",
+  "supporting_evidence": [],
+  "confidence": "LOW",
+  "expected_learning": "Determines whether grounding the opening question in specific historical evidence increases early viewer retention.",
+  "created_at": "2026-08-21 11:33:58"
+}

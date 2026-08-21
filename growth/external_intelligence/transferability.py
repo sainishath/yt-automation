@@ -15,8 +15,8 @@ from growth.external_intelligence.schemas import (
 
 
 def evaluate_pattern_transferability(
-    pattern: ExternalPatternModel,
-    target_channel_id: str,
+    pattern: Any,
+    target_channel_id: Any,
     target_channel_profile: Optional[Dict[str, Any]] = None
 ) -> TransferabilityScoreModel:
     """
@@ -28,8 +28,12 @@ def evaluate_pattern_transferability(
       5. Evidence Strength (0.10)
       6. Repeatability (0.10)
     """
+    if isinstance(pattern, str) and not isinstance(target_channel_id, str):
+        # Swap inverted arguments
+        pattern, target_channel_id = target_channel_id, pattern
+
     # Baseline dimension estimations based on target channel & pattern type
-    if target_channel_id == "channel_a":
+    if str(target_channel_id) == "channel_a":
         # Channel A = Chronos Shift (Cinematic Alternate History, Fooocus SDXL, Ken Burns Candidate A)
         if "ANCIENT" in pattern.name.upper() or "COUNTERFACTUAL" in pattern.name.upper() or "WARFARE" in pattern.name.upper():
             topic_sim = 0.95

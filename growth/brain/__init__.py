@@ -29,6 +29,8 @@ from growth.brain.decision_engine import DecisionEngine
 from growth.brain.explanation_engine import ExplanationEngine
 from growth.brain.brain import ContentBrain
 from growth.brain.cycle import DailyBrainCycle
+from growth.brain.production_recommendation import ProductionRecommendation, ProductionRecommendationEngine
+from growth.brain.backtester import BacktestReport, BrainBacktester
 
 __all__ = [
     "EvidenceSource",
@@ -54,4 +56,8 @@ __all__ = [
     "ExplanationEngine",
     "ContentBrain",
     "DailyBrainCycle",
+    "ProductionRecommendation",
+    "ProductionRecommendationEngine",
+    "BacktestReport",
+    "BrainBacktester",
 ]
