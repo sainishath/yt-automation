@@ -1,0 +1,116 @@
+{
+  "name": "Weekly External Intelligence & Analog Research Schedule",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 3 * * 1"
+            }
+          ]
+        }
+      },
+      "name": "Weekly Monday 3AM Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [200, 300],
+      "id": "node-schedule-01"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8010/api/external-intelligence/research",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"channel_id\": \"channel_a\",\n  \"use_live_api\": false\n}"
+      },
+      "name": "Research Channel A Analogs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [420, 200],
+      "id": "node-research-channel-a"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8010/api/external-intelligence/research",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"channel_id\": \"channel_b\",\n  \"use_live_api\": false\n}"
+      },
+      "name": "Research Channel B Analogs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [420, 400],
+      "id": "node-research-channel-b"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://127.0.0.1:8010/api/external-intelligence/recommendations?channel=channel_a"
+      },
+      "name": "Get Channel A Prior Recommendations",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 200],
+      "id": "node-recs-channel-a"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://127.0.0.1:8010/api/external-intelligence/recommendations?channel=channel_b"
+      },
+      "name": "Get Channel B Prior Recommendations",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [680, 400],
+      "id": "node-recs-channel-b"
+    }
+  ],
+  "connections": {
+    "Weekly Monday 3AM Trigger": {
+      "main": [
+        [
+          {
+            "node": "Research Channel A Analogs",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Research Channel B Analogs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Channel A Analogs": {
+      "main": [
+        [
+          {
+            "node": "Get Channel A Prior Recommendations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Channel B Analogs": {
+      "main": [
+        [
+          {
+            "node": "Get Channel B Prior Recommendations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

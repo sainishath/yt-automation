@@ -61,6 +61,9 @@ def main():
     parser.add_argument("--check-snapshots", action="store_true", help="Check and collect pending analytics snapshots")
     parser.add_argument("--dashboard", action="store_true", help="Display visual terminal metrics dashboard")
     parser.add_argument("--dry-run-loop", action="store_true", help="Execute complete end-to-end closed-loop dry run")
+    parser.add_argument("--research-external", choices=["channel_a", "channel_b", "both"], help="Execute public analog channel research")
+    parser.add_argument("--research-report", action="store_true", help="Generate comprehensive EXTERNAL_INTELLIGENCE_REPORT.md")
+    parser.add_argument("--generate-external-experiments", choices=["channel_a", "channel_b"], help="Generate A/B experiment proposals from external priors")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -148,6 +151,53 @@ def main():
         print("=" * 60)
         print("  CLOSED-LOOP DRY RUN COMPLETED SUCCESSFULLY: PASS")
         print("=" * 60 + "\n")
+
+    if args.research_external:
+        from growth.external_intelligence.researcher import ExternalResearcher
+        researcher = ExternalResearcher()
+        target_channels = ["channel_a", "channel_b"] if args.research_external == "both" else [args.research_external]
+        for ch in target_channels:
+            print(f"\n=======================================================")
+            print(f"  EXECUTING EXTERNAL RESEARCH: {ch.upper()}")
+            print(f"=======================================================")
+            res = researcher.run_channel_research(ch, use_live_api=False)
+            print(f"• Channels Scanned: {res['channels_scanned']}")
+            print(f"• Videos Analyzed: {res['videos_analyzed']}")
+            print(f"• Patterns Mined: {len(res['patterns'])}")
+            print(f"• Priors Formulated: {len(res['priors'])}")
+            print(f"• Recommendations: {len(res['recommendations'])}")
+            for idx, r in enumerate(res['recommendations'], 1):
+                print(f"  {idx}. {r['what']} (Transferability: {r['transferability']}, Status: {r['status']})")
+                print(f"     Why: {r['why']}")
+            print("=======================================================\n")
+
+    if args.research_report:
+        from growth.external_intelligence.researcher import ExternalResearcher
+        from growth.external_intelligence.research_reports import generate_external_intelligence_markdown_report
+        researcher = ExternalResearcher()
+        res_a = researcher.run_channel_research("channel_a", use_live_api=False)
+        res_b = researcher.run_channel_research("channel_b", use_live_api=False)
+        report_path = ROOT_DIR / "EXTERNAL_INTELLIGENCE_REPORT.md"
+        report_text = generate_external_intelligence_markdown_report(res_a, res_b, output_path=str(report_path))
+        print(f"\n[Growth CLI] Successfully generated external intelligence report at: {report_path.name}")
+        print(f"[Growth CLI] Report size: {len(report_text)} characters.\n")
+
+    if args.generate_external_experiments:
+        from growth.external_intelligence.researcher import ExternalResearcher
+        researcher = ExternalResearcher()
+        res = researcher.run_channel_research(args.generate_external_experiments, use_live_api=False)
+        print(f"\n=======================================================")
+        print(f"  PROPOSED A/B EXPERIMENTS: {args.generate_external_experiments.upper()}")
+        print(f"=======================================================")
+        for exp in res.get("experiment_proposals", []):
+            print(f"• Experiment ID: {exp['experiment_id']}")
+            print(f"  Name: {exp['name']}")
+            print(f"  Hypothesis: {exp['hypothesis']}")
+            print(f"  Control: {exp['control_definition']}")
+            print(f"  Variant: {exp['variant_definition']}")
+            print(f"  Sample Size: N >= {exp['min_sample_size']} per arm | Primary Metric: {exp['primary_metric']}")
+            print("-" * 55)
+        print("=======================================================\n")
 
 
 if __name__ == "__main__":
