@@ -319,6 +319,9 @@ class GrowthRepository:
             ))
             return cur.lastrowid
 
+    def insert_performance_snapshot(self, snap: PerformanceSnapshotModel) -> int:
+        return self.insert_snapshot(snap)
+
     def get_snapshots_for_video(self, video_id: str) -> List[Dict[str, Any]]:
         with get_db(self.db_path) as conn:
             rows = conn.execute("SELECT * FROM performance_snapshots WHERE video_id = ? ORDER BY snapshot_id ASC", (video_id,)).fetchall()

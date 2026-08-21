@@ -32,6 +32,12 @@ class StrategyEvolutionEngine:
         Checks if any unapplied winning experiments with N >= 4 justify proposing
         a new immutable strategy version (e.g. v1.1).
         """
+        return self._evaluate_mutation_internal(channel_id)
+
+    def evaluate_and_evolve_strategy(self, channel_id: str) -> Optional[Dict[str, Any]]:
+        return self.evaluate_strategy_mutation(channel_id)
+
+    def _evaluate_mutation_internal(self, channel_id: str) -> Optional[Dict[str, Any]]:
         current_strat = self.strat_mgr.get_active_strategy(channel_id)
         current_ver = current_strat.get("strategy_version", "v1.0")
 

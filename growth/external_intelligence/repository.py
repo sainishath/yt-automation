@@ -140,9 +140,22 @@ class ExternalIntelligenceRepository:
                 video.source_type.value if hasattr(video.source_type, 'value') else video.source_type
             ))
 
-    def list_external_videos(self, external_channel_id: str) -> List[Dict[str, Any]]:
+    def get_external_video(self, external_video_id: str) -> Optional[Dict[str, Any]]:
         with get_db(self.db_path) as conn:
-            rows = conn.execute("SELECT * FROM external_videos WHERE external_channel_id = ? ORDER BY views DESC", (external_channel_id,)).fetchall()
+            row = conn.execute("SELECT * FROM external_videos WHERE external_video_id = ?", (external_video_id,)).fetchone()
+            if not row:
+                return None
+            d = dict(row)
+            d["is_short"] = bool(d["is_short"])
+            d["is_simulation"] = bool(d["is_simulation"])
+            return d
+
+    def list_external_videos(self, external_channel_id: Optional[str] = None, limit: int = 1000) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            if external_channel_id:
+                rows = conn.execute("SELECT * FROM external_videos WHERE external_channel_id = ? ORDER BY views DESC LIMIT ?", (external_channel_id, limit)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM external_videos ORDER BY views DESC LIMIT ?", (limit,)).fetchall()
             res = []
             for r in rows:
                 d = dict(r)
@@ -152,6 +165,9 @@ class ExternalIntelligenceRepository:
             return res
 
     # ── Observations ────────────────────────────────────────────────────────
+
+    def upsert_external_observation(self, obs: ExternalObservationModel) -> None:
+        self.insert_observation(obs)
 
     def insert_observation(self, obs: ExternalObservationModel) -> None:
         with get_db(self.db_path) as conn:
@@ -233,9 +249,12 @@ class ExternalIntelligenceRepository:
             d["is_simulation"] = bool(d["is_simulation"])
             return d
 
-    def list_patterns(self, target_channel_id: str) -> List[Dict[str, Any]]:
+    def list_patterns(self, target_channel_id: Optional[str] = None) -> List[Dict[str, Any]]:
         with get_db(self.db_path) as conn:
-            rows = conn.execute("SELECT * FROM external_patterns WHERE target_channel_id = ? ORDER BY confidence DESC", (target_channel_id,)).fetchall()
+            if target_channel_id:
+                rows = conn.execute("SELECT * FROM external_patterns WHERE target_channel_id = ? ORDER BY confidence DESC", (target_channel_id,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM external_patterns ORDER BY confidence DESC").fetchall()
             res = []
             for r in rows:
                 d = dict(r)
@@ -243,6 +262,9 @@ class ExternalIntelligenceRepository:
                 d["is_simulation"] = bool(d["is_simulation"])
                 res.append(d)
             return res
+
+    def list_external_patterns(self, target_channel_id: Optional[str] = None) -> List[Dict[str, Any]]:
+        return self.list_patterns(target_channel_id)
 
     # ── Transferability Scores ──────────────────────────────────────────────
 
@@ -319,12 +341,18 @@ class ExternalIntelligenceRepository:
             row = conn.execute("SELECT * FROM external_priors WHERE prior_id = ?", (prior_id,)).fetchone()
             return dict(row) if row else None
 
-    def list_external_priors(self, target_channel_id: str, status: Optional[str] = None) -> List[Dict[str, Any]]:
+    def list_external_priors(self, target_channel_id: Optional[str] = None, status: Optional[str] = None) -> List[Dict[str, Any]]:
         with get_db(self.db_path) as conn:
+            query = "SELECT * FROM external_priors WHERE 1=1"
+            params = []
+            if target_channel_id:
+                query += " AND target_channel_id = ?"
+                params.append(target_channel_id)
             if status:
-                rows = conn.execute("SELECT * FROM external_priors WHERE target_channel_id = ? AND status = ? ORDER BY prior_weight DESC", (target_channel_id, status)).fetchall()
-            else:
-                rows = conn.execute("SELECT * FROM external_priors WHERE target_channel_id = ? ORDER BY prior_weight DESC", (target_channel_id,)).fetchall()
+                query += " AND status = ?"
+                params.append(status)
+            query += " ORDER BY prior_weight DESC"
+            rows = conn.execute(query, tuple(params)).fetchall()
             return [dict(r) for r in rows]
 
     def update_prior_status(self, prior_id: str, status: PriorStatus, override_reason: Optional[str] = None) -> None:
