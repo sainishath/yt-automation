@@ -260,6 +260,27 @@ def upload_to_youtube(
         print(f"[Upload] FAIL: {e}")
         return {"status": "error", "error": str(e)}
 
-    except Exception as e:
-        print(f"[Upload] FAIL: {e}")
-        return {"status": "error", "error": str(e)}
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Pipeline 2 YouTube Uploader & Auth")
+    parser.add_argument("--auth_only", action="store_true", help="Run one-time OAuth authentication flow and save token")
+    args = parser.parse_args()
+
+    if args.auth_only:
+        print("[Pipeline 2 Auth] Running OAuth authentication flow for Channel B (Debate Protocol)...")
+        if run_auth_flow():
+            print("[Pipeline 2 Auth] SUCCESS: OAuth token saved to youtube_token.pickle.")
+            try:
+                service = _get_youtube_service()
+                ch_res = service.channels().list(mine=True, part="snippet").execute()
+                items = ch_res.get("items", [])
+                if items:
+                    ch = items[0]
+                    print(f"Authenticated Channel ID: {ch.get('id')}")
+                    print(f"Authenticated Channel Title: {ch.get('snippet', {}).get('title')}")
+                    print(f"Authenticated Channel Handle: {ch.get('snippet', {}).get('customUrl')}")
+            except Exception as ce:
+                print(f"[Pipeline 2 Auth Warning] Could not query channel info: {ce}")
+        else:
+            print("[Pipeline 2 Auth] Authorization failed.")
