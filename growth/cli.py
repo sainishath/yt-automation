@@ -65,6 +65,11 @@ def main():
     parser.add_argument("--research-report", action="store_true", help="Generate comprehensive EXTERNAL_INTELLIGENCE_REPORT.md")
     parser.add_argument("--generate-external-experiments", choices=["channel_a", "channel_b"], help="Generate A/B experiment proposals from external priors")
     parser.add_argument("--create-external-experiments", choices=["channel_a", "channel_b", "both"], help="Bridge active external priors to registered First-Party Experiments")
+    parser.add_argument("--experiments", action="store_true", help="List all first-party experiments in database")
+    parser.add_argument("--experiment-status", type=str, metavar="EXP_ID", help="Display full audit status and lineage for a specific experiment")
+    parser.add_argument("--experiments-ready", action="store_true", help="Display experiments ready for execution in the queue")
+    parser.add_argument("--evaluate-experiment", type=str, metavar="EXP_ID", help="Evaluate experiment metrics and apply First-Party Dominance")
+    parser.add_argument("--experiment-report", action="store_true", help="Generate comprehensive EXPERIMENT_STATUS_REPORT.md")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -222,6 +227,64 @@ def main():
             for conf in res['blocked_conflicts']:
                 print(f"  ⚠️ Blocked Conflict: {conf['experiment_id']} ({conf['reason']})")
             print("=======================================================\n")
+
+    if args.experiments:
+        exps = repo.list_experiments()
+        print(f"\n=======================================================")
+        print(f"  ALL REGISTERED FIRST-PARTY EXPERIMENTS ({len(exps)})")
+        print(f"=======================================================")
+        for e in exps:
+            arms = repo.get_experiment_arms(e["experiment_id"])
+            print(f"• ID: {e['experiment_id']} | Channel: {e['channel_id']} | Status: {e['status']}")
+            print(f"  Variable: {e['variable_tested']} | Min Sample: N >= {e['min_sample_size']}")
+            print(f"  Hypothesis: {e['hypothesis']}")
+            if arms:
+                print(f"  Arms: {', '.join([a['name'] for a in arms])}")
+            print("-" * 55)
+        print("=======================================================\n")
+
+    if args.experiment_status:
+        from growth.experiments.lineage_tracker import ExperimentLineageTracker
+        tracker = ExperimentLineageTracker(repo)
+        trace = tracker.trace_experiment(args.experiment_status)
+        print(f"\n=======================================================")
+        print(f"  EXPERIMENT STATUS & LINEAGE AUDIT: {args.experiment_status}")
+        print(f"=======================================================")
+        print(json.dumps(trace, indent=2))
+        print("=======================================================\n")
+
+    if args.experiments_ready:
+        from growth.experiments.experiment_queue import ExperimentQueue
+        queue = ExperimentQueue(repo)
+        ready_a = queue.get_ready_experiments("channel_a")
+        ready_b = queue.get_ready_experiments("channel_b")
+        print(f"\n=======================================================")
+        print(f"  EXPERIMENTS READY IN EXECUTION QUEUE")
+        print(f"=======================================================")
+        print(f"Channel A Ready ({len(ready_a)}):")
+        for r in ready_a:
+            print(f"  • {r['experiment_id']} ({r['variable_tested']} | State: {r['status']})")
+        print(f"\nChannel B Ready ({len(ready_b)}):")
+        for r in ready_b:
+            print(f"  • {r['experiment_id']} ({r['variable_tested']} | State: {r['status']})")
+        print("=======================================================\n")
+
+    if args.evaluate_experiment:
+        from growth.experiments.experiment_manager import ExperimentManager
+        mgr = ExperimentManager(repo=repo)
+        outcome = mgr.evaluate_experiment_from_db(args.evaluate_experiment)
+        print(f"\n=======================================================")
+        print(f"  EXPERIMENT EVALUATION: {args.evaluate_experiment}")
+        print(f"=======================================================")
+        print(json.dumps(outcome, indent=2))
+        print("=======================================================\n")
+
+    if args.experiment_report:
+        from growth.experiments.experiment_reports import generate_experiment_status_report
+        report_path = ROOT_DIR / "EXPERIMENT_STATUS_REPORT.md"
+        report_text = generate_experiment_status_report(repo, output_path=str(report_path))
+        print(f"\n[Growth CLI] Successfully generated experiment status report at: {report_path.name}")
+        print(f"[Growth CLI] Report size: {len(report_text)} characters.\n")
 
 
 if __name__ == "__main__":

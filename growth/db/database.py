@@ -21,13 +21,17 @@ def init_db(db_path: Path = DEFAULT_DB_PATH) -> None:
         with open(SCHEMA_PATH, "r", encoding="utf-8") as f:
             conn.executescript(f.read())
 
-        # Safe schema migration for existing experiments table
         cursor = conn.cursor()
-        cursor.execute("PRAGMA table_info(experiments)")
-        existing_cols = {row[1] for row in cursor.fetchall()}
 
-        col_defs = [
+        # 1. Experiments table migrations
+        cursor.execute("PRAGMA table_info(experiments)")
+        existing_exp_cols = {row[1] for row in cursor.fetchall()}
+
+        exp_col_defs = [
             ("secondary_metrics", "TEXT"),
+            ("target_sample_size", "INTEGER DEFAULT 4"),
+            ("source_type", "TEXT DEFAULT 'FIRST_PARTY_DISCOVERY'"),
+            ("underlying_principle", "TEXT"),
             ("external_pattern_id", "TEXT"),
             ("external_prior_id", "TEXT"),
             ("source_channels", "TEXT"),
@@ -37,22 +41,60 @@ def init_db(db_path: Path = DEFAULT_DB_PATH) -> None:
             ("provenance", "TEXT DEFAULT 'FIRST_PARTY'"),
             ("rationale", "TEXT"),
             ("decision", "TEXT"),
+            ("decision_reason", "TEXT"),
             ("delta_percentage", "REAL"),
             ("control_count", "INTEGER DEFAULT 0"),
             ("treatment_count", "INTEGER DEFAULT 0"),
             ("control_median", "REAL"),
             ("treatment_median", "REAL"),
+            ("started_at", "TIMESTAMP"),
+            ("completed_at", "TIMESTAMP"),
             ("evaluated_at", "TIMESTAMP"),
             ("first_party_override_status", "TEXT"),
             ("updated_at", "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
         ]
 
-        for col_name, col_type in col_defs:
-            if col_name not in existing_cols:
+        for col_name, col_type in exp_col_defs:
+            if col_name not in existing_exp_cols:
                 try:
                     cursor.execute(f"ALTER TABLE experiments ADD COLUMN {col_name} {col_type}")
                 except Exception:
                     pass
+
+        # 2. Jobs table migrations
+        cursor.execute("PRAGMA table_info(jobs)")
+        existing_job_cols = {row[1] for row in cursor.fetchall()}
+        for col_name, col_type in [("topic_id", "TEXT"), ("arm_id", "TEXT")]:
+            if col_name not in existing_job_cols:
+                try:
+                    cursor.execute(f"ALTER TABLE jobs ADD COLUMN {col_name} {col_type}")
+                except Exception:
+                    pass
+
+        # 3. Videos table migrations
+        cursor.execute("PRAGMA table_info(videos)")
+        existing_vid_cols = {row[1] for row in cursor.fetchall()}
+        for col_name, col_type in [("arm_id", "TEXT"), ("topic_id", "TEXT")]:
+            if col_name not in existing_vid_cols:
+                try:
+                    cursor.execute(f"ALTER TABLE videos ADD COLUMN {col_name} {col_type}")
+                except Exception:
+                    pass
+
+        # 4. Create experiment_arms table if missing
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS experiment_arms (
+                arm_id TEXT PRIMARY KEY,
+                experiment_id TEXT NOT NULL,
+                arm_type TEXT NOT NULL,
+                name TEXT NOT NULL,
+                definition TEXT NOT NULL,
+                sample_count INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'ACTIVE',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY(experiment_id) REFERENCES experiments(experiment_id)
+            )
+        """)
 
         conn.commit()
     finally:

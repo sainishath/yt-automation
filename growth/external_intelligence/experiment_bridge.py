@@ -277,6 +277,9 @@ class ExperimentBridge:
             primary_metric=primary_metric,
             secondary_metrics=secondary_metrics,
             min_sample_size=4,
+            target_sample_size=4,
+            source_type="EXTERNAL_PRIOR",
+            underlying_principle=pattern.underlying_principle,
             status=initial_status,
             external_pattern_id=pattern.pattern_id,
             external_prior_id=prior.prior_id,
@@ -293,7 +296,7 @@ class ExperimentBridge:
 
     def register_experiment(self, experiment: ExperimentModel) -> Dict[str, Any]:
         """
-        Validates, checks conflicts/duplicates, and saves the experiment to the Growth Database.
+        Validates, checks conflicts/duplicates, and saves the experiment and its explicit arms to the Growth Database.
         """
         self.validate_experiment_contract(experiment)
 
@@ -324,13 +327,39 @@ class ExperimentBridge:
                 }
 
         self.repo.upsert_experiment(experiment)
-        logging.info(f"[Experiment Bridge] Successfully registered experiment '{experiment.experiment_id}' in state '{experiment.status}'.")
+
+        # 3. Create and register explicit experiment arms
+        from growth.db.models import ExperimentArmModel
+        arm_control = ExperimentArmModel(
+            arm_id=f"arm_{experiment.experiment_id}_control",
+            experiment_id=experiment.experiment_id,
+            arm_type="CONTROL",
+            name=f"{experiment.name} (Control)",
+            definition=experiment.control_definition,
+            sample_count=experiment.control_count,
+            status="ACTIVE"
+        )
+        arm_treatment = ExperimentArmModel(
+            arm_id=f"arm_{experiment.experiment_id}_treatment",
+            experiment_id=experiment.experiment_id,
+            arm_type="TREATMENT",
+            name=f"{experiment.name} (Treatment)",
+            definition=experiment.variant_definition,
+            sample_count=experiment.treatment_count,
+            status="ACTIVE"
+        )
+        self.repo.upsert_experiment_arm(arm_control)
+        self.repo.upsert_experiment_arm(arm_treatment)
+
+        logging.info(f"[Experiment Bridge] Successfully registered experiment '{experiment.experiment_id}' and arms in state '{experiment.status}'.")
 
         return {
             "status": "REGISTERED",
             "experiment_id": experiment.experiment_id,
             "channel_id": experiment.channel_id,
             "variable_tested": experiment.variable_tested,
+            "control_arm_id": arm_control.arm_id,
+            "treatment_arm_id": arm_treatment.arm_id,
             "state": experiment.status
         }
 

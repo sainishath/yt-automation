@@ -152,15 +152,59 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self._send_json(500, {"status": "error", "message": str(e)})
 
-        elif path == "/api/growth/experiments" or path.startswith("/api/growth/experiments/"):
+        elif path in ["/api/experiments/ready", "/api/growth/experiments/ready"]:
             try:
-                exp_id = path.replace("/api/growth/experiments/", "").strip() if path.startswith("/api/growth/experiments/") and path != "/api/growth/experiments" else params.get("experiment_id", [None])[0]
-                if exp_id and exp_id != "/api/growth/experiments":
-                    exp = repo.get_experiment(exp_id)
+                from growth.experiments.experiment_queue import ExperimentQueue
+                queue = ExperimentQueue(repo=repo)
+                channel = params.get("channel", [None])[0]
+                if channel:
+                    ready = queue.get_ready_experiments(channel)
+                else:
+                    ready = queue.get_ready_experiments("channel_a") + queue.get_ready_experiments("channel_b")
+                self._send_json(200, {"status": "success", "count": len(ready), "ready_experiments": ready})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path.endswith("/outcome") and (path.startswith("/api/experiments/") or path.startswith("/api/growth/experiments/")):
+            try:
+                from growth.experiments.experiment_manager import ExperimentManager
+                exp_id = path.split("/")[-2]
+                mgr = ExperimentManager(repo=repo)
+                outcome = mgr.evaluate_experiment_from_db(exp_id)
+                self._send_json(200, {"status": "success", "outcome": outcome})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path.endswith("/lineage") and (path.startswith("/api/experiments/") or path.startswith("/api/growth/experiments/")):
+            try:
+                from growth.experiments.lineage_tracker import ExperimentLineageTracker
+                exp_id = path.split("/")[-2]
+                tracker = ExperimentLineageTracker(repo=repo)
+                lineage = tracker.trace_experiment(exp_id)
+                self._send_json(200, {"status": "success", "lineage": lineage})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path in ["/api/strategy-versions", "/api/growth/strategy-versions"]:
+            try:
+                from growth.strategy.strategy_manager import StrategyManager
+                strat_mgr = StrategyManager()
+                strat_a = strat_mgr.get_active_strategy("channel_a")
+                strat_b = strat_mgr.get_active_strategy("channel_b")
+                self._send_json(200, {"status": "success", "strategy_versions": {"channel_a": strat_a, "channel_b": strat_b}})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path in ["/api/experiments", "/api/growth/experiments"] or path.startswith("/api/experiments/") or path.startswith("/api/growth/experiments/"):
+            try:
+                clean_path = path.replace("/api/growth/experiments/", "").replace("/api/experiments/", "").strip()
+                if clean_path and clean_path not in ["/api/experiments", "/api/growth/experiments"]:
+                    exp = repo.get_experiment(clean_path)
                     if exp:
-                        self._send_json(200, {"status": "success", "experiment": exp})
+                        arms = repo.get_experiment_arms(clean_path)
+                        self._send_json(200, {"status": "success", "experiment": exp, "arms": arms})
                     else:
-                        self._send_json(404, {"status": "error", "message": f"Experiment '{exp_id}' not found"})
+                        self._send_json(404, {"status": "error", "message": f"Experiment '{clean_path}' not found"})
                 else:
                     channel = params.get("channel", [None])[0]
                     status_filter = params.get("status", [None])[0]
