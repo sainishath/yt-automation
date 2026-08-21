@@ -46,6 +46,10 @@ class SnapshotScheduler:
         now = datetime.utcnow()
 
         for vid in all_videos:
+            # Only query videos that have been legitimately uploaded to YouTube
+            if vid.get("upload_status") != "UPLOADED_PUBLIC" and not self.collector.dry_run:
+                continue
+
             vid_id = vid["video_id"]
             yt_id = vid.get("youtube_video_id") or "simulated_yt_id"
             duration = float(vid.get("duration", 45.0))

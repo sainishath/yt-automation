@@ -92,6 +92,14 @@ class ContentBrain:
         """
         return self.decision_engine.recommend_next_decision(channel_id)
 
+    def next_production_decision(self, channel_id: str) -> BrainDecision:
+        """
+        Operational endpoint for determining the next production decision.
+        Inspects active experiments, cohort balances, 70/20/10 portfolio,
+        and returns a fully traceable BrainDecision.
+        """
+        return self.decision_engine.recommend_next_decision(channel_id)
+
     def explain_recommendation(self, channel_id: str) -> Dict[str, Any]:
         """
         Returns deep 10-point explanation for the current recommendation.
