@@ -15,16 +15,18 @@ def score_topic(
     category: str,
     historical_cluster_avg: float = 0.80,
     novelty: float = 0.75,
-    fact_check_difficulty: float = 0.30
+    fact_check_difficulty: float = 0.30,
+    external_prior_boost: float = 0.0
 ) -> Dict[str, Any]:
     """
-    Computes an explainable topic score (v1.0).
+    Computes an explainable topic score (v1.1).
     Factors:
       - audience_fit (0.30 weight)
       - historical_performance (0.25 weight)
       - novelty (0.20 weight)
       - expected_retention (0.15 weight)
       - fact_check_penalty (0.10 weight)
+      - bounded external prior boost (max +0.05)
     """
     # Baseline audience fit heuristic based on keywords
     audience_fit = 0.85
@@ -43,26 +45,28 @@ def score_topic(
 
     historical_perf = max(min(historical_cluster_avg, 1.0), 0.1)
     ease_of_production = max(1.0 - fact_check_difficulty, 0.1)
+    bounded_ext_boost = min(max(external_prior_boost, 0.0), 0.05)
 
     # Weighted composite score
-    final_score = (
+    base_score = (
         (0.30 * audience_fit) +
         (0.25 * historical_perf) +
         (0.20 * novelty) +
         (0.15 * expected_retention) +
         (0.10 * ease_of_production)
     )
-    final_score = round(final_score, 3)
+    final_score = round(min(base_score + bounded_ext_boost, 1.0), 3)
 
     return {
         "final_score": final_score,
-        "formula_version": "topic_score_v1",
+        "formula_version": "topic_score_v1.1",
         "breakdown": {
             "audience_fit": round(audience_fit, 2),
             "historical_cluster_performance": round(historical_perf, 2),
             "novelty": round(novelty, 2),
             "expected_retention": round(expected_retention, 2),
-            "production_ease": round(ease_of_production, 2)
+            "production_ease": round(ease_of_production, 2),
+            "external_prior_boost": round(bounded_ext_boost, 3)
         },
-        "reason": f"Audience fit: {audience_fit:.2f}, Historical cluster: {historical_perf:.2f}, Novelty: {novelty:.2f}"
+        "reason": f"Audience fit: {audience_fit:.2f}, Historical cluster: {historical_perf:.2f}, Novelty: {novelty:.2f}, Ext boost: {bounded_ext_boost:.2f}"
     }

@@ -149,3 +149,142 @@ CREATE TABLE IF NOT EXISTS jobs (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(channel_id) REFERENCES channels(channel_id)
 );
+
+-- ── External Intelligence Tables ──────────────────────────────────────────
+
+CREATE TABLE IF NOT EXISTS external_channels (
+    external_channel_id TEXT PRIMARY KEY,
+    target_channel_id TEXT NOT NULL, -- 'channel_a' or 'channel_b'
+    channel_title TEXT NOT NULL,
+    handle TEXT,
+    youtube_channel_id TEXT,
+    subscriber_count INTEGER DEFAULT 0,
+    video_count INTEGER DEFAULT 0,
+    content_niche TEXT NOT NULL,
+    similarity_score REAL DEFAULT 0.0,
+    similarity_reasons TEXT, -- JSON array
+    confidence TEXT DEFAULT 'HIGH', -- 'HIGH', 'MEDIUM', 'LOW'
+    is_simulation INTEGER DEFAULT 0, -- 0 for real public data, 1 for simulation
+    source_type TEXT NOT NULL, -- 'PUBLIC_YOUTUBE', 'SIMULATION'
+    discovered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_researched_at TIMESTAMP,
+    FOREIGN KEY(target_channel_id) REFERENCES channels(channel_id)
+);
+
+CREATE TABLE IF NOT EXISTS external_videos (
+    external_video_id TEXT PRIMARY KEY,
+    external_channel_id TEXT NOT NULL,
+    youtube_video_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    url TEXT NOT NULL,
+    published_at TIMESTAMP,
+    duration_seconds REAL DEFAULT 0.0,
+    is_short INTEGER DEFAULT 1,
+    views INTEGER DEFAULT 0,
+    likes INTEGER DEFAULT 0,
+    comments INTEGER DEFAULT 0,
+    relative_view_multiplier REAL DEFAULT 1.0, -- Normalized to channel median
+    collected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_simulation INTEGER DEFAULT 0,
+    source_type TEXT NOT NULL, -- 'PUBLIC_YOUTUBE', 'SIMULATION'
+    FOREIGN KEY(external_channel_id) REFERENCES external_channels(external_channel_id)
+);
+
+CREATE TABLE IF NOT EXISTS external_observations (
+    observation_id TEXT PRIMARY KEY,
+    external_video_id TEXT NOT NULL,
+    observation_type TEXT NOT NULL, -- 'OBJECTIVE_FACT', 'INTERPRETATION'
+    field_name TEXT NOT NULL,
+    observed_value TEXT NOT NULL,
+    interpretation TEXT,
+    evidence_level TEXT NOT NULL, -- 'OBSERVATION', 'EXTERNAL_EVIDENCE'
+    confidence REAL DEFAULT 1.0,
+    is_simulation INTEGER DEFAULT 0,
+    source_type TEXT NOT NULL,
+    recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(external_video_id) REFERENCES external_videos(external_video_id)
+);
+
+CREATE TABLE IF NOT EXISTS external_evidence (
+    evidence_id TEXT PRIMARY KEY,
+    target_channel_id TEXT NOT NULL,
+    pattern_type TEXT NOT NULL,
+    claim_summary TEXT NOT NULL,
+    supporting_channel_count INTEGER DEFAULT 0,
+    supporting_video_count INTEGER DEFAULT 0,
+    performance_evidence TEXT, -- JSON summary of baseline multiples
+    confidence REAL DEFAULT 0.0,
+    is_simulation INTEGER DEFAULT 0,
+    source_type TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(target_channel_id) REFERENCES channels(channel_id)
+);
+
+CREATE TABLE IF NOT EXISTS external_patterns (
+    pattern_id TEXT PRIMARY KEY,
+    target_channel_id TEXT NOT NULL,
+    pattern_type TEXT NOT NULL, -- 'HOOK_STRUCTURE', 'TOPIC_CLUSTER', 'NARRATIVE_FLOW', 'CTA_FORMAT'
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    surface_technique TEXT NOT NULL,
+    underlying_principle TEXT NOT NULL,
+    our_possible_implementation TEXT NOT NULL,
+    frequency REAL DEFAULT 0.0,
+    channel_count INTEGER DEFAULT 0,
+    video_count INTEGER DEFAULT 0,
+    supporting_observations TEXT, -- JSON list of observation IDs
+    consistency_score REAL DEFAULT 0.0,
+    confidence REAL DEFAULT 0.0,
+    is_simulation INTEGER DEFAULT 0,
+    source_type TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(target_channel_id) REFERENCES channels(channel_id)
+);
+
+CREATE TABLE IF NOT EXISTS transferability_scores (
+    transferability_id TEXT PRIMARY KEY,
+    pattern_id TEXT NOT NULL,
+    target_channel_id TEXT NOT NULL,
+    topic_similarity REAL NOT NULL,
+    audience_similarity REAL NOT NULL,
+    format_similarity REAL NOT NULL,
+    production_similarity REAL NOT NULL,
+    evidence_strength REAL NOT NULL,
+    repeatability REAL NOT NULL,
+    overall_transferability_score REAL NOT NULL,
+    classification TEXT NOT NULL, -- 'HIGH', 'MEDIUM', 'LOW', 'DO_NOT_TRANSFER'
+    reason TEXT NOT NULL,
+    evaluated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(pattern_id) REFERENCES external_patterns(pattern_id),
+    FOREIGN KEY(target_channel_id) REFERENCES channels(channel_id)
+);
+
+CREATE TABLE IF NOT EXISTS external_priors (
+    prior_id TEXT PRIMARY KEY,
+    target_channel_id TEXT NOT NULL,
+    pattern_id TEXT NOT NULL,
+    hypothesis TEXT NOT NULL,
+    transferability_classification TEXT NOT NULL,
+    prior_weight REAL DEFAULT 0.20, -- Bounded influence (max 0.30)
+    status TEXT NOT NULL, -- 'HYPOTHESIS', 'TESTING', 'SUPPORTED', 'REJECTED', 'EXPIRED'
+    first_party_override_reason TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    review_by TIMESTAMP,
+    FOREIGN KEY(target_channel_id) REFERENCES channels(channel_id),
+    FOREIGN KEY(pattern_id) REFERENCES external_patterns(pattern_id)
+);
+
+CREATE TABLE IF NOT EXISTS research_runs (
+    run_id TEXT PRIMARY KEY,
+    target_channel_id TEXT NOT NULL,
+    channels_scanned INTEGER DEFAULT 0,
+    videos_analyzed INTEGER DEFAULT 0,
+    patterns_discovered INTEGER DEFAULT 0,
+    priors_generated INTEGER DEFAULT 0,
+    status TEXT NOT NULL, -- 'IN_PROGRESS', 'COMPLETED', 'FAILED', 'PARTIAL'
+    error_message TEXT,
+    is_simulation INTEGER DEFAULT 0,
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP,
+    FOREIGN KEY(target_channel_id) REFERENCES channels(channel_id)
+);

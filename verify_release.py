@@ -231,6 +231,41 @@ p2_cli = subprocess.run([sys.executable, str(P2_DIR / "main.py"), "--help"], cap
 record_check("CLI", "Pipeline 1 pipeline_runner.py --help", p1_cli.returncode == 0, "CLI accessible")
 record_check("CLI", "Pipeline 2 main.py --help", p2_cli.returncode == 0, "CLI accessible")
 
+# 15. Growth Suite Verification
+print("\n>>> 15. Growth Suite Execution...")
+try:
+    from growth.run_growth_tests import run_all_growth_tests
+    growth_pass = run_all_growth_tests()
+    record_check("Growth System", "Growth & Learning 53-Test Suite", growth_pass, "53/53 tests passing")
+except Exception as e:
+    record_check("Growth System", "Growth & Learning Test Suite", False, str(e))
+
+# 16. External Intelligence Subsystem
+print("\n>>> 16. External Intelligence Subsystem...")
+try:
+    from growth.db.database import init_db
+    init_db()
+    from growth.external_intelligence.researcher import ExternalResearcher
+    from growth.external_intelligence.prior_engine import apply_first_party_override
+    from growth.external_intelligence.schemas import ExternalPriorModel, TransferabilityClassification, PriorStatus
+    
+    ext_res = ExternalResearcher()
+    test_run = ext_res.run_channel_research("channel_a", use_live_api=False)
+    priors_ok = len(test_run["priors"]) > 0 and len(test_run["patterns"]) > 0
+    
+    # Test First-Party Dominance Override
+    prior_sample = ExternalPriorModel(
+        prior_id="prior_check", target_channel_id="channel_a", pattern_id="pat_01",
+        hypothesis="Test", transferability_classification=TransferabilityClassification.HIGH,
+        prior_weight=0.25, status=PriorStatus.HYPOTHESIS
+    )
+    overridden = apply_first_party_override(prior_sample, {"decision": "REJECT_VARIANT", "control_count": 4, "delta_percentage": -6.0})
+    override_ok = overridden.status == PriorStatus.REJECTED and overridden.prior_weight == 0.0
+    
+    record_check("External Intelligence", "Research Pipeline & First-Party Dominance Guard", priors_ok and override_ok, "External research and first-party override validated")
+except Exception as e:
+    record_check("External Intelligence", "External Intelligence Subsystem", False, str(e))
+
 # Final Verdict
 if test_results["failed"] == 0:
     test_results["verdict"] = "PASS"

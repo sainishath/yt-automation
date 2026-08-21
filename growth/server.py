@@ -82,6 +82,64 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self._send_json(500, {"status": "error", "message": str(e)})
 
+        elif path == "/api/external-intelligence/channels":
+            try:
+                from growth.external_intelligence.repository import ExternalIntelligenceRepository
+                ext_repo = ExternalIntelligenceRepository(repo.db_path)
+                channel = params.get("channel", [None])[0]
+                channels = ext_repo.list_external_channels(channel)
+                self._send_json(200, {"status": "success", "external_channels": channels})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path == "/api/external-intelligence/patterns":
+            try:
+                from growth.external_intelligence.repository import ExternalIntelligenceRepository
+                ext_repo = ExternalIntelligenceRepository(repo.db_path)
+                channel = params.get("channel", ["channel_a"])[0]
+                patterns = ext_repo.list_patterns(channel)
+                self._send_json(200, {"status": "success", "patterns": patterns})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path == "/api/external-intelligence/recommendations":
+            try:
+                from growth.external_intelligence.repository import ExternalIntelligenceRepository
+                from growth.external_intelligence.recommendation_engine import build_explainable_recommendation
+                from growth.external_intelligence.schemas import ExternalPriorModel, ExternalPatternModel, TransferabilityScoreModel, TransferabilityClassification, PriorStatus, PatternType
+                ext_repo = ExternalIntelligenceRepository(repo.db_path)
+                channel = params.get("channel", ["channel_a"])[0]
+                priors = ext_repo.list_external_priors(channel)
+                recs = []
+                for pr in priors:
+                    pat_data = ext_repo.get_pattern(pr["pattern_id"])
+                    ts_data = ext_repo.get_transferability_score(pr["pattern_id"], channel)
+                    if pat_data and ts_data:
+                        pat_model = ExternalPatternModel(
+                            pattern_id=pat_data["pattern_id"], target_channel_id=channel,
+                            pattern_type=PatternType(pat_data["pattern_type"]), name=pat_data["name"],
+                            description=pat_data["description"], surface_technique=pat_data["surface_technique"],
+                            underlying_principle=pat_data["underlying_principle"], our_possible_implementation=pat_data["our_possible_implementation"],
+                            channel_count=pat_data["channel_count"], video_count=pat_data["video_count"], confidence=pat_data["confidence"]
+                        )
+                        ts_model = TransferabilityScoreModel(
+                            transferability_id=ts_data["transferability_id"], pattern_id=pr["pattern_id"],
+                            target_channel_id=channel, topic_similarity=ts_data["topic_similarity"],
+                            audience_similarity=ts_data["audience_similarity"], format_similarity=ts_data["format_similarity"],
+                            production_similarity=ts_data["production_similarity"], evidence_strength=ts_data["evidence_strength"],
+                            repeatability=ts_data["repeatability"], overall_transferability_score=ts_data["overall_transferability_score"],
+                            classification=TransferabilityClassification(ts_data["classification"]), reason=ts_data["reason"]
+                        )
+                        prior_model = ExternalPriorModel(
+                            prior_id=pr["prior_id"], target_channel_id=channel, pattern_id=pr["pattern_id"],
+                            hypothesis=pr["hypothesis"], transferability_classification=TransferabilityClassification(pr["transferability_classification"]),
+                            prior_weight=pr["prior_weight"], status=PriorStatus(pr["status"])
+                        )
+                        recs.append(build_explainable_recommendation(prior_model, pat_model, ts_model))
+                self._send_json(200, {"status": "success", "recommendations": recs})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
         else:
             self._send_json(404, {"status": "error", "message": "Endpoint not found"})
 
@@ -137,6 +195,18 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
                 self._send_json(200, {"status": "success", "learning_cycle": res})
             except Exception as e:
                 logging.error(f"Learning cycle failed: {e}")
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path == "/api/external-intelligence/research":
+            channel = payload.get("channel_id", "channel_a")
+            use_live = payload.get("use_live_api", False)
+            try:
+                from growth.external_intelligence.researcher import ExternalResearcher
+                researcher = ExternalResearcher(repo=None)
+                res = researcher.run_channel_research(channel, use_live_api=use_live)
+                self._send_json(200, {"status": "success", "research_result": res})
+            except Exception as e:
+                logging.error(f"External research failed: {e}")
                 self._send_json(500, {"status": "error", "message": str(e)})
 
         else:

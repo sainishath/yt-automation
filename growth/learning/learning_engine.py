@@ -66,6 +66,29 @@ class LearningEngine:
 
             if eval_res["decision"] == "ACCEPT_VARIANT" and eval_res["confidence"] == "HIGH":
                 promoted_strategy = self._promote_strategy(channel_id, eval_res, [v["video_id"] for v in videos])
+
+            # Apply First-Party Dominance to active external priors
+            try:
+                from growth.external_intelligence.repository import ExternalIntelligenceRepository
+                from growth.external_intelligence.prior_engine import apply_first_party_override
+                from growth.external_intelligence.schemas import ExternalPriorModel, TransferabilityClassification, PriorStatus
+                ext_repo = ExternalIntelligenceRepository(self.repo.db_path)
+                priors_raw = ext_repo.list_external_priors(channel_id)
+                for pr in priors_raw:
+                    prior_model = ExternalPriorModel(
+                        prior_id=pr["prior_id"],
+                        target_channel_id=pr["target_channel_id"],
+                        pattern_id=pr["pattern_id"],
+                        hypothesis=pr["hypothesis"],
+                        transferability_classification=TransferabilityClassification(pr["transferability_classification"]),
+                        prior_weight=pr["prior_weight"],
+                        status=PriorStatus(pr["status"]),
+                        review_by=pr.get("review_by")
+                    )
+                    updated = apply_first_party_override(prior_model, eval_res)
+                    ext_repo.upsert_external_prior(updated)
+            except Exception as pe:
+                pass
         except Exception:
             pass
 
