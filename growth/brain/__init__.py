@@ -39,6 +39,7 @@ from growth.brain.belief_engine import (
     PatternBelief
 )
 from growth.brain.weekly_cycle import WeeklyLearningCycle
+from growth.brain.learning_trace import VideoLearningTrace, LearningTraceEngine
 
 __all__ = [
     "EvidenceSource",
@@ -74,4 +75,6 @@ __all__ = [
     "VideoDiagnostic",
     "PatternBelief",
     "WeeklyLearningCycle",
+    "VideoLearningTrace",
+    "LearningTraceEngine",
 ]
