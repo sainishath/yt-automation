@@ -24,9 +24,22 @@ class YouTubeApiCollector:
         self.token_path = token_path
         self.dry_run = dry_run
 
-    def _get_credentials(self) -> Optional[Any]:
-        """Loads and refreshes OAuth credentials from token file or pickle."""
-        if not self.token_path or not self.token_path.exists():
+    def _get_credentials(self, channel_id: Optional[str] = None) -> Optional[Any]:
+        """Loads and refreshes OAuth credentials from token file or discovered channel paths."""
+        token_to_use = self.token_path
+        if not token_to_use or not token_to_use.exists():
+            # Auto-discover tokens from verified pipeline paths
+            root = Path(__file__).parent.parent.parent
+            if channel_id == "channel_b":
+                token_b = root / "convo-shorts" / "yt-automation-engine" / "youtube_token.pickle"
+                if token_b.exists():
+                    token_to_use = token_b
+            else:
+                token_a = root / "alternate-history-shorts" / "config" / "token.json"
+                if token_a.exists():
+                    token_to_use = token_a
+
+        if not token_to_use or not token_to_use.exists():
             return None
 
         from google.oauth2.credentials import Credentials
@@ -34,34 +47,52 @@ class YouTubeApiCollector:
 
         creds = None
         try:
-            if str(self.token_path).endswith(".pickle"):
-                with open(self.token_path, "rb") as f:
+            if str(token_to_use).endswith(".pickle"):
+                with open(token_to_use, "rb") as f:
                     creds = pickle.load(f)
             else:
-                creds = Credentials.from_authorized_user_file(str(self.token_path))
+                creds = Credentials.from_authorized_user_file(str(token_to_use))
 
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
-                if str(self.token_path).endswith(".pickle"):
-                    with open(self.token_path, "wb") as f:
+                if str(token_to_use).endswith(".pickle"):
+                    with open(token_to_use, "wb") as f:
                         pickle.dump(creds, f)
                 else:
-                    with open(self.token_path, "w", encoding="utf-8") as f:
+                    with open(token_to_use, "w", encoding="utf-8") as f:
                         f.write(creds.to_json())
         except Exception as e:
-            logging.warning(f"[YouTube Collector] Could not load/refresh token at {self.token_path}: {e}")
+            logging.warning(f"[YouTube Collector] Could not load/refresh token at {token_to_use}: {e}")
             return None
 
         return creds
 
-    def fetch_video_statistics(self, youtube_video_id: str) -> Dict[str, Any]:
+    def fetch_video_statistics(self, youtube_video_id: str, channel_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Fetches live public statistics from YouTube Data API v3:
         views, likes, comments.
+        Never fabricates numbers in production mode (dry_run=False).
         """
-        creds = self._get_credentials()
-        if not creds or self.dry_run:
-            logging.info(f"[YouTube Collector] Offline/Dry-run: Generating simulation data for {youtube_video_id}")
+        creds = self._get_credentials(channel_id)
+        if not creds:
+            if self.dry_run:
+                logging.info(f"[YouTube Collector] Dry-run: Generating simulation data for {youtube_video_id}")
+                return {
+                    "views": 1250,
+                    "likes": 140,
+                    "comments": 22,
+                    "data_source": "SIMULATION_FALLBACK",
+                    "is_simulated": True
+                }
+            else:
+                logging.warning(f"[YouTube Collector] Credentials unavailable for {channel_id or 'channel'}. Recording unavailable status without fabrication.")
+                return {
+                    "views": 0, "likes": 0, "comments": 0,
+                    "data_source": "CREDENTIALS_UNAVAILABLE",
+                    "is_simulated": False
+                }
+
+        if self.dry_run:
             return {
                 "views": 1250,
                 "likes": 140,
@@ -99,13 +130,36 @@ class YouTubeApiCollector:
                 "is_simulated": False
             }
 
-    def fetch_video_analytics_report(self, youtube_video_id: str) -> Dict[str, Any]:
+    def fetch_video_analytics_report(self, youtube_video_id: str, channel_id: Optional[str] = None) -> Dict[str, Any]:
         """
         Queries YouTube Analytics API v2 for detailed watch time, retention, shares, and subscribers.
-        Returns empty dictionary if analytics reporting data is not yet available or scope is missing.
+        Returns empty/pending dictionary if analytics reporting data is not yet available or scope is missing.
+        Never fabricates numbers in production mode (dry_run=False).
         """
-        creds = self._get_credentials()
-        if not creds or self.dry_run:
+        creds = self._get_credentials(channel_id)
+        if not creds:
+            if self.dry_run:
+                return {
+                    "watch_time_minutes": 820.0,
+                    "avg_view_duration_seconds": 38.5,
+                    "avg_percentage_viewed": 89.2,
+                    "subscribers_gained": 7,
+                    "shares": 14,
+                    "data_source": "SIMULATION_FALLBACK",
+                    "is_simulated": True
+                }
+            else:
+                return {
+                    "watch_time_minutes": 0.0,
+                    "avg_view_duration_seconds": 0.0,
+                    "avg_percentage_viewed": 0.0,
+                    "subscribers_gained": 0,
+                    "shares": 0,
+                    "data_source": "ANALYTICS_PENDING_NO_CREDENTIALS",
+                    "is_simulated": False
+                }
+
+        if self.dry_run:
             return {
                 "watch_time_minutes": 820.0,
                 "avg_view_duration_seconds": 38.5,
@@ -172,13 +226,14 @@ class YouTubeApiCollector:
         video_id: str,
         youtube_video_id: str,
         window_name: str,
-        duration: float = 45.0
+        duration: float = 45.0,
+        channel_id: Optional[str] = None
     ) -> PerformanceSnapshotModel:
         """
         Collects metrics, computes velocity and engagement rates, and records the snapshot with strict provenance.
         """
-        stats = self.fetch_video_statistics(youtube_video_id)
-        analytics = self.fetch_video_analytics_report(youtube_video_id)
+        stats = self.fetch_video_statistics(youtube_video_id, channel_id=channel_id)
+        analytics = self.fetch_video_analytics_report(youtube_video_id, channel_id=channel_id)
 
         views = stats.get("views", 0)
         likes = stats.get("likes", 0)

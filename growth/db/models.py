@@ -30,10 +30,10 @@ class VideoModel:
     pipeline_id: str
     title: str
     duration: float
-    upload_status: str
-    privacy_status: str
-    review_status: str
-    strategy_version: str
+    upload_status: str = "GENERATED"
+    privacy_status: str = "private"
+    review_status: str = "PENDING"
+    strategy_version: str = "v1.0"
     topic_id: Optional[str] = None
     description: Optional[str] = None
     youtube_video_id: Optional[str] = None
