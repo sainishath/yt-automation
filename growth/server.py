@@ -140,6 +140,35 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self._send_json(500, {"status": "error", "message": str(e)})
 
+        elif path == "/api/growth/experiments/external":
+            try:
+                channel = params.get("channel", [None])[0]
+                experiments = repo.list_experiments(channel_id=channel)
+                ext_experiments = [
+                    e for e in experiments
+                    if e.get("external_prior_id") or e.get("provenance") in ["EXTERNAL_INTELLIGENCE", "PUBLIC_YOUTUBE", "SIMULATION"]
+                ]
+                self._send_json(200, {"status": "success", "count": len(ext_experiments), "experiments": ext_experiments})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
+        elif path == "/api/growth/experiments" or path.startswith("/api/growth/experiments/"):
+            try:
+                exp_id = path.replace("/api/growth/experiments/", "").strip() if path.startswith("/api/growth/experiments/") and path != "/api/growth/experiments" else params.get("experiment_id", [None])[0]
+                if exp_id and exp_id != "/api/growth/experiments":
+                    exp = repo.get_experiment(exp_id)
+                    if exp:
+                        self._send_json(200, {"status": "success", "experiment": exp})
+                    else:
+                        self._send_json(404, {"status": "error", "message": f"Experiment '{exp_id}' not found"})
+                else:
+                    channel = params.get("channel", [None])[0]
+                    status_filter = params.get("status", [None])[0]
+                    experiments = repo.list_experiments(channel_id=channel, status=status_filter)
+                    self._send_json(200, {"status": "success", "count": len(experiments), "experiments": experiments})
+            except Exception as e:
+                self._send_json(500, {"status": "error", "message": str(e)})
+
         else:
             self._send_json(404, {"status": "error", "message": "Endpoint not found"})
 

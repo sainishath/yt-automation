@@ -12,11 +12,22 @@ from growth.experiments.registry import PREDEFINED_EXPERIMENTS
 
 
 class ExperimentManager:
-    def __init__(self, experiments: Optional[List[Dict[str, Any]]] = None):
+    def __init__(
+        self,
+        experiments: Optional[List[Dict[str, Any]]] = None,
+        repo: Optional[Any] = None
+    ):
         self.experiments = {e["experiment_id"]: e for e in (experiments or PREDEFINED_EXPERIMENTS)}
+        self.repo = repo
 
     def get_experiment(self, experiment_id: str) -> Optional[Dict[str, Any]]:
-        return self.experiments.get(experiment_id)
+        if experiment_id in self.experiments:
+            return self.experiments[experiment_id]
+        if self.repo:
+            db_exp = self.repo.get_experiment(experiment_id)
+            if db_exp:
+                return db_exp
+        return None
 
     def evaluate_experiment(
         self,

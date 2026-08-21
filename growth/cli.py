@@ -64,6 +64,7 @@ def main():
     parser.add_argument("--research-external", choices=["channel_a", "channel_b", "both"], help="Execute public analog channel research")
     parser.add_argument("--research-report", action="store_true", help="Generate comprehensive EXTERNAL_INTELLIGENCE_REPORT.md")
     parser.add_argument("--generate-external-experiments", choices=["channel_a", "channel_b"], help="Generate A/B experiment proposals from external priors")
+    parser.add_argument("--create-external-experiments", choices=["channel_a", "channel_b", "both"], help="Bridge active external priors to registered First-Party Experiments")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -199,6 +200,28 @@ def main():
             print(f"  Sample Size: N >= {exp['min_sample_size']} per arm | Primary Metric: {exp['primary_metric']}")
             print("-" * 55)
         print("=======================================================\n")
+
+    if args.create_external_experiments:
+        from growth.external_intelligence.experiment_bridge import ExperimentBridge
+        bridge = ExperimentBridge(repo=repo)
+        target_channels = ["channel_a", "channel_b"] if args.create_external_experiments == "both" else [args.create_external_experiments]
+        for ch in target_channels:
+            print(f"\n=======================================================")
+            print(f"  BRIDGING EXTERNAL PRIORS TO FIRST-PARTY EXPERIMENTS: {ch.upper()}")
+            print(f"=======================================================")
+            res = bridge.batch_bridge_priors(ch, auto_approve=False)
+            print(f"• Total Priors Scanned: {res['total_priors_found']}")
+            print(f"• Registered Experiments: {len(res['registered'])}")
+            print(f"• Skipped Duplicates: {len(res['skipped_duplicates'])}")
+            print(f"• Blocked Conflicts: {len(res['blocked_conflicts'])}")
+            print(f"• Errors: {len(res['errors'])}")
+            for reg in res['registered']:
+                print(f"  ✅ Registered: {reg['experiment_id']} (Var: {reg['variable_tested']}, State: {reg['state']})")
+            for dup in res['skipped_duplicates']:
+                print(f"  ⏭️ Skipped Duplicate: {dup['experiment_id']} ({dup['reason']})")
+            for conf in res['blocked_conflicts']:
+                print(f"  ⚠️ Blocked Conflict: {conf['experiment_id']} ({conf['reason']})")
+            print("=======================================================\n")
 
 
 if __name__ == "__main__":
