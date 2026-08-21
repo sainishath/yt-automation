@@ -76,6 +76,11 @@ def main():
     parser.add_argument("--yt-id", type=str, help="YouTube video ID for upload registration")
     parser.add_argument("--snapshot-status", action="store_true", help="Check and report status of pending performance snapshot windows")
     parser.add_argument("--experiment-report", action="store_true", help="Generate comprehensive EXPERIMENT_STATUS_REPORT.md")
+    parser.add_argument("--brain-status", nargs="?", const="channel_a", help="Display strategic status and portfolio distribution from Brain V1")
+    parser.add_argument("--brain-memory", nargs="?", const="channel_a", help="Display everything Content Brain knows about a channel")
+    parser.add_argument("--brain-opportunities", nargs="?", const="channel_a", help="Display ranked content opportunities with factor breakdown")
+    parser.add_argument("--brain-next", nargs="?", const="channel_a", help="Display next recommended strategic decision (does NOT upload)")
+    parser.add_argument("--brain-explain", nargs="?", const="channel_a", help="Display deep 10-point explanation of Brain recommendation")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -333,6 +338,57 @@ def main():
         print(f"  PERFORMANCE SNAPSHOT WINDOWS CHECK")
         print(f"=======================================================")
         print(json.dumps(sched_res, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_status is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        status_res = brain.get_status(args.brain_status)
+        print(f"\n=======================================================")
+        print(f"  CONTENT BRAIN V1 STATUS: {args.brain_status.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(status_res, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_memory is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        mem_res = brain.get_memory_view(args.brain_memory)
+        print(f"\n=======================================================")
+        print(f"  CONTENT BRAIN V1 MEMORY: {args.brain_memory.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(mem_res, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_opportunities is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        opps_res = brain.get_ranked_opportunities(args.brain_opportunities)
+        print(f"\n=======================================================")
+        print(f"  RANKED CONTENT OPPORTUNITIES: {args.brain_opportunities.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(opps_res, indent=2))
+        print("=======================================================\n")
+
+    if args.brain_next is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        dec = brain.recommend_next(args.brain_next)
+        print(f"\n=======================================================")
+        print(f"  CONTENT BRAIN NEXT RECOMMENDATION: {args.brain_next.upper()}")
+        print(f"  (Does NOT upload or publish automatically)")
+        print(f"=======================================================")
+        print(json.dumps(dec.to_dict(), indent=2))
+        print("=======================================================\n")
+
+    if args.brain_explain is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        expl = brain.explain_recommendation(args.brain_explain)
+        print(f"\n=======================================================")
+        print(f"  CONTENT BRAIN STRATEGIC EXPLANATION: {args.brain_explain.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(expl, indent=2))
         print("=======================================================\n")
 
 
