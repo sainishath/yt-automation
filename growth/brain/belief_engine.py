@@ -170,11 +170,11 @@ class BeliefEngine:
         latest_snap = snaps[0]
         maturity = self.classify_maturity(latest_snap.get("window_name", "24h"))
 
-        views = latest_snap.get("views", 0)
-        vph = float(latest_snap.get("views_per_hour", 0.0))
-        apv = float(latest_snap.get("avg_percentage_viewed", 0.0))
-        likes = latest_snap.get("likes", 0)
-        comments = latest_snap.get("comments", 0)
+        views = int(latest_snap.get("views") or 0)
+        vph = float(latest_snap.get("views_per_hour") or 0.0)
+        apv = float(latest_snap.get("avg_percentage_viewed") or 0.0)
+        likes = int(latest_snap.get("likes") or 0)
+        comments = int(latest_snap.get("comments") or 0)
 
         # Baseline comparisons
         all_channel_vids = self.repo.list_videos(channel_id=video.get("channel_id"), limit=100)
@@ -183,11 +183,15 @@ class BeliefEngine:
         for v in all_channel_vids:
             v_snaps = self.repo.list_snapshots_for_video(v.get("video_id"))
             if v_snaps:
-                all_apvs.append(v_snaps[-1].get("avg_percentage_viewed", 70.0))
-                all_views.append(v_snaps[-1].get("views", 100))
+                snap_apv = v_snaps[-1].get("avg_percentage_viewed")
+                if snap_apv is not None:
+                    all_apvs.append(float(snap_apv))
+                snap_v = v_snaps[-1].get("views")
+                if snap_v is not None:
+                    all_views.append(int(snap_v))
 
-        median_apv = statistics.median(all_apvs) if all_apvs else 75.0
-        median_views = statistics.median(all_views) if all_views else max(views, 1)
+        median_apv = float(statistics.median(all_apvs)) if all_apvs else 75.0
+        median_views = float(statistics.median(all_views)) if all_views else max(float(views), 1.0)
 
         rel_view_multiplier = views / max(median_views, 1) if median_views > 0 else 1.0
 

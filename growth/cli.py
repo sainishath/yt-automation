@@ -98,6 +98,8 @@ def main():
     parser.add_argument("--brain-learning-state", nargs="?", const="channel_a", help="Display comprehensive learning state, attribution, and negative knowledge")
     parser.add_argument("--brain-learning-status", nargs="?", const="channel_a", help="Alias for --brain-learning-state")
     parser.add_argument("--brain-history", nargs="?", const="channel_a", help="Display complete chronological learning events and strategy history")
+    parser.add_argument("--live-learning-status", nargs="?", const="channel_a", help="Display comprehensive real-time live trial dashboard and learning status")
+    parser.add_argument("--learning-trace", nargs="?", const="channel_a", help="Display causal learning trace for a video ID or channel")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -666,6 +668,36 @@ def main():
         print(f"=======================================================")
         print(json.dumps(events, indent=2))
         print("=======================================================\n")
+
+    if args.live_learning_status is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        ch = args.live_learning_status
+        status = brain.get_live_learning_status(ch)
+        print(f"\n=======================================================")
+        print(f"  LIVE FIRST-PARTY LEARNING TRIAL STATUS: {ch.upper()}")
+        print(f"=======================================================")
+        print(json.dumps(status, indent=2))
+        print("=======================================================\n")
+
+    if args.learning_trace is not None:
+        from growth.brain.brain import ContentBrain
+        brain = ContentBrain()
+        arg_val = args.learning_trace
+        if arg_val in ["channel_a", "channel_b"]:
+            traces = brain.list_learning_traces(arg_val, limit=5)
+            print(f"\n=======================================================")
+            print(f"  RECENT LEARNING TRACES: {arg_val.upper()}")
+            print(f"=======================================================")
+            print(json.dumps(traces, indent=2))
+            print("=======================================================\n")
+        else:
+            trace = brain.get_learning_trace(arg_val)
+            print(f"\n=======================================================")
+            print(f"  VIDEO CAUSAL LEARNING TRACE: {arg_val}")
+            print(f"=======================================================")
+            print(json.dumps(trace, indent=2))
+            print("=======================================================\n")
 
 
 if __name__ == "__main__":

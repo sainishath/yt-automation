@@ -161,8 +161,10 @@ class BrainMemory:
             cluster_data[cluster]["count"] += 1
             cluster_data[cluster]["videos"].append(vid_id)
             if latest:
-                cluster_data[cluster]["views_sum"] += latest.get("views", 0)
-                cluster_data[cluster]["apv_sum"] += latest.get("avg_percentage_viewed", 0.0)
+                cluster_data[cluster]["views_sum"] += int(latest.get("views") or 0)
+                apv_val = latest.get("avg_percentage_viewed")
+                if apv_val is not None:
+                    cluster_data[cluster]["apv_sum"] += float(apv_val)
 
         result = {}
         for cluster, stats in cluster_data.items():
@@ -191,7 +193,9 @@ class BrainMemory:
             hook_data[hook_type]["count"] += 1
             hook_data[hook_type]["videos"].append(vid_id)
             if latest:
-                hook_data[hook_type]["apv_sum"] += latest.get("avg_percentage_viewed", 0.0)
+                apv_val = latest.get("avg_percentage_viewed")
+                if apv_val is not None:
+                    hook_data[hook_type]["apv_sum"] += float(apv_val)
 
         result = {}
         for hook, stats in hook_data.items():

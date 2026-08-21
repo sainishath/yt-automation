@@ -121,22 +121,160 @@ class ContentBrain:
         """
         Returns current empirical belief states for the channel.
         """
+        from growth.db.models import GrowthRepository
         from growth.brain.belief_engine import BeliefEngine
-        engine = BeliefEngine(self.repo, self.ext_repo)
+        repo = GrowthRepository(self.db_path)
+        engine = BeliefEngine(repo)
         return [b.to_dict() for b in engine.get_channel_beliefs(channel_id)]
 
     def get_negative_knowledge(self, channel_id: str) -> Dict[str, Any]:
         """
         Returns institutional negative knowledge (DO_NOT_USE registry).
         """
+        from growth.db.models import GrowthRepository
         from growth.brain.belief_engine import BeliefEngine
-        engine = BeliefEngine(self.repo, self.ext_repo)
+        repo = GrowthRepository(self.db_path)
+        engine = BeliefEngine(repo)
         return engine.get_negative_knowledge(channel_id)
 
     def run_weekly_learning_cycle(self, channel_id: str) -> Dict[str, Any]:
         """
         Executes complete weekly learning cycle and writes WEEKLY_LEARNING_REPORT.md.
         """
+        from growth.db.models import GrowthRepository
         from growth.brain.weekly_cycle import WeeklyLearningCycle
-        cycle = WeeklyLearningCycle(self.repo)
+        repo = GrowthRepository(self.db_path)
+        cycle = WeeklyLearningCycle(repo)
         return cycle.run_weekly_cycle(channel_id)
+
+    def get_live_learning_status(self, channel_id: str) -> Dict[str, Any]:
+        """
+        Returns comprehensive real-time live trial learning status for a channel.
+        """
+        from growth.db.models import GrowthRepository
+        from growth.brain.belief_engine import BeliefEngine, VideoMaturity
+        from growth.brain.production_recommendation import ProductionRecommendationEngine
+        repo = GrowthRepository(self.db_path)
+        belief_engine = BeliefEngine(repo)
+
+        strat = self.memory.get_active_strategy(channel_id)
+        strat_ver = strat.get("strategy_version", "v1.0")
+
+        vids = repo.list_videos_by_channel(channel_id)
+        pub_vids = [v for v in vids if v.get("upload_status") == "UPLOADED_PUBLIC"]
+
+        # Calculate mature videos
+        mature_count = 0
+        missing_metrics = 0
+        total_snaps_count = 0
+        latest_24h = None
+        latest_48h = None
+
+        for v in pub_vids:
+            snaps = repo.list_snapshots_for_video(v["video_id"])
+            total_snaps_count += len(snaps)
+            for s in snaps:
+                if s.get("avg_percentage_viewed") is None:
+                    missing_metrics += 1
+                if s.get("window_name") in ["7d", "28d"]:
+                    mature_count += 1
+                if s.get("window_name") == "24h" and not latest_24h:
+                    latest_24h = {"video_id": v["video_id"], "views": s.get("views"), "apv": s.get("avg_percentage_viewed")}
+                if s.get("window_name") == "48h" and not latest_48h:
+                    latest_48h = {"video_id": v["video_id"], "views": s.get("views"), "apv": s.get("avg_percentage_viewed")}
+
+        exps = repo.list_experiments(channel_id=channel_id)
+        active_exp_info = None
+        mature_exps = []
+        for e in exps:
+            if e.get("status") in ["RUNNING", "SCHEDULED", "COLLECTING_DATA", "APPROVED"]:
+                if not active_exp_info:
+                    active_exp_info = {
+                        "experiment_id": e.get("experiment_id"),
+                        "name": e.get("name"),
+                        "variable_tested": e.get("variable_tested"),
+                        "control_count": e.get("control_count", 0),
+                        "treatment_count": e.get("treatment_count", 0),
+                        "target_per_arm": 4,
+                        "status": e.get("status"),
+                        "current_arm_needed": "CONTROL" if e.get("control_count", 0) < e.get("treatment_count", 0) else "TREATMENT"
+                    }
+            elif e.get("status") == "EVALUATED":
+                mature_exps.append(e)
+
+        # Latest video and diagnostic
+        latest_vid = pub_vids[0] if pub_vids else None
+        latest_diag_dict = None
+        if latest_vid:
+            diag = belief_engine.generate_video_diagnostic(latest_vid["video_id"])
+            if diag:
+                latest_diag_dict = diag.to_dict()
+
+        # Next decision
+        decision = self.decision_engine.recommend_next_decision(channel_id)
+        rec_engine = ProductionRecommendationEngine()
+        rec = rec_engine.generate_recommendation(decision, save_plan_file=False)
+
+        # Negative knowledge & beliefs
+        neg_data = belief_engine.get_negative_knowledge(channel_id)
+        beliefs = belief_engine.get_channel_beliefs(channel_id)
+        winners = [b.name for b in beliefs if b.status.value == "PROMOTED"]
+        rejected = [b.name for b in beliefs if b.status.value == "REJECTED"]
+
+        data_quality = "HEALTHY" if missing_metrics == 0 else "DATA_PENDING"
+
+        return {
+            "channel_id": channel_id,
+            "strategy_version": strat_ver,
+            "videos_published": len(pub_vids),
+            "videos_mature": mature_count,
+            "active_experiment": active_exp_info,
+            "latest_video": {
+                "video_id": latest_vid.get("video_id") if latest_vid else None,
+                "title": latest_vid.get("title") if latest_vid else None,
+                "youtube_video_id": latest_vid.get("youtube_video_id") if latest_vid else None,
+                "arm": latest_vid.get("variant_id") if latest_vid else None,
+                "diagnostic": latest_diag_dict
+            } if latest_vid else None,
+            "latest_24h_result": latest_24h,
+            "latest_48h_result": latest_48h,
+            "mature_experiments": [e.get("experiment_id") for e in mature_exps],
+            "winners": winners,
+            "rejected_patterns": rejected,
+            "do_not_use_count": len(neg_data.get("do_not_use_patterns", [])),
+            "next_video_plan": {
+                "topic": rec.topic,
+                "angle": rec.angle,
+                "hook": rec.hook_recommendation,
+                "experiment_id": decision.experiment_id,
+                "arm": decision.arm_type,
+                "variable_tested": decision.variable_under_test,
+                "why_reason": decision.reasoning
+            },
+            "data_quality": {
+                "status": data_quality,
+                "total_snapshots": total_snaps_count,
+                "missing_metrics": missing_metrics
+            }
+        }
+
+    def get_learning_trace(self, video_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Returns full causal learning trace for a specific video.
+        """
+        from growth.db.models import GrowthRepository
+        from growth.brain.learning_trace import LearningTraceEngine
+        repo = GrowthRepository(self.db_path)
+        trace_engine = LearningTraceEngine(repo)
+        trace = trace_engine.generate_trace_for_video(video_id)
+        return trace.to_dict() if trace else None
+
+    def list_learning_traces(self, channel_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+        """
+        Returns recent learning traces for a channel.
+        """
+        from growth.db.models import GrowthRepository
+        from growth.brain.learning_trace import LearningTraceEngine
+        repo = GrowthRepository(self.db_path)
+        trace_engine = LearningTraceEngine(repo)
+        return trace_engine.list_recent_traces(channel_id, limit=limit)
