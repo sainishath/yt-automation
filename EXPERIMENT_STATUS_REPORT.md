@@ -1,6 +1,6 @@
 # First-Party Experiment Status & Closed-Loop Learning Report
 
-**Generated:** 2026-08-21 09:23:51 UTC  
+**Generated:** 2026-08-21 09:48:20 UTC  
 **Total Experiments Tracked:** 4  
 **Active Experiments:** 4 | **Completed Experiments:** 0  
 **Verdict Distribution:** 0 Treatment Wins, 0 Control Wins (Prior Overrides), 0 Inconclusive  
@@ -51,7 +51,7 @@ This report tracks every controlled first-party A/B experiment operating in the 
 - **Success Metric:** `avg_percentage_viewed` (Min $N=4$ per arm)
 - **Linked External Prior:** `prior_pat_channel_a_counterfactual_question` (Initial Weight: 0.22)
 - **Registered Arms:** CONTROL (`arm_exp_channel_a_hook_structure_counterfactual_question_v1_control`: 0 samples), TREATMENT (`arm_exp_channel_a_hook_structure_counterfactual_question_v1_treatment`: 1 samples)
-- **Lineage Status:** `INCOMPLETE` (Pending: insufficient_samples_(1/8_needed), performance_snapshots_pending, outcome_unevaluated, learning_event_unrecorded)
+- **Lineage Status:** `INCOMPLETE` (Pending: insufficient_samples_(2/8_needed), performance_snapshots_pending, outcome_unevaluated, learning_event_unrecorded)
 
 --------------------------------------------------
 
