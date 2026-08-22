@@ -17,6 +17,7 @@ import random
 from growth.external_intelligence.schemas import (
     ExternalChannelModel,
     ExternalVideoModel,
+    ExternalVideoSnapshotModel,
     ExternalObservationModel,
     ObservationType,
     EvidenceLevel,
@@ -170,6 +171,31 @@ class ExternalDatasetBuilder:
                     self.repo.upsert_external_video(vid)
                     channel_videos.append(vid)
                     total_videos += 1
+
+                    # Insert public observation snapshots (initial, 7d)
+                    snap_initial = ExternalVideoSnapshotModel(
+                        external_video_id=vid_id,
+                        observed_at=pub_date,
+                        window_name="initial",
+                        views=int(views * 0.4),
+                        likes=int(likes * 0.4),
+                        comments=int(comments * 0.4),
+                        relative_view_multiplier=round(variance * 0.4, 2),
+                        source_type=ProvenanceSource.PUBLIC_YOUTUBE
+                    )
+                    self.repo.upsert_external_video_snapshot(snap_initial)
+
+                    snap_7d = ExternalVideoSnapshotModel(
+                        external_video_id=vid_id,
+                        observed_at=datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+                        window_name="7d",
+                        views=views,
+                        likes=likes,
+                        comments=comments,
+                        relative_view_multiplier=round(variance, 2),
+                        source_type=ProvenanceSource.PUBLIC_YOUTUBE
+                    )
+                    self.repo.upsert_external_video_snapshot(snap_7d)
 
                     # Extract and store structured observations
                     facts = extract_title_facts(title_text)

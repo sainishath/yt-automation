@@ -99,6 +99,24 @@ class ChannelImprovementScorecard:
         }
 
 
+def _parse_timestamp(ts_val: Any) -> Optional[datetime]:
+    """Robustly parses a timestamp string or datetime object."""
+    if not ts_val:
+        return None
+    if isinstance(ts_val, datetime):
+        return ts_val
+    ts_str = str(ts_val).strip()
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d", "%Y-%m-%dT%H:%M:%SZ"):
+        try:
+            return datetime.strptime(ts_str, fmt)
+        except ValueError:
+            continue
+    try:
+        return datetime.fromisoformat(ts_str.replace("Z", "+00:00")).replace(tzinfo=None)
+    except Exception:
+        return None
+
+
 class ChannelTrajectoryEngine:
     """
     Computes longitudinal channel health, rolling robust medians, deterministic scorecards,
@@ -121,10 +139,16 @@ class ChannelTrajectoryEngine:
         cutoff = 3.0 * (1.4826 * mad)
         return [x for x in values if abs(x - med) <= cutoff]
 
-    def compute_channel_health(self, channel_id: str, tag: str = "CURRENT") -> ChannelHealthSnapshot:
+    def compute_channel_health(
+        self,
+        channel_id: str,
+        tag: str = "CURRENT",
+        as_of: Optional[datetime] = None
+    ) -> ChannelHealthSnapshot:
         """
         Calculates instantaneous or milestone-specific channel health snapshot
         using SQLite first-party published videos and performance snapshots.
+        Rolling windows (7d, 14d, 28d) are strictly based on calendar time.
         """
         all_vids = self.repo.list_videos_by_channel(channel_id)
         pub_vids = [v for v in all_vids if v.get("upload_status") == "UPLOADED_PUBLIC"]
@@ -135,6 +159,7 @@ class ChannelTrajectoryEngine:
         apv_list: List[float] = []
         mature_views: List[float] = []
         mature_apvs: List[float] = []
+        timed_videos: List[Tuple[datetime, float, float]] = []  # (ts, views, apv)
         likes_total = 0
         comments_total = 0
 
@@ -170,6 +195,11 @@ class ChannelTrajectoryEngine:
                 min_views = v_views
                 worst_vid = vid_id
 
+            # Parse upload / publish timestamp for calendar-time windows
+            v_ts = _parse_timestamp(v.get("publish_timestamp") or v.get("generation_timestamp") or latest.get("snapshot_timestamp"))
+            if v_ts:
+                timed_videos.append((v_ts, float(v_views), v_apv))
+
             # Check maturity
             is_mature = any(s.get("window_name") in ["7d", "28d"] for s in snaps)
             if is_mature:
@@ -193,10 +223,18 @@ class ChannelTrajectoryEngine:
 
         comment_rate = (comments_total / total_views) if total_views > 0 else 0.0
 
-        # Rolling medians
-        r7_views = float(statistics.median(views_list[:7])) if len(views_list) >= 7 else (median_views if views_list else None)
-        r14_views = float(statistics.median(views_list[:14])) if len(views_list) >= 14 else (median_views if views_list else None)
-        r28_views = float(statistics.median(views_list[:28])) if len(views_list) >= 28 else (median_views if views_list else None)
+        # Calendar-time rolling window medians
+        anchor_time = as_of
+        if anchor_time is None:
+            anchor_time = max((t[0] for t in timed_videos), default=datetime.utcnow())
+
+        w7_views = [views for (ts, views, _) in timed_videos if anchor_time - timedelta(days=7) <= ts <= anchor_time]
+        w14_views = [views for (ts, views, _) in timed_videos if anchor_time - timedelta(days=14) <= ts <= anchor_time]
+        w28_views = [views for (ts, views, _) in timed_videos if anchor_time - timedelta(days=28) <= ts <= anchor_time]
+
+        r7_views = float(statistics.median(w7_views)) if w7_views else None
+        r14_views = float(statistics.median(w14_views)) if w14_views else None
+        r28_views = float(statistics.median(w28_views)) if w28_views else None
 
         # Experiments & Beliefs
         exps = self.repo.list_experiments(channel_id=channel_id)
@@ -238,14 +276,32 @@ class ChannelTrajectoryEngine:
             do_not_use_count=dnu_count
         )
 
-    def capture_and_record_baseline(self, channel_id: str, tag: str = "PRE_TRIAL_BASELINE") -> ChannelHealthSnapshot:
+    def capture_and_record_baseline(
+        self,
+        channel_id: str,
+        tag: str = "PRE_TRIAL_BASELINE",
+        as_of: Optional[datetime] = None
+    ) -> ChannelHealthSnapshot:
         """
         Idempotently records a baseline or milestone snapshot into SQLite learning events.
+        If the milestone for (channel_id, tag) already exists, returns the existing snapshot.
         """
-        snapshot = self.compute_channel_health(channel_id, tag=tag)
+        evt_type = f"MILESTONE_{tag.upper()}"
+        existing_events = self.repo.list_learning_events(channel_id=channel_id, limit=100)
+        for e in existing_events:
+            if e.get("event_type") == evt_type and e.get("details"):
+                try:
+                    data = json.loads(e["details"])
+                    return ChannelHealthSnapshot(**{
+                        k: data[k] for k in ChannelHealthSnapshot.__dataclass_fields__ if k in data
+                    })
+                except Exception:
+                    pass
+
+        snapshot = self.compute_channel_health(channel_id, tag=tag, as_of=as_of)
         evt = LearningEventModel(
             channel_id=channel_id,
-            event_type=f"MILESTONE_{tag.upper()}",
+            event_type=evt_type,
             summary=f"Captured channel health milestone '{tag}' for {channel_id}.",
             details=json.dumps(snapshot.to_dict()),
             confidence="HIGH" if snapshot.mature_videos_count >= 4 else "LOW"
@@ -263,7 +319,26 @@ class ChannelTrajectoryEngine:
         Compares Baseline vs Current performance to produce a deterministic scorecard
         with rigorous causal evidence classification.
         """
-        base = baseline_snapshot or self.compute_channel_health(channel_id, tag="PRE_TRIAL_BASELINE")
+        if baseline_snapshot is None:
+            # Check for persisted PRE_TRIAL_BASELINE or DAY_0 milestone
+            existing_events = self.repo.list_learning_events(channel_id=channel_id, limit=100)
+            base_evt = next((
+                e for e in existing_events
+                if e.get("event_type") in ["MILESTONE_PRE_TRIAL_BASELINE", "MILESTONE_DAY_0"] and e.get("details")
+            ), None)
+            if base_evt:
+                try:
+                    b_data = json.loads(base_evt["details"])
+                    base = ChannelHealthSnapshot(**{
+                        k: b_data[k] for k in ChannelHealthSnapshot.__dataclass_fields__ if k in b_data
+                    })
+                except Exception:
+                    base = self.compute_channel_health(channel_id, tag="PRE_TRIAL_BASELINE")
+            else:
+                base = self.compute_channel_health(channel_id, tag="PRE_TRIAL_BASELINE")
+        else:
+            base = baseline_snapshot
+
         curr = current_snapshot or self.compute_channel_health(channel_id, tag="CURRENT")
 
         metrics: List[ScorecardMetric] = []

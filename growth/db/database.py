@@ -102,6 +102,24 @@ def init_db(db_path: Path = DEFAULT_DB_PATH) -> None:
             ON performance_snapshots(video_id, window_name)
         """)
 
+        # 6. Ensure external_video_snapshots table exists
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS external_video_snapshots (
+                snapshot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                external_video_id TEXT NOT NULL,
+                observed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                window_name TEXT NOT NULL,
+                views INTEGER DEFAULT 0,
+                likes INTEGER DEFAULT 0,
+                comments INTEGER DEFAULT 0,
+                relative_view_multiplier REAL DEFAULT 1.0,
+                source_type TEXT NOT NULL DEFAULT 'PUBLIC_YOUTUBE',
+                is_simulation INTEGER DEFAULT 0,
+                UNIQUE(external_video_id, window_name),
+                FOREIGN KEY(external_video_id) REFERENCES external_videos(external_video_id)
+            )
+        """)
+
         conn.commit()
     finally:
         conn.close()

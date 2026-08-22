@@ -103,6 +103,9 @@ def main():
     parser.add_argument("--channel-scorecard", nargs="?", const="channel_a", help="Display deterministic channel performance scorecard (Baseline vs Current)")
     parser.add_argument("--channel-health", nargs="?", const="channel_a", help="Display robust longitudinal channel health snapshot")
     parser.add_argument("--trial-milestone", nargs=2, metavar=("TAG", "CHANNEL"), help="Capture channel health milestone (e.g. DAY_0 channel_a)")
+    parser.add_argument("--external-channel", nargs="?", const="channel_a", help="Display details and benchmark videos for an external channel or target channel")
+    parser.add_argument("--external-video", type=str, metavar="VIDEO_ID", help="Display details, snapshots, and observations for an external video")
+    parser.add_argument("--external-learning", nargs="?", const="channel_a", help="Display external priors, transferability, and first-party override status")
     args = parser.parse_args()
 
     repo = GrowthRepository()
@@ -545,6 +548,68 @@ def main():
         print(f"  CROSS-CHANNEL EXTERNAL PATTERNS")
         print(f"=======================================================")
         print(json.dumps(p_list, indent=2))
+        print("=======================================================\n")
+
+    if args.external_channel is not None:
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        ext_repo = ExternalIntelligenceRepository()
+        tgt = args.external_channel
+        # Check if argument is target channel name or specific external channel id
+        if tgt in ["channel_a", "channel_b"]:
+            channels = ext_repo.list_external_channels(target_channel_id=tgt)
+            print(f"\n=======================================================")
+            print(f"  EXTERNAL BENCHMARK CHANNELS FOR {tgt.upper()}")
+            print(f"=======================================================")
+            print(json.dumps(channels, indent=2))
+            print("=======================================================\n")
+        else:
+            ch = ext_repo.get_external_channel(tgt)
+            vids = ext_repo.list_external_videos(external_channel_id=tgt, limit=20)
+            print(f"\n=======================================================")
+            print(f"  EXTERNAL CHANNEL PROFILE: {tgt}")
+            print(f"=======================================================")
+            print(json.dumps({"channel": ch, "top_videos": vids}, indent=2))
+            print("=======================================================\n")
+
+    if args.external_video is not None:
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        ext_repo = ExternalIntelligenceRepository()
+        vid = ext_repo.get_external_video(args.external_video)
+        obs = ext_repo.list_observations_by_video(args.external_video)
+        snaps = ext_repo.list_external_video_snapshots(args.external_video)
+        print(f"\n=======================================================")
+        print(f"  EXTERNAL VIDEO AUDIT: {args.external_video}")
+        print(f"=======================================================")
+        print(json.dumps({
+            "video": vid,
+            "snapshots": snaps,
+            "observations": obs,
+            "provenance": "100% PUBLIC_YOUTUBE"
+        }, indent=2))
+        print("=======================================================\n")
+
+    if args.external_learning is not None:
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        from growth.brain.belief_engine import BeliefEngine
+        ext_repo = ExternalIntelligenceRepository()
+        tgt = args.external_learning
+        priors = ext_repo.list_external_priors(target_channel_id=tgt)
+        patterns = ext_repo.list_external_patterns(target_channel_id=tgt)
+        scores = ext_repo.list_transferability_scores(target_channel_id=tgt)
+        belief_engine = BeliefEngine(repo)
+        beliefs = belief_engine.get_channel_beliefs(tgt)
+        print(f"\n=======================================================")
+        print(f"  EXTERNAL INTELLIGENCE & CAUSAL LEARNING: {tgt.upper()}")
+        print(f"=======================================================")
+        print(json.dumps({
+            "target_channel": tgt,
+            "external_patterns_count": len(patterns),
+            "external_priors_count": len(priors),
+            "transferability_scores_count": len(scores),
+            "first_party_beliefs_count": len(beliefs),
+            "causal_hierarchy": "FIRST_PARTY_CONTROLLED > FIRST_PARTY_OBSERVATIONAL > EXTERNAL_PUBLIC > EXTERNAL_RESEARCH",
+            "priors": priors[:5]
+        }, indent=2))
         print("=======================================================\n")
 
     if args.brain_backtest is not None:

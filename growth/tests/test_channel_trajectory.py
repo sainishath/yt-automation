@@ -164,6 +164,74 @@ class TestChannelTrajectory(unittest.TestCase):
         self.assertIn("SECTION B — CHANNEL TRAJECTORY", content)
         self.assertIn("Robust Channel Scorecard", content)
 
+    def test_07_calendar_time_rolling_windows_irregular_and_shuffled(self):
+        """7. Verifies 7d, 14d, 28d windows are strictly calendar-time based with irregular/shuffled timestamps."""
+        from datetime import datetime, timedelta
+        import random
+
+        base_time = datetime(2026, 8, 1, 12, 0, 0)
+        # Irregular schedule: Day 0, Day 1, Day 2, Day 10, Day 11, Day 20
+        schedule = [
+            ("vid_irr_1", 0, 100),
+            ("vid_irr_2", 1, 200),
+            ("vid_irr_3", 2, 300),
+            ("vid_irr_4", 10, 400),
+            ("vid_irr_5", 11, 500),
+            ("vid_irr_6", 20, 600),
+        ]
+
+        # Insert in deliberately shuffled order
+        shuffled = list(schedule)
+        random.seed(42)
+        random.shuffle(shuffled)
+
+        for vid_id, day_offset, views in shuffled:
+            pub_ts = (base_time + timedelta(days=day_offset)).strftime("%Y-%m-%d %H:%M:%S")
+            self.repo.upsert_video(VideoModel(
+                video_id=vid_id, channel_id="channel_a", pipeline_id="pipeline1",
+                title=f"Irregular Video {vid_id}", duration=45.0, upload_status="UPLOADED_PUBLIC",
+                publish_timestamp=pub_ts
+            ))
+            self.repo.insert_snapshot(PerformanceSnapshotModel(
+                video_id=vid_id, window_name="24h", views=views, avg_percentage_viewed=70.0
+            ))
+
+        # Anchor calculation at Day 20
+        anchor = base_time + timedelta(days=20)
+        health = self.trajectory_engine.compute_channel_health("channel_a", as_of=anchor)
+
+        # 7d window (Day 13 to Day 20): only Video 6 (Day 20, views: 600)
+        self.assertEqual(health.rolling_7d_median_views, 600.0)
+
+        # 14d window (Day 6 to Day 20): Video 4 (400), Video 5 (500), Video 6 (600) -> median 500
+        self.assertEqual(health.rolling_14d_median_views, 500.0)
+
+        # 28d window (Day 0 to Day 20): all 6 videos [100, 200, 300, 400, 500, 600] -> median 350
+        self.assertEqual(health.rolling_28d_median_views, 350.0)
+
+    def test_08_milestone_idempotency_and_channel_isolation(self):
+        """8. Verifies milestone persistence is strictly idempotent per channel and isolated across channels."""
+        # Record DAY_7 on Channel A twice
+        m1 = self.trajectory_engine.capture_and_record_baseline("channel_a", tag="DAY_7")
+        m2 = self.trajectory_engine.capture_and_record_baseline("channel_a", tag="DAY_7")
+        self.assertEqual(m1.tag, "DAY_7")
+        self.assertEqual(m2.tag, "DAY_7")
+
+        # Verify exactly 1 event for channel_a
+        evts_a = [e for e in self.repo.list_learning_events(channel_id="channel_a") if e.get("event_type") == "MILESTONE_DAY_7"]
+        self.assertEqual(len(evts_a), 1)
+
+        # Record DAY_7 on Channel B
+        m_b = self.trajectory_engine.capture_and_record_baseline("channel_b", tag="DAY_7")
+        self.assertEqual(m_b.tag, "DAY_7")
+
+        evts_b = [e for e in self.repo.list_learning_events(channel_id="channel_b") if e.get("event_type") == "MILESTONE_DAY_7"]
+        self.assertEqual(len(evts_b), 1)
+
+        # Total across DB is 2
+        all_day7 = [e for e in self.repo.list_learning_events() if e.get("event_type") == "MILESTONE_DAY_7"]
+        self.assertEqual(len(all_day7), 2)
+
 
 if __name__ == "__main__":
     unittest.main()
