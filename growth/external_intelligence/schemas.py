@@ -105,6 +105,25 @@ class ExternalVideoModel:
 
 
 @dataclass
+class ExternalVideoSnapshotModel:
+    snapshot_id: Optional[int] = None
+    external_video_id: str = ""
+    observed_at: Optional[str] = None
+    window_name: str = "initial"  # 'initial', '1d', '3d', '7d', '14d', '28d'
+    views: int = 0
+    likes: int = 0
+    comments: int = 0
+    relative_view_multiplier: float = 1.0
+    source_type: ProvenanceSource = ProvenanceSource.PUBLIC_YOUTUBE
+    is_simulation: bool = False
+
+    def to_dict(self) -> Dict[str, Any]:
+        d = asdict(self)
+        d["source_type"] = self.source_type.value if isinstance(self.source_type, ProvenanceSource) else self.source_type
+        return d
+
+
+@dataclass
 class ExternalObservationModel:
     observation_id: str
     external_video_id: str

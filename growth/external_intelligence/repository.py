@@ -16,6 +16,7 @@ from growth.db.database import get_db, DEFAULT_DB_PATH
 from growth.external_intelligence.schemas import (
     ExternalChannelModel,
     ExternalVideoModel,
+    ExternalVideoSnapshotModel,
     ExternalObservationModel,
     ExternalEvidenceModel,
     ExternalPatternModel,
@@ -164,6 +165,48 @@ class ExternalIntelligenceRepository:
                 res.append(d)
             return res
 
+    # ── External Video Snapshots ─────────────────────────────────────────────
+
+    def upsert_external_video_snapshot(self, snap: ExternalVideoSnapshotModel) -> None:
+        with get_db(self.db_path) as conn:
+            conn.execute("""
+                INSERT INTO external_video_snapshots (
+                    external_video_id, window_name, views, likes, comments,
+                    relative_view_multiplier, source_type, is_simulation, observed_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(external_video_id, window_name) DO UPDATE SET
+                    views=excluded.views,
+                    likes=excluded.likes,
+                    comments=excluded.comments,
+                    relative_view_multiplier=excluded.relative_view_multiplier,
+                    source_type=excluded.source_type,
+                    is_simulation=excluded.is_simulation,
+                    observed_at=excluded.observed_at
+            """, (
+                snap.external_video_id,
+                snap.window_name,
+                snap.views,
+                snap.likes,
+                snap.comments,
+                snap.relative_view_multiplier,
+                snap.source_type.value if hasattr(snap.source_type, "value") else snap.source_type,
+                1 if snap.is_simulation else 0,
+                snap.observed_at or datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+            ))
+
+    def list_external_video_snapshots(self, external_video_id: str) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            rows = conn.execute(
+                "SELECT * FROM external_video_snapshots WHERE external_video_id = ? ORDER BY snapshot_id ASC",
+                (external_video_id,)
+            ).fetchall()
+            res = []
+            for r in rows:
+                d = dict(r)
+                d["is_simulation"] = bool(d["is_simulation"])
+                res.append(d)
+            return res
+
     # ── Observations ────────────────────────────────────────────────────────
 
     def upsert_external_observation(self, obs: ExternalObservationModel) -> None:
@@ -306,6 +349,14 @@ class ExternalIntelligenceRepository:
         with get_db(self.db_path) as conn:
             row = conn.execute("SELECT * FROM transferability_scores WHERE pattern_id = ? AND target_channel_id = ?", (pattern_id, target_channel_id)).fetchone()
             return dict(row) if row else None
+
+    def list_transferability_scores(self, target_channel_id: Optional[str] = None) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            if target_channel_id:
+                rows = conn.execute("SELECT * FROM transferability_scores WHERE target_channel_id = ? ORDER BY overall_transferability_score DESC", (target_channel_id,)).fetchall()
+            else:
+                rows = conn.execute("SELECT * FROM transferability_scores ORDER BY overall_transferability_score DESC").fetchall()
+            return [dict(r) for r in rows]
 
     # ── External Priors ─────────────────────────────────────────────────────
 
