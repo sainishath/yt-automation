@@ -1369,7 +1369,10 @@ def generate_voiceover(timeline_or_text, output_audio_path, voice="en-US-AndrewN
 
         output_wav = os.path.join(job_temp_dir, f"turn_{idx}.wav")
         piper_bin = str(ROOT_DIR / "piper.exe") if (ROOT_DIR / "piper.exe").exists() else "piper"
-        proc = subprocess.run([piper_bin, "-m", current_model, "-f", output_wav], input=clean_text_piper, text=True, encoding="utf-8", capture_output=True)
+        piper_cmd = [piper_bin, "-m", current_model, "-f", output_wav]
+        if speaker in ["B", "CHARACTER_B", "SPEAKER_B"]:
+            piper_cmd.extend(["--length_scale", "1.02"])
+        proc = subprocess.run(piper_cmd, input=clean_text_piper, text=True, encoding="utf-8", capture_output=True)
         if proc.returncode != 0:
             err_details = proc.stderr.strip() if proc.stderr else "Unknown error"
             raise RuntimeError(f"[Piper Error] Failed synthesizing speaker '{raw_speaker}' with model '{current_model}': {err_details}")
