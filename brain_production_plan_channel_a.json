@@ -1,5 +1,5 @@
 {
-  "recommendation_id": "rec_channel_a_20260821_121047",
+  "recommendation_id": "rec_channel_a_20260823_064744",
   "channel_id": "channel_a",
   "topic": "What if the Cold War turned hot in 1962?",
   "angle": "Geopolitics",
@@ -38,5 +38,5 @@
   "supporting_evidence": [],
   "confidence": "LOW",
   "expected_learning": "Determines whether grounding the opening question in specific historical evidence increases early viewer retention.",
-  "created_at": "2026-08-21 12:10:47"
+  "created_at": "2026-08-23 06:47:44"
 }
