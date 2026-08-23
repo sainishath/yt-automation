@@ -5,9 +5,8 @@
     "speed": 1.0
   },
   "B": {
-    "model": "models/en_US-libritts_r-medium.onnx",
-    "speaker": 4,
-    "length_scale": 0.95,
-    "speed": 1.05
+    "model": "models/voices/en_US-amy-medium.onnx",
+    "length_scale": 1.02,
+    "speed": 1.0
   }
 }
