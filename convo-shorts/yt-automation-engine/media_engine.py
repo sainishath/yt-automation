@@ -726,7 +726,8 @@ def validate_and_analyze_conversation(lines, topic="General Topic", research_con
     pct_a = (words_a / total_words * 100) if total_words > 0 else 0
     pct_b = (words_b / total_words * 100) if total_words > 0 else 0
 
-    est_duration = round(total_words / 2.7, 1)
+    # Piper TTS pacing at 0.95 length scale is ~3.2 words/sec (~190 WPM)
+    est_duration = round(total_words / 3.2, 1)
 
     def check_max_role_streak(roles_list):
         max_s = 0
@@ -973,60 +974,108 @@ def validate_and_analyze_conversation(lines, topic="General Topic", research_con
     return True, [], convo_stats
 
 
-def generate_script(topic, category):
+def generate_script(topic, category, active_strategy=None):
     """
-    Call Ollama and return debate script.
-    Enforces structural JSON schema format for two-persona debate.
+    Content Brain v1 Pipeline 2 Generator:
+    1. Loads StrategyManager active strategy context.
+    2. Runs p2_multi_angle concept generation & selects candidate.
+    3. Generates single senior-developer explanation with code cards.
+    4. Evaluates via HybridScriptCritic with up to 3 revision attempts.
     """
     import re
-    
+    from growth.brain.script_critic import HybridScriptCritic
+    from growth.brain.p2_multi_angle import generate_p2_multi_angle_concept
+    from growth.strategy.strategy_manager import StrategyManager
+
+    strat_mgr = StrategyManager()
+    strat_ctx = active_strategy or strat_mgr.get_active_strategy_context("channel_b")
+    strategy_bounds = {
+        "min_duration_seconds": strat_ctx.get("min_duration_seconds", 35.0),
+        "max_duration_seconds": strat_ctx.get("max_duration_seconds", 55.0)
+    }
+
+    critic = HybridScriptCritic(ollama_url=OLLAMA_URL, model=OLLAMA_MODEL)
+
+    print(f"[Content Brain v1] Generating strategic angles for topic: '{topic}'...")
+    angle_doc = generate_p2_multi_angle_concept(topic, category, strat_ctx)
+    selected_angle_id = angle_doc.get("selected_angle_id", "angle_1")
+    angles = angle_doc.get("angles", [])
+    selected_angle = next((a for a in angles if a.get("angle_id") == selected_angle_id), angles[0] if angles else {})
+    angle_type = selected_angle.get("type", "CODE_SMELL_TRAP")
+    hook_premise = selected_angle.get("hook_text", f"Why junior devs struggle with {topic}.")
+    core_conflict = selected_angle.get("core_conflict", "Performance bottleneck under production load.")
+    senior_takeaway = selected_angle.get("senior_takeaway", "Use idiomatic clean design patterns.")
+
+    print(f"[Content Brain v1] Selected strategic angle: [{angle_type}] '{hook_premise}'")
+
     last_errors = []
-    for attempt in range(1, 7):
-        print(f"[Ollama] Generating debate script (Attempt {attempt}/6)...")
-        
+    for attempt in range(1, 4):
+        print(f"[Content Brain v1] Generating script candidate (Attempt {attempt}/3)...")
         feedback_prompt = ""
         if last_errors:
             feedback_prompt = (
-                f"\n\n### REGENERATION INSTRUCTIONS FROM PREVIOUS ATTEMPT FAILURE:\n"
-                f"The previous attempt failed validation with errors: {last_errors}\n"
-                f"FIX THESE ISSUES IMMEDIATELY in this attempt:\n"
-                f"- TARGET SCRIPT WORD COUNT: Keep total words between 110 and 135 words (for a tight 35-45s duration).\n"
-                f"- SPEAKER B INITIATIVE: Speaker B MUST independently introduce new concepts or reveal facts on at least 2 turns. Speaker B IS NOT merely responding to Speaker A.\n"
-                f"- SPEAKER A IS NOT A QUESTION MACHINE: Speaker A must EXPLAIN facts or provide examples on at least 2 turns. DO NOT make Speaker A ask a question on every turn!\n"
-                f"- CONVERSATIONAL INTERACTION: Make them respond directly to each other (explain, challenge, reveal, answer) rather than two independent monologues.\n"
+                f"\n\n### REVISION DIRECTIVES FROM SCRIPT CRITIC:\n"
+                f"Previous attempt failed quality evaluation with flaws:\n"
+                f"{json.dumps(last_errors, indent=2)}\n"
+                f"FIX EVERY ISSUE: Tighten pacing, remove fluff, and ensure high curiosity."
             )
 
         prompt = (
-            f"You are a senior YouTube Shorts retention strategist and viral scriptwriter. Generate a fast-paced 2-person dialogue script about '{topic}' in strictly formatted JSON.\n\n"
-            f"### CRITICAL RULE: FACTUAL ACCURACY, SCIENTIFIC QUALIFICATION & NATURAL OUTRO\n"
-            f"- Both Speaker A and Speaker B are intelligent CO-HOSTS discussing '{topic}'.\n"
-            f"- All scientific statements MUST be accurate. Use natural qualifications ('Scientists believe...', 'In some species...', 'One known mechanism is...') when describing complex biological systems.\n"
-            f"- DO NOT invent false scientific mechanisms (e.g. claiming bioluminescence requires zero oxygen or low oxygen).\n"
-            f"- Speaker B MUST lead at least 2 information beats independently.\n"
-            f"- Total Script Word Count MUST be between 110 and 135 words total across 5-6 scenes (target duration: 35-50 seconds).\n"
-            f"- Speaker B word count ratio MUST be between 35% and 60% (healthy conversational balance).\n"
-            f"- ENDING OUTRO TURN: End the conversation with one brief, natural closing thought (6-15 words, max 20 words) on the final turn using role: 'outro' and interaction_type: 'close'. The closing thought must feel like the two hosts have reached a satisfying endpoint. It must NOT introduce new facts, a new topic, or an unanswered question.\n\n"
-            f"### STRUCTURE & DIALOGUE ROLES\n"
-            f"Assign a 'role' to every turn from: ['hook', 'explain', 'answer', 'question', 'challenge', 'correct', 'expand', 'example', 'reveal', 'connect', 'summarize', 'outro'].\n"
-            f"Target Length: 5 to 7 visual scenes total.\n\n"
-            f"### REQUIRED JSON SCHEMA\n"
+            f"You are a senior principal engineer and master technical educator. Generate a high-retention 40-second coding YouTube Short script explaining '{topic}' in strictly formatted JSON.\n\n"
+            f"### STRATEGIC ANGLE & CONTENT CONSTRAINTS:\n"
+            f"- Angle Type: {angle_type}\n"
+            f"- Hook Premise: {hook_premise}\n"
+            f"- Core Conflict / Mistake: {core_conflict}\n"
+            f"- Senior Takeaway: {senior_takeaway}\n"
+            f"- Speaker: Single authoritative senior developer voice ('A' / Ryan).\n"
+            f"- Structure: Exactly 4 visual scenes:\n"
+            f"  Scene 1: Hook & junior mistake / counter-intuitive code trap.\n"
+            f"  Scene 2: Why it fails under scale/concurrency or causes silent memory/CPU leaks.\n"
+            f"  Scene 3: Senior clean architecture fix with concise 3-4 line syntax in 'code_snippet'.\n"
+            f"  Scene 4: Punchy payoff principle and production takeaway.\n"
+            f"- Target Duration: {strategy_bounds['min_duration_seconds']:.0f}s - {strategy_bounds['max_duration_seconds']:.0f}s.\n"
+            f"- MANDATORY REQUIREMENT: Each scene's 'text' field MUST contain 25 to 30 spoken words (2 full technical sentences). Do NOT output brief one-line summaries. Total script across all 4 scenes MUST be 100 to 115 words.\n\n"
+            f"### REQUIRED JSON SCHEMA (MUST INCLUDE ALL 4 SCENES):\n"
             f"{{\n"
-            f"  \"title\": \"Debate: {topic}\",\n"
+            f"  \"title\": \"Senior Dev Explains: {topic}\",\n"
             f"  \"scenes\": [\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"Cinematic 8k shot of [Visual Description], hyper-detailed, 8k\",\n"
-            f"      \"reason\": \"Concept description\",\n"
+            f"      \"visual_prompt\": \"Cinematic close-up of developer workspace terminal and code architecture diagram, dark theme, 8k\",\n"
+            f"      \"code_snippet\": [\"# JUNIOR PATTERN\", \"db = open_raw_connection()\"],\n"
+            f"      \"reason\": \"Scene 1: Hook and junior mistake (25-30 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"hook\", \"interaction_type\": \"lead\", \"information_beat\": \"...\", \"claim\": \"...\", \"claim_type\": \"scientific_fact\", \"text\": \"...\"}},\n"
-            f"        {{\"speaker\": \"B\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"information_beat\": \"...\", \"claim\": \"...\", \"claim_type\": \"scientific_fact\", \"text\": \"...\"}},\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"outro\", \"interaction_type\": \"close\", \"information_beat\": \"\", \"text\": \"Short natural closing thought.\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"hook\", \"interaction_type\": \"lead\", \"text\": \"{hook_premise} Junior developers often execute queries synchronously on a single thread without checking pool exhaustion.\"}}\n"
+            f"      ]\n"
+            f"    }},\n"
+            f"    {{\n"
+            f"      \"visual_prompt\": \"System architecture overload diagram showing memory spike and connection timeout failure, glowing red, 8k\",\n"
+            f"      \"code_snippet\": [\"# FAILURE UNDER LOAD\", \"timeout: connection_pool_exhausted\"],\n"
+            f"      \"reason\": \"Scene 2: Why it fails under scale (25-30 words)\",\n"
+            f"      \"dialogue\": [\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"Under high write throughput, unindexed locks starve worker threads, cascading into catastrophic latency spikes and server memory leaks.\"}}\n"
+            f"      ]\n"
+            f"    }},\n"
+            f"    {{\n"
+            f"      \"visual_prompt\": \"Clean senior developer code editor with syntax highlighted production patterns, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# SENIOR PATTERN\", \"with db_pool.acquire() as conn:\", \"    conn.execute_batch(chunked_writes)\"],\n"
+            f"      \"reason\": \"Scene 3: Senior clean architecture fix (25-30 words)\",\n"
+            f"      \"dialogue\": [\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"The senior approach partitions write queues with backpressure batching, ensuring database connections are bounded and recycled gracefully.\"}}\n"
+            f"      ]\n"
+            f"    }},\n"
+            f"    {{\n"
+            f"      \"visual_prompt\": \"Smooth high-throughput distributed system graph running with low latency metrics, green glowing dashboard, 8k\",\n"
+            f"      \"code_snippet\": [\"# PRODUCTION RULE\", \"target_p99_latency < 15ms\"],\n"
+            f"      \"reason\": \"Scene 4: Core payoff principle (20-25 words)\",\n"
+            f"      \"dialogue\": [\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"outro\", \"interaction_type\": \"close\", \"text\": \"Never scale raw compute when your access pattern is broken. Enforce bounded concurrency before you add new servers.\"}}\n"
             f"      ]\n"
             f"    }}\n"
             f"  ]\n"
             f"}}\n"
             f"{feedback_prompt}"
         )
-        
+
         schema = {
             "type": "object",
             "properties": {
@@ -1038,27 +1087,18 @@ def generate_script(topic, category):
                         "properties": {
                             "visual_prompt": {"type": "string"},
                             "reason": {"type": "string"},
+                            "code_snippet": {
+                                "type": "array",
+                                "items": {"type": "string"}
+                            },
                             "dialogue": {
                                 "type": "array",
                                 "items": {
                                     "type": "object",
                                     "properties": {
-                                        "speaker": {"type": "string", "enum": ["A", "B"]},
-                                        "role": {
-                                            "type": "string",
-                                            "enum": ["hook", "explain", "answer", "question", "follow_up", "challenge", "correct", "expand", "example", "reveal", "connect", "summarize", "react", "outro"]
-                                        },
-                                        "interaction_type": {
-                                            "type": "string",
-                                            "enum": ["lead", "respond", "elaborate", "challenge", "answer", "redirect", "reveal", "question", "connect", "example", "close"]
-                                        },
-                                        "information_beat": {"type": "string"},
-                                        "claim": {"type": "string"},
-                                        "claim_type": {
-                                            "type": "string",
-                                            "enum": ["scientific_fact", "historical_fact", "numerical_fact", "definition", "example", "causal_claim", "comparison", "inference", "opinion", "reaction"]
-                                        },
-                                        "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+                                        "speaker": {"type": "string", "enum": ["A"]},
+                                        "role": {"type": "string"},
+                                        "interaction_type": {"type": "string"},
                                         "text": {"type": "string"}
                                     },
                                     "required": ["speaker", "text"]
@@ -1075,7 +1115,7 @@ def generate_script(topic, category):
         payload = {
             "model": OLLAMA_MODEL,
             "prompt": prompt,
-            "format": schema,   # enforce strict JSON schema-guided output
+            "format": schema,
             "stream": False,
             "options": OLLAMA_PARAMS,
         }
@@ -1085,71 +1125,55 @@ def generate_script(topic, category):
             if not acquired:
                 raise TimeoutError("Pipeline queue timeout capacity reached (GPU lock in Ollama)")
             try:
-                resp = requests.post(
-                    f"{OLLAMA_URL}/api/generate",
-                    json=payload,
-                    timeout=120,
-                )
+                resp = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, timeout=120)
             finally:
                 gpu_lock.release()
-                
-            resp.raise_for_status()
-            raw = resp.json().get("response", "")
-            
-            cleaned = raw.strip()
-            if cleaned.startswith("```json"):
-                cleaned = cleaned[7:]
-            if cleaned.startswith("```"):
-                cleaned = cleaned[3:]
-            if cleaned.endswith("```"):
-                cleaned = cleaned[:-3]
-            cleaned = cleaned.strip()
 
-            data = json.loads(cleaned)
+            resp.raise_for_status()
+            raw = resp.json().get("response", "").strip()
+            if raw.startswith("```json"):
+                raw = raw[7:]
+            if raw.startswith("```"):
+                raw = raw[3:]
+            if raw.endswith("```"):
+                raw = raw[:-3]
+            raw = raw.strip()
+
+            data = json.loads(raw)
             scenes_raw = data.get("scenes", [])
-            if not isinstance(scenes_raw, list) or not scenes_raw:
-                print(f"[Ollama] Validation failed: no scenes found")
-                last_errors = ["No scenes found in LLM output."]
+            if not scenes_raw:
+                last_errors = ["No scenes generated in JSON response."]
                 continue
+
+            # Evaluate candidate via HybridScriptCritic
+            critic_res = critic.evaluate_script(
+                topic=topic,
+                script_data=data,
+                channel_type="p2_coding",
+                strategy_bounds=strategy_bounds,
+                tested_variable="HOOK_STRUCTURE"
+            )
+
+            if not critic_res.passed:
+                print(f"[Content Brain Critic] Candidate rejected (Score: {critic_res.overall_score}/10): {critic_res.actionable_revisions}")
+                last_errors = critic_res.actionable_revisions
+                continue
+
+            print(f"[Content Brain Critic] Candidate PASSED Quality Gate (Score: {critic_res.overall_score}/10)!")
 
             lines = []
             segments = []
-            
-            corrections = {
-                r'\bunsuptiously\b': 'subconsciously',
-                r'\bunsustiously\b': 'subconsciously',
-                r'\bdirect\s+stairs\b': 'direct stares',
-                r'\beye\s+stairs\b': 'eye stares',
-                r'\bcontact\s+sense\b': 'contact signals',
-                r'\bcontact\s+sends\b': 'contact signals',
-                r'\bdrop\s+a\s+fire\s+statement\b': 'comment below',
-                r'\bdrop\s+a\s+(\w+)\s+emoji\b': 'comment below', 
-                r'\bleave\s+a\s+(\w+)\s+comment\b': 'comment below',
-                r'\b(drop|leave)\b\s+a\s+eye\s+emoji': 'comment below',
-                r'\b(drop|leave)\b\s+a\s+eye\s+comment': 'comment below',
-                r'\b(drop|leave)\b\s+a\s+brain\s+emoji': 'comment below',
-                r'\b(drop|leave)\b\s+a\s+brain\s+comment': 'comment below'
-            }
-
             for idx, sc in enumerate(scenes_raw):
                 seg_id = f"segment_{idx}"
-                v_prompt = sc.get("visual_prompt", sc.get("image_prompt", "Realistic cinematic image"))
-                sc_dialogue = sc.get("dialogue", sc.get("lines", []))
-                
+                v_prompt = sc.get("visual_prompt", "Realistic cinematic developer diagram")
+                sc_dialogue = sc.get("dialogue", [])
                 clean_sc_lines = []
                 for turn in sc_dialogue:
-                    val = turn.get("text", "")
-                    for pattern, replacement in corrections.items():
-                        val = re.sub(pattern, replacement, val, flags=re.IGNORECASE)
                     turn_copy = {
-                        "speaker": turn.get("speaker", "A"),
+                        "speaker": "A",
                         "role": turn.get("role", "explain"),
                         "interaction_type": turn.get("interaction_type", "lead"),
-                        "information_beat": turn.get("information_beat", ""),
-                        "claim": turn.get("claim", ""),
-                        "claim_type": turn.get("claim_type", "scientific_fact"),
-                        "confidence": turn.get("confidence", "high"),
-                        "text": " ".join(val.split()),
+                        "text": " ".join(turn.get("text", "").split()),
                         "segment_id": seg_id,
                         "visual_topic_prompt": v_prompt
                     }
@@ -1162,76 +1186,23 @@ def generate_script(topic, category):
                     "reason": sc.get("reason", ""),
                     "lines": clean_sc_lines
                 })
-                
-            if len(lines) < 4:
-                print(f"[Ollama] Validation failed: script has too few lines ({len(lines)})")
-                last_errors = ["Script has too few dialogue lines (< 4)."]
-                continue
 
-            # Outro normalization: Ensure only the final turn is eligible for 'outro' / 'close'
-            total_turns = len(lines)
-            for idx, turn in enumerate(lines):
-                role_val = str(turn.get("role", "")).lower()
-                itype_val = str(turn.get("interaction_type", "")).lower()
-                if idx < total_turns - 1:
-                    if role_val == "outro":
-                        turn["role"] = "connect"
-                    if itype_val == "close":
-                        turn["interaction_type"] = "connect"
-
-            if total_turns > 0:
-                last_turn = lines[-1]
-                last_txt = last_turn.get("text", "").strip()
-                last_w_count = len(last_txt.split())
-                last_beat = last_turn.get("information_beat", "").strip()
-                if 1 <= last_w_count <= 20 and "?" not in last_txt and not last_beat:
-                    last_turn["role"] = "outro"
-                    last_turn["interaction_type"] = "close"
-
-            # Run Conversation Balance & Substantive Turn Validation
-            is_valid_convo, convo_errors, convo_stats = validate_and_analyze_conversation(lines)
-            if not is_valid_convo:
-                print(f"[Ollama] Attempt {attempt} failed conversational balance validation: {convo_errors}")
-                last_errors = convo_errors
-                continue
-                
             return {
-                "title": data.get("title", f"Debate: {topic}"),
+                "title": data.get("title", f"Coding Explained: {topic}"),
                 "lines": lines,
                 "segments": segments,
                 "scenes": scenes_raw,
-                "convo_stats": convo_stats,
+                "angle_data": selected_angle,
+                "critic_metrics": critic_res.metrics,
+                "critic_score": critic_res.overall_score,
                 "success": True
             }
-            
+
         except Exception as e:
-            print(f"[Ollama] Attempt {attempt} failed: {e}")
+            print(f"[Content Brain Generator Error] Attempt {attempt} failed: {e}")
             last_errors = [str(e)]
-            
-    raise RuntimeError(f"SCRIPT_VALIDATION_FAILED: All script generation attempts failed validation. Last errors: {last_errors}")
-    fallback_lines = [
-        {"speaker": "A", "text": "AI will replace all human workers within ten years.", "visual_topic_prompt": "Cinematic shot of human robot working in high tech office", "segment_id": "segment_0"},
-        {"speaker": "B", "text": "That is wrong. AI will only assist us, not replace us.", "visual_topic_prompt": "Cinematic shot of friendly human worker collaborating with robot", "segment_id": "segment_0"},
-        {"speaker": "A", "text": "Look at the automation speed. It is happening faster than ever.", "visual_topic_prompt": "Cinematic shot of rapid robotic arm assembly line", "segment_id": "segment_1"},
-        {"speaker": "B", "text": "But humans will adapt and create new, higher-value jobs.", "visual_topic_prompt": "Cinematic shot of human programmer teaching robots", "segment_id": "segment_1"}
-    ]
-    return {
-        "title": f"Debate: {topic}",
-        "lines": fallback_lines,
-        "segments": [
-            {
-                "segment_id": "segment_0",
-                "visual_topic_prompt": fallback_lines[0]["visual_topic_prompt"],
-                "lines": fallback_lines[0:2]
-            },
-            {
-                "segment_id": "segment_1",
-                "visual_topic_prompt": fallback_lines[2]["visual_topic_prompt"],
-                "lines": fallback_lines[2:4]
-            }
-        ],
-        "success": False
-    }
+
+    raise RuntimeError(f"SCRIPT_CRITIC_GATE_FAILED: All script candidates failed Hybrid Critic verification. Last errors: {last_errors}")
 
 def sanitize_script(text):
     """Clean script text by stripping unicode emojis and converting emoji prompts to text."""

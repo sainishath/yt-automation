@@ -14,9 +14,10 @@
   "subtitle_safe_zone_top_pct": 0.25,
   "subtitle_safe_zone_bottom_pct": 0.75,
   "categories": [
-    "Weird Science",
-    "Productivity & stoicism",
-    "Human Behavior"
+    "Coding & Senior Dev Patterns",
+    "System Design & Backend Architecture",
+    "AI Engineering & LLMs",
+    "DevOps, Linux & Security"
   ],
   "long_background_source": "./data/assets/backgrounds/active/subway_surfers_1hr.webm",
   "last_background_timestamp": 1271.3088125000008,

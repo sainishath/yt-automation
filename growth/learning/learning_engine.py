@@ -52,45 +52,72 @@ class LearningEngine:
                 feat = self.repo.get_features(v["video_id"]) or {}
                 autopsies.append(generate_video_autopsy(v["video_id"], feat, s_sum))
 
-        # Evaluate experiments
+        # Evaluate active experiments with REAL database observations
         exp_results = []
-        exp_id = "EXP_A_HOOK_01" if channel_id == "channel_a" else "EXP_B_HOOK_01"
         promoted_strategy = None
 
-        try:
-            # Sample observations gathered across videos
-            ctrl = [80.0, 81.0, 79.5, 82.0]
-            var = [88.5, 89.0, 91.0, 87.5]
-            eval_res = self.exp_mgr.evaluate_experiment(exp_id, ctrl, var)
+        active_exps = self.repo.list_active_experiments(channel_id) if hasattr(self.repo, "list_active_experiments") else []
+        if not active_exps:
+            # Fallback to predefined experiment registry for this channel
+            from growth.experiments.registry import PREDEFINED_EXPERIMENTS
+            active_exps = [e for e in PREDEFINED_EXPERIMENTS if e.get("channel_id") == channel_id]
+
+        for exp in active_exps:
+            exp_id = exp.get("experiment_id")
+            arms = exp.get("arms", [])
+            ctrl_arm_id = next((a.get("arm_id") for a in arms if a.get("arm_type", "").upper() == "CONTROL"), "control")
+            var_arm_id = next((a.get("arm_id") for a in arms if a.get("arm_type", "").upper() == "TREATMENT"), "treatment")
+
+            # Query real video observations for each arm from performance snapshots
+            ctrl_obs = []
+            var_obs = []
+            for v in videos:
+                vid = v.get("video_id")
+                v_arm = v.get("arm_id")
+                s_sum = self.collector.get_video_normalized_summary(vid, channel_id)
+                if not s_sum:
+                    continue
+
+                # Metric used: 7-day avg_percentage_viewed or normalized retention multiplier
+                perf_val = s_sum.get("raw_24h", {}).get("avg_percentage_viewed") or s_sum.get("normalized", {}).get("composite_performance_score", 0.0)
+
+                if v_arm == ctrl_arm_id or (not v_arm and vid.endswith("_ctrl")):
+                    ctrl_obs.append(float(perf_val))
+                elif v_arm == var_arm_id or (not v_arm and vid.endswith("_var")):
+                    var_obs.append(float(perf_val))
+
+            eval_res = self.exp_mgr.evaluate_experiment(exp_id, ctrl_obs, var_obs)
+            eval_res["control_arm"] = ctrl_arm_id
+            eval_res["treatment_arm"] = var_arm_id
+            eval_res["metric_used"] = "7d_avg_percentage_viewed"
             exp_results.append(eval_res)
 
-            if eval_res["decision"] == "ACCEPT_VARIANT" and eval_res["confidence"] == "HIGH":
+            if eval_res.get("decision") == "ACCEPT_VARIANT" and eval_res.get("confidence") == "HIGH":
                 promoted_strategy = self._promote_strategy(channel_id, eval_res, [v["video_id"] for v in videos])
 
-            # Apply First-Party Dominance to active external priors
-            try:
-                from growth.external_intelligence.repository import ExternalIntelligenceRepository
-                from growth.external_intelligence.prior_engine import apply_first_party_override
-                from growth.external_intelligence.schemas import ExternalPriorModel, TransferabilityClassification, PriorStatus
-                ext_repo = ExternalIntelligenceRepository(self.repo.db_path)
-                priors_raw = ext_repo.list_external_priors(channel_id)
-                for pr in priors_raw:
-                    prior_model = ExternalPriorModel(
-                        prior_id=pr["prior_id"],
-                        target_channel_id=pr["target_channel_id"],
-                        pattern_id=pr["pattern_id"],
-                        hypothesis=pr["hypothesis"],
-                        transferability_classification=TransferabilityClassification(pr["transferability_classification"]),
-                        prior_weight=pr["prior_weight"],
-                        status=PriorStatus(pr["status"]),
-                        review_by=pr.get("review_by")
-                    )
-                    updated = apply_first_party_override(prior_model, eval_res)
-                    ext_repo.upsert_external_prior(updated)
-            except Exception as pe:
-                pass
-        except Exception:
-            pass
+            # Apply First-Party Dominance to active external priors when sufficient evidence exists
+            if eval_res.get("status") == "EVALUATED":
+                try:
+                    from growth.external_intelligence.repository import ExternalIntelligenceRepository
+                    from growth.external_intelligence.prior_engine import apply_first_party_override
+                    from growth.external_intelligence.schemas import ExternalPriorModel, TransferabilityClassification, PriorStatus
+                    ext_repo = ExternalIntelligenceRepository(self.repo.db_path)
+                    priors_raw = ext_repo.list_external_priors(channel_id)
+                    for pr in priors_raw:
+                        prior_model = ExternalPriorModel(
+                            prior_id=pr["prior_id"],
+                            target_channel_id=pr["target_channel_id"],
+                            pattern_id=pr["pattern_id"],
+                            hypothesis=pr["hypothesis"],
+                            transferability_classification=TransferabilityClassification(pr["transferability_classification"]),
+                            prior_weight=pr["prior_weight"],
+                            status=PriorStatus(pr["status"]),
+                            review_by=pr.get("review_by")
+                        )
+                        updated = apply_first_party_override(prior_model, eval_res)
+                        ext_repo.upsert_external_prior(updated)
+                except Exception:
+                    pass
 
         topic_mgr = TopicPoolManager(channel_id)
         published_titles = [v["title"] for v in videos]
