@@ -84,8 +84,12 @@ def clean_text(text: Any) -> str:
     return text
 
 
-def validate_and_enrich_script(script_data: dict, style_keywords: str) -> Tuple[bool, Any]:
-    """Validates script structure, word count, and timing constraints."""
+def validate_and_enrich_script(
+    script_data: dict,
+    style_keywords: str,
+    strategy_bounds: Optional[dict] = None
+) -> Tuple[bool, Any]:
+    """Validates script structure, sentence completeness, grammar hygiene, and dynamic strategy timing constraints."""
     if not isinstance(script_data, dict):
         return False, "Script data is not a dictionary"
     
@@ -95,22 +99,57 @@ def validate_and_enrich_script(script_data: dict, style_keywords: str) -> Tuple[
             return False, f"Missing required key: {key}"
             
     scenes = script_data.get("scenes", [])
-    if not isinstance(scenes, list) or len(scenes) < 5:
+    if not isinstance(scenes, list) or len(scenes) < 4:
         return False, f"Invalid or too few scenes: {len(scenes)}"
         
+    bounds = strategy_bounds or {}
+    min_duration = float(bounds.get("min_duration_seconds", 35.0))
+    max_duration = float(bounds.get("max_duration_seconds", 55.0))
+
     total_words = 0
     cumulative_time = 0.0
     words_per_sec = 2.2
+    
+    # Dangling terminal words that indicate truncated clauses
+    dangling_endings = (
+        "across", "from", "to", "with", "and", "or", "but", "by", "for", "in", "on", "at",
+        "of", "that", "which", "while", "as", "the", "a", "an", "their", "its", "because"
+    )
     
     for idx, scene in enumerate(scenes):
         if not isinstance(scene, dict) or "narration" not in scene or "visual_prompt" not in scene:
             return False, f"Scene {idx} is missing narration or visual_prompt"
             
-        scene["narration"] = clean_text(scene["narration"])
-        scene["visual_prompt"] = clean_text(scene["visual_prompt"])
+        scene["narration"] = clean_text(scene["narration"]).strip()
+        scene["visual_prompt"] = clean_text(scene["visual_prompt"]).strip()
         
         narration = scene["narration"]
+        if not narration or len(narration) < 15:
+            return False, f"Scene {idx} narration is empty or too short: '{narration}'"
+            
         words = count_words(narration)
+        if words < 4:
+            return False, f"Scene {idx} has too few words ({words} words): '{narration}'"
+            
+        # Check for truncated clauses / dangling prepositions
+        cleaned_words = [w.strip(".,;:?!'\"()[]{}").lower() for w in narration.split() if w.strip()]
+        if cleaned_words and cleaned_words[-1] in dangling_endings:
+            return False, f"Scene {idx} ends on a dangling/truncated word: '{cleaned_words[-1]}' in '{narration}'"
+
+        # Check for terminal punctuation
+        if not narration.endswith((".", "!", "?", '."', '!"', '?"')):
+            # If missing terminal punctuation and not clearly complete, reject or fix
+            if cleaned_words and cleaned_words[-1] not in dangling_endings:
+                scene["narration"] = narration + "."
+                narration = scene["narration"]
+            else:
+                return False, f"Scene {idx} narration lacks valid terminal punctuation and is incomplete: '{narration}'"
+
+        # Check for broken question grammar
+        if "could have the" in narration.lower():
+            scene["narration"] = re.sub(r'(?i)\bcould have the\b', 'could the', narration)
+            narration = scene["narration"]
+            
         total_words += words
         
         duration = round(words / words_per_sec, 1)
@@ -121,11 +160,14 @@ def validate_and_enrich_script(script_data: dict, style_keywords: str) -> Tuple[
         if style_keywords and style_keywords not in v_prompt:
             scene["visual_prompt"] = f"{v_prompt}, {style_keywords}"
             
-    if not (80 <= total_words <= 140):
-        return False, f"Total word count is {total_words}, must be between 80 and 140"
+    min_words = int(min_duration * words_per_sec * 0.80)
+    max_words = int(max_duration * words_per_sec * 1.25)
+
+    if not (min_words <= total_words <= max_words):
+        return False, f"Total word count is {total_words}, must be between {min_words} and {max_words} for {min_duration}-{max_duration}s range"
         
-    if not (30.0 <= cumulative_time <= 60.0):
-        return False, f"Total duration is {cumulative_time}s, must be between 30s and 60s"
+    if not (min_duration * 0.85 <= cumulative_time <= max_duration * 1.20):
+        return False, f"Total duration is {cumulative_time}s, must be between {min_duration*0.85:.1f}s and {max_duration*1.20:.1f}s"
         
     return True, script_data
 
@@ -316,9 +358,27 @@ def generate_script(
     style_config: dict,
     output_dir: str = "output",
     evidence_packet: Optional[dict] = None,
-    max_retries: int = 3
+    max_retries: int = 3,
+    active_strategy: Optional[dict] = None
 ) -> dict:
     style_keywords = style_config.get("base_style_keywords", "")
+    
+    # Load StrategyManager context for Channel A
+    ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+    if str(ROOT_REPO) not in sys.path:
+        sys.path.insert(0, str(ROOT_REPO))
+
+    from growth.strategy.strategy_manager import StrategyManager
+    from growth.brain.script_critic import HybridScriptCritic
+
+    strat_mgr = StrategyManager()
+    strat_ctx = active_strategy or strat_mgr.get_active_strategy_context("channel_a")
+    strategy_bounds = {
+        "min_duration_seconds": strat_ctx.get("min_duration_seconds", 35.0),
+        "max_duration_seconds": strat_ctx.get("max_duration_seconds", 55.0)
+    }
+
+    critic = HybridScriptCritic(ollama_url=OLLAMA_URL, model=OLLAMA_MODEL)
     
     packet_file = Path(output_dir) / video_id / "evidence_packet.json"
     if evidence_packet is None and packet_file.exists():
@@ -366,6 +426,22 @@ def generate_script(
     avoid_anachronisms_str = "\n".join([f"- {item}" for item in visual_constraints.get("avoid_anachronisms", [])[:4]])
     visual_details_str = "\n".join([f"- [{v.get('category')}]: {v.get('description')}" for v in visual_evidence_list[:4]])
 
+    tested_hook_style = strat_ctx.get("assigned_hook_type", "COUNTERFACTUAL_QUESTION")
+    if "question" in tested_hook_style.lower() or "polar" in tested_hook_style.lower():
+        hook_directive = (
+            "OPENING HOOK REQUIREMENTS (Scene 1) — EXPERIMENT ARM: COUNTERFACTUAL QUESTION\n"
+            "1. The first scene's narration MUST be a spoken counterfactual question starting with 'What if...?' or 'What would have happened if...?'.\n"
+            "2. It MUST end with a question mark (?).\n"
+            "3. It must be spoken aloud in the video, 10-16 words, creating immediate mystery and high curiosity.\n"
+            "4. Do NOT use declarative statements like 'In a world where...' for Scene 1 under this experiment arm."
+        )
+    else:
+        hook_directive = (
+            "OPENING HOOK REQUIREMENTS (Scene 1) — EXPERIMENT ARM: ACTIVE COUNTERFACTUAL CLAIM\n"
+            "1. The first scene's narration MUST be an active counterfactual statement (e.g. 'If Alexandria had never burned, human history would be a thousand years ahead.').\n"
+            "2. It must be spoken aloud in the video, 10-16 words, stating the monumental stakes immediately."
+        )
+
     prompt = f"""You are a professional history storyteller and viral shorts creator.
 Generate a narrative-style "what if" history script for the topic: "{topic}".
 The tone must be epic, cinematic, and curiosity-driven.
@@ -386,12 +462,7 @@ PERIOD-ACCURATE VISUAL ELEMENTS TO INCLUDE:
 CRITICAL ANACHRONISMS TO AVOID IN VISUAL PROMPTS:
 {avoid_anachronisms_str if avoid_anachronisms_str else "- Avoid modern or anachronistic elements."}
 
-OPENING HOOK REQUIREMENTS (Scene 1):
-1. The first scene's narration MUST be a powerful, high-curiosity spoken hook (10-15 words).
-2. It must immediately establish the counterfactual premise using direct, active language (e.g., "What if...", "Imagine if...", "Suppose...", or "In a world where...").
-3. Do NOT weaken the opening hook with hesitant or academic modal phrasing (avoid starting with "Might...", "Could perhaps...", "It is possible that...", "Perhaps...").
-4. The counterfactual framing itself communicates that the scenario is hypothetical.
-5. Create an instant curiosity gap that compels the viewer to keep watching.
+{hook_directive}
 
 STRICT PHRASING BOUNDARIES:
 1. HISTORICAL FACTS: State real-world historical facts accurately according to the evidence packet.
@@ -401,10 +472,10 @@ STRICT PHRASING BOUNDARIES:
 
 Return ONLY a raw JSON object with this exact schema:
 {{
-  "hook": "Stops the user and states the alternate history divergence of this video.",
+  "hook": "Spoken opening hook question stating the alternate history divergence.",
   "scenes": [
     {{
-      "narration": "First scene narration line (must state topic's divergence in 10-15 words with a strong 'What if' or 'Imagine if' hook).",
+      "narration": "First scene narration line (MUST match the assigned hook format and be spoken word-for-word in 10-16 words).",
       "visual_prompt": "Cinematic and rich visual description of the opening scene."
     }},
     {{
@@ -417,8 +488,8 @@ Return ONLY a raw JSON object with this exact schema:
 
 Constraints:
 1. Topic Alignment: Every single narration line and visual prompt MUST be specifically about the topic "{topic}".
-2. Spoken Word Count: Total word count of all narrations combined MUST be between 90 and 135 words.
-3. Scenes: Divide into 6 to 8 scenes. Each scene's narration should contain 12-18 words, EXCEPT scene 1 (hook: 10-15 words).
+2. Total Spoken Word Count: EXACTLY 90 to 120 words total across all scenes combined (each scene must have 14-18 spoken words). Do NOT exceed 125 total words.
+3. Scenes: Divide into exactly 6 or 7 scenes.
 4. Historical Era and Technology Level Accuracy: Visual prompts must explicitly lock the scene's technological level using the provided facts.
 5. Shot Variety: Every visual prompt MUST explicitly start with a camera shot description (e.g., Wide shot, Medium shot, Close-up, Low-angle shot).
 """
@@ -434,8 +505,9 @@ Constraints:
         }
     }
     
+    last_critic_flaws = []
     for attempt in range(1, max_retries + 1):
-        logging.info(f"Attempt {attempt}/{max_retries} to generate RAG v4 script for topic: '{topic}'")
+        logging.info(f"Attempt {attempt}/{max_retries} to generate Content Brain v1 script for topic: '{topic}'")
         try:
             response = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, timeout=90)
             response.raise_for_status()
@@ -450,46 +522,42 @@ Constraints:
             script_data["topic"] = topic
             script_data["grounding_facts"] = grounding_facts
             
-            success, result = validate_and_enrich_script(script_data, style_keywords)
-            if success:
-                result, claim_ver_doc = verify_and_revise_script_claims(result, evidence_packet, video_id, output_dir=output_dir)
-                out_dir = Path(output_dir) / video_id
-                out_dir.mkdir(parents=True, exist_ok=True)
-                script_file = out_dir / "script.json"
-                with open(script_file, "w", encoding="utf-8") as f:
-                    json.dump(result, f, indent=2, ensure_ascii=False)
-                logging.info(f"Successfully generated, verified, and saved script to {script_file}")
-                return result
-            else:
-                logging.warning(f"Validation failed on attempt {attempt}: {result}")
+            success, result = validate_and_enrich_script(script_data, style_keywords, strategy_bounds=strategy_bounds)
+            if not success:
+                logging.warning(f"Structural validation failed on attempt {attempt}: {result}")
+                continue
+
+            # Hybrid Script Critic Quality Gate
+            critic_res = critic.evaluate_script(
+                topic=topic,
+                script_data=result,
+                channel_type="p1_history",
+                strategy_bounds=strategy_bounds,
+                tested_variable="HOOK_STRUCTURE"
+            )
+
+            if not critic_res.passed:
+                logging.warning(f"[Content Brain Critic P1] Rejected attempt {attempt} (Score: {critic_res.overall_score}/10): {critic_res.actionable_revisions}")
+                last_critic_flaws = critic_res.actionable_revisions
+                continue
+
+            result["critic_score"] = critic_res.overall_score
+            result["critic_metrics"] = critic_res.metrics
+            logging.info(f"[Content Brain Critic P1] Script PASSED (Score: {critic_res.overall_score}/10)!")
+
+            result, claim_ver_doc = verify_and_revise_script_claims(result, evidence_packet, video_id, output_dir=output_dir)
+            out_dir = Path(output_dir) / video_id
+            out_dir.mkdir(parents=True, exist_ok=True)
+            script_file = out_dir / "script.json"
+            with open(script_file, "w", encoding="utf-8") as f:
+                json.dump(result, f, indent=2, ensure_ascii=False)
+            logging.info(f"Successfully generated, verified, and saved script to {script_file}")
+            return result
                 
         except Exception as e:
             logging.error(f"Error during script generation on attempt {attempt}: {e}")
             
-    logging.info(f"Using fallback RAG v4 script for topic: '{topic}'")
-    fallback_script = {
-        "title": f"What If: {topic}",
-        "hook": f"What if {topic} changed history forever?",
-        "topic": topic,
-        "video_id": video_id,
-        "grounding_facts": grounding_facts,
-        "scenes": [
-            {"narration": f"In a world where {topic}, history took a completely different path.", "visual_prompt": "Cinematic wide shot of an ancient grand library filled with scholars reading manuscripts under warm sunlight"},
-            {"narration": "Ancient knowledge was preserved and expanded across generations without interruption.", "visual_prompt": "Medium shot of ancient scrolls, maps, and astronomical instruments neatly organized on wooden tables"},
-            {"narration": "Scholars collaborated from around the world to build advanced scientific instruments.", "visual_prompt": "Low angle wide shot of astronomers observing stars using giant bronze astrolabes"},
-            {"narration": "Medicine and mathematics progressed centuries ahead of historical timelines.", "visual_prompt": "Close-up of hand drawing intricate geometric diagrams and chemical formulas on parchment"},
-            {"narration": "This repository of wisdom transformed global civilization and trade routes.", "visual_prompt": "High angle overview shot of a thriving harbor city with grand classical architecture"},
-            {"narration": "Imagine how different modern technology would be if this knowledge was never lost.", "visual_prompt": "Cinematic shot of ancient classical city illuminated at night with glowing oil lamps and clear starlight"}
-        ]
-    }
-    result, claim_ver_doc = verify_and_revise_script_claims(fallback_script, evidence_packet, video_id, output_dir=output_dir)
-    out_dir = Path(output_dir) / video_id
-    out_dir.mkdir(parents=True, exist_ok=True)
-    script_file = out_dir / "script.json"
-    with open(script_file, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2, ensure_ascii=False)
-    logging.info(f"Fallback RAG v4 Script saved to {script_file}")
-    return result
+    raise RuntimeError(f"SCRIPT_CRITIC_GATE_FAILED: All script candidates for '{topic}' failed generation or Hybrid Critic verification. Last flaws: {last_critic_flaws}")
 
 
 if __name__ == "__main__":
