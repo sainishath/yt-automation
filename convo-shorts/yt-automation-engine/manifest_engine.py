@@ -93,11 +93,16 @@ def generate_production_manifest(
     audio_stats: dict,
     qa_results: dict,
     job_id: str = None,
-    out_manifest_path: str = None
+    out_manifest_path: str = None,
+    strategy_version: str = "v1.0",
+    experiment_id: str = None,
+    arm_id: str = None,
+    tested_variable: str = None,
+    angle_data: dict = None
 ) -> dict:
     """
     Generates structured production manifest for a Pipeline 2 Short.
-    Includes synthetic media metadata and asset provenance.
+    Includes synthetic media metadata, asset provenance, and Content Brain experiment lineage.
     """
     video_p = Path(video_path)
     if out_manifest_path is None:
@@ -113,6 +118,13 @@ def generate_production_manifest(
         "status": "qa_passed" if qa_results.get("passed", False) else "qa_failed",
         "topic": topic,
         "category": category,
+        "content_brain": {
+            "strategy_version": strategy_version,
+            "experiment_id": experiment_id,
+            "arm_id": arm_id,
+            "tested_variable": tested_variable,
+            "angle_data": angle_data or {}
+        },
         "technical_specs": {
             "resolution": "1080x1920",
             "aspect_ratio": "9:16",

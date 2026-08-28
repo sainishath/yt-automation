@@ -11,7 +11,7 @@
     "hooks": ["Provocative attack on common habits", "Shocking counter-intuitive questions"],
     "narrative_structure": "two_host_socratic_duel",
     "speaker_balance": [0.40, 0.55],
-    "optimal_duration_seconds": [35, 45],
+    "optimal_duration_seconds": [25, 50],
     "visual_style": "Gameplay dynamic background with visual proof overlays"
   },
   "losing_patterns": {

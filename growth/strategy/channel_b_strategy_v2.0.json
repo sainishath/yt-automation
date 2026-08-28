@@ -1,0 +1,44 @@
+{
+  "channel_id": "channel_b",
+  "strategy_version": "v2.0",
+  "name": "Coding & Software/AI Education Transition Strategy",
+  "niche_version": "channel_b_niche_v2",
+  "content_category": "coding_software_ai_education",
+  "target_audience": {
+    "primary": "Programming beginners and self-taught developers learning practical coding",
+    "secondary": "Developers wanting concise explanations of concepts & AI/tech news",
+    "core_interest": "Python, JavaScript, Git, Docker, SQL, APIs, AI models, developer mental models"
+  },
+  "content_architecture": {
+    "preferred_flow": [
+      "HOOK",
+      "PROBLEM",
+      "SIMPLE_EXPLANATION",
+      "ANALOGY",
+      "CODE_DEMONSTRATION",
+      "VISUAL_OR_EXECUTION",
+      "COMMON_MISTAKE",
+      "PAYOFF_TAKEAWAY"
+    ],
+    "two_host_dynamic": {
+      "host_a": "Technical Explainer (Authoritative, simplified concepts, zero unexplained jargon)",
+      "host_b": "Curious Learner / Pragmatic Developer (Asks the key questions viewers think of)"
+    }
+  },
+  "winning_patterns": {
+    "topics": ["Python decorators & generators", "REST vs GraphQL APIs", "Git under the hood", "Docker containers vs VMs", "SQL indexing tricks", "How LLM embeddings work"],
+    "hooks": ["Counterintuitive code behavior", "Mistake-first developer pitfalls", "Direct conceptual question"],
+    "narrative_structure": "two_host_collaborative_explainer",
+    "speaker_balance": [0.45, 0.55],
+    "optimal_duration_seconds": [35, 55],
+    "visual_style": "Gameplay dynamic canvas with centered 896x896 Fooocus code & diagram overlays"
+  },
+  "losing_patterns": {
+    "topics": ["Unexplained theoretical jargon dumps", "Unbalanced monologues without visual code context"],
+    "hooks": ["Generic welcome greetings", "Formal textbook dictionary definitions"]
+  },
+  "active_experiments": [
+    "EXP_B_TECH_HOOK_01"
+  ],
+  "posting_frequency": "5_to_7_shorts_per_week"
+}

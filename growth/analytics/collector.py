@@ -57,27 +57,35 @@ class AnalyticsCollector:
 
     def get_video_normalized_summary(self, video_id: str, channel_id: str) -> Optional[Dict[str, Any]]:
         """
-        Retrieves the 24h snapshot and computes normalized score against channel baseline.
+        Retrieves mature performance snapshot (preferring 7d, falling back to 24h)
+        and computes normalized scores against channel baseline.
         """
         snaps = self.repo.get_snapshots_for_video(video_id)
-        snap_24h = next((s for s in snaps if s.get("window_name") == "24h"), None)
-        if not snap_24h:
+        # Select best evaluation snapshot: 7d window preferred, fallback to 24h
+        eval_snap = next((s for s in snaps if s.get("window_name") == "7d"), None)
+        if not eval_snap:
+            eval_snap = next((s for s in snaps if s.get("window_name") == "24h"), None)
+        if not eval_snap:
             return None
 
-        # Fetch recent 24h snapshots for channel baseline
+        # Fetch recent baseline snapshots for channel
         channel_videos = self.repo.list_videos_by_channel(channel_id)
-        recent_24h = []
+        recent_snaps = []
         for v in channel_videos[:15]:
             v_snaps = self.repo.get_snapshots_for_video(v["video_id"])
-            s24 = next((s for s in v_snaps if s.get("window_name") == "24h"), None)
-            if s24:
-                recent_24h.append(s24)
+            s = next((x for x in v_snaps if x.get("window_name") == eval_snap.get("window_name")), None)
+            if not s:
+                s = next((x for x in v_snaps if x.get("window_name") == "24h"), None)
+            if s:
+                recent_snaps.append(s)
 
-        baseline = calculate_channel_baseline(recent_24h)
-        norm = normalize_video_metrics(snap_24h, baseline)
+        baseline = calculate_channel_baseline(recent_snaps)
+        norm = normalize_video_metrics(eval_snap, baseline)
         return {
             "video_id": video_id,
-            "raw_24h": snap_24h,
+            "window_name": eval_snap.get("window_name", "24h"),
+            "raw_24h": eval_snap,
+            "raw_snapshot": eval_snap,
             "baseline": baseline,
             "normalized": norm
         }

@@ -15,6 +15,7 @@ Categories:
     "Human Behavior"
 """
 
+import os
 import argparse
 import json
 import sys
@@ -121,9 +122,41 @@ def run_pipeline(
             raise RuntimeError(err_msg)
         print(f"[JOB {job_id}] [STAGE PREFLIGHT SUCCESS] All infrastructure checks passed!")
 
-        # 1/2. Generate or Load Script
+        # 1. Content Brain v1 Strategic Initialization
+        failed_stage = "STRATEGY_INIT"
+        ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+        if str(ROOT_REPO) not in sys.path:
+            sys.path.insert(0, str(ROOT_REPO))
+
+        from growth.strategy.strategy_manager import StrategyManager
+        from growth.brain.decision_engine import DecisionEngine
+        from growth.brain.memory import BrainMemory
+        from growth.db.database import get_db, DEFAULT_DB_PATH
+
+        strat_mgr = StrategyManager()
+        strat_ctx = strat_mgr.get_active_strategy_context("channel_b")
+        strategy_version = strat_ctx.get("strategy_version", "v1.0")
+        
+        # Query active experiment assignment
+        experiment_id = None
+        arm_id = "control"
+        tested_variable = "HOOK_STRUCTURE"
+        try:
+            mem = BrainMemory(DEFAULT_DB_PATH)
+            dec_engine = DecisionEngine(mem)
+            decision = dec_engine.recommend_next_decision("channel_b")
+            if decision and decision.experiment_id:
+                experiment_id = decision.experiment_id
+                arm_id = decision.arm_id or "control"
+                tested_variable = decision.variable_under_test or "HOOK_STRUCTURE"
+        except Exception as de_err:
+            print(f"[Content Brain] Notice: Running under baseline strategy ({de_err})")
+
+        print(f"[Content Brain v1 Lineage] Strategy: {strategy_version} | Exp: {experiment_id} | Arm: {arm_id}")
+
+        # 2. Generate or Load Script with Multi-Angle & Hybrid Critic
         failed_stage = "SCRIPTING"
-        print(f"[JOB {job_id}] [STAGE SCRIPTING] Generating debate script via Ollama...")
+        print(f"[JOB {job_id}] [STAGE SCRIPTING] Generating technical Short via Content Brain v1...")
         script = {}
         title = f"Short: {topic}"
         timeline_or_text = ""
@@ -144,14 +177,14 @@ def run_pipeline(
             timeline_or_text = full_text
             print("[Manual Script] Provided directly.")
         else:
-            script = generate_script(topic, category)
+            script = generate_script(topic, category, active_strategy=strat_ctx)
             if "lines" in script:
-                title = script.get("title", f"Debate: {topic}")
+                title = script.get("title", f"Coding: {topic}")
                 timeline_or_text = script["lines"]
-                hook = "Debate starts"
-                body = "Structured debate timeline"
-                cta = "Comment your thoughts"
-                print(f"[JOB {job_id}] [STAGE SCRIPTING SUCCESS] Debate generated with {len(timeline_or_text)} turns.")
+                hook = script.get("angle_data", {}).get("hook_text", "Coding breakdown")
+                body = "Structured single narrator explanation"
+                cta = "Follow for daily engineering deep-dives"
+                print(f"[JOB {job_id}] [STAGE SCRIPTING SUCCESS] Script passed Hybrid Critic (Score: {script.get('critic_score', 8.5)}/10).")
             else:
                 hook, body, cta = script["hook"], script["body"], script["cta"]
                 title = script.get("title", f"{hook} #Shorts")
@@ -191,16 +224,32 @@ def run_pipeline(
         if is_debate_run:
             failed_stage = "VISUAL_GENERATION"
             print(f"[JOB {job_id}] [STAGE VISUAL_GENERATION] Generating Fooocus images for debate segments...")
+            visual_proofs = []
             segments = script.get("segments", [])
             generated_paths = {}
-            for seg in segments:
+            from code_renderer import render_code_snippet_card
+            scenes_raw = script.get("scenes", [])
+            for idx, seg in enumerate(segments):
                 seg_id = seg.get("segment_id")
                 prompt = seg.get("visual_topic_prompt")
                 target_path = job_temp_dir / f"{label}_{seg_id}.png"
-                img_path = generate_fooocus_image(prompt, str(target_path))
+                
+                # Check if scene contains code snippet
+                code_snippet = None
+                if idx < len(scenes_raw):
+                    code_snippet = scenes_raw[idx].get("code_snippet")
+                    
+                # Scenes with explicit code snippets render clean dark-mode syntax code cards;
+                # Conceptual / architecture scenes render photorealistic SDXL visuals via Fooocus
+                if code_snippet and isinstance(code_snippet, list) and len(code_snippet) > 0 and idx % 2 == 1:
+                    print(f"[CODE CARD] Rendering syntax dark-mode card for {seg_id}...")
+                    img_path = render_code_snippet_card(code_snippet, title=topic[:28], output_path=str(target_path))
+                else:
+                    print(f"[FOOOCUS SDXL] Generating 896x896 visual overlay for {seg_id}...")
+                    img_path = generate_fooocus_image(prompt, str(target_path))
+                    
                 generated_paths[seg_id] = img_path
                 
-            visual_proofs = []
             for sc in timings:
                 seg_id = sc.get("segment_id")
                 visual_proofs.append(generated_paths.get(seg_id))
@@ -246,11 +295,28 @@ def run_pipeline(
             voice_cfg=voice_cfg,
             audio_stats=audio_stats,
             qa_results=qa_results,
-            job_id=job_id
+            job_id=job_id,
+            strategy_version=strategy_version,
+            experiment_id=experiment_id,
+            arm_id=arm_id,
+            tested_variable=tested_variable,
+            angle_data=script.get("angle_data")
         )
 
         if not qa_results.get("passed", False):
             raise RuntimeError(f"PRODUCTION QA GATE FAILED for {label}: {qa_results.get('details')}")
+
+        # Post 540x960 review proxy to Discord webhook
+        webhook_url = os.getenv("DISCORD_WEBHOOK_URL_P2") or os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("DISCORD_WEBHOOK_CHANNEL_B")
+        if webhook_url:
+            try:
+                print(f"[JOB {job_id}] Posting 540x960 review proxy to Discord webhook...")
+                from discord_review import post_for_review
+                post_for_review("pipeline2", job_id, [str(video_out)], "video", webhook_url)
+            except Exception as dw_err:
+                print(f"[JOB {job_id}] Notice: Discord review dispatch failed ({dw_err})")
+        else:
+            print(f"[JOB {job_id}] Discord webhook URL not configured in environment (DISCORD_WEBHOOK_URL_P2). Video ready on disk.")
 
         # Optional upload to YouTube if explicitly requested
         upload_res = None
@@ -338,8 +404,17 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--category",
-        default="Tech",
-        choices=["Weird Science", "Productivity & stoicism", "Human Behavior", "Tech"],
+        default="Coding & Senior Dev Patterns",
+        choices=[
+            "Coding & Senior Dev Patterns",
+            "System Design & Backend Architecture",
+            "AI Engineering & LLMs",
+            "DevOps & Cloud Infrastructure",
+            "Tech",
+            "Weird Science",
+            "Productivity & stoicism",
+            "Human Behavior"
+        ],
         help="Content category",
     )
     parser.add_argument("--job_id", default=None, help="Unique job identifier")

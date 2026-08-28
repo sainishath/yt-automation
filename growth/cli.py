@@ -106,7 +106,14 @@ def main():
     parser.add_argument("--external-channel", nargs="?", const="channel_a", help="Display details and benchmark videos for an external channel or target channel")
     parser.add_argument("--external-video", type=str, metavar="VIDEO_ID", help="Display details, snapshots, and observations for an external video")
     parser.add_argument("--external-learning", nargs="?", const="channel_a", help="Display external priors, transferability, and first-party override status")
+    parser.add_argument("--import-external-dataset", type=str, metavar="FILE_PATH", help="Import a human/Gemini-researched tabular dataset (CSV, TSV, XLSX)")
+    parser.add_argument("--dry-run", action="store_true", help="Execute import in dry-run mode without mutating database")
+    parser.add_argument("--dataset-id", type=str, help="Custom dataset ID for external dataset import")
+    parser.add_argument("--dataset-version", type=str, default="v1.0", help="Dataset version tag for external dataset import")
+    parser.add_argument("--external-dataset-status", action="store_true", help="Display status and metrics for all imported external research datasets")
+    parser.add_argument("--external-dataset", type=str, metavar="DATASET_ID", help="Display detailed record and quarantine inspection for a specific dataset ID")
     args = parser.parse_args()
+
 
     repo = GrowthRepository()
     collector = AnalyticsCollector(repo, use_mock_engine=True)
@@ -800,7 +807,69 @@ def main():
         print(json.dumps(milestone, indent=2))
         print("=======================================================\n")
 
+    if args.import_external_dataset:
+
+        from growth.external_intelligence.ingestion.dataset_importer import TabularDatasetImporter
+        importer = TabularDatasetImporter()
+        p = Path(args.import_external_dataset)
+        print(f"\n=======================================================")
+        print(f"  IMPORTING EXTERNAL RESEARCH DATASET: {p.name}")
+        print(f"  Dry Run: {args.dry_run}")
+        print(f"=======================================================")
+        rep = importer.import_dataset(
+            file_path=p,
+            dataset_id=args.dataset_id,
+            dataset_version=args.dataset_version,
+            dry_run=args.dry_run
+        )
+        print(f"  Dataset ID:             {rep.dataset_id}")
+        print(f"  Total Rows:             {rep.total_rows}")
+        print(f"  Valid Rows:             {rep.valid_rows}")
+        print(f"  Rejected Rows:          {rep.rejected_rows}")
+        print(f"  Duplicate Rows:         {rep.duplicate_rows}")
+        print(f"  Missing Transcripts:    {rep.missing_transcripts}")
+        print(f"  Missing Public Metrics: {rep.missing_metrics}")
+        print(f"  Performance Distribution: {rep.performance_distribution}")
+        if rep.rejection_reasons:
+            print(f"\n  Rejection Summary:")
+            for reason, count in rep.rejection_reasons.items():
+                print(f"    • {reason}: {count}")
+        if rep.quarantine_log:
+            print(f"\n  Quarantined Sample (First 3):")
+            for q in rep.quarantine_log[:3]:
+                print(f"    - Row {q['row_index']} ({q['title']}): {q['errors']}")
+        print("=======================================================\n")
+
+    if args.external_dataset_status:
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        ext_repo = ExternalIntelligenceRepository()
+        ds_list = ext_repo.list_external_datasets()
+        print(f"\n=======================================================")
+        print(f"  EXTERNAL RESEARCH DATASETS REGISTRY ({len(ds_list)} Datasets)")
+        print(f"=======================================================")
+        if not ds_list:
+            print("  No external tabular datasets registered yet.")
+        for ds in ds_list:
+            print(f"  • {ds['dataset_id']} (v{ds['dataset_version']}) | Imported: {ds.get('imported_at')}")
+            print(f"    Rows: {ds['row_count']} Total | {ds['valid_count']} Valid | {ds['rejected_count']} Rejected")
+            print(f"    Source: {ds['source']} | Collector: {ds['collector']} | Path: {ds.get('file_path')}\n")
+        print("=======================================================\n")
+
+    if args.external_dataset:
+        from growth.external_intelligence.repository import ExternalIntelligenceRepository
+        ext_repo = ExternalIntelligenceRepository()
+        ds = ext_repo.get_external_dataset(args.external_dataset)
+        print(f"\n=======================================================")
+        print(f"  EXTERNAL DATASET DETAILS: {args.external_dataset}")
+        print(f"=======================================================")
+        if not ds:
+            print(f"  Dataset '{args.external_dataset}' not found.")
+        else:
+            print(json.dumps(ds, indent=2))
+        print("=======================================================\n")
+
 
 if __name__ == "__main__":
     main()
+
 

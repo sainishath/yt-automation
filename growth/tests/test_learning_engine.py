@@ -51,6 +51,34 @@ class TestLearningEngine(unittest.TestCase):
         self.assertGreater(len(res["recommended_topics"]), 0)
         self.assertIn("# 📊 Weekly Channel Growth Report", res["report_markdown"])
 
+    def test_n_less_than_4_insufficient(self):
+        # 2 videos are in repo, N=2 < 4
+        res = self.engine.run_channel_learning_cycle("channel_a")
+        self.assertIsNone(res["promoted_strategy"])
+        self.assertGreaterEqual(len(res["experiment_results"]), 1)
+        self.assertEqual(res["experiment_results"][0]["status"], "INSUFFICIENT_DATA")
+
+    def test_n_greater_equal_4_evaluates_real_observations(self):
+        # Populate 4 control and 4 variant videos with clear performance gap
+        for i in range(10, 14):
+            ctrl_id = f"vid_ctrl_{i}"
+            self.repo.upsert_video(VideoModel(ctrl_id, "channel_a", "p1", f"Ctrl {i}", 45.0, "UPLOADED", "public", "APPROVED", "v1.0", arm_id="control"))
+            self.repo.upsert_features(VideoFeaturesModel(ctrl_id, "History", "Hook", 7.0, "Hook text", 100, 8, 5.5, 0.18, "Motion", 0.08, 2.2, "8_beat"))
+            self.collector.collect_snapshots_for_video(ctrl_id, duration=45.0, retention_factor=0.70)
+
+            var_id = f"vid_var_{i}"
+            self.repo.upsert_video(VideoModel(var_id, "channel_a", "p1", f"Var {i}", 45.0, "UPLOADED", "public", "APPROVED", "v1.0", arm_id="treatment"))
+            self.repo.upsert_features(VideoFeaturesModel(var_id, "History", "Hook", 9.2, "Hook text", 100, 8, 5.5, 0.18, "Motion", 0.08, 2.2, "8_beat"))
+            self.collector.collect_snapshots_for_video(var_id, duration=45.0, retention_factor=0.95)
+
+        res = self.engine.run_channel_learning_cycle("channel_a")
+        self.assertIsNotNone(res["promoted_strategy"])
+        exp_res = res["experiment_results"][0]
+        self.assertEqual(exp_res["status"], "EVALUATED")
+        self.assertEqual(exp_res["decision"], "ACCEPT_VARIANT")
+        self.assertEqual(exp_res["control_count"], 4)
+        self.assertEqual(exp_res["variant_count"], 4)
+
 
 if __name__ == "__main__":
     unittest.main()

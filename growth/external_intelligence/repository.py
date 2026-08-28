@@ -419,7 +419,7 @@ class ExternalIntelligenceRepository:
                 prior_id
             ))
 
-    # ── Research Runs ───────────────────────────────────────────────────────
+    # ── Research Runs & Datasets ───────────────────────────────────────────
 
     def record_research_run(self, run: ResearchRunModel) -> None:
         with get_db(self.db_path) as conn:
@@ -441,3 +441,44 @@ class ExternalIntelligenceRepository:
                 1 if run.is_simulation else 0,
                 run.completed_at
             ))
+
+    def list_external_datasets(self) -> List[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS external_datasets (
+                    dataset_id TEXT PRIMARY KEY,
+                    dataset_version TEXT NOT NULL,
+                    source TEXT NOT NULL,
+                    collector TEXT NOT NULL,
+                    schema_version TEXT NOT NULL,
+                    row_count INTEGER DEFAULT 0,
+                    valid_count INTEGER DEFAULT 0,
+                    rejected_count INTEGER DEFAULT 0,
+                    quarantined_count INTEGER DEFAULT 0,
+                    file_path TEXT,
+                    imported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            rows = conn.execute("SELECT * FROM external_datasets ORDER BY imported_at DESC").fetchall()
+            return [dict(r) for r in rows]
+
+    def get_external_dataset(self, dataset_id: str) -> Optional[Dict[str, Any]]:
+        with get_db(self.db_path) as conn:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS external_datasets (
+                    dataset_id TEXT PRIMARY KEY,
+                    dataset_version TEXT NOT NULL,
+                    source TEXT NOT NULL,
+                    collector TEXT NOT NULL,
+                    schema_version TEXT NOT NULL,
+                    row_count INTEGER DEFAULT 0,
+                    valid_count INTEGER DEFAULT 0,
+                    rejected_count INTEGER DEFAULT 0,
+                    quarantined_count INTEGER DEFAULT 0,
+                    file_path TEXT,
+                    imported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            row = conn.execute("SELECT * FROM external_datasets WHERE dataset_id = ?", (dataset_id,)).fetchone()
+            return dict(row) if row else None
+
