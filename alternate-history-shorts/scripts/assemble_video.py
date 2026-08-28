@@ -107,16 +107,17 @@ def align_and_generate_ass(whisper_words: list, original_text: str, style_cfg: d
         chunks.append(chunk)
         
     # Build ASS content
+    # Build ASS content with enhanced mobile legibility (drop shadow + crisp outline)
     font = style_cfg.get("font", "Arial")
-    bold = "0"
+    bold = "1" if "bold" in font.lower() else "1"  # Default to bold for mobile shorts
     if "bold" in font.lower():
         font = font.replace("Bold", "").replace("bold", "").strip()
-        bold = "1"
         
-    size = style_cfg.get("size", 64)
+    size = style_cfg.get("size", 68)
     color = map_color_to_ass(style_cfg.get("color", "white"))
     out_color = map_color_to_ass(style_cfg.get("outline_color", "black"))
-    out_width = style_cfg.get("outline_width", 3)
+    out_width = style_cfg.get("outline_width", 4)
+    shadow_depth = style_cfg.get("shadow", 2)
     margin_v = style_cfg.get("margin_v", 320)
     
     # Header info
@@ -128,7 +129,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,{font},{size},{color},&H000000FF,{out_color},&H00000000,{bold},0,0,0,100,100,0,0,1,{out_width},0,2,10,10,{margin_v},1
+Style: Default,{font},{size},{color},&H000000FF,{out_color},&H80000000,{bold},0,0,0,100,100,0,0,1,{out_width},{shadow_depth},2,10,10,{margin_v},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -181,20 +182,24 @@ def build_scene_clip(idx: int, img_path: Path, audio_path: Path, ass_path: Path,
     # Compute total frames at 25 fps
     frames = max(25, int(duration * 25))
     
-    # Rotate Ken Burns motion style based on scene index
-    motion_type = idx % 4
+    # Pre-scale to high resolution (2160x3840) to give zoompan subpixel precision and eliminate jitter/shakiness
+    # Zoom/pan expressions move smoothly in micro-steps across the entire duration (4-6s)
+    motion_type = idx % 5
     if motion_type == 0:
-        # Zoom In
-        zoom_expr = f"z='1.0+(0.08*on/{frames})':x='0':y='0'"
+        # Ultra-smooth slow zoom in (1.00 -> 1.05) centered on upper third
+        zoom_expr = f"z='min(zoom+0.0004,1.05)':x='iw/2-(iw/zoom/2)':y='ih/3-(ih/zoom/3)'"
     elif motion_type == 1:
-        # Zoom Out
-        zoom_expr = f"z='1.08-(0.08*on/{frames})':x='0':y='0'"
+        # Ultra-smooth slow zoom out (1.05 -> 1.00) revealing environment
+        zoom_expr = f"z='max(1.05-0.0004*on,1.00)':x='iw/2-(iw/zoom/2)':y='ih/3-(ih/zoom/3)'"
     elif motion_type == 2:
-        # Pan Left
-        zoom_expr = f"z='1.08':x='(1.08-1)*iw*(1-on/{frames})':y='(1.08-1)*ih/2'"
+        # Gentle horizontal drift: slow pan left across the frame
+        zoom_expr = f"z='1.05':x='(1.05-1.0)*iw*(1.0-on/{frames})':y='ih/3-(ih/zoom/3)'"
+    elif motion_type == 3:
+        # Gentle horizontal drift: slow pan right across the frame
+        zoom_expr = f"z='1.05':x='(1.05-1.0)*iw*(on/{frames})':y='ih/3-(ih/zoom/3)'"
     else:
-        # Pan Right
-        zoom_expr = f"z='1.08':x='(1.08-1)*iw*(on/{frames})':y='(1.08-1)*ih/2'"
+        # Subtle diagonal glide
+        zoom_expr = f"z='min(zoom+0.0003,1.04)':x='(0.04)*iw*(on/{frames})':y='(0.04)*ih*(on/{frames})'"
         
     # Relative path calculations to bypass Windows path character limitations inside subtitles filter
     # Set CWD to the audio directory during FFmpeg execution
@@ -204,10 +209,12 @@ def build_scene_clip(idx: int, img_path: Path, audio_path: Path, ass_path: Path,
     rel_ass = ass_path.name
     rel_out = out_clip_path.name
     
+    # 1. Scale input image up to high-res (2160x3840)
+    # 2. zoompan interpolates with subpixel smoothness
+    # 3. scale down to clean 1080x1920 with lanczos
     filter_graph = (
-        f"scale=1080:1920,"
-        f"zoompan={zoom_expr}:d={frames}:s=1080x1920,"
-        f"fps=25,"
+        f"scale=2160:3840:flags=lanczos,"
+        f"zoompan={zoom_expr}:d={frames}:s=1080x1920:fps=25,"
         f"subtitles={rel_ass}"
     )
     

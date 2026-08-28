@@ -25,6 +25,7 @@ import hashlib
 import logging
 import argparse
 import urllib.parse
+import urllib.request
 import requests
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
@@ -164,12 +165,59 @@ def fetch_wikipedia_source(entity: str, max_retries: int = 2) -> Optional[Dict[s
     return None
 
 
+def fetch_local_qdrant_sources(query: str, limit: int = 3) -> List[Dict[str, Any]]:
+    """Fetches Tier 0 local primary literature chunks from Qdrant vector database."""
+    results = []
+    try:
+        from sentence_transformers import SentenceTransformer
+        embedder = SentenceTransformer("all-MiniLM-L6-v2")
+        q_vec = embedder.encode(query).tolist()
+        
+        req = urllib.request.Request(
+            "http://127.0.0.1:6333/collections/history_visual_rag/points/search",
+            data=json.dumps({"vector": q_vec, "limit": limit, "with_payload": True}).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=4) as r:
+            res_data = json.loads(r.read().decode("utf-8"))
+            for hit in res_data.get("result", []):
+                payload = hit.get("payload", {})
+                source_name = payload.get("source", "Primary Historical Literature")
+                passage_text = payload.get("text", "")
+                if passage_text:
+                    results.append({
+                        "source_id": f"qdrant_{payload.get('id', compute_string_hash(passage_text[:30]))}",
+                        "title": f"Historical Archive: {source_name}",
+                        "url": "local://qdrant/history_visual_rag",
+                        "publisher": f"Gutenberg Primary Corpus ({source_name})",
+                        "source_type": "tier_0_primary_corpus",
+                        "retrieved_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+                        "passage": passage_text[:400],
+                        "date_context": "Primary Document Evidence",
+                        "era": "Historical Era",
+                        "entities": [query],
+                        "score": round(float(hit.get("score", 0.8)), 3)
+                    })
+    except Exception as e:
+        logging.info(f"[RAG Qdrant Info] Local vector search skipped: {e}")
+    return results
+
+
 def fetch_openalex_sources(entity: str, max_results: int = 2) -> List[Dict[str, Any]]:
-    """Fetches Tier 1 scholarly research works from OpenAlex REST API."""
-    query = urllib.parse.quote(entity)
-    url = f"https://api.openalex.org/works?search={query}&per_page={max_results}"
+    """Fetches Tier 1 scholarly research works from OpenAlex REST API with historical domain scoping."""
+    # Scope query to historical research and filter modern technical terms
+    search_term = f"{entity} history ancient"
+    query = urllib.parse.quote(search_term)
+    url = f"https://api.openalex.org/works?search={query}&per_page={max_results * 2}"
     headers = {"User-Agent": WIKI_USER_AGENT}
     results = []
+
+    unrelated_modern_terms = (
+        "deep learning", "neural network", "software", "algorithm", "pytorch", "tensorflow",
+        "machine learning", "gpu", "compiler", "operating system", "clinical trial",
+        "molecular biology", "pharmacokinetics", "in vitro", "nanoparticle"
+    )
 
     try:
         response = requests.get(url, headers=headers, timeout=12)
@@ -179,6 +227,11 @@ def fetch_openalex_sources(entity: str, max_results: int = 2) -> List[Dict[str, 
                 title = item.get("title", "")
                 if not title:
                     continue
+                
+                title_lower = title.lower()
+                if any(tech in title_lower for tech in unrelated_modern_terms):
+                    continue
+
                 inv_abstract = item.get("abstract_inverted_index", {})
                 abstract_words = []
                 if inv_abstract:
@@ -190,8 +243,13 @@ def fetch_openalex_sources(entity: str, max_results: int = 2) -> List[Dict[str, 
                     abstract_words = [wp[1] for wp in word_pos]
 
                 abstract_passage = " ".join(abstract_words[:180]) if abstract_words else f"Scholarly research work analyzing {title}."
+                if any(tech in abstract_passage.lower() for tech in unrelated_modern_terms):
+                    continue
+
                 pub_year = item.get("publication_year", "N/A")
-                venue = item.get("primary_location", {}).get("source", {}).get("display_name", "Academic Press")
+                loc = item.get("primary_location") or {}
+                src_info = loc.get("source") or {}
+                venue = src_info.get("display_name", "Academic Press")
                 
                 results.append({
                     "source_id": f"openalex_{item.get('id', '').split('/')[-1]}",
@@ -205,6 +263,8 @@ def fetch_openalex_sources(entity: str, max_results: int = 2) -> List[Dict[str, 
                     "era": "Historical Analysis",
                     "entities": [entity]
                 })
+                if len(results) >= max_results:
+                    break
     except Exception as e:
         logging.warning(f"[RAG v4 Warning] OpenAlex API fetch skipped for '{entity}': {e}")
 
@@ -485,21 +545,19 @@ def retrieve_beat_visual_evidence(
     matched_items.sort(key=lambda x: x[0], reverse=True)
     selected_visual = [item[1] for item in matched_items[:3]] if matched_items else visual_evidence[:2]
 
-    key_elements = [v["description"] for v in selected_visual]
+    key_elements = [v["description"] for v in selected_visual if v.get("description")]
     hint_parts = []
-    if selected_visual:
-        hint_parts.append(f"Era/Location: {selected_visual[0].get('time_period', 'Period Accurate')}")
+    if selected_visual and selected_visual[0].get("time_period"):
+        hint_parts.append(f"{selected_visual[0].get('time_period')}")
     if key_elements:
-        hint_parts.append(f"Visual Details: {'; '.join(key_elements[:2])}")
-    if avoid_anachronisms:
-        hint_parts.append(f"Avoid: {', '.join(avoid_anachronisms[:3])}")
+        hint_parts.append(f"{key_elements[0]}")
 
     return {
         "relevant_visual_evidence": selected_visual,
-        "must_include": must_include[:3],
-        "avoid_anachronisms": avoid_anachronisms,
+        "must_include": must_include[:2],
+        "avoid_anachronisms": avoid_anachronisms[:3],
         "uncertain_details": uncertain_details,
-        "visual_prompt_hint": " | ".join(hint_parts)
+        "visual_prompt_hint": ", ".join(hint_parts)
     }
 
 
@@ -577,9 +635,17 @@ def generate_evidence_packet(video_id: str, topic: str, output_dir: str = "outpu
     raw_sources = []
     seen_ids = set()
 
-    # Stage 1: Primary Entity Retrieval
+    # Stage 1: Primary Entity Retrieval + Local Qdrant Primary Literature Fetch
     primary_entities = extract_entities(topic)
     attempt_1_sources = 0
+
+    # Query local Qdrant primary literature vector database
+    qdrant_srcs = fetch_local_qdrant_sources(topic, limit=2)
+    for qs in qdrant_srcs:
+        if qs["source_id"] not in seen_ids:
+            seen_ids.add(qs["source_id"])
+            raw_sources.append(qs)
+            attempt_1_sources += 1
 
     for ent in primary_entities:
         wiki_src = fetch_wikipedia_source(ent)
@@ -597,7 +663,7 @@ def generate_evidence_packet(video_id: str, topic: str, output_dir: str = "outpu
 
     retrieval_attempts.append({
         "stage": 1,
-        "name": "Primary Entity Retrieval",
+        "name": "Primary Entity + Local Vector Retrieval",
         "queries": primary_entities,
         "sources_found": attempt_1_sources
     })

@@ -72,7 +72,35 @@ def run_pipeline1(
     video_path = base_out / video_id
     video_path.mkdir(parents=True, exist_ok=True)
 
-    # 1. Initialize run_manifest.json
+    # 1. Content Brain v1 Strategic Initialization
+    ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+    if str(ROOT_REPO) not in sys.path:
+        sys.path.insert(0, str(ROOT_REPO))
+
+    from growth.strategy.strategy_manager import StrategyManager
+    from growth.brain.decision_engine import DecisionEngine
+    from growth.brain.memory import BrainMemory
+    from growth.db.database import DEFAULT_DB_PATH
+
+    strat_mgr = StrategyManager()
+    strat_ctx = strat_mgr.get_active_strategy_context("channel_a")
+    strategy_version = strat_ctx.get("strategy_version", "v1.0")
+
+    experiment_id = None
+    arm_id = "control"
+    tested_variable = "HOOK_STRUCTURE"
+    try:
+        mem = BrainMemory(DEFAULT_DB_PATH)
+        dec_engine = DecisionEngine(mem)
+        decision = dec_engine.recommend_next_decision("channel_a")
+        if decision and decision.experiment_id:
+            experiment_id = decision.experiment_id
+            arm_id = decision.arm_id or "control"
+            tested_variable = decision.variable_under_test or "HOOK_STRUCTURE"
+    except Exception as de_err:
+        logger.info(f"[Content Brain] Running under baseline strategy: {de_err}")
+
+    # 1. Initialize run_manifest.json with Content Brain Lineage
     manifest_path = video_path / "run_manifest.json"
     manifest = {
         "video_id": video_id,
@@ -80,6 +108,12 @@ def run_pipeline1(
         "started_at": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
         "pipeline_version": "1.0-production",
         "status": "RUNNING",
+        "content_brain": {
+            "strategy_version": strategy_version,
+            "experiment_id": experiment_id,
+            "arm_id": arm_id,
+            "tested_variable": tested_variable
+        },
         "stages": {
             "rag": "PENDING",
             "script": "PENDING",
@@ -101,6 +135,7 @@ def run_pipeline1(
     print(f"\n=======================================================")
     print(f"  PIPELINE 1 PRODUCTION RUN: {video_id} ")
     print(f"  Topic: \"{topic}\"")
+    print(f"  Strategy: {strategy_version} | Exp: {experiment_id} | Arm: {arm_id}")
     print(f"=======================================================\n")
 
     # Load style configuration
@@ -131,12 +166,19 @@ def run_pipeline1(
         # ----------------------------------------------------
         # Stage 2: Script Generation & Claim Verification
         # ----------------------------------------------------
-        logger.info(f"[{video_id}] Stage 2: Script Generation & Post-Verification...")
-        script = generate_script(topic, video_id, style_config, output_dir=str(base_out), evidence_packet=evidence_packet)
+        logger.info(f"[{video_id}] Stage 2: Script Generation & Post-Verification with Hybrid Critic...")
+        script = generate_script(
+            topic,
+            video_id,
+            style_config,
+            output_dir=str(base_out),
+            evidence_packet=evidence_packet,
+            active_strategy=strat_ctx
+        )
         if script.get("status") == "BLOCKED":
             manifest["stages"]["script"] = "BLOCKED"
             manifest["status"] = "BLOCKED"
-            manifest["failures"].append("Script generation blocked by RAG gate")
+            manifest["failures"].append("Script generation blocked by RAG / Critic gate")
             with open(manifest_path, "w", encoding="utf-8") as mf:
                 json.dump(manifest, mf, indent=2, ensure_ascii=False)
             return {"status": "BLOCKED", "reason": "SCRIPT_GENERATION_BLOCKED", "manifest": manifest}
@@ -208,6 +250,20 @@ def run_pipeline1(
         if qa_report.get("passed", False):
             manifest["status"] = "READY"
             logger.info(f"[{video_id}] PIPELINE RUN COMPLETE - STATUS: READY")
+
+            # Post to Discord Review Webhook
+            webhook_url = os.getenv("DISCORD_WEBHOOK_URL_P1") or os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("DISCORD_WEBHOOK_CHANNEL_A")
+            if webhook_url:
+                try:
+                    logger.info(f"[{video_id}] Posting 540x960 review proxy to Discord webhook...")
+                    from discord_review import post_for_review
+                    final_mp4 = manifest["artifacts"].get("final_video")
+                    if final_mp4 and os.path.exists(final_mp4):
+                        post_for_review("pipeline1", video_id, [final_mp4], "video", webhook_url)
+                except Exception as dw_err:
+                    logger.warning(f"[{video_id}] Discord review dispatch notice: {dw_err}")
+            else:
+                logger.info(f"[{video_id}] Discord webhook URL not configured in environment (DISCORD_WEBHOOK_URL_P1). Holding at READY.")
         else:
             manifest["status"] = "BLOCKED"
             manifest["failures"].extend(qa_report.get("failures", []))

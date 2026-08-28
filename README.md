@@ -1,46 +1,121 @@
-# YouTube Shorts Automation Engine (Dual-Pipeline Production System)
+# YouTube Shorts Automation Engine (Dual-Pipeline Growth Intelligence Platform)
 
-A production-grade, unattended YouTube Shorts generation, validation, review-gating, and publishing platform powering two automated channels:
+A production-grade, closed-loop YouTube Shorts generation, validation, review-gating, and empirical learning platform powering two automated channels:
 
-1. **Pipeline 1: Alternate-History Shorts (`alternate-history-shorts`)**  
-   Groundbreaking historical "What-If" shorts with RAG v4 academic evidence grounding, Whisper word-highlight subtitles, Fooocus SDXL photorealistic rendering, and Ken Burns cinematic camera motion.
-2. **Pipeline 2: Conversational Debate Shorts (`convo-shorts`)**  
-   High-retention debate and psychology shorts with multi-turn dialogue, dual synthetic voices, automated thumbnail generation, and background gameplay integration.
+1. **Pipeline 1: Chronos Shift (`alternate-history-shorts`)**  
+   Groundbreaking historical "What-If" shorts with RAG v4 academic evidence grounding, Whisper word-highlight subtitles, Fooocus SDXL photorealistic rendering, Ken Burns cinematic camera motion, and Content Brain dynamic strategy bounds.
+2. **Pipeline 2: Debate Protocol / Senior Dev (`convo-shorts`)**  
+   High-retention software engineering and technical deep-dives with multi-angle strategic concept generation, single senior developer narration, syntax-highlighted code cards, and background gameplay integration.
 
 ---
 
-## 🏛️ System Architecture
+## 🏛️ System Architecture (Content Brain v1 Closed Loop)
 
-```text
-                                 [ n8n Automation Engine (Port 5678) ]
-                                    │                           │
-                   ┌────────────────┘                           └────────────────┐
-                   ▼                                                             ▼
-     [ Pipeline 1 Server (Port 8000) ]                             [ Pipeline 2 Server (Port 5001) ]
-  (Alternate History Shorts Engine)                             (Conversational Debate Shorts Engine)
-                   │                                                             │
-   1. RAG v4 Historical Grounding                                1. Multi-Turn Dialogue Generation
-   2. Claim Verification (0 Unsupported)                         2. Co-Host Balancing & Fact Checks
-   3. Edge-TTS Voice Generation                                  3. Dual-Speaker Piper/Edge TTS
-   4. Whisper Word-Level Alignment                               4. Whisper Word-Level Alignment
-   5. Semantic Visual Beat Planner                               5. Gameplay Background Integration
-   6. Fooocus SDXL Generation (Port 7865)                        6. Fooocus Segment Visual Proofs
-   7. 1080x1920 Assembly (Candidate A Motion)                    7. 1080x1920 Video Compilation
-   8. 17-Point QA Verification Gate                              8. Multi-Axis QA Verification Gate
-                   │                                                             │
-                   └──────────────────────┬──────────────────────────────────────┘
-                                          ▼
-                         [ Discord Review Gate (Webhooks) ]
-                                          │
-                         ┌────────────────┴────────────────┐
-                         ▼                                 ▼
-                   [ REJECTED ]                      [ APPROVED ]
-                         │                                 │
-                 Execution Halts                   YouTube Upload
-              (Zero Retries/Spam)              (Idempotent Quota Gate)
-                                                           │
-                                                           ▼
-                                                [ PUBLIC YOUTUBE SHORT ]
+```mermaid
+flowchart TD
+    %% ==========================================
+    %% LAYER 1: EXTERNAL EVIDENCE & BENCHMARKS
+    %% ==========================================
+    subgraph L1_EXTERNAL["LAYER 1: External Evidence & Benchmarks"]
+        EXT_CORPUS[("Relational External Corpus\n(Multi-Sheet Evidence)")]
+        EXT_REPO[ExternalIntelligenceRepository]
+        EXT_PRIORS[External Priors Engine\n(Hypotheses & Transferability)]
+        EXT_CORPUS --> EXT_REPO --> EXT_PRIORS
+    end
+
+    %% ==========================================
+    %% LAYER 2: CONTENT BRAIN & STRATEGY MEMORY
+    %% ==========================================
+    subgraph L2_BRAIN["LAYER 2: Shared Content Brain & Strategy Memory"]
+        SM[StrategyManager\n(Version Registry: v1.0, v1.1...)]
+        DE[DecisionEngine\n(Hypothesis & Arm Balancing)]
+        EXP_MGR[ExperimentManager\n(Arm Definitions & N>=4 Guard)]
+        TOPIC_POOL[TopicPoolManager\n(Candidate Ranking)]
+        CRITIC[HybridScriptCritic\n(Tier 1 Deterministic + Tier 2 Semantic Fail-Closed)]
+        
+        SM --> DE
+        EXP_MGR --> DE
+        TOPIC_POOL --> DE
+        EXT_PRIORS -.->|"Priors Grounding"| DE
+    end
+
+    %% ==========================================
+    %% LAYER 3: PRODUCTION PIPELINES (ISOLATED)
+    %% ==========================================
+    subgraph L3_PRODUCTION["LAYER 3: Production Execution (Strictly Isolated)"]
+        subgraph P1["Pipeline 1: Chronos Shift (History)"]
+            P1_LINEAGE[Inception Lineage Bound]
+            P1_RAG[RAG v4 Evidence Retrieval]
+            P1_GEN[History Script Generator\n(Dynamic Duration Bounds)]
+            P1_CRIT[Hybrid Critic Quality Gate\n(3 Revision Loops / Fail-Closed)]
+            P1_MEDIA[Full-Screen SDXL (Fooocus) +\nOrchestral BGM + Edge-TTS]
+            P1_QA[17/17 QA Gate]
+            P1_MAN[run_manifest.json]
+            
+            P1_LINEAGE --> P1_RAG --> P1_GEN --> P1_CRIT --> P1_MEDIA --> P1_QA --> P1_MAN
+        end
+
+        subgraph P2["Pipeline 2: Debate Protocol (Coding)"]
+            P2_LINEAGE[Inception Lineage Bound]
+            P2_ANGLES[p2_multi_angle.py\n(Strategic Angle Generator)]
+            P2_GEN[Senior Dev Script Generator\n(Code Snippets & Architecture)]
+            P2_CRIT[Hybrid Critic Quality Gate\n(3 Revision Loops / Fail-Closed)]
+            P2_MEDIA[Centered 810x810 Fooocus Overlay +\nMinecraft Gameplay BG + Piper TTS]
+            P2_QA[Audio LUFS & Visual QA Gate]
+            P2_MAN[*.manifest.json]
+            
+            P2_LINEAGE --> P2_ANGLES --> P2_GEN --> P2_CRIT --> P2_MEDIA --> P2_QA --> P2_MAN
+        end
+
+        DE --> P1_LINEAGE
+        DE --> P2_LINEAGE
+        P1_CRIT --- CRITIC
+        P2_CRIT --- CRITIC
+    end
+
+    %% ==========================================
+    %% LAYER 4: HUMAN GATE & OBSERVABILITY
+    %% ==========================================
+    subgraph L4_OBSERVABILITY["LAYER 4: Human Gate & Snapshot Observability"]
+        DISCORD{Discord Proxy Review\n(Human Gate: 540x960 Proxy)}
+        YT[(YouTube Channel Deployment\nPrivate Status Default)]
+        COLLECTOR[AnalyticsCollector\n(YouTube API / Token Auth)]
+        SNAPS[(performance_snapshots\n1h, 6h, 24h, 48h, 7d Windows)]
+        
+        P1_MAN --> DISCORD
+        P2_MAN --> DISCORD
+        DISCORD -- "Approved" --> YT
+        YT --> COLLECTOR --> SNAPS
+    end
+
+    %% ==========================================
+    %% LAYER 5: LEARNING & CLOSED LOOP FEEDBACK
+    %% ==========================================
+    subgraph L5_LEARNING["LAYER 5: Empirical Growth Learning Loop"]
+        AUTOPSY[Video Autopsy Analyzer\n(Causal Attribution & Features)]
+        LE[LearningEngine\n(Batch Learning Cycle)]
+        N_CHECK{"N >= 4 mature samples\nper arm?"}
+        STAT_EVAL[Statistical Experiment Evaluation\n(Welch's t-test Significance)]
+        OUTCOME_CHECK{"Statistically\nsignificant winner?"}
+        FPD[First-Party Dominance Override\n(Overrides External Priors)]
+        DELTA[Immutable Strategy Version Delta\n(e.g., channel_a_strategy_v1.1.json)]
+        RETAIN[Retain Existing Strategy\n& Continue Observation]
+        
+        SNAPS --> AUTOPSY --> LE
+        SNAPS --> LE
+        LE --> N_CHECK
+        N_CHECK -- "No (N < 4)" --> HOLD[Status: INSUFFICIENT_DATA\nCollect More Observations]
+        N_CHECK -- "Yes (N >= 4)" --> STAT_EVAL --> OUTCOME_CHECK
+        OUTCOME_CHECK -- "No" --> RETAIN
+        OUTCOME_CHECK -- "Yes" --> FPD
+        OUTCOME_CHECK -- "Yes" --> DELTA
+    end
+
+    %% ==========================================
+    %% CLOSED-LOOP FEEDBACK ARROWS
+    %% ==========================================
+    DELTA ==>|"Evolves Active Strategy Version"| SM
+    FPD -.->|"Updates Prior Status / Weight"| EXT_PRIORS
 ```
 
 ---

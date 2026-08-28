@@ -333,6 +333,43 @@ def build_fallback_scene_plan(
 
     return fallback_beats
 
+def clean_visual_prompt_string(cam_shot: str, vis_concept: str, prompt_hint: str) -> str:
+    """Constructs a clean, coherent Fooocus visual prompt without repetitive artifacts."""
+    cam = cam_shot.strip().rstrip(".,:;")
+    concept = vis_concept.strip()
+    
+    # Strip existing camera shot prefixes from vis_concept if already present
+    cam_prefixes = (
+        "cinematic wide shot of", "wide shot of", "medium shot of", "close-up shot of",
+        "close-up of", "low-angle shot of", "cinematic shot of", "aerial shot of",
+        "split-screen cinematic wide shot of", "split-screen of", "shot of", "close up of"
+    )
+    for pfx in cam_prefixes:
+        if concept.lower().startswith(pfx):
+            concept = concept[len(pfx):].strip()
+            break
+
+    # Strip redundant "of a scholar reading an ancient text of A bustling..."
+    concept = re.sub(r'^(a\s+|an\s+|the\s+)', '', concept, flags=re.IGNORECASE)
+    
+    # Build clean base prompt
+    base = f"{cam} of {concept}" if not cam.lower().endswith("of") else f"{cam} {concept}"
+    base = base.rstrip(".,:; ")
+    
+    parts = [base]
+    if prompt_hint:
+        clean_hint = prompt_hint.strip().rstrip(".,; ")
+        if clean_hint and clean_hint.lower() not in base.lower():
+            parts.append(clean_hint)
+            
+    final_prompt = ", ".join(parts)
+    # Clean up double punctuation and spaces
+    final_prompt = re.sub(r'\s*,\s*', ', ', final_prompt)
+    final_prompt = re.sub(r'\s*\.\s*', '. ', final_prompt)
+    final_prompt = re.sub(r'of\s+of', 'of', final_prompt, flags=re.IGNORECASE)
+    return final_prompt.strip()
+
+
 def plan_visual_scenes(
     video_id: str,
     output_dir: str = "output",
@@ -408,10 +445,7 @@ def plan_visual_scenes(
             beat_evidence = retrieve_beat_visual_evidence(evidence_packet, excerpt, vis_concept) if evidence_packet else {}
             prompt_hint = beat_evidence.get("visual_prompt_hint", "")
 
-            if prompt_hint:
-                enriched_prompt = f"{cam_shot} of {vis_concept}. {prompt_hint}, 8k resolution, highly detailed, masterwork."
-            else:
-                enriched_prompt = f"{cam_shot} of {vis_concept}. Era details: {grounding_facts[:120]}, 8k resolution, highly detailed, masterwork."
+            enriched_prompt = clean_visual_prompt_string(cam_shot, vis_concept, prompt_hint)
 
             aligned_beats.append({
                 "beat_id": f"beat_{idx+1:03d}",

@@ -179,77 +179,96 @@ def generate_fooocus_image(
     """Sends generation request using two-step Gradio call, validates output, and saves it."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
     
-    ep67 = client.endpoints[67]
-    dep67 = ep67.dependency
+    ep = None
+    for candidate in client.endpoints:
+        if candidate.api_name == "/generate_image":
+            ep = candidate
+            break
+            
+    if not ep:
+        # Fallback to endpoint 77 or last endpoint
+        ep = client.endpoints[77] if len(client.endpoints) > 77 else client.endpoints[-1]
+        
     comps = {comp['id']: comp for comp in client.config['components']}
     
     for attempt in range(1, max_retries + 1):
         try:
             start_time = time.time()
-            logging.info(f"Generating Fooocus image for {out_path.name} (Attempt {attempt}/{max_retries})")
+            logging.info(f"Generating Fooocus SDXL image for {out_path.name} on RTX 4070 (Attempt {attempt}/{max_retries})")
             
-            # 1. Build initial args list from default values
+            # 1. Build arguments matching /generate_image endpoint inputs
             args = []
-            for cid in dep67['inputs']:
-                if cid in comps:
-                    comp = comps[cid]
-                    val = comp.get('value')
-                    if val is None:
-                        val = comp.get('props', {}).get('value')
-                    args.append(val)
-                else:
-                    args.append(None)
-                    
+            for cid in ep.dependency['inputs']:
+                comp = comps.get(cid, {})
+                val = comp.get('value')
+                if val is None:
+                    val = comp.get('props', {}).get('value')
+                args.append(val)
+                
             # Sanitize radio lists
-            for idx, (cid, ctype) in enumerate(zip(dep67['inputs'], ep67.input_component_types)):
+            for idx, (cid, ctype) in enumerate(zip(ep.dependency['inputs'], ep.input_component_types)):
                 val = args[idx]
                 if ctype == 'radio' and isinstance(val, list):
                     args[idx] = val[1] if len(val) > 1 else val[0]
                     
-            # 2. Apply custom overrides
-            args[0] = None  # state
-            args[1] = False # generate_image_grid_for_each_batch
-            args[2] = prompt_text
-            args[3] = neg_prompt
-            args[4] = style_list
-            args[5] = "Speed"
+            # Set generation overrides
+            args[0] = False # generate_image_grid_for_each_batch
+            args[1] = prompt_text
+            args[2] = neg_prompt
+            args[3] = style_list
+            args[4] = "Speed"
             
-            aspect_choices = comps[dep67['inputs'][6]].get('props', {}).get('choices', [])
-            args[6] = resolve_aspect_ratio(aspect_ratio, aspect_choices)
-            args[7] = 1  # image_number
-            args[8] = "png"
+            aspect_choices = comps[ep.dependency['inputs'][5]].get('props', {}).get('choices', [])
+            args[5] = resolve_aspect_ratio(aspect_ratio, aspect_choices)
+            args[6] = 1  # image_number
+            args[7] = "png"
             
             seed_val = random.randint(1, 1000000000)
-            args[9] = str(seed_val)
+            args[8] = str(seed_val)
             
-            args[13] = "juggernautXL_v8Rundiffusion.safetensors" # base_model
-            args[14] = "None"  # refiner_model
-            args[15] = 0.5     # refiner_switch
+            args[12] = "juggernautXL_v8Rundiffusion.safetensors" # base_model
+            args[13] = "None"  # refiner_model
+            args[14] = 0.5     # refiner_switch
             
             # Filter out state components
             filtered_args = []
-            for val, ctype in zip(args, ep67.input_component_types):
+            for val, ctype in zip(args, ep.input_component_types):
                 if ctype != 'state':
                     filtered_args.append(val)
                     
-            # Call step 1: get_task
-            client.predict(*filtered_args, fn_index=67)
+            outputs_dir = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs"))
+            import tempfile
+            gradio_temp = Path(tempfile.gettempdir()) / "gradio"
+            pre_files = (set(outputs_dir.glob("**/*.png")) if outputs_dir.exists() else set()) | (set(gradio_temp.glob("**/*.png")) if gradio_temp.exists() else set())
             
-            # Call step 2: generate_clicked
             job_start_time = time.time()
-            job = client.submit(fn_index=68)
-            
+            if ep.api_name == "/generate_image":
+                job = client.submit(*filtered_args, api_name='/generate_image')
+            else:
+                job = client.submit(*filtered_args, fn_index=ep.fn_index)
+                
+            timeout_seconds = 600  # 10 minutes max per SDXL render
             while not job.done():
+                if time.time() - job_start_time > timeout_seconds:
+                    logging.error("[ERROR] Fooocus image generation timed out.")
+                    try:
+                        job.cancel()
+                    except Exception:
+                        pass
+                    raise TimeoutError("Fooocus generation timed out.")
                 time.sleep(2)
                 
-            # Copy generated image from Fooocus outputs
-            outputs_dir = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs"))
-            new_img = find_newest_png(outputs_dir, job_start_time - 5.0)
+            # Copy generated image from Fooocus outputs using set difference
+            post_files = (set(outputs_dir.glob("**/*.png")) if outputs_dir.exists() else set()) | (set(gradio_temp.glob("**/*.png")) if gradio_temp.exists() else set())
+            new_candidate_files = post_files - pre_files
+            new_img = None
+            if new_candidate_files:
+                valid_files = [f for f in new_candidate_files if f.stat().st_size > 50000]
+                if valid_files:
+                    new_img = max(valid_files, key=lambda p: p.stat().st_mtime)
             
             if not new_img:
-                import tempfile
-                gradio_temp = Path(tempfile.gettempdir()) / "gradio"
-                new_img = find_newest_png(gradio_temp, job_start_time - 5.0)
+                new_img = find_newest_png(outputs_dir, job_start_time - 5.0) or find_newest_png(gradio_temp, job_start_time - 5.0)
                 
             if new_img and new_img.exists():
                 shutil.copy(new_img, out_path)
