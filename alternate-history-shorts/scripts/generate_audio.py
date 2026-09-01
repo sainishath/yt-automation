@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import re
 import argparse
 import subprocess
 import logging
@@ -17,6 +18,39 @@ logging.basicConfig(
     ]
 )
 
+def clean_narration_text(text: str) -> str:
+    """
+    Sanitizes spoken narration text by aggressively removing LLM word-count metadata,
+    bracketed notes, parenthetical annotations, and scene prefixes.
+    """
+    if not isinstance(text, str):
+        text = str(text) if text is not None else ""
+        
+    text = text.strip()
+    # 1. Strip bracketed / parenthetical word count metadata (e.g. (15 words), [14 words], [Word count: 12], (12-16 words), [15 words total])
+    text = re.sub(r'[\(\[\{]\s*(?:word\s*count\s*:?\s*)?\d+(?:\s*-\s*\d+)?\s*(?:spoken\s*)?words?\s*(?:total|approx)?[\)\]\}]', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'[\(\[\{]\s*(?:word\s*count|words?)\b[^\)\]\}]*[\)\]\}]', '', text, flags=re.IGNORECASE)
+    
+    # 2. Strip standalone / trailing word counts like: '- 16 words', '— 15 words.', '14 words'
+    text = re.sub(r'[\s,;—–-]+(?:word\s*count\s*:?\s*)?\d+(?:\s*-\s*\d+)?\s*(?:spoken\s*)?words?\s*(?:total|approx)?[\.\?!]?(?=$|[\s,;—–-])', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'[\(\[]?\b\d+\s*words?\b[\)\]]?', '', text, flags=re.IGNORECASE)
+    
+    # 3. Strip stray scene indicators like 'Scene 1:', '[Scene 2]', '(Scene 3: ...)'
+    text = re.sub(r'^(?:scene\s*\d+|hook|narration)\s*:\s*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'[\(\[]\s*scene\s*\d+[^\]\)]*[\)\]]', '', text, flags=re.IGNORECASE)
+    
+    # 4. Strip stray empty parentheses, brackets, or leading/trailing hyphens/dashes
+    text = re.sub(r'[\(\[\{]\s*[\)\]\}]', '', text)
+    text = re.sub(r'\s+([,\.\?!])', r'\1', text)
+    text = re.sub(r'\s{2,}', ' ', text)
+    text = text.strip(' \t\n\r—–-"\'')
+    
+    # 5. Ensure valid terminal punctuation if text is non-empty
+    if text and not text.endswith(('.', '!', '?', '."', '!"', '?"')):
+        text += '.'
+        
+    return text.strip()
+
 def get_audio_duration(file_path: Path) -> float:
     """Uses ffprobe to measure the actual duration of the generated audio file."""
     cmd = [
@@ -30,10 +64,11 @@ def get_audio_duration(file_path: Path) -> float:
 def generate_scene_audio(text: str, voice: str, out_path: Path, max_retries: int = 3) -> float:
     """Generates audio for a single scene using edge-tts, verifies it, and returns duration."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    clean_text = clean_narration_text(text)
     
     cmd = [
         "edge-tts",
-        "--text", text,
+        "--text", clean_text,
         "--voice", voice,
         "--write-media", str(out_path)
     ]
@@ -103,7 +138,8 @@ def process_video_audio(video_id: str, output_dir: str = "output") -> dict:
     print("-" * 50)
     
     for idx, scene in enumerate(scenes):
-        narration = scene.get("narration", "").strip()
+        narration = clean_narration_text(scene.get("narration", ""))
+        scene["narration"] = narration
         words = len(narration.split())
         est_duration = scene.get("estimated_duration_seconds", 0.0)
         total_estimated += est_duration

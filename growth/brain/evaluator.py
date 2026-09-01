@@ -74,13 +74,13 @@ class MultiArmExperimentEvaluator:
     def _get_arm_metrics(self, experiment_id: str, arm_type: str) -> List[float]:
         """
         Retrieves real performance metric values (e.g. APV) for an experiment arm.
-        Uses latest valid snapshot for each legitimately published video.
+        Prefers mature 7d snapshots (or 48h/24h if mature) for each legitimately published video.
         """
         vids = self.repo.list_videos_by_experiment(experiment_id)
         metric_values = []
 
         for v in vids:
-            if v.get("upload_status") != "UPLOADED_PUBLIC":
+            if v.get("upload_status") not in ["UPLOADED_PUBLIC", "UPLOADED", "PUBLISHED"]:
                 continue
             # Match arm type
             var_id = (v.get("variant_id") or "").upper()
@@ -92,11 +92,12 @@ class MultiArmExperimentEvaluator:
             if not snaps:
                 continue
 
-            # Prioritize 24h, 48h, or latest valid snapshot with real APV
-            valid_snaps = [s for s in snaps if s.get("avg_percentage_viewed") is not None and s.get("avg_percentage_viewed") > 0]
-            if valid_snaps:
-                latest = valid_snaps[-1]
-                metric_values.append(float(latest["avg_percentage_viewed"]))
+            # Prioritize 7d snapshot for mature evaluation; fallback to 48h or 24h
+            snap_map = {s.get("window_name"): s for s in snaps if s.get("avg_percentage_viewed") is not None and s.get("avg_percentage_viewed") > 0}
+            target_snap = snap_map.get("7d") or snap_map.get("48h") or snap_map.get("24h") or (snaps[-1] if snaps else None)
+
+            if target_snap and target_snap.get("avg_percentage_viewed") is not None and float(target_snap.get("avg_percentage_viewed", 0)) > 0:
+                metric_values.append(float(target_snap["avg_percentage_viewed"]))
 
         return metric_values
 
@@ -126,7 +127,8 @@ class MultiArmExperimentEvaluator:
 
     def evaluate_experiment(self, experiment_id: str) -> EvaluationReport:
         """
-        Evaluates experiment arms with strict N >= 4 guard and non-fabrication check.
+        Evaluates experiment arms with strict N >= 4 guard, 7-day mature snapshots,
+        and Delta >= +15% threshold for winning strategy promotion.
         Idempotently updates the experiment record in SQLite.
         """
         exp = self.repo.get_experiment(experiment_id)
@@ -168,9 +170,9 @@ class MultiArmExperimentEvaluator:
         # 1. Check Sample Size Hard Guard (N >= 4 required per arm)
         if n_ctrl < min_n or n_treat < min_n:
             reason = (
-                f"Insufficient real published samples for evaluation: "
+                f"Insufficient mature published samples for evaluation: "
                 f"CONTROL has {n_ctrl}/{min_n}, TREATMENT has {n_treat}/{min_n}. "
-                f"Evaluation blocked until N >= {min_n} per arm."
+                f"Evaluation blocked until N >= {min_n} per arm at 7-day maturity."
             )
             return EvaluationReport(
                 experiment_id=experiment_id,
@@ -199,28 +201,28 @@ class MultiArmExperimentEvaluator:
         else:
             delta_pct = 0.0
 
-        # Empirical Significance: Delta >= +5% APV threshold with N >= 4
-        if delta_pct >= 5.0:
+        # Empirical Significance: Delta >= +15.0% APV threshold with N >= 4 per arm
+        if delta_pct >= 15.0:
             decision = ExperimentDecision.WIN
             confidence = ConfidenceLevel.HIGH
             reason = (
-                f"Treatment outperformed Control by +{delta_pct:.1f}% median APV "
-                f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} empirical samples."
+                f"Treatment outperformed Control by +{delta_pct:.1f}% median APV (>= +15.0% threshold) "
+                f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} mature 7-day samples."
             )
             is_significant = True
-        elif delta_pct <= -5.0:
+        elif delta_pct <= -15.0:
             decision = ExperimentDecision.LOSE
             confidence = ConfidenceLevel.HIGH
             reason = (
-                f"Treatment underperformed Control by {delta_pct:.1f}% median APV "
-                f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} empirical samples."
+                f"Treatment underperformed Control by {delta_pct:.1f}% median APV (<= -15.0% threshold) "
+                f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} mature 7-day samples."
             )
             is_significant = True
         else:
             decision = ExperimentDecision.INCONCLUSIVE
             confidence = ConfidenceLevel.MEDIUM
             reason = (
-                f"Treatment delta ({delta_pct:+.1f}%) is within neutral band (±5.0%). "
+                f"Treatment delta ({delta_pct:+.1f}%) is within neutral band (±15.0%). "
                 f"Outcome is inconclusive."
             )
             is_significant = False

@@ -1,0 +1,1 @@
+Default mutable arguments in Python functions can lead to strange persistent bugs across calls.

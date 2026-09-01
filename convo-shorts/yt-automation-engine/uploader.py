@@ -120,12 +120,17 @@ def upload_to_youtube(
     """
     import json
     
-    # ── check for existing upload in manifest (idempotency safety) ──────────────
+    # ── check for existing upload in manifest & scrapped status ──────────────
     manifest_p = Path(video_path).with_suffix(".manifest.json")
     if manifest_p.exists():
         try:
             with open(manifest_p, "r", encoding="utf-8") as mf:
                 mdata = json.load(mf)
+            if mdata.get("status") in ("REJECTED", "REJECTED_SCRAPPED", "SCRAPPED"):
+                raise RuntimeError(
+                    f"CANNOT_UPLOAD_SCRAPPED_VIDEO: Video '{video_path}' was rejected by human reviewer and is permanently scrapped. "
+                    "All uploads to YouTube (including private/unlisted) are strictly barred."
+                )
             yt_data = mdata.get("youtube_deployment", {})
             if yt_data.get("uploaded") and yt_data.get("video_id"):
                 vid_id = yt_data["video_id"]
@@ -138,6 +143,8 @@ def upload_to_youtube(
                     "privacy_status": yt_data.get("privacy_status", privacy_status),
                     "thumbnail_uploaded": yt_data.get("thumbnail_uploaded", False)
                 }
+        except RuntimeError:
+            raise
         except Exception as me:
             print(f"[Upload Warning] Could not parse manifest for idempotency check: {me}")
 

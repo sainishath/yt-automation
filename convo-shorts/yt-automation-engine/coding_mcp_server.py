@@ -38,7 +38,7 @@ def _qdrant_search(query_vector: list, limit: int = 3, filter_category: str = No
 def search_code_patterns(query: str, limit: int = 3) -> str:
     """Retrieves senior vs junior code patterns and pitfalls."""
     q_vec = embedder.encode(query).tolist()
-    results = _qdrant_search(q_vec, limit=limit)
+    results = _qdrant_search(q_vec, limit=limit, filter_category="code_pattern")
     return "\n\n---\n\n".join([f"### {h['payload'].get('title')}\n{h['payload'].get('text')}" for h in results])
 
 @mcp.tool()

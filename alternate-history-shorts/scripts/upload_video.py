@@ -152,6 +152,20 @@ def upload_video(video_id: str, output_dir: str = "output", privacy: str = "priv
     with open(metadata_path, "r", encoding="utf-8") as f:
         metadata = json.load(f)
 
+    # Rejection & Scrapped Protection Guard
+    manifest_path = video_path / "run_manifest.json"
+    if manifest_path.exists():
+        try:
+            with open(manifest_path, "r", encoding="utf-8") as mf:
+                m_data = json.load(mf)
+            if m_data.get("status") in ("REJECTED", "REJECTED_SCRAPPED", "SCRAPPED"):
+                raise RuntimeError(
+                    f"CANNOT_UPLOAD_SCRAPPED_VIDEO: Video '{video_id}' was rejected by human reviewer and is permanently scrapped. "
+                    "All uploads to YouTube (including private/unlisted) are strictly forbidden."
+                )
+        except json.JSONDecodeError:
+            pass
+
     # Idempotency / Duplicate Protection Check
     existing_yt_id = metadata.get("youtube_video_id")
     if existing_yt_id and not force:

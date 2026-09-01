@@ -2,7 +2,8 @@
 """
 p2_multi_angle.py
 ----------------
-Content Brain v1 Multi-Angle Generation for Pipeline 2 (Coding & Tech).
+Content Brain v1 Multi-Angle Generation for Pipeline 2 (Beginner Coding & Mentorship).
+Persona: Friendly, expert coding mentor explaining to an absolute beginner using the ELI5 rule.
 """
 
 import json
@@ -16,47 +17,52 @@ OLLAMA_MODEL = "llama3.2:latest"
 
 def generate_p2_multi_angle_concept(topic: str, category: str, active_strategy: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Generates 3 distinct strategic angles for a technical concept and selects the highest-scoring candidate.
+    Generates 3 distinct beginner-friendly ELI5 angles for a programming concept and selects the best candidate.
     """
-    prompt = f"""You are a principal software engineer and senior coding educator.
-Generate 3 distinct strategic angles for a high-retention 40-second YouTube Short on '{topic}'.
+    prompt = f"""You are a warm, encouraging coding mentor teaching absolute beginners who have never coded before.
+Generate 3 distinct beginner-friendly 'Explain Like I'm 5' (ELI5) strategic angles for a high-retention 40-second YouTube Short on '{topic}'.
 Category: {category}
 
+### CORE PERSONA & TEACHING RULES:
+1. EXPLAIN LIKE I'M 5 (ELI5): Use everyday physical metaphors (e.g. variables are labeled storage boxes, booleans are light switches, functions are recipes).
+2. NO ADVANCED JARGON: Never mention memory buses, compiler ASTs, bytecodes, or distributed architectures. Keep it fun, simple, and crystal clear.
+3. CLEAR CALL TO ACTION: Tease the next part in the sequence so viewers subscribe/follow.
+
 ### THE 3 STRATEGIC ANGLES TO CREATE:
-1. CODE_SMELL_TRAP: Focus on a common junior coding pitfall that silently fails or causes bugs in production.
-2. ARCHITECTURE_BOTTLENECK: Focus on high-load, scalability failure, or catastrophic system outages.
-3. SENIOR_MENTAL_MODEL: Focus on a counter-intuitive principle about memory, data structures, or performance.
+1. REAL_WORLD_METAPHOR: Ground the concept in a physical object everyone understands (boxes, recipes, light switches).
+2. BEGINNER_AH_HA_MOMENT: Clarify a common point of confusion for new coders (e.g. why we need quotes around words but not numbers).
+3. MINI_SUPERPOWER: Show how this single concept lets them build something cool (like games or calculators).
 
 ### REQUIRED JSON OUTPUT:
 {{
   "angles": [
     {{
       "angle_id": "angle_1",
-      "type": "CODE_SMELL_TRAP",
-      "hook_text": "Why 90% of devs misuse this pattern.",
-      "core_conflict": "Unbounded writes overwhelm the server memory.",
-      "senior_takeaway": "Always enforce chunked backpressure batching.",
-      "curiosity_score": 9.0
+      "type": "REAL_WORLD_METAPHOR",
+      "hook_text": "Think of a variable as a labeled shoe box.",
+      "core_conflict": "Without names on boxes, you can't find what you stored.",
+      "senior_takeaway": "Naming boxes clearly is your first coding superpower.",
+      "curiosity_score": 9.5
     }},
     {{
       "angle_id": "angle_2",
-      "type": "ARCHITECTURE_BOTTLENECK",
-      "hook_text": "The single query that crashed GitHub.",
-      "core_conflict": "Lack of read replicas caused primary lock starvation.",
-      "senior_takeaway": "Separate read and write connection pools.",
-      "curiosity_score": 8.5
+      "type": "BEGINNER_AH_HA_MOMENT",
+      "hook_text": "Why does code crash when you forget quotes?",
+      "core_conflict": "The computer thinks words without quotes are variable names.",
+      "senior_takeaway": "Quotes tell the computer: 'This is plain text, not a command.'",
+      "curiosity_score": 9.0
     }},
     {{
       "angle_id": "angle_3",
-      "type": "SENIOR_MENTAL_MODEL",
-      "hook_text": "Stop using bigger servers for read traffic.",
-      "core_conflict": "Vertical scaling hits memory bus limits.",
-      "senior_takeaway": "Read replicas offer linear read throughput.",
-      "curiosity_score": 8.0
+      "type": "MINI_SUPERPOWER",
+      "hook_text": "The 2 lines of code behind every game score.",
+      "core_conflict": "How does a game remember your high score?",
+      "senior_takeaway": "Variables remember state so your game keeps score.",
+      "curiosity_score": 8.5
     }}
   ],
   "selected_angle_id": "angle_1",
-  "selection_reasoning": "Code smell with clear junior vs senior code cards produces highest completion rate."
+  "selection_reasoning": "Real-world metaphor produces the highest comprehension and beginner retention."
 }}
 """
 
@@ -80,10 +86,11 @@ Category: {category}
         "selected_angle_id": "angle_1",
         "angles": [{
             "angle_id": "angle_1",
-            "type": "CODE_SMELL_TRAP",
-            "hook_text": f"Why junior devs struggle with {topic}.",
-            "core_conflict": "Performance bottleneck under production load.",
-            "senior_takeaway": "Use idiomatic clean design patterns."
+            "type": "REAL_WORLD_METAPHOR",
+            "hook_text": f"Think of {topic} as a simple real-world tool.",
+            "core_conflict": "Understanding how code stores and uses data.",
+            "senior_takeaway": "Master the simple mental model to write great code."
         }],
-        "selection_reasoning": "Fallback angle selection."
+        "selection_reasoning": "Fallback ELI5 angle selection."
     }
+

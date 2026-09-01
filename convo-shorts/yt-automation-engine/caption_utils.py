@@ -138,10 +138,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
     
     default_speaker_colors = {
-        "a": "&H00FFFF00&",
-        "b": "&H00FF00FF&",
-        "character_a": "&H00FFFF00&",
-        "character_b": "&H00FF00FF&",
+        "a": "&H0000FFFF&",           # Yellow in ASS ABGR (&H0000FFFF&)
+        "b": "&H00FFFF00&",           # Cyan in ASS ABGR (&H00FFFF00&)
+        "character_a": "&H0000FFFF&", # Speaker A / Junior (Yellow)
+        "character_b": "&H00FFFF00&", # Speaker B / Senior (Cyan)
         "narrator": "&H00FFFFFF&"
     }
     if speaker_colors:

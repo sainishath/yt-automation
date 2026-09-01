@@ -1,0 +1,1 @@
+Docker solves the classic it works on my machine problem by packaging your app and dependencies together.

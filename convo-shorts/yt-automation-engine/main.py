@@ -80,12 +80,11 @@ def run_pipeline(
     audio_file: str = None, 
     voice: str = "en-US-BrianNeural",
     custom_job_id: str = None,
-    custom_output_dir: str = None,
-    upload: bool = False
+    custom_output_dir: str = None
 ) -> dict:
     """
     Full media pipeline with Preflight Verification, Isolated Workspace,
-    Disposable Job Failure Model, and machine-readable status reporting.
+    Disposable Job Failure Model, Human Review Gate, and machine-readable status reporting.
     """
     import time
     out_dir = Path(custom_output_dir) if custom_output_dir else OUTPUT_DIR
@@ -104,18 +103,17 @@ def run_pipeline(
     failed_stage = "CREATED"
 
     print("\n" + "=" * 60)
-    print(f"  [JOB {job_id}] Pipeline 2 Execution Started")
+    print(f"  [JOB {job_id}] Pipeline 2 Execution Started (Human Review Gated)")
     print(f"  Topic    : {topic}")
     print(f"  Category : {category}")
     print(f"  Label    : {label}")
-    print(f"  Upload   : {upload}")
     print("=" * 60 + "\n")
 
     try:
         # 0. Preflight Verification
         failed_stage = "PREFLIGHT"
         print(f"[JOB {job_id}] [STAGE PREFLIGHT] Verifying infrastructure requirements...")
-        is_preflight_valid, pf_stage, pf_error = run_preflight_check(CFG, require_youtube_auth=upload)
+        is_preflight_valid, pf_stage, pf_error = run_preflight_check(CFG, require_youtube_auth=False)
         if not is_preflight_valid:
             err_msg = f"PREFLIGHT_CHECK_FAILED: {pf_error}"
             print(f"[JOB {job_id}] [STAGE PREFLIGHT FAILED] {err_msg}")
@@ -132,6 +130,7 @@ def run_pipeline(
         from growth.brain.decision_engine import DecisionEngine
         from growth.brain.memory import BrainMemory
         from growth.db.database import get_db, DEFAULT_DB_PATH
+        from growth.db.models import GrowthRepository, JobModel, VideoModel
 
         strat_mgr = StrategyManager()
         strat_ctx = strat_mgr.get_active_strategy_context("channel_b")
@@ -153,6 +152,27 @@ def run_pipeline(
             print(f"[Content Brain] Notice: Running under baseline strategy ({de_err})")
 
         print(f"[Content Brain v1 Lineage] Strategy: {strategy_version} | Exp: {experiment_id} | Arm: {arm_id}")
+
+        # Sync with growth.db: Create job record
+        growth_repo = None
+        try:
+            growth_repo = GrowthRepository(DEFAULT_DB_PATH)
+            job_entry = JobModel(
+                job_id=job_id,
+                channel_id="channel_b",
+                pipeline_id="convo-shorts",
+                topic_text=topic,
+                status="GENERATING",
+                video_id=label,
+                strategy_version=strategy_version,
+                experiment_id=experiment_id,
+                arm_id=arm_id,
+                variant_id=arm_id
+            )
+            growth_repo.upsert_job(job_entry)
+            print(f"[JOB {job_id}] growth.db synchronized: Job created with status GENERATING")
+        except Exception as g_err:
+            print(f"[JOB {job_id}] Notice: growth.db job initialization skipped: {g_err}")
 
         # 2. Generate or Load Script with Multi-Angle & Hybrid Critic
         failed_stage = "SCRIPTING"
@@ -223,30 +243,44 @@ def run_pipeline(
         # 4.5 Generate images if debate run
         if is_debate_run:
             failed_stage = "VISUAL_GENERATION"
-            print(f"[JOB {job_id}] [STAGE VISUAL_GENERATION] Generating Fooocus images for debate segments...")
+            print(f"[JOB {job_id}] [STAGE VISUAL_GENERATION] Rendering VS Code syntax cards (Fooocus disabled for code integrity)...")
             visual_proofs = []
             segments = script.get("segments", [])
             generated_paths = {}
             from code_renderer import render_code_snippet_card
             scenes_raw = script.get("scenes", [])
+            total_scenes = len(segments)
             for idx, seg in enumerate(segments):
                 seg_id = seg.get("segment_id")
-                prompt = seg.get("visual_topic_prompt")
                 target_path = job_temp_dir / f"{label}_{seg_id}.png"
+                
+                # Check if scene is the final Outro/CTA scene
+                is_outro_scene = (idx == total_scenes - 1)
                 
                 # Check if scene contains code snippet
                 code_snippet = None
                 if idx < len(scenes_raw):
                     code_snippet = scenes_raw[idx].get("code_snippet")
                     
-                # Scenes with explicit code snippets render clean dark-mode syntax code cards;
-                # Conceptual / architecture scenes render photorealistic SDXL visuals via Fooocus
-                if code_snippet and isinstance(code_snippet, list) and len(code_snippet) > 0 and idx % 2 == 1:
-                    print(f"[CODE CARD] Rendering syntax dark-mode card for {seg_id}...")
-                    img_path = render_code_snippet_card(code_snippet, title=topic[:28], output_path=str(target_path))
+                has_code = False
+                if code_snippet and not is_outro_scene:
+                    if isinstance(code_snippet, list) and len(code_snippet) > 0 and any(str(l).strip() for l in code_snippet):
+                        has_code = True
+                    elif isinstance(code_snippet, dict) and len(code_snippet) > 0:
+                        has_code = True
+                    elif isinstance(code_snippet, str) and len(code_snippet.strip()) > 0:
+                        has_code = True
+
+                if has_code:
+                    card_title = f"{topic[:22]} [{idx+1}/{total_scenes-1}]"
+                    print(f"[CODE CARD] Rendering Tokyo Night syntax card for {seg_id}...")
+                    img_path = render_code_snippet_card(code_snippet, title=card_title, output_path=str(target_path))
                 else:
-                    print(f"[FOOOCUS SDXL] Generating 896x896 visual overlay for {seg_id}...")
-                    img_path = generate_fooocus_image(prompt, str(target_path))
+                    if is_outro_scene:
+                        print(f"[OUTRO CTA] Scene {idx+1} is Call-to-Action. Disabling overlay (clean subtitles over gameplay).")
+                    else:
+                        print(f"[VISUAL] Scene {idx+1} has no code snippet. Disabling overlay.")
+                    img_path = None
                     
                 generated_paths[seg_id] = img_path
                 
@@ -304,40 +338,74 @@ def run_pipeline(
         )
 
         if not qa_results.get("passed", False):
+            if growth_repo:
+                try:
+                    job_fail = JobModel(
+                        job_id=job_id,
+                        channel_id="channel_b",
+                        pipeline_id="convo-shorts",
+                        topic_text=topic,
+                        status="QA_FAILED",
+                        video_id=label,
+                        error_message=str(qa_results.get('details'))
+                    )
+                    growth_repo.upsert_job(job_fail)
+                except Exception:
+                    pass
             raise RuntimeError(f"PRODUCTION QA GATE FAILED for {label}: {qa_results.get('details')}")
 
-        # Post 540x960 review proxy to Discord webhook
-        webhook_url = os.getenv("DISCORD_WEBHOOK_URL_P2") or os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("DISCORD_WEBHOOK_CHANNEL_B")
-        if webhook_url:
+        # Update growth.db state: Register VideoModel and set JobModel to AWAITING_REVIEW
+        if growth_repo:
             try:
-                print(f"[JOB {job_id}] Posting 540x960 review proxy to Discord webhook...")
-                from discord_review import post_for_review
-                post_for_review("pipeline2", job_id, [str(video_out)], "video", webhook_url)
-            except Exception as dw_err:
-                print(f"[JOB {job_id}] Notice: Discord review dispatch failed ({dw_err})")
-        else:
-            print(f"[JOB {job_id}] Discord webhook URL not configured in environment (DISCORD_WEBHOOK_URL_P2). Video ready on disk.")
+                from metadata_generator import generate_metadata
+                meta = generate_metadata(topic, category)
+                v_model = VideoModel(
+                    video_id=label,
+                    channel_id="channel_b",
+                    pipeline_id="convo-shorts",
+                    title=meta.get("title", title),
+                    description=meta.get("description", topic),
+                    duration=float(subtitle_data.get("duration", 45.0)),
+                    upload_status="GENERATED",
+                    privacy_status="private",
+                    qa_score=1.0,
+                    review_status="PENDING",
+                    strategy_version=strategy_version,
+                    topic_id=f"topic_{label}",
+                    experiment_id=experiment_id,
+                    arm_id=arm_id,
+                    variant_id=arm_id
+                )
+                growth_repo.upsert_video(v_model)
 
-        # Optional upload to YouTube if explicitly requested
-        upload_res = None
-        if upload:
-            failed_stage = "UPLOAD"
-            print(f"\n[JOB {job_id}] [STAGE UPLOAD] Triggering private YouTube upload...")
-            from uploader import upload_to_youtube
-            from metadata_generator import generate_metadata
-            meta = generate_metadata(topic, category)
-            upload_res = upload_to_youtube(
-                video_path=video_out,
-                title=meta.get("title", title),
-                description=meta.get("description", topic),
-                hashtags=meta.get("tags", ["#shorts", "#facts"]),
-                privacy_status="private"
-            )
-            if upload_res.get("status") != "success":
-                raise RuntimeError(f"YOUTUBE_UPLOAD_FAILED: {upload_res.get('error')}")
+                job_entry = JobModel(
+                    job_id=job_id,
+                    channel_id="channel_b",
+                    pipeline_id="convo-shorts",
+                    topic_text=topic,
+                    status="AWAITING_REVIEW",
+                    video_id=label,
+                    strategy_version=strategy_version,
+                    experiment_id=experiment_id,
+                    arm_id=arm_id,
+                    variant_id=arm_id
+                )
+                growth_repo.upsert_job(job_entry)
+                print(f"[JOB {job_id}] growth.db synchronized: Video {label} registered, Job -> AWAITING_REVIEW")
+            except Exception as g_sync_err:
+                print(f"[JOB {job_id}] Notice: growth.db QA sync error: {g_sync_err}")
+
+        # Post 540x960 review proxy to Discord webhook
+        try:
+            print(f"[JOB {job_id}] Compressing < 8MB review proxy and posting to Discord webhook...")
+            from discord_review import post_for_review
+            post_for_review("pipeline2", job_id, [str(video_out)], "video")
+            print(f"\n[JOB {job_id}] Proxy dispatched to Discord. Awaiting manual approval.\n")
+        except Exception as dw_err:
+            print(f"[JOB {job_id}] Notice: Discord review dispatch failed ({dw_err})")
 
         success_res = {
-            "status": "qa_passed",
+            "status": "AWAITING_REVIEW",
             "job_id": job_id,
             "short_id": label,
             "video_path": video_out,
@@ -345,9 +413,6 @@ def run_pipeline(
             "duration": round(subtitle_data.get("duration", 0), 2),
             "qa_passed": True
         }
-        if upload_res:
-            success_res["uploaded"] = True
-            success_res["youtube_url"] = upload_res.get("url")
 
         # Cleanup isolated job workspace safely on success
         try:
@@ -356,13 +421,11 @@ def run_pipeline(
             pass
 
         print("\n" + "=" * 60)
-        print(f"  [JOB {job_id}] PRODUCTION SHORT READY (QA PASSED)")
+        print(f"  [JOB {job_id}] PRODUCTION SHORT READY (AWAITING REVIEW)")
         print(f"  Video     : {video_out}")
         print(f"  Manifest  : {Path(video_out).with_suffix('.manifest.json')}")
         print(f"  Label     : {label}")
         print(f"  Title     : {title}")
-        if upload_res:
-            print(f"  YouTube   : {upload_res.get('url')}")
         print("=" * 60 + "\n")
         print("[MACHINE-READABLE RESULT]:")
         print(json.dumps(success_res, indent=2))
@@ -418,8 +481,8 @@ if __name__ == "__main__":
         help="Content category",
     )
     parser.add_argument("--job_id", default=None, help="Unique job identifier")
+    parser.add_argument("--lesson", type=int, default=None, help="Lesson number from curriculum_queue.json (1-30)")
     parser.add_argument("--output_dir", default=None, help="Custom output directory")
-    parser.add_argument("--upload", action="store_true", help="Automatically upload private video to YouTube if QA passes")
     parser.add_argument("--script_file", default=None, help="Path to manual script text file (skips Ollama)")
     parser.add_argument("--script_text", default=None, help="Manual script text string (skips Ollama)")
     parser.add_argument("--audio_file", default=None, help="Path to pre-generated audio file (skips TTS)")
@@ -427,19 +490,36 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
+    topic = args.topic
+    category = args.category
+
+    # If --lesson is provided, load topic from curriculum_queue.json
+    if args.lesson is not None:
+        curr_path = Path(__file__).parent / "curriculum_queue.json"
+        if curr_path.exists():
+            with open(curr_path, "r", encoding="utf-8") as f:
+                curriculum_data = json.load(f)
+            matching = [item for item in curriculum_data if item.get("lesson_number") == args.lesson]
+            if matching:
+                lesson_item = matching[0]
+                topic = lesson_item["topic"]
+                category = lesson_item.get("category", "Coding & Senior Dev Patterns")
+                print(f"[CURRICULUM] Loaded Lesson {args.lesson}: '{topic}' ({category})")
+            else:
+                print(f"[CURRICULUM WARNING] Lesson {args.lesson} not found in curriculum_queue.json. Using topic: {topic}")
+
     res = run_pipeline(
-        topic=args.topic, 
-        category=args.category,
+        topic=topic, 
+        category=category,
         script_file=args.script_file,
         script_text=args.script_text,
         audio_file=args.audio_file,
         voice=args.voice,
         custom_job_id=args.job_id,
-        custom_output_dir=args.output_dir,
-        upload=args.upload
+        custom_output_dir=args.output_dir
     )
 
-    if res.get("status") == "qa_passed":
+    if res.get("status") in ("AWAITING_REVIEW", "qa_passed"):
         sys.exit(0)
     else:
         sys.exit(1)

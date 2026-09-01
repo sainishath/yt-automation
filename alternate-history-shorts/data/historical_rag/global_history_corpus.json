@@ -1,0 +1,543 @@
+[
+  {
+    "title": "Battle of Red Cliffs and Three Kingdoms Divergence",
+    "region": "East Asia",
+    "era": "Ancient (208 AD)",
+    "source": "Records of the Three Kingdoms & Zizhi Tongjian",
+    "entities": [
+      "Cao Cao",
+      "Zhuge Liang",
+      "Zhou Yu",
+      "Liu Bei",
+      "Sun Quan",
+      "Yangtze River"
+    ],
+    "text": "In the winter of 208 AD, the Battle of Red Cliffs (Chibi) halted Cao Cao campaign to unify China under the Han Chancellor rule. Allied southern warlords Liu Bei and Sun Quan, guided by military strategists Zhuge Liang and Zhou Yu, exploited a naval vulnerability by chaining Cao Cao northern cavalry fleet together. A fire attack orchestrated by Huang Gai destroyed the northern fleet on the Yangtze River. The catastrophic defeat fractured China into the Three Kingdoms: Wei in the north, Shu Han in the southwest, and Eastern Wu in the south. Had Cao Cao triumphed, the Han dynasty might have experienced immediate reunification four centuries before the Tang, preventing the fragmentation and nomad migrations of the Six Dynasties period."
+  },
+  {
+    "title": "Tang Dynasty Cosmopolitan Golden Age and Chang an",
+    "region": "East Asia",
+    "era": "Medieval (618-907 AD)",
+    "source": "Old Book of Tang & Silk Road Archaeological Evidence",
+    "entities": [
+      "Emperor Taizong",
+      "Chang an",
+      "Silk Road",
+      "Battle of Talas",
+      "An Lushan"
+    ],
+    "text": "The Tang Dynasty (618-907 AD) represented the pinnacle of medieval East Asian civilization. Its capital, Chang an, was the largest city in the world with over one million inhabitants within its grid-pattern walls and another million in the suburbs. The city welcomed Persian Zoroastrians, Nestorian Christians, Arab merchants, and Japanese scholars. Tang poetry flourished under Li Bai and Du Fu, while civil service examinations based on Confucian classics created a meritocratic bureaucracy. The empire projected power along the Silk Road into Central Asia until the Battle of Talas (751 AD) against the Abbasid Caliphate, which facilitated the westward transfer of papermaking technology."
+  },
+  {
+    "title": "Song Dynasty Technological and Economic Revolution",
+    "region": "East Asia",
+    "era": "Medieval (960-1279 AD)",
+    "source": "History of Song & Science and Civilisation in China",
+    "entities": [
+      "Song Dynasty",
+      "Bi Sheng",
+      "Gunpowder",
+      "Magnetic Compass",
+      "Jiaozi Paper Money",
+      "Kaifeng"
+    ],
+    "text": "The Song Dynasty witnessed the world first proto-industrial economic revolution. Movable type printing was invented by Bi Sheng around 1040 AD, while the magnetic mariner compass revolutionized deep-sea navigation. Gunpowder formulas were codified in the Wujing Zongyao (1044 AD) for chemical warfare, fire arrows, and explosive bombs. The Song economy introduced the world first government-issued paper currency (Jiaozi) and developed massive hydraulic blast furnaces powered by coke for iron production exceeding Britain early industrial output. Maritime trade boomed from Quanzhou and Guangzhou across the Indian Ocean."
+  },
+  {
+    "title": "Zheng He Treasure Fleet Voyages",
+    "region": "East Asia",
+    "era": "Early Modern (1405-1433 AD)",
+    "source": "Ming Shilu & Records of the Western Ocean",
+    "entities": [
+      "Zheng He",
+      "Yongle Emperor",
+      "Treasure Ships",
+      "Malacca",
+      "Indian Ocean",
+      "Nanjing"
+    ],
+    "text": "Between 1405 and 1433, Admiral Zheng He commanded seven massive maritime expeditions under the Yongle Emperor of the Ming Dynasty. The fleet comprised up to 317 multi-decked Treasure Ships (Baochuan) measuring over 100 meters in length with watertight bulkheads and balanced rudders, manned by 28,000 crew members. The voyages traversed Southeast Asia, India, the Persian Gulf, the Red Sea, and the Swahili coast of East Africa, establishing diplomatic tributary relations without permanent territorial colonization. Following the Yongle Emperor death, Confucian bureaucrats suspended naval expeditions and implemented maritime bans (Haijin), pivoting state resources inward to rebuild the Great Wall against northern nomad threats."
+  },
+  {
+    "title": "Sengoku Jidai and Tokugawa Unification of Japan",
+    "region": "East Asia",
+    "era": "Early Modern (1467-1603 AD)",
+    "source": "Shinchoko-ki & Tokugawa Jikki",
+    "entities": [
+      "Oda Nobunaga",
+      "Toyotomi Hideyoshi",
+      "Tokugawa Ieyasu",
+      "Battle of Sekigahara",
+      "Nagashino",
+      "Sakoku"
+    ],
+    "text": "The Sengoku period (Warring States) of Japan was characterized by social upheaval and military conflict among regional daimyos. The three great unifiers transformed warfare: Oda Nobunaga utilized rotating volley fire with matchlock tanegashima muskets at the Battle of Nagashino (1575); Toyotomi Hideyoshi conducted the Great Sword Hunt and national land surveys; and Tokugawa Ieyasu secured supremacy at the Battle of Sekigahara (1600). The established Tokugawa Shogunate instituted two and a half centuries of Pax Tokugawa, enforcing strict class division, alternate attendance (sankin-kotai) in Edo (Tokyo), and the Sakoku maritime isolation edict restricting foreign contact to Nagasaki."
+  },
+  {
+    "title": "Mongol Empire and Pax Mongolica Across Eurasia",
+    "region": "East Asia / Central Asia",
+    "era": "Medieval (1206-1368 AD)",
+    "source": "Secret History of the Mongols & William of Rubruck Chronicles",
+    "entities": [
+      "Genghis Khan",
+      "Kublai Khan",
+      "Karakorum",
+      "Yam Courier System",
+      "Silk Road",
+      "Yuan Dynasty"
+    ],
+    "text": "Founded by Genghis Khan in 1206, the Mongol Empire became the largest contiguous land empire in world history, stretching from the Sea of Japan to the Danube River. The Mongol military doctrine combined composite recurve bow archery on horseback, psychological warfare, decimal command structures, and feigned retreats. Under the Pax Mongolica, trade and diplomatic travel flourished across Eurasia, protected by the Yam horse postal relay system and bronze pass tablets (Paiza). Kublai Khan established the Yuan Dynasty in Dadu (Beijing), integrating Chinese administrative practices with nomadic steppe aristocracy."
+  },
+  {
+    "title": "Maurya Empire and Ashoka the Great Edicts",
+    "region": "South Asia",
+    "era": "Ancient (322-185 BC)",
+    "source": "Arthashastra of Chanakya & Major Rock Edicts of Ashoka",
+    "entities": [
+      "Chandragupta Maurya",
+      "Ashoka the Great",
+      "Chanakya",
+      "Pataliputra",
+      "Kalinga War",
+      "Dhamma"
+    ],
+    "text": "Founded by Chandragupta Maurya and his mentor Chanakya (author of the statecraft treatise Arthashastra), the Maurya Empire unified nearly the entire Indian subcontinent with its capital at Pataliputra (modern Patna). Following the devastating Kalinga War (261 BC), Emperor Ashoka the Great experienced deep remorse over the slaughter and renounced aggressive military conquest, converting to Buddhism. He promulgated moral governance (Dhamma) through rock and pillar inscriptions across India, Afghanistan, and Nepal, institutionalizing hospitals for humans and animals, religious tolerance, and sending Buddhist emissaries to Hellenistic kingdoms in Egypt, Syria, and Greece."
+  },
+  {
+    "title": "Gupta Empire: Classical Golden Age of Indian Science and Arts",
+    "region": "South Asia",
+    "era": "Classical (320-550 AD)",
+    "source": "Aryabhatiya & Records of Buddhist Kingdoms (Faxian)",
+    "entities": [
+      "Chandragupta II",
+      "Aryabhata",
+      "Kalidasa",
+      "Nalanda University",
+      "Decimal System",
+      "Zero"
+    ],
+    "text": "The Gupta Empire (320-550 AD) is celebrated as the Classical Golden Age of India, marked by unprecedented scientific, mathematical, and artistic achievements. Mathematician and astronomer Aryabhata calculated the value of pi to four decimal places, formulated the concepts of zero and the decimal positional numeral system, and correctly deduced that the Earth rotates on its axis and reflects sunlight from the moon. The international residential university of Nalanda attracted scholars from across Asia. Classical Sanskrit literature reached its zenith through Kalidasa plays, while rock-cut cave architecture and murals flourished at Ajanta and Ellora."
+  },
+  {
+    "title": "Chola Dynasty: Maritime Naval Supremacy in the Indian Ocean",
+    "region": "South Asia",
+    "era": "Medieval (848-1279 AD)",
+    "source": "Thanjavur Inscriptions & Chola Copper-Plate Grants",
+    "entities": [
+      "Rajaraja Chola I",
+      "Rajendra Chola I",
+      "Brihadisvara Temple",
+      "Srivijaya",
+      "Bay of Bengal",
+      "Thanjavur"
+    ],
+    "text": "Under Rajaraja Chola I and his son Rajendra Chola I, the Chola Dynasty of southern India transformed the Bay of Bengal into a Chola Lake. Utilizing advanced naval architecture and organized merchant guilds (Ayyavole 500), Rajendra Chola launched trans-oceanic military expeditions against the Srivijaya maritime empire in modern Indonesia and Malaysia in 1025 AD, securing vital trade routes between China and the Middle East. The Cholas constructed monumental granite architectural marvels, notably the Brihadisvara Temple at Thanjavur, and perfected the lost-wax casting technique for bronze sculptures, creating the iconic Nataraja."
+  },
+  {
+    "title": "Mughal Empire: Architecture, Administration, and Syncretism",
+    "region": "South Asia",
+    "era": "Early Modern (1526-1707 AD)",
+    "source": "Baburnama & Ain-i-Akbari by Abu l-Fazl",
+    "entities": [
+      "Babur",
+      "Akbar the Great",
+      "Shah Jahan",
+      "Taj Mahal",
+      "Zabt Revenue System",
+      "Fatehpur Sikri"
+    ],
+    "text": "Established by Babur in 1526 using field artillery and matchlock muskets at the First Battle of Panipat, the Mughal Empire became an economic superpower accounting for roughly a quarter of global GDP in the 17th century. Akbar the Great centralized administration through the Mansabdari military-bureaucratic hierarchy and Zabt revenue land assessment, while abolishing the Jizya tax and promoting inter-religious philosophical debates (Ibadat Khana) and cultural syncretism. Under Shah Jahan, Indo-Islamic architectural splendor culminated in the white marble Taj Mahal and the Red Fort in Delhi."
+  },
+  {
+    "title": "Mali Empire and Mansa Musa Pilgrimage to Mecca",
+    "region": "Africa",
+    "era": "Medieval (1235-1670 AD)",
+    "source": "Ibn Battuta Rihla & Tarikh al-Sudan",
+    "entities": [
+      "Mansa Musa",
+      "Sundiata Keita",
+      "Timbuktu",
+      "Sankore University",
+      "Cairo",
+      "Gold Trade"
+    ],
+    "text": "Founded by Sundiata Keita after the Battle of Kirina (1235 AD) as chronicled in the Epic of Sundiata, the Mali Empire controlled the lucrative trans-Saharan trade routes exchanging gold from the Bambuk and Bure fields for North African salt. In 1324, Emperor Mansa Musa embarked on his historic pilgrimage (Hajj) to Mecca with an entourage of 60,000 men and camels laden with gold. His lavish spending and gifts in Cairo depressed the value of gold in Egypt for over a decade. Musa returned with Andalusian and Middle Eastern scholars and architects, such as Abu Ishaq al-Sahili, constructing the Djinguereber Mosque and elevating Timbuktu and the University of Sankore into premier global centers of Islamic theology, astronomy, and mathematics."
+  },
+  {
+    "title": "Kingdom of Kush and the 25th Black Pharaoh Dynasty of Egypt",
+    "region": "Africa",
+    "era": "Ancient (1070 BC - 350 AD)",
+    "source": "Victory Stele of Piye & Strabo Geographica",
+    "entities": [
+      "King Piye",
+      "Taharqa",
+      "Meroe",
+      "Napata",
+      "Nubian Pyramids",
+      "Iron Smelting",
+      "Kandake"
+    ],
+    "text": "Centered along the Nile River in modern Sudan, the Kingdom of Kush was an ancient African powerhouse. In the 8th century BC, Kushite King Piye invaded Egypt, establishing the 25th Dynasty and ruling as Pharaohs of a unified Egyptian-Nubian empire for nearly a century. Under King Taharqa, monumental temple restoration swept through Thebes and Karnak. Following clashes with the Neo-Assyrian Empire, Kush relocated its capital south to Meroe, developing a thriving iron smelting industry, an undeciphered alphabetic script (Meroitic), and constructing over 200 steep-sided royal pyramids. Kushite warrior queens (Kandakes) famously repelled Roman legions under Augustus Caesar."
+  },
+  {
+    "title": "Kingdom of Aksum: Ancient Red Sea Trading Power",
+    "region": "Africa",
+    "era": "Ancient / Late Antiquity (100-940 AD)",
+    "source": "Periplus of the Erythraean Sea & Ezana Stone Inscriptions",
+    "entities": [
+      "King Ezana",
+      "Aksum Obelisks",
+      "Adulis",
+      "Ge ez Script",
+      "Red Sea Trade",
+      "Christianity"
+    ],
+    "text": "The Kingdom of Aksum, situated in modern Ethiopia and Eritrea, was recognized by Persian philosopher Mani as one of the four great powers of the 3rd century alongside Rome, Persia, and China. Controlling the Red Sea port of Adulis, Aksum dominated trade between the Mediterranean, Arabia, and India in ivory, frankincense, emeralds, and spices. Under King Ezana in the 4th century AD, Aksum became one of the earliest states to officially adopt Christianity, minting its own gold, silver, and bronze coinage with Ge ez script. The monumental granite stelae of Aksum stand as engineering feats of ancient megalithic quarrying and transport."
+  },
+  {
+    "title": "Great Zimbabwe and the Swahili Coast Gold Network",
+    "region": "Africa",
+    "era": "Medieval (1100-1450 AD)",
+    "source": "Archaeological Excavations of Great Zimbabwe & Kilwa Chronicles",
+    "entities": [
+      "Great Zimbabwe",
+      "Great Enclosure",
+      "Kilwa Kisiwani",
+      "Mutapa Empire",
+      "Shona",
+      "Indian Ocean Trade"
+    ],
+    "text": "Constructed between the 11th and 15th centuries by the ancestral Shona people, Great Zimbabwe was the capital of a prosperous southern African kingdom spanning modern Zimbabwe and Mozambique. The city features the iconic Great Enclosure, built entirely of dry-stone granite blocks without mortar, featuring walls up to 11 meters high and a conical tower. Great Zimbabwe served as the political and economic hub of a vast interior trade network, funneling alluvial gold and ivory eastward to Swahili city-states like Kilwa Kisiwani on the Indian Ocean coast, where artifacts from Ming China, Persia, and Syria have been recovered."
+  },
+  {
+    "title": "Kingdom of Benin: Urban Engineering and Bronze Metallurgy",
+    "region": "Africa",
+    "era": "Medieval / Early Modern (1180-1897 AD)",
+    "source": "Olfert Dapper Description of Africa & Royal Court of Benin Oral History",
+    "entities": [
+      "Oba of Benin",
+      "Benin Bronzes",
+      "Edo City Walls",
+      "Ife",
+      "Brass Casting"
+    ],
+    "text": "The Kingdom of Benin (in modern southern Nigeria) was a sophisticated forest civilization founded by the Edo people under dynastic kings (Obas). European visitors in the 16th and 17th centuries described Benin City as a grand metropolis with broad avenues, street lighting, and a massive earthwork rampart and moat network (the Walls of Benin) estimated to be four times longer than the Great Wall of China. Guild bronze casters under royal patronage perfected high-relief brass and bronze lost-wax plaques depicting court ceremonies, Portuguese explorers, and sacred leopards, recognized worldwide as supreme masterpieces of metal sculpture."
+  },
+  {
+    "title": "Carthage: Hannibal Barca and the Punic Struggle for the Mediterranean",
+    "region": "Africa / Mediterranean",
+    "era": "Ancient (814-146 BC)",
+    "source": "Polybius Histories & Livy Ab Urbe Condita",
+    "entities": [
+      "Hannibal Barca",
+      "Carthage",
+      "Punic Wars",
+      "Battle of Cannae",
+      "Scipio Africanus",
+      "Cothon Port"
+    ],
+    "text": "Founded as a Phoenician colony on the Gulf of Tunis, Carthage grew into the preeminent maritime and commercial republic of the western Mediterranean, featuring the protected circular naval harbor (Cothon) capable of docking 220 warships. During the Second Punic War (218-201 BC), general Hannibal Barca executed an audacious crossing of the Pyrenees and Alps with war elephants into Italy, executing the tactical masterpiece of double-envelopment at the Battle of Cannae (216 BC). Despite devastating Roman field armies, Carthage lack of siege machinery and Rome demographic resilience culminated in Roman victory at the Battle of Zama."
+  },
+  {
+    "title": "Aztec Empire: Tenochtitlan Urban Engineering and the Triple Alliance",
+    "region": "Americas",
+    "era": "Pre-Columbian (1428-1521 AD)",
+    "source": "Florentine Codex of Bernardino de Sahagun & Letters of Hernan Cortes",
+    "entities": [
+      "Tenochtitlan",
+      "Moctezuma II",
+      "Triple Alliance",
+      "Chinampas",
+      "Templo Mayor",
+      "Lake Texcoco"
+    ],
+    "text": "The Aztec Empire (Mexica) arose in the Valley of Mexico through the Triple Alliance of Tenochtitlan, Texcoco, and Tlacopan in 1428. Their capital, Tenochtitlan, built on an island in Lake Texcoco, was an urban masterpiece of 200,000 inhabitants linked to the mainland by causeways with movable bridges. The Mexica engineered an extensive dike system built by Nezahualcoyotl to separate saline water from fresh water, and developed chinampas (floating agricultural beds) yielding up to seven crops per year. The central sacred precinct was dominated by the twin-pyramid Templo Mayor dedicated to Huitzilopochtli and Tlaloc."
+  },
+  {
+    "title": "Classic Maya Civilization: Astronomy, Mathematics, and City-States",
+    "region": "Americas",
+    "era": "Pre-Columbian (250-900 AD)",
+    "source": "Popol Vuh & Dresden Codex & Tikal Stelae",
+    "entities": [
+      "Tikal",
+      "Calakmul",
+      "Palenque",
+      "Pakal the Great",
+      "Maya Hieroglyphs",
+      "Long Count Calendar"
+    ],
+    "text": "The Classic Maya civilization flourished across the Yucatan Peninsula, Guatemala, Belize, and Honduras in competing city-state kingdoms such as Tikal, Calakmul, Palenque, and Copan. The Maya developed the only fully functional written script in the pre-Columbian Americas, alongside a vigesimal (base-20) mathematical system utilizing zero centuries before Europe. Their astronomers calculated the solar year to 365.242 days, tracked the synodic period of Venus with incredible precision, and synchronized the 260-day Tzolkin and 365-day Haab calendars into the 52-year Calendar Round and the Long Count."
+  },
+  {
+    "title": "Inca Empire (Tawantinsuyu): Andean Road Infrastructure and Quipu",
+    "region": "Americas",
+    "era": "Pre-Columbian (1438-1533 AD)",
+    "source": "Royal Commentaries of the Incas by Garcilaso de la Vega & Felipe Guaman Poma",
+    "entities": [
+      "Pachacuti",
+      "Cusco",
+      "Machu Picchu",
+      "Qhapaq Nan",
+      "Quipu",
+      "Tahuantinsuyu",
+      "Terrace Farming"
+    ],
+    "text": "Spanning 4,000 kilometers along the spine of the Andes from Colombia to Chile, the Inca Empire (Tawantinsuyu, Realm of the Four Parts) was the largest empire in pre-Columbian America. Initiated by Emperor Pachacuti from the capital Cusco, the Incas mastered high-altitude agriculture through stone-walled andenes (terraces) and micro-climate crop adaptation. Without draft animals or the wheel, they constructed the Qhapaq Nan a 40,000-kilometer paved mountain road network featuring suspension bridges across gorges. Information, census tallies, and storehouse inventories were recorded using the Quipu knotted-string mnemonic system."
+  },
+  {
+    "title": "Cahokia and the Mississippian Mound Builders",
+    "region": "Americas",
+    "era": "Pre-Columbian (1050-1350 AD)",
+    "source": "Cahokia Mounds Archaeological Site & American Bottom Research",
+    "entities": [
+      "Cahokia",
+      "Monks Mound",
+      "Woodhenge",
+      "Mississippian Culture",
+      "American Bottom",
+      "Maize Agriculture"
+    ],
+    "text": "Located near modern St. Louis, Cahokia was the largest pre-Columbian urban settlement north of Mexico, reaching its peak around 1100 AD with an estimated population of 20,000 to 30,000 people. Cahokia was the center of the Mississippian culture, built upon intensive maize agriculture and shell-bead prestige trade across North America. The site contains over 120 earthen mounds, dominated by Monks Mound a massive four-tiered earthen pyramid covering 14 acres and rising 30 meters high. Cahokia included astronomical solar calendar circles constructed of red cedar posts known as Woodhenge."
+  },
+  {
+    "title": "Abbasid Caliphate and the House of Wisdom in Baghdad",
+    "region": "Middle East",
+    "era": "Medieval (750-1258 AD)",
+    "source": "Kitab al-Fihrist of Ibn al-Nadim & Tarikh al-Tabari",
+    "entities": [
+      "Harun al-Rashid",
+      "Al-Ma mun",
+      "House of Wisdom (Bayt al-Hikma)",
+      "Al-Khwarizmi",
+      "Baghdad",
+      "Al-Kindi"
+    ],
+    "text": "Under Caliphs Harun al-Rashid and Al-Ma mun, Baghdad was founded in 762 AD as a circular city on the Tigris and blossomed into the intellectual capital of the medieval world. The grand research academy, the House of Wisdom (Bayt al-Hikma), spearheaded the Translation Movement, translating Greek, Persian, Sanskrit, and Syriac scientific and philosophical treatises into Arabic. Polymath Muhammad ibn Musa al-Khwarizmi formulated algebra (al-jabr) and Hindu-Arabic numerals, while Al-Kindi and Al-Farabi synthesized Aristotelian logic with Islamic theology, pioneering optics, pharmacology, and cryptography."
+  },
+  {
+    "title": "Fall of Constantinople 1453 and Rise of the Ottoman Empire",
+    "region": "Middle East / Europe",
+    "era": "Late Medieval (1453 AD)",
+    "source": "Kritovoulos History of Mehmed the Conqueror & Ducas Chronicle",
+    "entities": [
+      "Mehmed II",
+      "Constantine XI",
+      "Theodosian Walls",
+      "Orban Supercannon",
+      "Hagia Sophia",
+      "Golden Horn"
+    ],
+    "text": "On May 29, 1453, 21-year-old Ottoman Sultan Mehmed II breached the legendary double Theodosian Walls of Constantinople, bringing an end to the 1,123-year-old Byzantine Empire (Eastern Roman Empire). The 53-day siege integrated revolutionary military technologies, including the massive bronze bombard designed by Hungarian engineer Orban, alongside the tactical feat of hauling 70 Ottoman warships over greased logs across land into the Golden Horn. The fall of Constantinople severed Christian European land routes to Asian spice markets, catalyzing the Portuguese and Spanish Age of Discovery."
+  },
+  {
+    "title": "Achaemenid Persian Empire and Cyrus the Great",
+    "region": "Middle East",
+    "era": "Ancient (550-330 BC)",
+    "source": "Cyrus Cylinder & Herodotus Histories & Behistun Inscription",
+    "entities": [
+      "Cyrus the Great",
+      "Darius I",
+      "Persepolis",
+      "Royal Road",
+      "Cyrus Cylinder",
+      "Satrapies"
+    ],
+    "text": "Founded in 550 BC by Cyrus the Great, the Achaemenid Persian Empire was the first global superpower, governing up to 44% of the world population across three continents. Cyrus established an administrative model based on regional autonomy, preserving local religious customs and languages, famously commemorated on the clay Cyrus Cylinder after liberating Babylon. Darius the Great standardized governance with the Satrapy provincial system, the gold Daric currency, and the 2,500-kilometer Royal Road connecting Susa to Sardis with courier relay stations (Chapar Khaneh)."
+  },
+  {
+    "title": "Library of Alexandria and the Hellenistic Age of Discovery",
+    "region": "Mediterranean / North Africa",
+    "era": "Ancient (300 BC - 400 AD)",
+    "source": "Letter of Aristeas & Plutarch Life of Caesar",
+    "entities": [
+      "Ptolemy I Soter",
+      "Eratosthenes",
+      "Archimedes",
+      "Callimachus",
+      "Mouseion",
+      "Hypatia"
+    ],
+    "text": "Established by the Ptolemaic dynasty in the Hellenistic port city of Alexandria in Egypt around 300 BC, the Great Library and its parent institution, the Mouseion, was antiquity most ambitious intellectual enterprise, collecting up to 500,000 papyrus scrolls. Chief librarian Eratosthenes calculated the Earth circumference with 98% accuracy by measuring noon shadow angles in Syene and Alexandria; Aristarchus of Samos proposed the first heliocentric model of the solar system; and Archimedes formulated foundational principles of hydrostatics and mechanics. Its gradual decline through fires and political instability remains history greatest intellectual loss."
+  },
+  {
+    "title": "Fall of the Western Roman Empire and Barbarian Migrations",
+    "region": "Europe",
+    "era": "Late Antiquity (376-476 AD)",
+    "source": "Ammianus Marcellinus Res Gestae & Procopius Wars",
+    "entities": [
+      "Romulus Augustulus",
+      "Odoacer",
+      "Alaric",
+      "Battle of Adrianople",
+      "476 AD",
+      "Ravenna"
+    ],
+    "text": "The deposition of teenage Emperor Romulus Augustulus by Germanic general Odoacer in September 476 AD in Ravenna marked the formal conclusion of the Western Roman Empire. The collapse was the culmination of two centuries of economic inflation, currency debasement, plague depopulation, civil wars, and the external pressure of the Migration Period triggered by the arrival of the Huns. The defeat of Emperor Valens at the Battle of Adrianople (378 AD) and the subsequent Sacks of Rome by Alaric Visigoths (410 AD) and the Vandals (455 AD) permanently fragmented Western Europe into feudal Germanic kingdoms."
+  },
+  {
+    "title": "World War I: Trench Warfare and Industrialized Total War on the Western Front",
+    "region": "Europe",
+    "era": "Modern (1914-1918 AD)",
+    "source": "Imperial War Museums & Historical Archives of the Great War",
+    "entities": [
+      "Western Front",
+      "Battle of the Somme",
+      "Verdun",
+      "Maxim Machine Gun",
+      "Mark I Tank",
+      "Mustard Gas"
+    ],
+    "text": "The First World War (1914-1918) transformed global warfare through industrial mass production, chemical munitions, and defensive mechanization. Along the 400-mile Western Front stretching from the Swiss border to the North Sea, entrenched armies clashed in deep subterranean trench networks protected by barbed wire entanglements, machine gun pillboxes, and heavy artillery barrages. The 1916 Battle of the Somme and Battle of Verdun demonstrated the lethal stalemate between defensive firepower (Maxim and Vickers machine guns) and offensive infantry assaults. The conflict introduced weaponized aviation, German U-boat submarine blockades, poison chlorine and mustard gas, and the British deployment of the Mark I armored tank at Flers-Courcelette in September 1916."
+  },
+  {
+    "title": "World War II: Battle of Stalingrad and the Eastern Front Turning Point",
+    "region": "Europe / Eurasia",
+    "era": "Modern (1942-1943 AD)",
+    "source": "Soviet Military Archives & German Army High Command Records",
+    "entities": [
+      "Stalingrad",
+      "General Vasily Chuikov",
+      "General Friedrich Paulus",
+      "Operation Uranus",
+      "Volga River",
+      "T-34 Tank",
+      "6th Army"
+    ],
+    "text": "The Battle of Stalingrad (August 1942 - February 1943) was the single deadliest military confrontation in human history, resulting in over two million casualties. Nazi Germany Army Group South sought to capture the industrial hub on the Volga River to cut Soviet supply lines and secure the Caucasus oil fields. Urban combat transformed the city into rubble (Rattenkrieg), where Soviet forces under General Vasily Chuikov engaged in room-by-room combat inside the Red October Steel Factory and Grain Elevator. On November 19, 1942, the Red Army launched Operation Uranus, a double-pincer counteroffensive that encircled General Friedrich Paulus 6th Army of 300,000 soldiers. The total German surrender in February 1943 destroyed Nazi strategic momentum on the Eastern Front and initiated the irreversible Soviet westward advance."
+  },
+  {
+    "title": "World War II: Battle of Midway and Naval Aircraft Carrier Supremacy in the Pacific",
+    "region": "Pacific / North America",
+    "era": "Modern (June 1942 AD)",
+    "source": "US Naval History and Heritage Command & Imperial Japanese Navy Records",
+    "entities": [
+      "Battle of Midway",
+      "Admiral Chester Nimitz",
+      "Admiral Isoroku Yamamoto",
+      "USS Enterprise",
+      "USS Yorktown",
+      "Akagi",
+      "Kaga",
+      "Soryu",
+      "Hiryu",
+      "Douglas SBD Dauntless"
+    ],
+    "text": "Between June 4 and June 7, 1942, six months after Pearl Harbor, the United States Navy inflicted a decisive defeat on the Imperial Japanese Navy at the Battle of Midway. American cryptanalysts at Station HYPO under Commander Joseph Rochefort broke the Japanese naval code JN-25, discovering Admiral Isoroku Yamamoto plan to ambush Midway Atoll. US Pacific Fleet Commander Chester Nimitz deployed three aircraft carriers (Enterprise, Hornet, Yorktown). In a pivotal five-minute window on the morning of June 4, American Douglas SBD Dauntless dive bombers from Enterprise and Yorktown struck the Japanese carrier fleet while their decks were crowded with rearming torpedoes and fuel lines, sinking four fleet carriers (Akagi, Kaga, Soryu, Hiryu). Midway permanently shattered Japanese naval aviation supremacy in the Pacific."
+  },
+  {
+    "title": "Cold War Space Race: Apollo 11 Lunar Landing and the Saturn V Rocket",
+    "region": "North America / Space",
+    "era": "Modern (1961-1969 AD)",
+    "source": "NASA History Division & Apollo Flight Journal",
+    "entities": [
+      "Apollo 11",
+      "Neil Armstrong",
+      "Buzz Aldrin",
+      "Michael Collins",
+      "Saturn V",
+      "Sea of Tranquility",
+      "Lunar Module Eagle",
+      "Wernher von Braun"
+    ],
+    "text": "On July 20, 1969, the American Apollo 11 mission landed the first humans on the Moon, fulfilling President John F. Kennedy 1961 national goal and culminating the Cold War Space Race against the Soviet Union. Propelled by the 363-foot Saturn V multi-stage liquid-fueled rocket engineered under Wernher von Braun at Marshall Space Flight Center, the spacecraft carried astronauts Neil Armstrong, Buzz Aldrin, and Michael Collins. The Lunar Module Eagle touched down in the Sea of Tranquility with less than 30 seconds of descent fuel remaining. Armstrong historic transmission (That is one small step for man, one giant leap for mankind) was broadcast live to over 650 million viewers worldwide. The astronauts deployed scientific instruments, collected 47.5 pounds of lunar rock and soil samples, and safely rendezvoused with Collins in the Command Module Columbia."
+  },
+  {
+    "title": "Ancient Egypt: Old Kingdom, Imhotep, and the Great Pyramid of Giza",
+    "region": "Africa / Middle East",
+    "era": "Ancient (c. 2686-2181 BC)",
+    "source": "Egyptian Antiquities Authority & Oxford History of Ancient Egypt",
+    "entities": [
+      "Old Kingdom",
+      "Great Pyramid of Giza",
+      "Pharaoh Khufu",
+      "Imhotep",
+      "Step Pyramid of Djoser",
+      "Saqqara",
+      "Nile River",
+      "Limestone"
+    ],
+    "text": "The Old Kingdom of Egypt (c. 2686-2181 BC), known as the Age of the Pyramids, saw unprecedented central state administrative capacity, astronomical engineering, and monumental stone masonry along the Nile River. Royal architect Imhotep designed the world first monumental stone structure, the Step Pyramid of Djoser at Saqqara. During the Fourth Dynasty, Pharaoh Khufu commissioned the Great Pyramid of Giza (c. 2560 BC), an architectural masterpiece standing 146.6 meters tall composed of 2.3 million limestone and granite blocks weighing an average of 2.5 tons each. The pyramid was oriented to true north within four minutes of arc using celestial pole star alignments, constructed by an organized seasonal workforce of tens of thousands of conscripted agricultural laborers and skilled masons supported by royal grain rations."
+  },
+  {
+    "title": "Ancient Egypt: New Kingdom, Ramesses II, and the Battle of Kadesh",
+    "region": "Africa / Middle East",
+    "era": "Ancient (1274 BC)",
+    "source": "Kadesh Inscriptions (Ramesseum & Abu Simbel) & Hittite Cuneiform Tablets from Hattusa",
+    "entities": [
+      "New Kingdom",
+      "Pharaoh Ramesses II",
+      "King Muwatalli II",
+      "Battle of Kadesh",
+      "Orontes River",
+      "Chariot Warfare",
+      "Egyptian-Hittite Peace Treaty"
+    ],
+    "text": "In 1274 BC, Pharaoh Ramesses II of the 19th Dynasty led the Egyptian army of 20,000 troops (divided into the divisions of Amun, Ra, Ptah, and Set) into Syria to confront King Muwatalli II of the Hittite Empire at the Battle of Kadesh on the Orontes River. Kadesh was the largest chariot battle in military history, engaging over 5,000 war chariots. Deceived by Bedouin spies into believing the Hittites were distant, the Egyptian vanguard was ambushed and nearly routed until Ramesses mounted a ferocious counter-charge backed by elite Nearin reserves. The tactical stalemate resulted in the Egyptian-Hittite Peace Treaty (c. 1259 BC), the earliest surviving international peace treaty in written human history, establishing mutual non-aggression and extradition pacts preserved on silver tablets and temple walls at Karnak."
+  },
+  {
+    "title": "The French Revolution: Fall of the Bastille and the Overthrow of Absolute Monarchy",
+    "region": "Europe",
+    "era": "Early Modern (1789-1799 AD)",
+    "source": "French National Archives & Declaration of the Rights of Man and of the Citizen",
+    "entities": [
+      "Storming of the Bastille",
+      "King Louis XVI",
+      "Maximilien Robespierre",
+      "Estates-General",
+      "National Assembly",
+      "Reign of Terror",
+      "Guillotine"
+    ],
+    "text": "On July 14, 1789, Parisian citizens stormed the medieval fortress and prison of the Bastille, initiating the French Revolution and dismantling the centuries-old Ancien Regime of absolute Bourbon monarchy and feudal privilege. Triggered by fiscal bankruptcy, bread shortages, and the exclusion of the Third Estate from political power at the Estates-General of Versailles, the revolutionary National Assembly published the Declaration of the Rights of Man and of the Citizen, establishing universal liberty, equality, and popular sovereignty. The revolution radicalized into the abolition of the monarchy, the execution of King Louis XVI and Marie Antoinette by guillotine in 1793, the Jacobin Reign of Terror under Maximilien Robespierre, and total war against European monarchical coalitions before the rise of Napoleon Bonaparte."
+  },
+  {
+    "title": "The American Revolutionary War: The Siege of Yorktown and Independence",
+    "region": "North America",
+    "era": "Early Modern (1775-1783 AD)",
+    "source": "National Archives of the United States & Papers of George Washington",
+    "entities": [
+      "Siege of Yorktown",
+      "General George Washington",
+      "General Lord Cornwallis",
+      "Comte de Rochambeau",
+      "Admiral de Grasse",
+      "Continental Army",
+      "Treaty of Paris (1783)"
+    ],
+    "text": "The American Revolutionary War (1775-1783) resulted in the Thirteen British colonies securing sovereign independence to establish the United States of America. In autumn 1781, General George Washington Continental Army and French allied forces under the Comte de Rochambeau marched 400 miles from New York to Virginia, trapping British General Lord Cornwallis army at the coastal port of Yorktown. Simultaneously, the French naval fleet under Admiral de Grasse won the Battle of the Chesapeake, blocking British naval reinforcement and evacuation. After an intense siege featuring parallel trench sapping and the storming of Redoubts 9 and 10, Cornwallis surrendered 8,000 British soldiers on October 19, 1781, breaking British parliamentary resolve and leading to the Treaty of Paris in 1783."
+  },
+  {
+    "title": "The Industrial Revolution: The Watt Steam Engine and Mechanized Factory Production",
+    "region": "Europe / Global",
+    "era": "Modern (1760-1840 AD)",
+    "source": "British Science Museum Archives & Parliamentary Papers on Coal and Iron",
+    "entities": [
+      "James Watt",
+      "Matthew Boulton",
+      "Steam Engine",
+      "Spinning Jenny",
+      "Richard Arkwright",
+      "Coal Mining",
+      "Blast Furnaces",
+      "Manchester"
+    ],
+    "text": "Beginning in Great Britain around 1760, the Industrial Revolution fundamentally restructured human economic life from agrarian handicraft production to mechanized, fossil-fueled factory systems. In 1769, James Watt patented the separate condenser for the Newcomen steam engine, vastly increasing fuel efficiency and enabling rotary motion to power industrial machinery anywhere, independent of watermills. Mechanized textile inventions like James Hargreaves Spinning Jenny and Richard Arkwright Water Frame concentrated manufacturing into industrial urban factories in Manchester and Lancashire. Powered by abundant coal reserves, coke-fueled blast furnaces produced cheap pig iron and wrought iron, catalyzing the expansion of canals, steam locomotives, and global railway networks."
+  },
+  {
+    "title": "The Napoleonic Wars: Battle of Waterloo and the Seventh Coalition",
+    "region": "Europe",
+    "era": "Modern (June 1815 AD)",
+    "source": "British National Archives & French War Ministry Records of the Hundred Days",
+    "entities": [
+      "Battle of Waterloo",
+      "Napoleon Bonaparte",
+      "Duke of Wellington",
+      "Field Marshal Blucher",
+      "Imperial Guard",
+      "Hougoumont",
+      "La Haye Sainte",
+      "Hundred Days"
+    ],
+    "text": "On June 18, 1815, near Waterloo in modern Belgium, the Battle of Waterloo ended the Napoleonic Wars and the Hundred Days return of Emperor Napoleon Bonaparte. Napoleon French Army of the North (72,000 men) confronted the Anglo-Allied army (68,000 men) commanded by the Duke of Wellington. Wellington deployed his troops along the reverse slope of the Mont-Saint-Jean ridge, anchoring his flanks on fortified farmhouses at Hougoumont and La Haye Sainte. Despite ferocious French artillery bombardments and massed heavy cavalry charges by Marshal Ney, the Allied infantry squares held firm until Field Marshal Gebhard Leberecht von Blucher Prussian IV Corps arrived on the French eastern flank at Plancenoit. When the elite French Imperial Guard broke under British musket volleys, Napoleon army collapsed, resulting in his permanent abdication and exile to Saint Helena."
+  }
+]

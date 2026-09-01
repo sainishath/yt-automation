@@ -167,6 +167,15 @@ def generate_pillow_proof_image(beat: dict, out_path: Path, width: int = 896, he
         logging.error(f"Failed to generate Pillow proof image for {beat.get('beat_id')}: {e}")
         return False
 
+def check_fooocus_online(url: str = "http://127.0.0.1:7865", timeout: float = 3.0) -> bool:
+    """Quick non-blocking check to verify if Fooocus server is listening."""
+    import requests
+    try:
+        r = requests.get(url, timeout=timeout)
+        return r.status_code == 200
+    except Exception:
+        return False
+
 def generate_fooocus_image(
     client: Client,
     prompt_text: str,
@@ -176,19 +185,19 @@ def generate_fooocus_image(
     out_path: Path,
     max_retries: int = 3
 ) -> float:
-    """Sends generation request using two-step Gradio call, validates output, and saves it."""
+    """
+    Sends generation request using the robust two-step Gradio API protocol:
+    1. Sets parameters dynamically via fn_index=67
+    2. Submits generation job asynchronously via fn_index=68 in a wait-loop
+    Validates output image and saves it to out_path.
+    """
     out_path.parent.mkdir(parents=True, exist_ok=True)
     
-    ep = None
-    for candidate in client.endpoints:
-        if candidate.api_name == "/generate_image":
-            ep = candidate
-            break
-            
-    if not ep:
-        # Fallback to endpoint 77 or last endpoint
-        ep = client.endpoints[77] if len(client.endpoints) > 77 else client.endpoints[-1]
+    if len(client.endpoints) <= 68:
+        raise RuntimeError(f"Unexpected Fooocus API endpoints structure (total {len(client.endpoints)} endpoints).")
         
+    ep67 = client.endpoints[67]
+    dep67 = ep67.dependency
     comps = {comp['id']: comp for comp in client.config['components']}
     
     for attempt in range(1, max_retries + 1):
@@ -196,58 +205,66 @@ def generate_fooocus_image(
             start_time = time.time()
             logging.info(f"Generating Fooocus SDXL image for {out_path.name} on RTX 4070 (Attempt {attempt}/{max_retries})")
             
-            # 1. Build arguments matching /generate_image endpoint inputs
+            # 1. Build arguments dynamically from component values
             args = []
-            for cid in ep.dependency['inputs']:
-                comp = comps.get(cid, {})
-                val = comp.get('value')
-                if val is None:
-                    val = comp.get('props', {}).get('value')
-                args.append(val)
-                
+            for cid in dep67['inputs']:
+                if cid in comps:
+                    comp = comps[cid]
+                    val = comp.get('value')
+                    if val is None:
+                        val = comp.get('props', {}).get('value')
+                    args.append(val)
+                else:
+                    args.append(None)
+                    
             # Sanitize radio lists
-            for idx, (cid, ctype) in enumerate(zip(ep.dependency['inputs'], ep.input_component_types)):
+            for idx, (cid, ctype) in enumerate(zip(dep67['inputs'], ep67.input_component_types)):
                 val = args[idx]
                 if ctype == 'radio' and isinstance(val, list):
                     args[idx] = val[1] if len(val) > 1 else val[0]
                     
             # Set generation overrides
-            args[0] = False # generate_image_grid_for_each_batch
-            args[1] = prompt_text
-            args[2] = neg_prompt
-            args[3] = style_list
-            args[4] = "Speed"
+            args[0] = None  # state
+            args[1] = False # generate_image_grid_for_each_batch
+            args[2] = prompt_text
+            args[3] = neg_prompt
+            args[4] = style_list
+            args[5] = "Speed"
             
-            aspect_choices = comps[ep.dependency['inputs'][5]].get('props', {}).get('choices', [])
-            args[5] = resolve_aspect_ratio(aspect_ratio, aspect_choices)
-            args[6] = 1  # image_number
-            args[7] = "png"
+            target_clean = aspect_ratio.replace("*", "×").replace("x", "×").split(" ")[0]
+            aspect_choices = comps[dep67['inputs'][6]].get('props', {}).get('choices', [])
+            resolved_ratio = aspect_choices[0][1] if isinstance(aspect_choices[0], list) else aspect_choices[0]
+            for choice in aspect_choices:
+                val = choice[1] if isinstance(choice, list) else choice
+                if val.startswith(target_clean):
+                    resolved_ratio = val
+                    break
+            args[6] = resolved_ratio
+            args[7] = 1  # image_number
+            args[8] = "png"
             
             seed_val = random.randint(1, 1000000000)
-            args[8] = str(seed_val)
-            
-            args[12] = "juggernautXL_v8Rundiffusion.safetensors" # base_model
-            args[13] = "None"  # refiner_model
-            args[14] = 0.5     # refiner_switch
+            args[9] = str(seed_val)
+            args[13] = "juggernautXL_v8Rundiffusion.safetensors"
+            args[14] = "None"
+            args[15] = 0.5
             
             # Filter out state components
-            filtered_args = []
-            for val, ctype in zip(args, ep.input_component_types):
-                if ctype != 'state':
-                    filtered_args.append(val)
-                    
+            filtered_args = [val for val, ctype in zip(args, ep67.input_component_types) if ctype != 'state']
+            
             outputs_dir = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs"))
             import tempfile
             gradio_temp = Path(tempfile.gettempdir()) / "gradio"
             pre_files = (set(outputs_dir.glob("**/*.png")) if outputs_dir.exists() else set()) | (set(gradio_temp.glob("**/*.png")) if gradio_temp.exists() else set())
             
+            # Step 1: Set parameters via predict on fn_index=67
+            client.predict(*filtered_args, fn_index=67)
+            
+            # Step 2: Submit asynchronous generation job on fn_index=68
             job_start_time = time.time()
-            if ep.api_name == "/generate_image":
-                job = client.submit(*filtered_args, api_name='/generate_image')
-            else:
-                job = client.submit(*filtered_args, fn_index=ep.fn_index)
-                
-            timeout_seconds = 600  # 10 minutes max per SDXL render
+            job = client.submit(fn_index=68)
+            
+            timeout_seconds = 240  # 4 minutes max per SDXL render
             while not job.done():
                 if time.time() - job_start_time > timeout_seconds:
                     logging.error("[ERROR] Fooocus image generation timed out.")
@@ -347,16 +364,23 @@ def process_video_images(
     images_dir.mkdir(parents=True, exist_ok=True)
     
     # Attempt Gradio Client Connection
-    logging.info("Connecting to Fooocus Gradio API at http://127.0.0.1:7865/ ...")
+    logging.info("Checking Fooocus Gradio API connectivity at http://127.0.0.1:7865/ ...")
     client = None
-    try:
-        client = Client("http://127.0.0.1:7865/")
-        logging.info("Successfully connected to local Fooocus server.")
-    except Exception as ce:
+    if check_fooocus_online():
+        try:
+            client = Client("http://127.0.0.1:7865/")
+            logging.info("Successfully connected to local Fooocus server.")
+        except Exception as ce:
+            logging.warning(f"Gradio client initialization error: {ce}")
+    else:
         if allow_fallback:
-            logging.warning(f"Fooocus offline ({ce}). ALLOW_FOOOCUS_FALLBACK=1 is active. Will generate Pillow proof images.")
+            logging.warning("Fooocus is offline (http://127.0.0.1:7865). ALLOW_FOOOCUS_FALLBACK is active. Will generate Pillow proof images.")
         else:
-            logging.error(f"Fooocus offline ({ce}) and ALLOW_FOOOCUS_FALLBACK is disabled.")
+            logging.error("Fooocus is offline (http://127.0.0.1:7865) and fallback is disabled.")
+            raise RuntimeError(
+                "FOOOCUS SERVER UNAVAILABLE: Could not connect to Fooocus on http://127.0.0.1:7865. "
+                "Please ensure the local Fooocus service or Docker container is active on port 7865 and retry."
+            )
 
     fooocus_successes = 0
     pillow_fallbacks = 0

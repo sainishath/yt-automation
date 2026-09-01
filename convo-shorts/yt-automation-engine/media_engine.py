@@ -974,18 +974,47 @@ def validate_and_analyze_conversation(lines, topic="General Topic", research_con
     return True, [], convo_stats
 
 
+def fetch_coding_rag_context(topic: str, limit: int = 3) -> str:
+    """Queries local Qdrant collection 'coding_education_rag' on port 6333 for technical grounding."""
+    import urllib.request
+    try:
+        from sentence_transformers import SentenceTransformer
+        embedder = SentenceTransformer("all-MiniLM-L6-v2")
+        q_vec = embedder.encode(topic).tolist()
+        payload = {"vector": q_vec, "limit": limit, "with_payload": True}
+        req = urllib.request.Request(
+            "http://127.0.0.1:6333/collections/coding_education_rag/points/search",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=5) as r:
+            res = json.loads(r.read().decode("utf-8"))
+            hits = res.get("result", [])
+            if hits:
+                print(f"[Qdrant RAG] Successfully retrieved {len(hits)} technical patterns from 'coding_education_rag' on port 6333.")
+                return "\n\n".join([f"### {h['payload'].get('title', 'Technical Pattern')}\n{h['payload'].get('text', '')}" for h in hits])
+    except Exception as e:
+        print(f"[Qdrant RAG Warning] Qdrant retrieval skipped/failed: {e}")
+    return ""
+
+
 def generate_script(topic, category, active_strategy=None):
     """
     Content Brain v1 Pipeline 2 Generator:
-    1. Loads StrategyManager active strategy context.
-    2. Runs p2_multi_angle concept generation & selects candidate.
-    3. Generates single senior-developer explanation with code cards.
-    4. Evaluates via HybridScriptCritic with up to 3 revision attempts.
+    1. Queries Qdrant coding_education_rag for factual engineering grounding.
+    2. Loads StrategyManager active strategy context.
+    3. Runs p2_multi_angle concept generation & selects candidate.
+    4. Generates single senior-developer explanation with code cards.
+    5. Evaluates via HybridScriptCritic with up to 3 revision attempts.
     """
     import re
     from growth.brain.script_critic import HybridScriptCritic
     from growth.brain.p2_multi_angle import generate_p2_multi_angle_concept
     from growth.strategy.strategy_manager import StrategyManager
+
+    # 1. Retrieve Factual RAG Context from Qdrant
+    rag_context = fetch_coding_rag_context(topic, limit=2)
 
     strat_mgr = StrategyManager()
     strat_ctx = active_strategy or strat_mgr.get_active_strategy_context("channel_b")
@@ -1020,55 +1049,60 @@ def generate_script(topic, category, active_strategy=None):
                 f"FIX EVERY ISSUE: Tighten pacing, remove fluff, and ensure high curiosity."
             )
 
+        rag_section = ""
+        if rag_context:
+            rag_section = f"\n\n### FACTUAL ENGINEERING EVIDENCE & RAG CONTEXT (FROM QDRANT):\n{rag_context}\n"
+
         prompt = (
-            f"You are a senior principal engineer and master technical educator. Generate a high-retention 40-second coding YouTube Short script explaining '{topic}' in strictly formatted JSON.\n\n"
-            f"### STRATEGIC ANGLE & CONTENT CONSTRAINTS:\n"
-            f"- Angle Type: {angle_type}\n"
-            f"- Hook Premise: {hook_premise}\n"
-            f"- Core Conflict / Mistake: {core_conflict}\n"
-            f"- Senior Takeaway: {senior_takeaway}\n"
-            f"- Speaker: Single authoritative senior developer voice ('A' / Ryan).\n"
+            f"You are a warm, encouraging coding mentor teaching absolute beginners who have never coded before. Generate a high-retention 40-second beginner YouTube Short script explaining '{topic}' in strictly formatted JSON.{rag_section}\n\n"
+            f"### CORE PERSONA & ELI5 TEACHING CONSTRAINTS:\n"
+            f"- Persona: Warm, friendly, encouraging coding mentor ('Ryan').\n"
+            f"- THE ELI5 RULE: Explain Like I'm 5! You MUST use simple, real-world physical metaphors (e.g. variables = labeled boxes, booleans = light switches, functions = recipes). Absolutely ZERO complex jargon (no ASTs, bytecodes, memory buses).\n"
+            f"- Strategic Hook: {hook_premise}\n"
+            f"- Core Metaphor / Concept: {core_conflict}\n"
+            f"- Takeaway Principle: {senior_takeaway}\n"
             f"- Structure: Exactly 4 visual scenes:\n"
-            f"  Scene 1: Hook & junior mistake / counter-intuitive code trap.\n"
-            f"  Scene 2: Why it fails under scale/concurrency or causes silent memory/CPU leaks.\n"
-            f"  Scene 3: Senior clean architecture fix with concise 3-4 line syntax in 'code_snippet'.\n"
-            f"  Scene 4: Punchy payoff principle and production takeaway.\n"
+            f"  Scene 1: Hook & Everyday Physical Metaphor with clean 2-3 line beginner code in 'code_snippet'.\n"
+            f"  Scene 2: Simple Code Walkthrough showing how the code actually runs.\n"
+            f"  Scene 3: The beginner 'Ah-ha!' moment or common mistake to avoid.\n"
+            f"  Scene 4: Punchy takeaway + Clear Call to Action teasing the next lesson in the sequence.\n"
             f"- Target Duration: {strategy_bounds['min_duration_seconds']:.0f}s - {strategy_bounds['max_duration_seconds']:.0f}s.\n"
-            f"- MANDATORY REQUIREMENT: Each scene's 'text' field MUST contain 25 to 30 spoken words (2 full technical sentences). Do NOT output brief one-line summaries. Total script across all 4 scenes MUST be 100 to 115 words.\n\n"
+            f"- Each scene's 'text' field MUST contain 22 to 26 spoken words (simple, friendly sentences). Total script across all 4 scenes MUST be 90 to 105 words.\n"
+            f"- Each scene MUST include a 'code_snippet' array with 2 to 4 clean, readable code lines (e.g. ['# Python Variables', 'age = 25', 'name = \"Alex\"', 'print(name, age)']).\n\n"
             f"### REQUIRED JSON SCHEMA (MUST INCLUDE ALL 4 SCENES):\n"
             f"{{\n"
-            f"  \"title\": \"Senior Dev Explains: {topic}\",\n"
+            f"  \"title\": \"Beginner Python: {topic}\",\n"
             f"  \"scenes\": [\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"Cinematic close-up of developer workspace terminal and code architecture diagram, dark theme, 8k\",\n"
-            f"      \"code_snippet\": [\"# JUNIOR PATTERN\", \"db = open_raw_connection()\"],\n"
-            f"      \"reason\": \"Scene 1: Hook and junior mistake (25-30 words)\",\n"
+            f"      \"visual_prompt\": \"Clean modern code editor with glowing variable syntax in dark theme, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# Python Variables\", \"age = 25\", \"name = 'Alex'\", \"print(name, age)\"],\n"
+            f"      \"reason\": \"Scene 1: Friendly hook and labeled box metaphor (22-26 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"hook\", \"interaction_type\": \"lead\", \"text\": \"{hook_premise} Junior developers often execute queries synchronously on a single thread without checking pool exhaustion.\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"hook\", \"interaction_type\": \"lead\", \"text\": \"{hook_premise} Think of a variable as a labeled shoe box where you store your favorite things under a simple name.\"}}\n"
             f"      ]\n"
             f"    }},\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"System architecture overload diagram showing memory spike and connection timeout failure, glowing red, 8k\",\n"
-            f"      \"code_snippet\": [\"# FAILURE UNDER LOAD\", \"timeout: connection_pool_exhausted\"],\n"
-            f"      \"reason\": \"Scene 2: Why it fails under scale (25-30 words)\",\n"
+            f"      \"visual_prompt\": \"Minimalist diagram showing a labeled box holding data with clean glowing lines, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# Putting data in the box\", \"score = 100\", \"score = 150  # Updated!\"],\n"
+            f"      \"reason\": \"Scene 2: How data updates inside the box (22-26 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"Under high write throughput, unindexed locks starve worker threads, cascading into catastrophic latency spikes and server memory leaks.\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"When you write age equals twenty-five, Python creates the box and drops twenty-five right inside. You can change what is inside anytime!\"}}\n"
             f"      ]\n"
             f"    }},\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"Clean senior developer code editor with syntax highlighted production patterns, dark UI, 8k\",\n"
-            f"      \"code_snippet\": [\"# SENIOR PATTERN\", \"with db_pool.acquire() as conn:\", \"    conn.execute_batch(chunked_writes)\"],\n"
-            f"      \"reason\": \"Scene 3: Senior clean architecture fix (25-30 words)\",\n"
+            f"      \"visual_prompt\": \"Friendly code editor comparison showing clear descriptive names vs confusing single letters, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# Good naming habit\", \"player_score = 100\", \"# Bad: x = 100\"],\n"
+            f"      \"reason\": \"Scene 3: Beginner ah-ha moment (22-26 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"The senior approach partitions write queues with backpressure batching, ensuring database connections are bounded and recycled gracefully.\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"The secret to writing great code is giving your boxes clear labels so you and your team always know what is inside.\"}}\n"
             f"      ]\n"
             f"    }},\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"Smooth high-throughput distributed system graph running with low latency metrics, green glowing dashboard, 8k\",\n"
-            f"      \"code_snippet\": [\"# PRODUCTION RULE\", \"target_p99_latency < 15ms\"],\n"
-            f"      \"reason\": \"Scene 4: Core payoff principle (20-25 words)\",\n"
+            f"      \"visual_prompt\": \"Clean summary card with glowing subscribe badge and next lesson preview, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# LESSON 1 COMPLETE!\", \"// Next: Numbers & Text Types\"],\n"
+            f"      \"reason\": \"Scene 4: Takeaway and Call to Action (20-24 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"outro\", \"interaction_type\": \"close\", \"text\": \"Never scale raw compute when your access pattern is broken. Enforce bounded concurrency before you add new servers.\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"outro\", \"interaction_type\": \"close\", \"text\": \"You just wrote your very first Python concept! Follow along for lesson two where we explore numbers and words!\"}}\n"
             f"      ]\n"
             f"    }}\n"
             f"  ]\n"
@@ -1340,9 +1374,8 @@ def generate_voiceover(timeline_or_text, output_audio_path, voice="en-US-AndrewN
 
         output_wav = os.path.join(job_temp_dir, f"turn_{idx}.wav")
         piper_bin = str(ROOT_DIR / "piper.exe") if (ROOT_DIR / "piper.exe").exists() else "piper"
-        piper_cmd = [piper_bin, "-m", current_model, "-f", output_wav]
-        if speaker in ["B", "CHARACTER_B", "SPEAKER_B"]:
-            piper_cmd.extend(["--length_scale", "0.95"])
+        # 10% slower audio for calm, beginner-friendly mentor speech pacing
+        piper_cmd = [piper_bin, "-m", current_model, "-f", output_wav, "--length_scale", "1.10"]
         proc = subprocess.run(piper_cmd, input=clean_text_piper, text=True, encoding="utf-8", capture_output=True)
         if proc.returncode != 0:
             err_details = proc.stderr.strip() if proc.stderr else "Unknown error"
@@ -1608,11 +1641,8 @@ def assemble_video(video_bg_path, audio_path,
         image_events = []
         for idx, proof in enumerate(visual_proofs):
             if proof and idx < len(timings):
-                start_time = timings[idx]["start"]
-                if idx < len(timings) - 1:
-                    end_time = timings[idx+1]["start"]
-                else:
-                    end_time = duration + 0.5
+                start_time = round(timings[idx]["start"], 3)
+                end_time = round(timings[idx]["end"], 3)
                 image_events.append({
                     'path': proof,
                     'start': start_time,
@@ -1624,12 +1654,10 @@ def assemble_video(video_bg_path, audio_path,
         for idx, ev in enumerate(image_events):
             img_path = ev.get('path')
             if img_path and os.path.exists(img_path):
-                raw_start = ev.get('start', 0.0)
-                # Requirement 3: First Fooocus image is delayed to 2.0s so full-screen Minecraft + audio plays from 0.0s to 2.0s
-                start_time = max(2.0, raw_start) if idx == 0 else raw_start
-                end_time = ev.get('end', duration + 0.5)
+                start_time = ev.get('start', 0.0)
+                end_time = ev.get('end', duration)
                 
-                print(f"[IMAGE ENGINE] Validating image asset for upper-zone overlay: {img_path} from {start_time}s to {end_time}s")
+                print(f"[IMAGE ENGINE] Validating image asset for upper-zone overlay: {img_path} from {start_time:.3f}s to {end_time:.3f}s")
                 img_f = str(img_path).replace("\\", "/")
                 inputs.append(f'-loop 1 -i "{img_f}"')
                 final_image_events.append({
@@ -1660,13 +1688,13 @@ def assemble_video(video_bg_path, audio_path,
             else:
                 kb_filter = f"zoompan=z='max(1.03-0.0003*on,1.0)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={total_frames}:s=896x896,fps=60"
 
-            fade_filter = ",format=yuva420p,fade=in:st=0:d=0.3:alpha=1" if i == 0 else ""
+            fade_filter = ",format=yuva420p,fade=in:st=0:d=0.25:alpha=1"
             filter_complex.append(
-                f"[{event['input_idx']}:v]{kb_filter},scale=810:810,pad=814:814:2:2:color=0x444444{fade_filter}[img{i}]"
+                f"[{event['input_idx']}:v]scale=960:720:force_original_aspect_ratio=decrease,pad=960:720:(ow-iw)/2:(oh-ih)/2:color=0x00000000{fade_filter}[img{i}]"
             )
-            # Overlay centered horizontally (x=(1080-w)/2) and positioned in upper portion (y=120) over full-screen Minecraft background
+            # Overlay centered horizontally (x=(1080-960)/2 = 60) and positioned in upper portion (y=140) over full-screen Minecraft background
             filter_complex.append(
-                f"{current_bg_node}[img{i}]overlay=x=(1080-w)/2:y=120:"
+                f"{current_bg_node}[img{i}]overlay=x=60:y=140:"
                 f"enable='between(t,{event['start']},{event['end']})'{next_bg_node}"
             )
             current_bg_node = next_bg_node
