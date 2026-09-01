@@ -58,7 +58,7 @@ async def on_message(message):
         await message.channel.send("🟢 **[APPROVED]** Received approval! Uploading Short to YouTube...")
         
         try:
-            payload = {"privacy_status": "private"}
+            payload = {"privacy_status": "public"}
             if job_id:
                 payload["job_id"] = job_id
                 resp = requests.post(f"{GROWTH_SERVER_URL}/api/upload-approved", json=payload, timeout=60)

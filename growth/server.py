@@ -367,8 +367,7 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
                 logging.info(f"Processing upload approval for Job '{job_id}' (Channel: {channel_id}, Pipeline: {pipeline_id}, Video: {video_id})")
 
                 # Update job status to UPLOADING
-                conn = get_db(repo.db_path)
-                with conn:
+                with get_db(repo.db_path) as conn:
                     conn.execute("UPDATE jobs SET status = 'UPLOADING', updated_at = CURRENT_TIMESTAMP WHERE job_id = ?", (job_id,))
 
                 yt_id = None
@@ -406,6 +405,7 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
                             tags = m.get("tags", tags)
 
                     up_res = p1_upload(
+                        video_id=video_id,
                         final_mp4=final_mp4,
                         title=title,
                         description=description,
@@ -424,6 +424,7 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
                     from metadata_generator import generate_metadata
 
                     p2_candidates = [
+                        ROOT_DIR / "data" / "yt-automation-engine" / "videos" / f"{video_id}.mp4",
                         ROOT_DIR / "convo-shorts" / "data" / "videos" / f"{video_id}.mp4",
                         ROOT_DIR / "convo-shorts" / "yt-automation-engine" / "data" / "yt-automation-engine" / "videos" / f"{video_id}.mp4",
                         ROOT_DIR / "convo-shorts" / "yt-automation-engine" / "data" / "videos" / f"{video_id}.mp4"
@@ -435,15 +436,15 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
                             break
 
                     if not final_mp4:
-                        # Fallback: search anywhere in convo-shorts
-                        found = list((ROOT_DIR / "convo-shorts").rglob(f"*{video_id}*.mp4"))
+                        # Fallback: search anywhere in repo
+                        found = list(ROOT_DIR.rglob(f"*{video_id}*.mp4"))
                         # Exclude temp proxies
                         found = [f for f in found if "review_proxy" not in f.name and "temp" not in str(f)]
                         if found:
                             final_mp4 = found[0]
 
                     if not final_mp4 or not final_mp4.exists():
-                        raise FileNotFoundError(f"Final MP4 not found for video {video_id} across convo-shorts directories.")
+                        raise FileNotFoundError(f"Final MP4 not found for video {video_id} across workspace directories.")
 
                     video_file = str(final_mp4)
                     meta = generate_metadata(job_dict.get("topic_text", ""), "Coding & Software Engineering")
