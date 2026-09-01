@@ -198,11 +198,36 @@ def upload_to_youtube(
         )
 
         response = None
-        while response is None:
-            status, response = insert_request.next_chunk()
-            if status:
-                pct = int(status.progress() * 100)
-                print(f"[Upload] {pct}% ...")
+        try:
+            while response is None:
+                status, response = insert_request.next_chunk()
+                if status:
+                    pct = int(status.progress() * 100)
+                    print(f"[Upload] {pct}% ...")
+        except Exception as up_err:
+            if privacy_status == "public":
+                print(f"[Upload Warning] Public upload rejected ({up_err}). Retrying upload as 'private'...")
+                privacy_status = "private"
+                body["status"]["privacyStatus"] = "private"
+                media = MediaFileUpload(
+                    video_path,
+                    mimetype="video/mp4",
+                    resumable=True,
+                    chunksize=5 * 1024 * 1024,
+                )
+                insert_request = youtube.videos().insert(
+                    part="snippet,status",
+                    body=body,
+                    media_body=media,
+                )
+                response = None
+                while response is None:
+                    status, response = insert_request.next_chunk()
+                    if status:
+                        pct = int(status.progress() * 100)
+                        print(f"[Upload (private fallback)] {pct}% ...")
+            else:
+                raise up_err
 
         vid_id = response["id"]
         url    = f"https://www.youtube.com/shorts/{vid_id}"
