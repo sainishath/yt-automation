@@ -430,7 +430,10 @@ def generate_script(
     max_retries: int = 5,
     active_strategy: Optional[dict] = None,
     strategy_context: Optional[dict] = None,
-    is_factual: Optional[bool] = None
+    is_factual: Optional[bool] = None,
+    series_name: Optional[str] = None,
+    part_number: Optional[int] = None,
+    total_parts: Optional[int] = None
 ) -> dict:
     style_keywords = style_config.get("base_style_keywords", "")
     
@@ -455,6 +458,33 @@ def generate_script(
     lower_t = topic.lower().strip()
     if is_factual is None:
         is_factual = not (lower_t.startswith(("what if", "imagine if", "suppose", "had ", "what would")) or "what if" in lower_t)
+
+    # Multi-Part Series Directive Construction
+    series_directive = ""
+    if series_name:
+        p_num = part_number or 1
+        tot = total_parts or 4
+        if p_num == 1:
+            series_directive = (
+                f"\n\nMULTI-PART SERIES ARC ({series_name} — Part {p_num} of {tot}):\n"
+                f"- This is the dramatic OPENING CHAPTER of the {tot}-part saga '{series_name}'.\n"
+                f"- Set up the monumental historical tension and rising conflict.\n"
+                f"- FINAL SCENE REQUIREMENT (Scene Outro): You MUST end the final scene's spoken narration with an intense cliffhanger CTA teasing the next episode (e.g. 'Subscribe and follow for Part 2!')."
+            )
+        elif p_num < tot:
+            series_directive = (
+                f"\n\nMULTI-PART SERIES ARC ({series_name} — Part {p_num} of {tot}):\n"
+                f"- This is PART {p_num} of the ongoing {tot}-part saga '{series_name}'.\n"
+                f"- Escalate the crisis and plunge immediately into the turning point of the conflict.\n"
+                f"- FINAL SCENE REQUIREMENT (Scene Outro): You MUST end the final scene's spoken narration with a gripping cliffhanger CTA teasing the next chapter (e.g. 'Subscribe for Part {p_num + 1}!')."
+            )
+        else:
+            series_directive = (
+                f"\n\nMULTI-PART SERIES ARC ({series_name} — Part {p_num} of {tot} GRAND FINALE):\n"
+                f"- This is the CLIMAX and GRAND FINALE of the {tot}-part saga '{series_name}'.\n"
+                f"- Bring the saga to its monumental historical climax and permanent legacy.\n"
+                f"- FINAL SCENE REQUIREMENT (Scene Outro): Provide an epic, conclusive summary statement on how this event changed history."
+            )
 
     # Stage 1: Load or Generate RAG v4 Grounding Context & Historical-Visual Evidence Packet
     if evidence_packet is None:
@@ -514,7 +544,7 @@ def generate_script(
         )
 
         prompt = f"""You are an authoritative historical documentary narrator and creator of high-retention factual YouTube Shorts.
-Generate a compelling, 100% factual historical documentary script for the topic: "{topic}".
+Generate a compelling, 100% factual historical documentary script for the topic: "{topic}".{series_directive}
 Synthesize the provided RAG HISTORICAL EVIDENCE directly into an engaging, accurate narrative.
 Every sentence must be accurate, educational, and cinematic. Do NOT use fictional alternate-history what-if framing.
 
@@ -573,7 +603,7 @@ Constraints:
             )
 
         prompt = f"""You are a professional history storyteller and viral shorts creator.
-Generate a narrative-style "what if" history script for the topic: "{topic}".
+Generate a narrative-style "what if" history script for the topic: "{topic}".{series_directive}
 The tone must be epic, cinematic, and curiosity-driven.
 
 RAG v4 HISTORICAL EVIDENCE:
@@ -655,6 +685,12 @@ Constraints:
             script_data["video_id"] = video_id
             script_data["topic"] = topic
             script_data["grounding_facts"] = grounding_facts
+            if series_name:
+                script_data["series"] = {
+                    "series_name": series_name,
+                    "part_number": part_number or 1,
+                    "total_parts": total_parts or 4
+                }
             
             success, result = validate_and_enrich_script(script_data, style_keywords, strategy_bounds=strategy_bounds)
             if not success:
@@ -678,6 +714,12 @@ Constraints:
 
             result["critic_score"] = critic_res.overall_score
             result["critic_metrics"] = critic_res.metrics
+            if series_name:
+                result["series"] = {
+                    "series_name": series_name,
+                    "part_number": part_number or 1,
+                    "total_parts": total_parts or 4
+                }
             logging.info(f"[Content Brain Critic P1] Script PASSED (Score: {critic_res.overall_score}/10)!")
 
             result, claim_ver_doc = verify_and_revise_script_claims(result, evidence_packet, video_id, output_dir=output_dir, is_factual=is_factual)
@@ -708,6 +750,9 @@ if __name__ == "__main__":
     parser.add_argument("--video_id", default="video_001", help="ID/Folder name for the video output")
     parser.add_argument("--output_dir", default="output", help="Base output directory")
     parser.add_argument("--factual", action="store_true", help="Force 100% factual documentary mode")
+    parser.add_argument("--series_name", default=None, help="Name of the multi-part series saga")
+    parser.add_argument("--part_number", type=int, default=None, help="Current episode/part number in the series")
+    parser.add_argument("--total_parts", type=int, default=None, help="Total number of parts in the series")
     args = parser.parse_args()
     
     _BASE_DIR = Path(__file__).parent.parent.resolve()
@@ -722,7 +767,16 @@ if __name__ == "__main__":
         style_config = json.load(f)
         
     try:
-        script = generate_script(args.topic, args.video_id, style_config, output_dir=args.output_dir, is_factual=args.factual)
+        script = generate_script(
+            args.topic,
+            args.video_id,
+            style_config,
+            output_dir=args.output_dir,
+            is_factual=args.factual,
+            series_name=args.series_name,
+            part_number=args.part_number,
+            total_parts=args.total_parts
+        )
         
         out_dir = Path(args.output_dir) / args.video_id
         out_dir.mkdir(parents=True, exist_ok=True)
