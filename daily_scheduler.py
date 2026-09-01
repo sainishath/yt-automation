@@ -126,11 +126,17 @@ def run_pipeline_2(lesson_num: int) -> bool:
 
 
 def ingest_analytics_snapshots():
-    """Runs periodic YouTube analytics collection for growth.db."""
+    """Reconciles live YouTube state and runs periodic analytics collection for growth.db."""
     print("\n" + "="*60)
     print("  [ANALYTICS] Ingesting YouTube Analytics & Performance Snapshots...")
     print("="*60)
     try:
+        from growth.analytics.sync_youtube_state import run_full_reconciliation
+        reconcile_res = run_full_reconciliation()
+        for ch, s in reconcile_res.items():
+            if s.get("authenticated"):
+                print(f"[RECONCILIATION] {ch.upper()}: {s.get('active_verified')} active, {s.get('marked_deleted')} deleted.")
+
         from growth.analytics.fetch_analytics import fetch_due_snapshots
         res = fetch_due_snapshots(dry_run=False)
         print(f"[ANALYTICS] Ingestion complete: {res.get('collected_count', 0)} snapshots collected, {res.get('skipped_count', 0)} skipped.")
