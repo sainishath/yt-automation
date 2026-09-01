@@ -28,8 +28,11 @@ build/
 *.sqlite
 *.sqlite3
 *.db
+growth/growth.db
+growth/*.db
 
 # Secrets, API Keys & OAuth Credentials (CRITICAL)
+.env
 *.env
 .env.*
 !.env.example
@@ -42,16 +45,22 @@ build/
 
 # Runtime Output & Media Assets
 output/
+**/output/
+temp/
+**/temp/
 data/yt-automation-engine/videos/
 data/yt-automation-engine/temp/
-temp/
 videos/
+**/videos/
 *.mp4
 *.wav
 *.mp3
 *.webm
 *.avi
 *.mov
+*.png
+*.jpg
+*.jpeg
 espeak-ng-data/
 
 # Logs & Runtime State
