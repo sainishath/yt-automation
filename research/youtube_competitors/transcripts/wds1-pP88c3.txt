@@ -1,0 +1,1 @@
+A JavaScript promise is just an IOU for a value that will resolve in the future.

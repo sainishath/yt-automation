@@ -58,15 +58,18 @@ def run_pipeline1(
     video_id: Optional[str] = None,
     output_dir: Optional[str] = None,
     allow_fallback: bool = True,
-    force_rebuild: bool = False
+    force_rebuild: bool = False,
+    is_factual: Optional[bool] = None
 ) -> Dict[str, Any]:
     """
-    Full end-to-end production pipeline execution for Pipeline 1.
-    Returns machine-readable run summary dictionary.
+    Executes the end-to-end Channel A production workflow.
+    Supports both Counterfactual Alternate History and 100% Factual RAG Documentary modes.
+    Strictly halts at AWAITING_REVIEW after sending a proxy to Discord.
     """
     start_time = time.time()
     if not video_id:
         video_id = f"video_{int(time.time())}_{os.urandom(2).hex()}"
+    job_id = f"job_{video_id}"
 
     base_out = Path(output_dir) if output_dir else _BASE_DIR / "output"
     video_path = base_out / video_id
@@ -88,6 +91,7 @@ def run_pipeline1(
 
     experiment_id = None
     arm_id = "control"
+    variant_id = "control"
     tested_variable = "HOOK_STRUCTURE"
     try:
         mem = BrainMemory(DEFAULT_DB_PATH)
@@ -96,6 +100,7 @@ def run_pipeline1(
         if decision and decision.experiment_id:
             experiment_id = decision.experiment_id
             arm_id = decision.arm_id or "control"
+            variant_id = arm_id
             tested_variable = decision.variable_under_test or "HOOK_STRUCTURE"
     except Exception as de_err:
         logger.info(f"[Content Brain] Running under baseline strategy: {de_err}")
@@ -138,6 +143,31 @@ def run_pipeline1(
     print(f"  Strategy: {strategy_version} | Exp: {experiment_id} | Arm: {arm_id}")
     print(f"=======================================================\n")
 
+    # ----------------------------------------------------
+    # Sync with Growth Intelligence Database (growth.db)
+    # ----------------------------------------------------
+    growth_repo = None
+    try:
+        from growth.db.models import GrowthRepository, JobModel, VideoModel
+        from growth.db.database import DEFAULT_DB_PATH
+        growth_repo = GrowthRepository(DEFAULT_DB_PATH)
+        job_entry = JobModel(
+            job_id=job_id,
+            channel_id="channel_a",
+            pipeline_id="alternate-history-shorts",
+            topic_text=topic,
+            status="GENERATING",
+            video_id=video_id,
+            strategy_version=strategy_version,
+            experiment_id=experiment_id,
+            arm_id=arm_id,
+            variant_id=variant_id
+        )
+        growth_repo.upsert_job(job_entry)
+        logger.info(f"[{video_id}] growth.db synchronized: Job {job_id} set to GENERATING.")
+    except Exception as g_err:
+        logger.warning(f"[{video_id}] Notice: growth.db job initialization skipped: {g_err}")
+
     # Load style configuration
     style_path = _BASE_DIR / "config" / "style.json"
     with open(style_path, "r", encoding="utf-8") as sf:
@@ -172,8 +202,8 @@ def run_pipeline1(
             video_id,
             style_config,
             output_dir=str(base_out),
-            evidence_packet=evidence_packet,
-            active_strategy=strat_ctx
+            strategy_context=strat_ctx,
+            is_factual=is_factual
         )
         if script.get("status") == "BLOCKED":
             manifest["stages"]["script"] = "BLOCKED"
@@ -248,26 +278,92 @@ def run_pipeline1(
         manifest["qa_metrics"] = qa_report.get("metrics", {})
 
         if qa_report.get("passed", False):
-            manifest["status"] = "READY"
-            logger.info(f"[{video_id}] PIPELINE RUN COMPLETE - STATUS: READY")
+            manifest["status"] = "AWAITING_REVIEW"
+            logger.info(f"[{video_id}] PIPELINE QA PASSED - TRANSITIONING TO AWAITING_REVIEW")
+
+            # Update growth.db state: Register video & mark job AWAITING_REVIEW
+            if growth_repo:
+                try:
+                    final_mp4 = manifest["artifacts"].get("final_video")
+                    duration_sec = qa_report.get("metrics", {}).get("duration_seconds", 45.0)
+                    meta_path = video_path / "metadata.json"
+                    meta_title = f"What If {topic}?"
+                    meta_desc = ""
+                    if meta_path.exists():
+                        try:
+                            with open(meta_path, "r", encoding="utf-8") as mf_json:
+                                meta_d = json.load(mf_json)
+                                meta_title = meta_d.get("title", meta_title)
+                                meta_desc = meta_d.get("description", meta_desc)
+                        except Exception:
+                            pass
+
+                    v_model = VideoModel(
+                        video_id=video_id,
+                        channel_id="channel_a",
+                        pipeline_id="alternate-history-shorts",
+                        title=meta_title,
+                        description=meta_desc,
+                        duration=float(duration_sec),
+                        upload_status="GENERATED",
+                        privacy_status="private",
+                        qa_score=1.0,
+                        review_status="PENDING",
+                        strategy_version=strategy_version,
+                        topic_id=f"topic_{video_id}",
+                        experiment_id=experiment_id,
+                        arm_id=arm_id,
+                        variant_id=variant_id
+                    )
+                    growth_repo.upsert_video(v_model)
+
+                    job_entry = JobModel(
+                        job_id=job_id,
+                        channel_id="channel_a",
+                        pipeline_id="alternate-history-shorts",
+                        topic_text=topic,
+                        status="AWAITING_REVIEW",
+                        video_id=video_id,
+                        strategy_version=strategy_version,
+                        experiment_id=experiment_id,
+                        arm_id=arm_id,
+                        variant_id=variant_id
+                    )
+                    growth_repo.upsert_job(job_entry)
+                    logger.info(f"[{video_id}] growth.db synchronized: Video {video_id} registered, Job {job_id} -> AWAITING_REVIEW.")
+                except Exception as g_sync_err:
+                    logger.warning(f"[{video_id}] Notice: growth.db QA sync error: {g_sync_err}")
 
             # Post to Discord Review Webhook
-            webhook_url = os.getenv("DISCORD_WEBHOOK_URL_P1") or os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("DISCORD_WEBHOOK_CHANNEL_A")
-            if webhook_url:
-                try:
-                    logger.info(f"[{video_id}] Posting 540x960 review proxy to Discord webhook...")
-                    from discord_review import post_for_review
-                    final_mp4 = manifest["artifacts"].get("final_video")
-                    if final_mp4 and os.path.exists(final_mp4):
-                        post_for_review("pipeline1", video_id, [final_mp4], "video", webhook_url)
-                except Exception as dw_err:
-                    logger.warning(f"[{video_id}] Discord review dispatch notice: {dw_err}")
-            else:
-                logger.info(f"[{video_id}] Discord webhook URL not configured in environment (DISCORD_WEBHOOK_URL_P1). Holding at READY.")
+            try:
+                logger.info(f"[{video_id}] Compressing < 8MB review proxy and posting to Discord webhook...")
+                from discord_review import post_for_review
+                final_mp4 = manifest["artifacts"].get("final_video")
+                if final_mp4 and os.path.exists(final_mp4):
+                    post_for_review("pipeline1", job_id, [final_mp4], "video")
+                    print(f"\n[{video_id}] Proxy dispatched to Discord. Awaiting manual approval.\n")
+                else:
+                    logger.warning(f"[{video_id}] Final MP4 artifact not found at {final_mp4}")
+            except Exception as dw_err:
+                logger.error(f"[{video_id}] Discord review dispatch failed: {dw_err}")
         else:
             manifest["status"] = "BLOCKED"
             manifest["failures"].extend(qa_report.get("failures", []))
             logger.error(f"[{video_id}] PIPELINE RUN BLOCKED AT QA GATE: {manifest['failures']}")
+            if growth_repo:
+                try:
+                    job_fail = JobModel(
+                        job_id=job_id,
+                        channel_id="channel_a",
+                        pipeline_id="alternate-history-shorts",
+                        topic_text=topic,
+                        status="QA_FAILED",
+                        video_id=video_id,
+                        error_message="; ".join(manifest["failures"])
+                    )
+                    growth_repo.upsert_job(job_fail)
+                except Exception:
+                    pass
 
     except Exception as e:
         logger.error(f"[{video_id}] Fatal Pipeline Error: {e}", exc_info=True)
@@ -292,11 +388,12 @@ def run_pipeline1(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Pipeline 1 Automated Production Runner")
-    parser.add_argument("--topic", required=True, help="Alternate history what-if topic")
+    parser.add_argument("--topic", required=True, help="Alternate history what-if topic or historical event")
     parser.add_argument("--video_id", help="Custom video folder ID")
     parser.add_argument("--output_dir", default=None, help="Custom output directory")
     parser.add_argument("--force", action="store_true", help="Force rebuild all assets")
     parser.add_argument("--no_fallback", action="store_true", help="Disallow Pillow proof fallback for images")
+    parser.add_argument("--factual", action="store_true", help="Run in 100% factual historical documentary mode")
     args = parser.parse_args()
 
     allow_fallback = not args.no_fallback
@@ -305,7 +402,8 @@ if __name__ == "__main__":
         video_id=args.video_id,
         output_dir=args.output_dir,
         allow_fallback=allow_fallback,
-        force_rebuild=args.force
+        force_rebuild=args.force,
+        is_factual=args.factual
     )
 
     print(f"\n=======================================================")
@@ -313,4 +411,4 @@ if __name__ == "__main__":
     print(f"  Final Video: {res.get('video_path')}")
     print(f"  Total Execution Time: {res.get('total_time_seconds')}s")
     print(f"=======================================================\n")
-    sys.exit(0 if res.get("status") == "READY" else 1)
+    sys.exit(0 if res.get("status") in ("AWAITING_REVIEW", "READY") else 1)

@@ -177,88 +177,200 @@ def transcribe_scene(model, audio_path: Path, narration_text: str, style_cfg: di
             
     return align_and_generate_ass(words, narration_text, style_cfg)
 
-def build_scene_clip(idx: int, img_path: Path, audio_path: Path, ass_path: Path, duration: float, out_clip_path: Path) -> bool:
-    """Compiles a single scene video clip with Ken Burns motion, audio, and ASS subtitles."""
-    # Compute total frames at 25 fps
-    frames = max(25, int(duration * 25))
-    
-    # Pre-scale to high resolution (2160x3840) to give zoompan subpixel precision and eliminate jitter/shakiness
-    # Zoom/pan expressions move smoothly in micro-steps across the entire duration (4-6s)
-    motion_type = idx % 5
-    if motion_type == 0:
-        # Ultra-smooth slow zoom in (1.00 -> 1.05) centered on upper third
-        zoom_expr = f"z='min(zoom+0.0004,1.05)':x='iw/2-(iw/zoom/2)':y='ih/3-(ih/zoom/3)'"
-    elif motion_type == 1:
-        # Ultra-smooth slow zoom out (1.05 -> 1.00) revealing environment
-        zoom_expr = f"z='max(1.05-0.0004*on,1.00)':x='iw/2-(iw/zoom/2)':y='ih/3-(ih/zoom/3)'"
-    elif motion_type == 2:
-        # Gentle horizontal drift: slow pan left across the frame
-        zoom_expr = f"z='1.05':x='(1.05-1.0)*iw*(1.0-on/{frames})':y='ih/3-(ih/zoom/3)'"
-    elif motion_type == 3:
-        # Gentle horizontal drift: slow pan right across the frame
-        zoom_expr = f"z='1.05':x='(1.05-1.0)*iw*(on/{frames})':y='ih/3-(ih/zoom/3)'"
-    else:
-        # Subtle diagonal glide
-        zoom_expr = f"z='min(zoom+0.0003,1.04)':x='(0.04)*iw*(on/{frames})':y='(0.04)*ih*(on/{frames})'"
-        
-    # Relative path calculations to bypass Windows path character limitations inside subtitles filter
-    # Set CWD to the audio directory during FFmpeg execution
+def render_scene_frames_opencv(
+    img_path: Path,
+    duration: float,
+    focal_u: float = 0.50,
+    focal_v: float = 0.35,
+    zoom_target: float = 1.10,
+    t_hit: float = 2.5,
+    fps: int = 25,
+    out_width: int = 1080,
+    out_height: int = 1920
+):
+    """
+    Generator that yields raw BGR bytes for every frame of the scene using OpenCV
+    subpixel affine warping with C1 Continuous Smoothstep interpolation (3*tau^2 - 2*tau^3).
+    Guarantees ultra-smooth, jitter-free Directional Focal Zoom-In.
+    """
+    import cv2
+    import numpy as np
+
+    img = cv2.imread(str(img_path))
+    if img is None:
+        raise FileNotFoundError(f"Failed to load image: {img_path}")
+
+    ih, iw = img.shape[:2]
+    total_frames = max(1, int(round(duration * fps)))
+
+    # Directional Focal Target:
+    # Start wide (1.00x) centered at default natural perspective (0.50, 0.40)
+    start_u, start_v = 0.50, 0.40
+    start_zoom = 1.00
+
+    # Slow, subtle, documentary-grade zoom and pan bounds:
+    # Clamping zoom strictly between 1.02x and 1.06x for a stately, cinematic feel
+    target_zoom = max(1.02, min(1.06, zoom_target if zoom_target > 1.0 else 1.05))
+    target_u = max(0.20, min(0.80, focal_u))
+    target_v = max(0.20, min(0.65, focal_v))
+
+    # Pre-calculate source crop aspect ratio (9:16)
+    target_aspect = out_width / out_height
+
+    for f_idx in range(total_frames):
+        # 1. Stretch smooth interpolation across the ENTIRE duration of the scene
+        # This creates a slow, continuous, steady documentary camera crawl without jarring jumps
+        tau = f_idx / float(max(1, total_frames - 1))
+        smooth_tau = 3.0 * (tau ** 2) - 2.0 * (tau ** 3)
+
+        curr_zoom = start_zoom + (target_zoom - start_zoom) * smooth_tau
+        curr_u = start_u + (target_u - start_u) * smooth_tau
+        curr_v = start_v + (target_v - start_v) * smooth_tau
+
+        # 2. Compute the subpixel bounding box in source image coordinates
+        crop_h = ih / curr_zoom
+        crop_w = crop_h * target_aspect
+
+        if crop_w > iw:
+            crop_w = iw / curr_zoom
+            crop_h = crop_w / target_aspect
+
+        center_x = curr_u * iw
+        center_y = curr_v * ih
+
+        # Clamp center to ensure crop stays strictly within source image bounds
+        half_w = crop_w / 2.0
+        half_h = crop_h / 2.0
+        center_x = max(half_w, min(iw - half_w, center_x))
+        center_y = max(half_h, min(ih - half_h, center_y))
+
+        # 3. Subpixel 3-point affine transformation matrix with Lanczos-4 resampling
+        src_pts = np.float32([
+            [center_x - half_w, center_y - half_h],
+            [center_x + half_w, center_y - half_h],
+            [center_x - half_w, center_y + half_h]
+        ])
+        dst_pts = np.float32([
+            [0, 0],
+            [out_width, 0],
+            [0, out_height]
+        ])
+
+        M = cv2.getAffineTransform(src_pts, dst_pts)
+        warped = cv2.warpAffine(
+            img, M, (out_width, out_height),
+            flags=cv2.INTER_LANCZOS4,
+            borderMode=cv2.BORDER_REFLECT_101
+        )
+
+        yield warped.tobytes()
+
+
+def build_scene_clip(
+    idx: int,
+    img_path: Path,
+    audio_path: Path,
+    ass_path: Path,
+    duration: float,
+    out_clip_path: Path,
+    focal_u: float = 0.50,
+    focal_v: float = 0.35,
+    zoom_target: float = 1.10,
+    t_hit: float = 2.5
+) -> bool:
+    """
+    Compiles a single scene video clip with ultra-smooth OpenCV subpixel motion,
+    audio muxing, and ASS subtitle burning.
+    """
     audio_dir = audio_path.parent
-    rel_img = f"../images/{img_path.name}"
     rel_audio = audio_path.name
     rel_ass = ass_path.name
     rel_out = out_clip_path.name
-    
-    # 1. Scale input image up to high-res (2160x3840)
-    # 2. zoompan interpolates with subpixel smoothness
-    # 3. scale down to clean 1080x1920 with lanczos
-    filter_graph = (
-        f"scale=2160:3840:flags=lanczos,"
-        f"zoompan={zoom_expr}:d={frames}:s=1080x1920:fps=25,"
-        f"subtitles={rel_ass}"
-    )
-    
+
+    fps = 25
+    out_w, out_h = 1080, 1920
     temp_video = f"temp_video_{idx}.mp4"
-    
-    cmd_video = [
+
+    logging.info(
+        f"Assembling scene {idx} with OpenCV Directional Focal Zoom: "
+        f"Focal=({focal_u:.2f}, {focal_v:.2f}), Zoom={zoom_target:.2f}x, Hit={t_hit:.2f}s"
+    )
+
+    # 1. Stream OpenCV warped frames directly into FFmpeg stdin
+    cmd_ffmpeg = [
         "ffmpeg", "-y",
-        "-i", rel_img,
-        "-vf", filter_graph,
-        "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "fast", "-crf", "22",
+        "-f", "rawvideo",
+        "-vcodec", "rawvideo",
+        "-s", f"{out_w}x{out_h}",
+        "-pix_fmt", "bgr24",
+        "-r", str(fps),
+        "-i", "-",
+        "-vf", f"subtitles={rel_ass}",
+        "-c:v", "libx264",
+        "-pix_fmt", "yuv420p",
+        "-preset", "veryfast",
+        "-crf", "20",
         "-t", f"{duration:.2f}",
         temp_video
     ]
-    
-    logging.info(f"Assembling scene {idx} video only with motion type {motion_type}...")
-    res_video = subprocess.run(cmd_video, cwd=str(audio_dir), capture_output=True)
-    if res_video.returncode != 0:
-        err = res_video.stderr.decode("utf-8", errors="ignore")[-1000:]
-        logging.error(f"FFmpeg video compile error for scene {idx}:\n{err}")
+
+    try:
+        proc = subprocess.Popen(
+            cmd_ffmpeg,
+            cwd=str(audio_dir),
+            stdin=subprocess.PIPE,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+        for frame_bytes in render_scene_frames_opencv(
+            img_path=img_path,
+            duration=duration,
+            focal_u=focal_u,
+            focal_v=focal_v,
+            zoom_target=zoom_target,
+            t_hit=t_hit,
+            fps=fps,
+            out_width=out_w,
+            out_height=out_h
+        ):
+            proc.stdin.write(frame_bytes)
+
+        proc.stdin.close()
+        proc.wait()
+
+        if proc.returncode != 0:
+            logging.error(f"FFmpeg OpenCV rawvideo stream failed for scene {idx} (code {proc.returncode})")
+            return False
+
+    except Exception as e:
+        logging.error(f"OpenCV subpixel frame streaming failed for scene {idx}: {e}")
         return False
-        
+
+    # 2. Mux synthesized audio stream
     cmd_merge = [
         "ffmpeg", "-y",
         "-i", temp_video,
         "-i", rel_audio,
         "-c:v", "copy",
-        "-c:a", "aac", "-b:a", "192k",
+        "-c:a", "aac",
+        "-b:a", "192k",
         "-t", f"{duration:.2f}",
         rel_out
     ]
-    
-    logging.info(f"Muxing audio for scene {idx}...")
+
     res_merge = subprocess.run(cmd_merge, cwd=str(audio_dir), capture_output=True)
-    
-    # Cleanup temp video file
+
+    # Cleanup temporary video file
     temp_path = audio_dir / temp_video
     if temp_path.exists():
         temp_path.unlink()
-        
+
     if res_merge.returncode != 0:
         err = res_merge.stderr.decode("utf-8", errors="ignore")[-1000:]
         logging.error(f"FFmpeg muxing error for scene {idx}:\n{err}")
         return False
-        
+
     return True
 
 def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: int = 0) -> None:
@@ -297,11 +409,22 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
     final_dir.mkdir(parents=True, exist_ok=True)
     
     compiled_clips = []
-    
+
+    # Load scene_plan.json if available to retrieve focal coordinates and timing
+    plan_path = video_path / "scene_plan.json"
+    scene_plan_beats = []
+    if plan_path.exists():
+        try:
+            with open(plan_path, "r", encoding="utf-8") as pf:
+                sp_data = json.load(pf)
+                scene_plan_beats = sp_data.get("visual_beats", [])
+        except Exception as pe:
+            logging.warning(f"Could not load scene_plan.json: {pe}")
+
     for idx, scene in enumerate(scenes):
         narration = scene.get("narration", "")
         duration = float(scene.get("actual_duration_seconds", scene.get("estimated_duration_seconds", 5.0)))
-        
+
         audio_file = audio_dir / f"scene_{idx:03d}.mp3"
         beat_alt = images_dir / f"beat_{idx+1:03d}.png"
         beat_files = sorted(images_dir.glob("beat_*.png"), key=lambda p: int("".join(c for c in p.stem if c.isdigit()) or 0))
@@ -316,23 +439,47 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
             img_file = images_dir / f"scene_{idx:03d}.png"
         ass_file = audio_dir / f"scene_{idx:03d}.ass"
         out_clip = audio_dir / f"scene_{idx:03d}_compiled.mp4"
-        
+
         if not audio_file.exists():
             raise FileNotFoundError(f"Missing audio file for scene {idx}: {audio_file}")
         if not img_file.exists():
             raise FileNotFoundError(f"Missing image file for scene {idx}: {img_file}")
-            
+
+        # Extract beat-specific focal coordinates and hit timing
+        focal_u = 0.50
+        focal_v = 0.35
+        zoom_tgt = 1.10
+        t_hit = duration * 0.55
+
+        if idx < len(scene_plan_beats):
+            sp_beat = scene_plan_beats[idx]
+            focal_u = float(sp_beat.get("focal_u", 0.50))
+            focal_v = float(sp_beat.get("focal_v", 0.35))
+            zoom_tgt = float(sp_beat.get("zoom_target", 1.10))
+            t_hit = float(sp_beat.get("t_hit", duration * 0.55))
+
         # Transcribe
         style_cfg = cfg.get("caption_style", {})
         ass_content = transcribe_scene(whisper_model, audio_file, narration, style_cfg)
         with open(ass_file, "w", encoding="utf-8") as sf:
             sf.write(ass_content)
-            
-        # Compile individual scene clip
-        success = build_scene_clip(idx, img_file, audio_file, ass_file, duration, out_clip)
+
+        # Compile individual scene clip with OpenCV Subpixel Ken Burns
+        success = build_scene_clip(
+            idx=idx,
+            img_path=img_file,
+            audio_path=audio_file,
+            ass_path=ass_file,
+            duration=duration,
+            out_clip_path=out_clip,
+            focal_u=focal_u,
+            focal_v=focal_v,
+            zoom_target=zoom_tgt,
+            t_hit=t_hit
+        )
         if not success:
             raise RuntimeError(f"Failed to assemble scene {idx} clip.")
-            
+
         compiled_clips.append(out_clip)
 
     # Re-order compilation to place selected thumbnail frame first

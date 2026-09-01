@@ -1,0 +1,65 @@
+Feature Name,Role,Data Type,Pre-Pub Safe,Description
+meta_video_id,METADATA / IDENTIFIER,object,NO (Metadata only),Human-readable record identification and tracking
+meta_channel_id,METADATA / IDENTIFIER,object,NO (Metadata only),Human-readable record identification and tracking
+meta_channel_name,METADATA / IDENTIFIER,object,NO (Metadata only),Human-readable record identification and tracking
+meta_video_title,METADATA / IDENTIFIER,object,NO (Metadata only),Human-readable record identification and tracking
+meta_published_at,METADATA / IDENTIFIER,object,NO (Metadata only),Human-readable record identification and tracking
+meta_raw_views,METADATA / IDENTIFIER,int64,NO (Metadata only),Human-readable record identification and tracking
+meta_channel_median_views,METADATA / IDENTIFIER,float64,NO (Metadata only),Human-readable record identification and tracking
+cat_hook_structure,CATEGORICAL CONTEXT,object,NO (Preserved string for explainability),Original raw categorical value preserved alongside encodings
+cat_explanation_structure,CATEGORICAL CONTEXT,object,NO (Preserved string for explainability),Original raw categorical value preserved alongside encodings
+cat_visual_technique,CATEGORICAL CONTEXT,object,NO (Preserved string for explainability),Original raw categorical value preserved alongside encodings
+cat_technical_level,CATEGORICAL CONTEXT,object,NO (Preserved string for explainability),Original raw categorical value preserved alongside encodings
+cat_information_density,CATEGORICAL CONTEXT,object,NO (Preserved string for explainability),Original raw categorical value preserved alongside encodings
+cat_cta_structure,CATEGORICAL CONTEXT,object,NO (Preserved string for explainability),Original raw categorical value preserved alongside encodings
+target_computed_relative_views,SUPERVISED ML TARGET,float64,NO (Post-publication ground truth outcome),Predicted relative engagement target
+target_log_relative_views,SUPERVISED ML TARGET,float64,NO (Post-publication ground truth outcome),Predicted relative engagement target
+target_computed_performance_class,SUPERVISED ML TARGET,object,NO (Post-publication ground truth outcome),Predicted relative engagement target
+target_is_high_performer,SUPERVISED ML TARGET,int64,NO (Post-publication ground truth outcome),Predicted relative engagement target
+target_is_low_performer,SUPERVISED ML TARGET,int64,NO (Post-publication ground truth outcome),Predicted relative engagement target
+annot_researcher_relative_perf,RESEARCHER ANNOTATION,float64,NO (External researcher interpretation),Preserved researcher claim for disagreement analysis
+annot_researcher_class,RESEARCHER ANNOTATION,object,NO (External researcher interpretation),Preserved researcher claim for disagreement analysis
+annot_has_classification_disagreement,RESEARCHER ANNOTATION,int64,NO (External researcher interpretation),Preserved researcher claim for disagreement analysis
+feat_channel_size_large,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_channel_size_medium,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_channel_size_small,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_public_subscribers,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_log_subscribers,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_duration_seconds,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_is_short_duration_under_50s,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_hook_counterintuitive,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_hook_question,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_hook_mistake_first,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_hook_problem_first,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_hook_curiosity_gap,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_hook_news_hook,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_hook_demonstration_first,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_expl_before_after,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_expl_mistake_why_fix,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_expl_concept_analogy_code,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_expl_step_by_step,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_expl_demo_explanation,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_expl_news_context,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_expl_story_explanation,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_analogy_used,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_code_used,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_example_used,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_visual_code_animation,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_visual_prop_or_hardware,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_visual_screen_recording,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_visual_high_energy_editing,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_cta_seamless_loop,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_cta_verbal_prompt,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_tech_level_beginner,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_tech_level_intermediate,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_tech_level_advanced,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_density_high,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_density_moderate,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_density_low,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_transcript_word_count,PRE-PUBLICATION FEATURE,int64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_words_per_second,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_question_density,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_number_density,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_tech_term_density,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_code_token_density,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"
+feat_avg_word_length,PRE-PUBLICATION FEATURE,float64,YES (Available before upload),"Model input feature derived from concept, structure, or script"

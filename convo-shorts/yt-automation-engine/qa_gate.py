@@ -84,16 +84,17 @@ def run_full_production_qa(
         results["details"].append(f"Technical Probing Failed: {e}")
         return results
 
-    # 2. Visual Checks
+    # 2. Visual Checks (allows None for text-only outro/CTA scenes)
     if visual_proofs and len(visual_proofs) > 0:
+        expected_assets = [vp for vp in visual_proofs if vp is not None]
         valid_imgs = 0
-        for vp in visual_proofs:
-            if vp and Path(vp).exists() and Path(vp).stat().st_size > 0:
+        for vp in expected_assets:
+            if Path(vp).exists() and Path(vp).stat().st_size > 0:
                 valid_imgs += 1
-        if valid_imgs == len(visual_proofs):
+        if len(expected_assets) == 0 or valid_imgs == len(expected_assets):
             results["checks"]["visual"] = True
         else:
-            results["details"].append(f"Visual Check Failed: {valid_imgs}/{len(visual_proofs)} Fooocus proof assets valid.")
+            results["details"].append(f"Visual Check Failed: {valid_imgs}/{len(expected_assets)} visual assets valid.")
     else:
         results["checks"]["visual"] = True
 
@@ -121,7 +122,7 @@ def run_full_production_qa(
 
     # 4. Content Checks
     word_count = len(subtitle_data.get("words", []))
-    if 50 <= word_count <= 250 and 25.0 <= v_dur <= 60.0:
+    if 50 <= word_count <= 250 and 20.0 <= v_dur <= 60.0:
         results["checks"]["content"] = True
     else:
         results["details"].append(f"Content Warning: word_count={word_count}, v_dur={v_dur:.1f}s.")

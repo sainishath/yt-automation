@@ -28,7 +28,7 @@ if os.path.exists(_CFG_PATH):
             DISCORD_BOT_TOKEN = cfg.get("discord_bot_token", DISCORD_BOT_TOKEN)
     except Exception as e:
         logger.warning(f"Could not load config.json: {e}")
-FLASK_SERVER_URL = "http://127.0.0.1:5001"
+GROWTH_SERVER_URL = "http://127.0.0.1:8010"
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -45,32 +45,66 @@ async def on_message(message):
         return
 
     content = message.content.strip().lower()
+    raw_content = message.content.strip()
     
-    # Check for approval trigger
-    if content in ["yes", "approve", "y", "1"]:
-        logger.info(f"Received APPROVAL from {message.author}: '{message.content}'")
+    # Check for approval trigger: "approve <job_id>" or "yes", "approve"
+    if content in ["yes", "approve", "y", "1"] or content.startswith("approve "):
+        job_id = None
+        parts = raw_content.split()
+        if len(parts) > 1 and parts[0].lower() == "approve":
+            job_id = parts[1]
+
+        logger.info(f"Received APPROVAL from {message.author}: '{raw_content}' (Job: {job_id})")
         await message.channel.send("🟢 **[APPROVED]** Received approval! Uploading Short to YouTube...")
         
-        # Trigger YouTube upload on Flask backend
         try:
-            resp = requests.post(f"{FLASK_SERVER_URL}/upload_youtube", json={})
+            payload = {"privacy_status": "private"}
+            if job_id:
+                payload["job_id"] = job_id
+                resp = requests.post(f"{GROWTH_SERVER_URL}/api/upload-approved", json=payload, timeout=60)
+            else:
+                resp = requests.post(f"{FLASK_SERVER_URL}/upload_youtube", json={}, timeout=60)
+
             res_data = resp.json()
             if resp.ok and res_data.get("status") == "success":
-                yt_url = res_data.get("url", "https://youtube.com")
+                yt_url = res_data.get("youtube_url", res_data.get("url", "https://youtube.com"))
                 await message.channel.send(f"✅ **[PUBLISHED]** Video successfully published to YouTube!\nWatch here: {yt_url}")
-                # Mark topic done
-                requests.post(f"{FLASK_SERVER_URL}/mark-done", json={"status": "DONE", "youtube_url": yt_url})
             else:
-                err_msg = res_data.get("error", "Unknown error")
+                err_msg = res_data.get("message", res_data.get("error", "Unknown error"))
                 await message.channel.send(f"❌ **[UPLOAD ERROR]** YouTube upload failed: `{err_msg}`")
         except Exception as e:
             logger.error(f"Error during YouTube upload: {e}")
             await message.channel.send(f"❌ **[SYSTEM ERROR]** Failed to connect to YouTube engine: `{e}`")
 
-    # Check for rejection trigger
-    elif content in ["no", "reject", "n", "0"]:
-        logger.info(f"Received REJECTION from {message.author}: '{message.content}'")
-        await message.channel.send("🔴 **[REJECTED]** Video rejected! Re-generating fresh script & video...")
+    # Check for rejection trigger: "reject <job_id>" or "no", "reject"
+    elif content in ["no", "reject", "n", "0"] or content.startswith("reject "):
+        job_id = None
+        parts = raw_content.split()
+        if len(parts) > 1 and parts[0].lower() == "reject":
+            job_id = parts[1]
+
+        logger.info(f"Received REJECTION from {message.author}: '{raw_content}' (Job: {job_id})")
+        
+        try:
+            payload = {"reason": "REJECTED_VIA_DISCORD_COMMAND"}
+            if job_id:
+                payload["job_id"] = job_id
+            
+            resp = requests.post(f"{GROWTH_SERVER_URL}/api/reject", json=payload, timeout=30)
+            res_data = resp.json()
+            if resp.ok and res_data.get("status") == "success":
+                scrapped_count = res_data.get("scrapped_files_count", 0)
+                await message.channel.send(
+                    f"🔴 **[SCRAPPED]** Video for job `{job_id or 'current'}` has been permanently rejected and scrapped.\n"
+                    f"• Upload Status: **SCRAPPED (Zero uploads allowed, including private)**\n"
+                    f"• Deleted {scrapped_count} video artifact(s)."
+                )
+            else:
+                err_msg = res_data.get("message", "Rejection failed")
+                await message.channel.send(f"⚠️ **[REJECTION NOTICE]** Video marked as rejected: `{err_msg}`")
+        except Exception as e:
+            logger.error(f"Error during rejection processing: {e}")
+            await message.channel.send(f"🔴 **[REJECTED]** Video rejected! Scrapping files and halting upload.")
 
 if __name__ == "__main__":
     if not DISCORD_BOT_TOKEN:

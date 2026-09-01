@@ -110,7 +110,7 @@ class LearningEngine:
                 prior_row["first_party_override_reason"] = f"Empirically rejected in experiment {experiment_id} (Delta: {delta:+.1f}%)"
                 self.ext_repo.upsert_external_prior(ExternalPriorModel(**prior_row))
 
-        # 3. Check for Strategy Proposal Generation on Clear Wins
+        # 3. Check for Strategy Proposal & Mutation Generation on Clear Wins (Delta >= +15%)
         if report.decision == ExperimentDecision.WIN and report.is_statistically_significant:
             proposal_evt = LearningEventModel(
                 channel_id=channel_id,
@@ -130,6 +130,16 @@ class LearningEngine:
             self.repo.insert_learning_event(proposal_evt)
             events_generated.append("STRATEGY_PROPOSAL")
 
+            # Evolve immutable strategy version (e.g. v1.0 -> v1.1)
+            try:
+                from growth.brain.strategy_evolution import StrategyEvolutionEngine
+                strat_evo = StrategyEvolutionEngine(self.repo)
+                evo_res = strat_evo.evaluate_strategy_mutation(channel_id)
+                if evo_res and evo_res.get("action") == "STRATEGY_VERSION_CREATED":
+                    events_generated.append("STRATEGY_MUTATION")
+            except Exception as evo_err:
+                pass
+
         return {
             "experiment_id": experiment_id,
             "action": "LEARNING_PROCESSED",
@@ -138,19 +148,73 @@ class LearningEngine:
             "confidence": report.confidence.value
         }
 
-    def run_channel_learning_cycle(self, channel_id: str) -> List[Dict[str, Any]]:
+    def audit_hook_retention_failures(self, channel_id: str) -> List[Dict[str, Any]]:
         """
-        Scans all active/pending experiments for a channel and processes any that meet evaluation criteria.
+        Scans published videos for the channel and checks for Hook Failures (APV < 65.0%).
+        Logs HOOK_FAILURE learning events and flags the associated hook pattern.
         """
+        videos = self.repo.list_videos_by_channel(channel_id)
+        hook_failures = []
+
+        for v in videos:
+            vid_id = v["video_id"]
+            snaps = self.repo.get_snapshots_for_video(vid_id)
+            if not snaps:
+                continue
+
+            # Prioritize 7d or latest snapshot
+            snap_map = {s.get("window_name"): s for s in snaps}
+            target_snap = snap_map.get("7d") or snap_map.get("48h") or snap_map.get("24h") or snaps[-1]
+
+            apv = float(target_snap.get("avg_percentage_viewed") or 0.0)
+            if 0.0 < apv < 65.0:
+                feat = self.repo.get_features(vid_id) or {}
+                hook_type = feat.get("hook_type", "UNKNOWN")
+                hook_text = feat.get("hook_text", "")
+
+                failure_data = {
+                    "video_id": vid_id,
+                    "title": v.get("title", ""),
+                    "avg_percentage_viewed": apv,
+                    "hook_type": hook_type,
+                    "hook_text": hook_text,
+                    "window_name": target_snap.get("window_name")
+                }
+                hook_failures.append(failure_data)
+
+                # Record HOOK_FAILURE event
+                fail_evt = LearningEventModel(
+                    channel_id=channel_id,
+                    event_type="HOOK_FAILURE",
+                    summary=f"Video '{vid_id}' experienced poor retention ({apv:.1f}% APV < 65.0% threshold) with hook type '{hook_type}'.",
+                    details=json.dumps(failure_data),
+                    confidence="HIGH"
+                )
+                self.repo.insert_learning_event(fail_evt)
+
+        return hook_failures
+
+    def run_channel_learning_cycle(self, channel_id: str) -> Dict[str, Any]:
+        """
+        Scans all active/pending experiments for a channel, audits hook retention failures,
+        and processes any that meet evaluation criteria.
+        """
+        hook_failures = self.audit_hook_retention_failures(channel_id)
+
         exps = self.repo.list_experiments(channel_id=channel_id)
-        results = []
+        exp_results = []
 
         for exp in exps:
             exp_id = exp["experiment_id"]
             status = exp.get("status", "").upper()
-            if status in ["RUNNING", "COLLECTING_DATA", "APPROVED", "SCHEDULED"]:
+            if status in ["RUNNING", "COLLECTING_DATA", "APPROVED", "SCHEDULED", "PROPOSED"]:
                 outcome = self.process_experiment_outcome(exp_id)
                 if outcome:
-                    results.append(outcome)
+                    exp_results.append(outcome)
 
-        return results
+        return {
+            "channel_id": channel_id,
+            "hook_failures": hook_failures,
+            "hook_failures_count": len(hook_failures),
+            "experiment_results": exp_results
+        }

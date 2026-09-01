@@ -147,16 +147,19 @@ CRITICAL VISUAL DIRECTIVES:
    - one input scene = one visual beat
    - one sentence = one visual beat
    - every sentence requires a new image
-3. YOU MUST SPLIT A SENTENCE when it contains multiple visually distinct events:
+3. WIDE-ANGLE CINEMATIC DOCUMENTARY FRAMING:
+   - Every visual concept must be a wide-angle or expansive establishing shot with rich environmental detail and deep background perspective.
+   - Images must have breathing room for a slow, continuous documentary camera pan across subjects.
+4. YOU MUST SPLIT A SENTENCE when it contains multiple visually distinct events:
    EXAMPLE OF SPLITTING A COMPOUND SENTENCE:
    Text: "At dawn, Caesar's fleet entered Alexandria harbor, and hours later catastrophic flames erupted from the docks."
-   -> Beat 1 excerpt: "At dawn, Caesar's fleet entered Alexandria harbor," (Visual: Roman fleet anchoring at dawn)
-   -> Beat 2 excerpt: "and hours later catastrophic flames erupted from the docks." (Visual: Docks engulfed in fire)
-4. YOU SHOULD MERGE CONSECUTIVE SENTENCES when they describe the exact same subject, location, action, and visual state:
+   -> Beat 1 excerpt: "At dawn, Caesar's fleet entered Alexandria harbor," (Visual: Sprawling wide shot of Roman fleet anchoring at dawn)
+   -> Beat 2 excerpt: "and hours later catastrophic flames erupted from the docks." (Visual: Wide panoramic view of docks engulfed in fire)
+5. YOU SHOULD MERGE CONSECUTIVE SENTENCES when they describe the exact same subject, location, action, and visual state:
    EXAMPLE OF MERGING CONSECUTIVE SENTENCES:
    Text: "Ancient scrolls burned in the dark hall. Rare manuscripts turned to ash."
-   -> Beat excerpt: "Ancient scrolls burned in the dark hall. Rare manuscripts turned to ash." (Visual: Close-up of burning papyrus manuscripts)
-5. CREATE A NEW BEAT ONLY when there is a meaningful visual change such as:
+   -> Beat excerpt: "Ancient scrolls burned in the dark hall. Rare manuscripts turned to ash." (Visual: Detailed wide interior of library chamber with burning papyrus)
+6. CREATE A NEW BEAT ONLY when there is a meaningful visual change such as:
    - new subject
    - new location
    - major action change
@@ -165,10 +168,14 @@ CRITICAL VISUAL DIRECTIVES:
    - before/after state
    - major change in scale or perspective
    - major emotional/narrative transition
-6. Do NOT create a new beat merely because a sentence ended, punctuation appeared, or the original script scene changed.
 7. Target visual beat duration is roughly 3.5 to 5.5 seconds of spoken text.
 8. EVERY beat MUST contain a "narration_text_excerpt" that is an EXACT, UNMODIFIED, CONTIGUOUS excerpt copied directly from the Full Spoken Narration text above. Do NOT paraphrase or alter any words.
-9. DO NOT output any numeric timestamps, start times, end times, or durations. Python will derive all timestamps deterministically.
+9. EVERY beat MUST define a primary visual focal target:
+   - "focal_keyword": A single critical word from the excerpt that represents the subject being highlighted (e.g. "scrolls", "columns", "scribe", "flames", "harbor").
+   - "focal_u": Normalized horizontal coordinate of this subject in the 9:16 frame (float between 0.20 and 0.80, default 0.50).
+   - "focal_v": Normalized vertical coordinate of this subject in the 9:16 frame (float between 0.20 and 0.65, default 0.40).
+   - "zoom_target": Slow zoom target factor for this beat (float between 1.02 and 1.06, default 1.04).
+10. DO NOT output any numeric timestamps, start times, end times, or durations. Python will derive all timestamps deterministically.
 
 Return ONLY a valid JSON object in this exact schema:
 {{
@@ -176,8 +183,12 @@ Return ONLY a valid JSON object in this exact schema:
     {{
       "beat_id": "beat_001",
       "narration_text_excerpt": "Exact verbatim excerpt copied from narration",
-      "visual_concept": "Detailed description of what is visually visible",
-      "camera_shot": "Cinematic camera angle (e.g. Cinematic wide shot, Medium action shot, Close-up)",
+      "visual_concept": "Detailed wide-angle description of what is visually visible",
+      "camera_shot": "Cinematic wide-angle shot",
+      "focal_keyword": "flames",
+      "focal_u": 0.50,
+      "focal_v": 0.40,
+      "zoom_target": 1.04,
       "visual_transition_reason": "Specific semantic visual reason why the image changes here"
     }}
   ]
@@ -334,33 +345,43 @@ def build_fallback_scene_plan(
     return fallback_beats
 
 def clean_visual_prompt_string(cam_shot: str, vis_concept: str, prompt_hint: str) -> str:
-    """Constructs a clean, coherent Fooocus visual prompt without repetitive artifacts."""
+    """Constructs a clean, high-detail Fooocus visual prompt optimized for wide-angle documentary panning."""
     cam = cam_shot.strip().rstrip(".,:;")
     concept = vis_concept.strip()
     
+    # Ensure camera shot explicitly emphasizes wide-angle cinematic perspective for documentary panning
+    if not any(w in cam.lower() for w in ("wide", "panoramic", "establishing", "aerial", "landscape")):
+        cam = f"Cinematic wide-angle documentary shot of {cam}" if cam else "Cinematic wide-angle shot"
+
     # Strip existing camera shot prefixes from vis_concept if already present
     cam_prefixes = (
         "cinematic wide shot of", "wide shot of", "medium shot of", "close-up shot of",
         "close-up of", "low-angle shot of", "cinematic shot of", "aerial shot of",
-        "split-screen cinematic wide shot of", "split-screen of", "shot of", "close up of"
+        "split-screen cinematic wide shot of", "split-screen of", "shot of", "close up of",
+        "cinematic wide-angle documentary shot of", "cinematic wide-angle shot of"
     )
     for pfx in cam_prefixes:
         if concept.lower().startswith(pfx):
             concept = concept[len(pfx):].strip()
             break
 
-    # Strip redundant "of a scholar reading an ancient text of A bustling..."
+    # Strip redundant leading articles
     concept = re.sub(r'^(a\s+|an\s+|the\s+)', '', concept, flags=re.IGNORECASE)
     
     # Build clean base prompt
     base = f"{cam} of {concept}" if not cam.lower().endswith("of") else f"{cam} {concept}"
     base = base.rstrip(".,:; ")
     
+    # Add quality & wide-angle breathing room descriptors for documentary panning
+    detail_boosters = "ultra-wide cinematic framing, expansive environmental depth, highly detailed historical realism, 8k resolution, atmospheric volumetric lighting"
     parts = [base]
     if prompt_hint:
         clean_hint = prompt_hint.strip().rstrip(".,; ")
         if clean_hint and clean_hint.lower() not in base.lower():
             parts.append(clean_hint)
+            
+    if detail_boosters.lower() not in base.lower():
+        parts.append(detail_boosters)
             
     final_prompt = ", ".join(parts)
     # Clean up double punctuation and spaces
@@ -440,6 +461,24 @@ def plan_visual_scenes(
 
             cam_shot = beat.get("camera_shot", "Cinematic wide shot")
             vis_concept = beat.get("visual_concept", excerpt[:60])
+            focal_kw = str(beat.get("focal_keyword", "")).strip().lower()
+            focal_u = float(beat.get("focal_u", 0.50))
+            focal_v = float(beat.get("focal_v", 0.40))
+            zoom_tgt = float(beat.get("zoom_target", 1.04))
+
+            # Clamp coordinates to safe documentary framing boundaries
+            focal_u = max(0.20, min(0.80, focal_u))
+            focal_v = max(0.20, min(0.65, focal_v))
+            zoom_tgt = max(1.02, min(1.06, zoom_tgt))
+
+            # Locate timestamp of focal_keyword within beat start/end
+            t_hit_rel = (end_t - start_t) * 0.55  # Default hit time at 55% of beat duration
+            if focal_kw:
+                for w in global_timeline:
+                    if w.get("global_start", 0) >= start_t - 0.1 and w.get("global_end", 0) <= end_t + 0.1:
+                        if normalize_word(w.get("word", "")) == normalize_word(focal_kw) or focal_kw in normalize_word(w.get("word", "")):
+                            t_hit_rel = max(0.8, w.get("global_start", start_t) - start_t)
+                            break
 
             # Retrieve beat-specific visual evidence and anachronism rules from RAG v4
             beat_evidence = retrieve_beat_visual_evidence(evidence_packet, excerpt, vis_concept) if evidence_packet else {}
@@ -456,6 +495,11 @@ def plan_visual_scenes(
                 "visual_concept": vis_concept,
                 "visual_prompt": enriched_prompt,
                 "camera_shot": cam_shot,
+                "focal_keyword": focal_kw,
+                "focal_u": round(focal_u, 3),
+                "focal_v": round(focal_v, 3),
+                "zoom_target": round(zoom_tgt, 3),
+                "t_hit": round(t_hit_rel, 3),
                 "rag_visual_evidence": [v.get("description", "") for v in beat_evidence.get("relevant_visual_evidence", [])],
                 "rag_must_include": beat_evidence.get("must_include", []),
                 "rag_avoid_anachronisms": beat_evidence.get("avoid_anachronisms", []),
