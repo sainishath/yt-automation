@@ -59,11 +59,15 @@ def run_pipeline1(
     output_dir: Optional[str] = None,
     allow_fallback: bool = True,
     force_rebuild: bool = False,
-    is_factual: Optional[bool] = None
+    is_factual: Optional[bool] = None,
+    series_name: Optional[str] = None,
+    part_number: Optional[int] = None,
+    total_parts: Optional[int] = None
 ) -> Dict[str, Any]:
     """
     Executes the end-to-end Channel A production workflow.
     Supports both Counterfactual Alternate History and 100% Factual RAG Documentary modes.
+    Supports multi-part serialized narrative sagas with cliffhangers.
     Strictly halts at AWAITING_REVIEW after sending a proxy to Discord.
     """
     start_time = time.time()
@@ -203,7 +207,10 @@ def run_pipeline1(
             style_config,
             output_dir=str(base_out),
             strategy_context=strat_ctx,
-            is_factual=is_factual
+            is_factual=is_factual,
+            series_name=series_name,
+            part_number=part_number,
+            total_parts=total_parts
         )
         if script.get("status") == "BLOCKED":
             manifest["stages"]["script"] = "BLOCKED"
@@ -394,6 +401,9 @@ if __name__ == "__main__":
     parser.add_argument("--force", action="store_true", help="Force rebuild all assets")
     parser.add_argument("--no_fallback", action="store_true", help="Disallow Pillow proof fallback for images")
     parser.add_argument("--factual", action="store_true", help="Run in 100% factual historical documentary mode")
+    parser.add_argument("--series_name", default=None, help="Name of the multi-part historical saga")
+    parser.add_argument("--part_number", type=int, default=None, help="Current episode/part number in the series")
+    parser.add_argument("--total_parts", type=int, default=None, help="Total number of parts in the series")
     args = parser.parse_args()
 
     allow_fallback = not args.no_fallback
@@ -403,7 +413,10 @@ if __name__ == "__main__":
         output_dir=args.output_dir,
         allow_fallback=allow_fallback,
         force_rebuild=args.force,
-        is_factual=args.factual
+        is_factual=args.factual,
+        series_name=args.series_name,
+        part_number=args.part_number,
+        total_parts=args.total_parts
     )
 
     print(f"\n=======================================================")

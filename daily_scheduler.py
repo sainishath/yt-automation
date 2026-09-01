@@ -70,10 +70,18 @@ def save_state(state: dict):
         json.dump(state, f, indent=2)
 
 
-def run_pipeline_1(topic: str) -> bool:
-    """Executes Pipeline 1 for factual history documentary Short."""
+def run_pipeline_1(
+    topic: str,
+    series_name: str = None,
+    part_number: int = None,
+    total_parts: int = None
+) -> bool:
+    """Executes Pipeline 1 for factual history documentary Short, with optional serialized saga support."""
+    header = f"  [PIPELINE 1] Launching Factual History Short: '{topic}'"
+    if series_name:
+        header = f"  [PIPELINE 1] Launching Series '{series_name}' Part {part_number}/{total_parts}: '{topic}'"
     print(f"\n{'='*60}")
-    print(f"  [PIPELINE 1] Launching Factual History Short: '{topic}'")
+    print(header)
     print(f"{'='*60}")
     
     script_path = ROOT_DIR / "alternate-history-shorts" / "scripts" / "pipeline_runner.py"
@@ -83,6 +91,12 @@ def run_pipeline_1(topic: str) -> bool:
         "--topic", topic,
         "--factual"
     ]
+    if series_name:
+        cmd.extend(["--series_name", series_name])
+    if part_number is not None:
+        cmd.extend(["--part_number", str(part_number)])
+    if total_parts is not None:
+        cmd.extend(["--total_parts", str(total_parts)])
     
     env = dict(os.environ)
     env["PYTHONIOENCODING"] = "utf-8"
@@ -219,6 +233,43 @@ def run_daily_quota(num_history: int = 2, num_coding: int = 2):
     print("#"*60 + "\n")
 
 
+def run_series_saga(series_name: str, episodes: list, auto_compile: bool = True):
+    """Executes a multi-part historical series and compiles into a 16:9 widescreen omnibus."""
+    tot = len(episodes)
+    print("\n" + "="*60)
+    print(f"  [HISTORICAL SAGA] Launching {tot}-part Series: '{series_name}'")
+    print("="*60)
+    
+    state = load_state()
+    for idx, ep_topic in enumerate(episodes):
+        p_num = idx + 1
+        success = run_pipeline_1(
+            topic=ep_topic,
+            series_name=series_name,
+            part_number=p_num,
+            total_parts=tot
+        )
+        state["production_log"].append({
+            "pipeline": "pipeline_1_series",
+            "series_name": series_name,
+            "part_number": p_num,
+            "topic": ep_topic,
+            "success": success
+        })
+        save_state(state)
+        
+    if auto_compile:
+        import importlib.util
+        comp_path = ROOT_DIR / "alternate-history-shorts" / "scripts" / "compile_series.py"
+        spec = importlib.util.spec_from_file_location("compile_series_module", str(comp_path))
+        comp_mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(comp_mod)
+        
+        clips = comp_mod.find_clips_for_series(series_name)
+        if clips:
+            comp_mod.compile_series(clips=clips, series_name=series_name)
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "--day-1":
         run_day_1_batch()
@@ -226,5 +277,9 @@ if __name__ == "__main__":
         run_daily_quota()
     elif len(sys.argv) > 1 and sys.argv[1] == "--analytics":
         ingest_analytics_snapshots()
+    elif len(sys.argv) > 2 and sys.argv[1] == "--series":
+        s_name = sys.argv[2]
+        ep_topics = sys.argv[3:] if len(sys.argv) > 3 else [f"{s_name} Part 1", f"{s_name} Part 2", f"{s_name} Part 3"]
+        run_series_saga(s_name, ep_topics)
     else:
-        print("Usage: python daily_scheduler.py [--day-1 | --daily-quota | --analytics]")
+        print("Usage: python daily_scheduler.py [--day-1 | --daily-quota | --analytics | --series <Name> <Topic1> <Topic2> ...]")
