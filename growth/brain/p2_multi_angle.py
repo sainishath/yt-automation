@@ -39,25 +39,25 @@ Category: {category}
     {{
       "angle_id": "angle_1",
       "type": "REAL_WORLD_METAPHOR",
-      "hook_text": "Think of a variable as a labeled shoe box.",
-      "core_conflict": "Without names on boxes, you can't find what you stored.",
-      "senior_takeaway": "Naming boxes clearly is your first coding superpower.",
+      "hook_text": "A punchy real-world physical metaphor specifically about {topic}.",
+      "core_conflict": "The core problem solved by {topic}.",
+      "senior_takeaway": "The fundamental insight beginners need to remember about {topic}.",
       "curiosity_score": 9.5
     }},
     {{
       "angle_id": "angle_2",
       "type": "BEGINNER_AH_HA_MOMENT",
-      "hook_text": "Why does code crash when you forget quotes?",
-      "core_conflict": "The computer thinks words without quotes are variable names.",
-      "senior_takeaway": "Quotes tell the computer: 'This is plain text, not a command.'",
+      "hook_text": "A common mistake or curiosity question specifically about {topic}.",
+      "core_conflict": "Why beginners struggle with {topic} without this insight.",
+      "senior_takeaway": "The clean mental model for {topic}.",
       "curiosity_score": 9.0
     }},
     {{
       "angle_id": "angle_3",
       "type": "MINI_SUPERPOWER",
-      "hook_text": "The 2 lines of code behind every game score.",
-      "core_conflict": "How does a game remember your high score?",
-      "senior_takeaway": "Variables remember state so your game keeps score.",
+      "hook_text": "How {topic} gives coders a superpower to build games or apps.",
+      "core_conflict": "What programs cannot do without {topic}.",
+      "senior_takeaway": "How mastering {topic} unlocks practical programming.",
       "curiosity_score": 8.5
     }}
   ],

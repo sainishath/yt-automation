@@ -1038,8 +1038,9 @@ def generate_script(topic, category, active_strategy=None):
     print(f"[Content Brain v1] Selected strategic angle: [{angle_type}] '{hook_premise}'")
 
     last_errors = []
-    for attempt in range(1, 4):
-        print(f"[Content Brain v1] Generating script candidate (Attempt {attempt}/3)...")
+    max_script_attempts = 5
+    for attempt in range(1, max_script_attempts + 1):
+        print(f"[Content Brain v1] Generating script candidate (Attempt {attempt}/{max_script_attempts})...")
         feedback_prompt = ""
         if last_errors:
             feedback_prompt = (
@@ -1057,7 +1058,7 @@ def generate_script(topic, category, active_strategy=None):
             f"You are a warm, encouraging coding mentor teaching absolute beginners who have never coded before. Generate a high-retention 40-second beginner YouTube Short script explaining '{topic}' in strictly formatted JSON.{rag_section}\n\n"
             f"### CORE PERSONA & ELI5 TEACHING CONSTRAINTS:\n"
             f"- Persona: Warm, friendly, encouraging coding mentor ('Ryan').\n"
-            f"- THE ELI5 RULE: Explain Like I'm 5! You MUST use simple, real-world physical metaphors (e.g. variables = labeled boxes, booleans = light switches, functions = recipes). Absolutely ZERO complex jargon (no ASTs, bytecodes, memory buses).\n"
+            f"- THE ELI5 RULE: Explain Like I'm 5! You MUST use simple, real-world physical metaphors tailored specifically to '{topic}'. Absolutely ZERO complex jargon (no ASTs, bytecodes, memory buses).\n"
             f"- Strategic Hook: {hook_premise}\n"
             f"- Core Metaphor / Concept: {core_conflict}\n"
             f"- Takeaway Principle: {senior_takeaway}\n"
@@ -1068,41 +1069,41 @@ def generate_script(topic, category, active_strategy=None):
             f"  Scene 4: Punchy takeaway + Clear Call to Action teasing the next lesson in the sequence.\n"
             f"- Target Duration: {strategy_bounds['min_duration_seconds']:.0f}s - {strategy_bounds['max_duration_seconds']:.0f}s.\n"
             f"- Each scene's 'text' field MUST contain 22 to 26 spoken words (simple, friendly sentences). Total script across all 4 scenes MUST be 90 to 105 words.\n"
-            f"- Each scene MUST include a 'code_snippet' array with 2 to 4 clean, readable code lines (e.g. ['# Python Variables', 'age = 25', 'name = \"Alex\"', 'print(name, age)']).\n\n"
+            f"- Each scene MUST include a 'code_snippet' array with 2 to 4 clean, readable code lines.\n\n"
             f"### REQUIRED JSON SCHEMA (MUST INCLUDE ALL 4 SCENES):\n"
             f"{{\n"
-            f"  \"title\": \"Beginner Python: {topic}\",\n"
+            f"  \"title\": \"Beginner Coding: {topic}\",\n"
             f"  \"scenes\": [\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"Clean modern code editor with glowing variable syntax in dark theme, dark UI, 8k\",\n"
-            f"      \"code_snippet\": [\"# Python Variables\", \"age = 25\", \"name = 'Alex'\", \"print(name, age)\"],\n"
-            f"      \"reason\": \"Scene 1: Friendly hook and labeled box metaphor (22-26 words)\",\n"
+            f"      \"visual_prompt\": \"Clean modern code editor with glowing syntax in dark theme, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# {topic}\", \"// Simple example code\"],\n"
+            f"      \"reason\": \"Scene 1: Friendly hook and everyday metaphor (22-26 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"hook\", \"interaction_type\": \"lead\", \"text\": \"{hook_premise} Think of a variable as a labeled shoe box where you store your favorite things under a simple name.\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"hook\", \"interaction_type\": \"lead\", \"text\": \"{hook_premise} Let us break down how this works step by step in plain English.\"}}\n"
             f"      ]\n"
             f"    }},\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"Minimalist diagram showing a labeled box holding data with clean glowing lines, dark UI, 8k\",\n"
-            f"      \"code_snippet\": [\"# Putting data in the box\", \"score = 100\", \"score = 150  # Updated!\"],\n"
-            f"      \"reason\": \"Scene 2: How data updates inside the box (22-26 words)\",\n"
+            f"      \"visual_prompt\": \"Minimalist diagram explaining {topic} with clean glowing lines, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# Running the code\", \"// Clear output\"],\n"
+            f"      \"reason\": \"Scene 2: Simple code walkthrough (22-26 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"When you write age equals twenty-five, Python creates the box and drops twenty-five right inside. You can change what is inside anytime!\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"When this code runs, the computer executes your instructions cleanly and reliably.\"}}\n"
             f"      ]\n"
             f"    }},\n"
             f"    {{\n"
-            f"      \"visual_prompt\": \"Friendly code editor comparison showing clear descriptive names vs confusing single letters, dark UI, 8k\",\n"
-            f"      \"code_snippet\": [\"# Good naming habit\", \"player_score = 100\", \"# Bad: x = 100\"],\n"
+            f"      \"visual_prompt\": \"Friendly code editor comparison showing best practice vs beginner mistake, dark UI, 8k\",\n"
+            f"      \"code_snippet\": [\"# Best practice\", \"// Clean pattern\"],\n"
             f"      \"reason\": \"Scene 3: Beginner ah-ha moment (22-26 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"The secret to writing great code is giving your boxes clear labels so you and your team always know what is inside.\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"explain\", \"interaction_type\": \"lead\", \"text\": \"{senior_takeaway}\"}}\n"
             f"      ]\n"
             f"    }},\n"
             f"    {{\n"
             f"      \"visual_prompt\": \"Clean summary card with glowing subscribe badge and next lesson preview, dark UI, 8k\",\n"
-            f"      \"code_snippet\": [\"# LESSON 1 COMPLETE!\", \"// Next: Numbers & Text Types\"],\n"
+            f"      \"code_snippet\": [\"# LESSON COMPLETE!\", \"// Next: Next Concept\"],\n"
             f"      \"reason\": \"Scene 4: Takeaway and Call to Action (20-24 words)\",\n"
             f"      \"dialogue\": [\n"
-            f"        {{\"speaker\": \"A\", \"role\": \"outro\", \"interaction_type\": \"close\", \"text\": \"You just wrote your very first Python concept! Follow along for lesson two where we explore numbers and words!\"}}\n"
+            f"        {{\"speaker\": \"A\", \"role\": \"outro\", \"interaction_type\": \"close\", \"text\": \"You just mastered {topic}! Subscribe and follow for the next lesson in our beginner series!\"}}\n"
             f"      ]\n"
             f"    }}\n"
             f"  ]\n"
@@ -1188,7 +1189,8 @@ def generate_script(topic, category, active_strategy=None):
                 tested_variable="HOOK_STRUCTURE"
             )
 
-            if not critic_res.passed:
+            is_acceptable = critic_res.passed or (critic_res.tier1_deterministic_passed and critic_res.overall_score >= 7.0 and attempt >= 2)
+            if not is_acceptable:
                 print(f"[Content Brain Critic] Candidate rejected (Score: {critic_res.overall_score}/10): {critic_res.actionable_revisions}")
                 last_errors = critic_res.actionable_revisions
                 continue
