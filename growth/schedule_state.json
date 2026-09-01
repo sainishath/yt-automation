@@ -1,7 +1,8 @@
 {
-  "current_lesson": 2,
+  "current_lesson": 5,
   "completed_history_topics": [
-    "The Battle of Stalingrad"
+    "The Battle of Stalingrad",
+    "Ancient Egypt: The Great Pyramid"
   ],
   "production_log": [
     {
@@ -13,6 +14,26 @@
       "pipeline": "pipeline_1",
       "topic": "The Industrial Revolution",
       "success": false
+    },
+    {
+      "pipeline": "pipeline_1",
+      "topic": "Ancient Egypt: The Great Pyramid",
+      "success": true
+    },
+    {
+      "pipeline": "pipeline_2",
+      "lesson": 2,
+      "success": true
+    },
+    {
+      "pipeline": "pipeline_2",
+      "lesson": 3,
+      "success": true
+    },
+    {
+      "pipeline": "pipeline_2",
+      "lesson": 4,
+      "success": true
     }
   ]
 }
