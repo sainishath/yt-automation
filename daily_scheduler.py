@@ -11,6 +11,7 @@ Tracks:
 3. Synchronous execution with error logging and status reporting.
 """
 
+import os
 import sys
 import json
 import random
@@ -83,7 +84,7 @@ def run_pipeline_1(topic: str) -> bool:
         "--factual"
     ]
     
-    env = dict(sys.environ)
+    env = dict(os.environ)
     env["PYTHONIOENCODING"] = "utf-8"
     
     res = subprocess.run(cmd, cwd=str(ROOT_DIR), env=env)
@@ -103,11 +104,24 @@ def run_pipeline_2(lesson_num: int) -> bool:
         "--lesson", str(lesson_num)
     ]
     
-    env = dict(sys.environ)
+    env = dict(os.environ)
     env["PYTHONIOENCODING"] = "utf-8"
     
     res = subprocess.run(cmd, cwd=str(ROOT_DIR), env=env)
     return res.returncode == 0
+
+
+def ingest_analytics_snapshots():
+    """Runs periodic YouTube analytics collection for growth.db."""
+    print("\n" + "="*60)
+    print("  [ANALYTICS] Ingesting YouTube Analytics & Performance Snapshots...")
+    print("="*60)
+    try:
+        from growth.analytics.fetch_analytics import fetch_due_snapshots
+        res = fetch_due_snapshots(dry_run=False)
+        print(f"[ANALYTICS] Ingestion complete: {res.get('collected_count', 0)} snapshots collected, {res.get('skipped_count', 0)} skipped.")
+    except Exception as ae:
+        print(f"[ANALYTICS WARNING] Analytics ingestion encountered issue: {ae}")
 
 
 def run_day_1_batch():
@@ -149,6 +163,9 @@ def run_day_1_batch():
         if success:
             state["current_lesson"] = max(state["current_lesson"], lesson + 1)
         save_state(state)
+        
+    # 3. Ingest due analytics snapshots
+    ingest_analytics_snapshots()
         
     print("\n" + "#"*60)
     print("  DAY 1 PRODUCTION BATCH COMPLETE — ALL PROXIES POSTED TO DISCORD")
@@ -194,6 +211,9 @@ def run_daily_quota(num_history: int = 2, num_coding: int = 2):
             state["current_lesson"] = lesson_to_run + 1
         save_state(state)
         
+    # 3. Ingest due analytics snapshots
+    ingest_analytics_snapshots()
+        
     print("\n" + "#"*60)
     print("  DAILY QUOTA COMPLETE — ALL PROXIES POSTED TO DISCORD")
     print("#"*60 + "\n")
@@ -204,5 +224,7 @@ if __name__ == "__main__":
         run_day_1_batch()
     elif len(sys.argv) > 1 and sys.argv[1] == "--daily-quota":
         run_daily_quota()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--analytics":
+        ingest_analytics_snapshots()
     else:
-        print("Usage: python daily_scheduler.py [--day-1 | --daily-quota]")
+        print("Usage: python daily_scheduler.py [--day-1 | --daily-quota | --analytics]")
