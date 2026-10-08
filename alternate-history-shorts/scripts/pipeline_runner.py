@@ -400,7 +400,7 @@ if __name__ == "__main__":
     parser.add_argument("--output_dir", default=None, help="Custom output directory")
     parser.add_argument("--force", action="store_true", help="Force rebuild all assets")
     parser.add_argument("--no_fallback", action="store_true", help="Disallow Pillow proof fallback for images")
-    parser.add_argument("--factual", action="store_true", help="Run in 100% factual historical documentary mode")
+    parser.add_argument("--factual", action="store_true", help="Run in 100%% factual historical documentary mode")
     parser.add_argument("--series_name", default=None, help="Name of the multi-part historical saga")
     parser.add_argument("--part_number", type=int, default=None, help="Current episode/part number in the series")
     parser.add_argument("--total_parts", type=int, default=None, help="Total number of parts in the series")

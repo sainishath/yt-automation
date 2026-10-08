@@ -1,5 +1,5 @@
 {
-  "current_lesson": 5,
+  "current_lesson": 6,
   "completed_history_topics": [
     "The Battle of Stalingrad",
     "Ancient Egypt: The Great Pyramid"
@@ -33,6 +33,15 @@
     {
       "pipeline": "pipeline_2",
       "lesson": 4,
+      "success": true
+    },
+    {
+      "pipeline": "pipeline_2",
+      "lesson": 5,
+      "topic": "While Loops: Repeat Until Done",
+      "short_id": "Short_010",
+      "youtube_video_id": null,
+      "timestamp": "2026-10-02T19:16:27.592598",
       "success": true
     }
   ]
