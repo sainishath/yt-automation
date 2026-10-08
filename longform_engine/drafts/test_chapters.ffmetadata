@@ -1,0 +1,45 @@
+;FFMETADATA1
+major_brand=isom
+minor_version=512
+compatible_brands=isomiso2avc1mp41
+[CHAPTER]
+TIMEBASE=1/1000
+START=0
+END=86000
+title=01: Mental Models (Hardware & Memory)
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=86000
+END=172000
+title=02: Variables & Dynamic Typing
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=172000
+END=258000
+title=03: Strings & Text Manipulation
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=258000
+END=344000
+title=04: Conditional Logic & Branching
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=344000
+END=430000
+title=05: Loops & Iteration Mechanics
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=430000
+END=516000
+title=06: Data Structures (Lists vs Dicts)
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=516000
+END=602000
+title=07: Functions, Scope & The Mutable Default Trap

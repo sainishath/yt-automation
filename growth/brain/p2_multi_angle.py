@@ -11,8 +11,10 @@ import logging
 import urllib.request
 from typing import Dict, Any, Optional
 
-OLLAMA_URL = "http://127.0.0.1:11434"
-OLLAMA_MODEL = "llama3.2:latest"
+import os
+
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:latest")
 
 
 def generate_p2_multi_angle_concept(topic: str, category: str, active_strategy: Dict[str, Any]) -> Dict[str, Any]:

@@ -12,12 +12,13 @@ Uses Ollama (llama3.2) to polish the title and select optimized hashtags.
 import sys
 import json
 import logging
+import os
 import requests
 from pathlib import Path
 from typing import Any
 
-OLLAMA_URL = "http://127.0.0.1:11434"
-OLLAMA_MODEL = "llama3.2:latest"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:latest")
 
 
 def parse_llm_json(raw_text: str, default: Any = None) -> Any:

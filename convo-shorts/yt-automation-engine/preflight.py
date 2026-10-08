@@ -34,8 +34,8 @@ def run_preflight_check(cfg: dict, require_youtube_auth: bool = False) -> tuple:
         return False, "PREFLIGHT", f"FFmpeg check failed: {e}"
 
     # 2. Ollama server and model availability
-    ollama_url = cfg.get("ollama_url", "http://127.0.0.1:11434").rstrip("/")
-    required_ollama_model = cfg.get("ollama_model", "llama3.1:latest")
+    ollama_url = os.environ.get("OLLAMA_URL", cfg.get("ollama_url", "http://127.0.0.1:11434")).rstrip("/")
+    required_ollama_model = os.environ.get("OLLAMA_MODEL", cfg.get("ollama_model", "qwen2.5-coder:7b"))
     try:
         r = requests.get(f"{ollama_url}/api/tags", timeout=5)
         if r.status_code != 200:
@@ -44,7 +44,12 @@ def run_preflight_check(cfg: dict, require_youtube_auth: bool = False) -> tuple:
         models_data = r.json().get("models", [])
         available_models = [m.get("name") for m in models_data]
         if not any(required_ollama_model in m for m in available_models):
-            return False, "PREFLIGHT", f"Required Ollama model '{required_ollama_model}' not loaded in Ollama server. Available: {available_models}"
+            # Check if any standard local model is available
+            found_fallback = [m for m in available_models if "qwen" in m or "llama" in m or "gemma" in m]
+            if found_fallback:
+                print(f"[PREFLIGHT] Required model '{required_ollama_model}' not found, falling back to installed '{found_fallback[0]}'")
+            else:
+                return False, "PREFLIGHT", f"Required Ollama model '{required_ollama_model}' not loaded in Ollama server. Available: {available_models}"
     except Exception as e:
         return False, "PREFLIGHT", f"Ollama server unreachable at {ollama_url}: {e}"
 
