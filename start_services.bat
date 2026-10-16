@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal enabledelayedexpansion
 title YouTube Automations Service Launcher
 
@@ -29,7 +29,7 @@ if %ERRORLEVEL% equ 0 (
     echo       [OK] Fooocus SDXL is ONLINE on http://127.0.0.1:7865.
 ) else (
     echo       [STARTING] Launching Fooocus SDXL server...
-    start "Fooocus SDXL" /d "D:\Projects\Fooocus" cmd /k "set PYTHONIOENCODING=utf-8 && python launch.py --listen 127.0.0.1 --port 7865"
+    start "Fooocus SDXL" /d "D:\AI-Tools\Fooocus" cmd /k "set PYTHONIOENCODING=utf-8 && python launch.py --listen 127.0.0.1 --port 7865"
     echo       Waiting for Fooocus SDXL to initialize...
     timeout /t 10 >nul
 )

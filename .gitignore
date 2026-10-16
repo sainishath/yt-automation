@@ -30,6 +30,12 @@ build/
 *.db
 growth/growth.db
 growth/*.db
+*.db-journal
+*.db-shm
+*.db-wal
+growth/*.db-journal
+growth/*.db-shm
+growth/*.db-wal
 
 # Secrets, API Keys & OAuth Credentials (CRITICAL)
 .env

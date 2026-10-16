@@ -1,4 +1,4 @@
-﻿# Master Service Launcher for YouTube Automations
+# Master Service Launcher for YouTube Automations
 $env:PYTHONIOENCODING = "utf-8"
 
 Write-Host "========================================================" -ForegroundColor Cyan
@@ -23,7 +23,7 @@ try {
     Write-Host " [OK] ONLINE" -ForegroundColor Green
 } catch {
     Write-Host " [STARTING] Launching Fooocus SDXL server on port 7865..." -ForegroundColor Yellow
-    Start-Process -FilePath "python" -ArgumentList "D:\Projects\Fooocus\launch.py --listen 127.0.0.1 --port 7865" -WorkingDirectory "D:\Projects\Fooocus"
+    Start-Process -FilePath "python" -ArgumentList "D:\AI-Tools\Fooocus\launch.py --listen 127.0.0.1 --port 7865" -WorkingDirectory "D:\AI-Tools\Fooocus"
     Write-Host "Waiting for Fooocus SDXL to initialize..."
     Start-Sleep -Seconds 10
 }
