@@ -16,6 +16,7 @@ import hashlib
 import logging
 import argparse
 import re
+import subprocess
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 
@@ -148,8 +149,37 @@ def align_audio_file(
                 "probability": w.get("probability", 1.0)
             })
 
-    # Audio duration from last segment or word
-    audio_duration = raw_segments[-1]["end"] if raw_segments else (raw_words[-1]["end"] if raw_words else 0.0)
+    # Audio duration from last segment or word with natural 300ms breath pause
+    speech_end = raw_segments[-1]["end"] if raw_segments else (raw_words[-1]["end"] if raw_words else 0.0)
+    audio_duration = speech_end
+
+    # Trim trailing silence in audio file to leave exactly a 300ms pause between scenes
+    if speech_end > 0.0:
+        target_trimmed_dur = round(speech_end + 0.30, 2)
+        try:
+            dur_check = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", str(audio_path)],
+                capture_output=True, text=True
+            )
+            raw_dur = float(json.loads(dur_check.stdout)["format"]["duration"])
+            if raw_dur > target_trimmed_dur + 0.05:
+                trimmed_file = audio_path.parent / f"trimmed_{audio_path.name}"
+                trim_cmd = [
+                    "ffmpeg", "-y", "-i", str(audio_path),
+                    "-t", f"{target_trimmed_dur:.2f}",
+                    "-c", "copy",
+                    str(trimmed_file)
+                ]
+                subprocess.run(trim_cmd, capture_output=True, check=True)
+                if trimmed_file.exists():
+                    trimmed_file.replace(audio_path)
+                    audio_duration = target_trimmed_dur
+                    logging.info(f"[Whisper Alignment] Trimmed trailing silence in {audio_path.name}: {raw_dur:.2f}s -> {target_trimmed_dur:.2f}s")
+            else:
+                audio_duration = raw_dur
+        except Exception as te:
+            logging.warning(f"[Whisper Alignment] Trailing silence trimming skipped: {te}")
+            audio_duration = speech_end
 
     # Fallback to segment-level if word timestamps are missing
     if not raw_words and raw_segments:

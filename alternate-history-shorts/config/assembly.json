@@ -9,8 +9,8 @@
     "outline_color": "black",
     "outline_width": 3,
     "position": "center-lower-safe-zone",
-    "margin_v": 320
+    "margin_v": 680
   },
-  "music_volume_db": -22,
+  "music_volume_db": -25,
   "whisper_model": "base.en"
 }

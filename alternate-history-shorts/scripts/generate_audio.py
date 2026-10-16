@@ -62,34 +62,37 @@ def get_audio_duration(file_path: Path) -> float:
     return float(metadata["format"]["duration"])
 
 def generate_scene_audio(text: str, voice: str, out_path: Path, max_retries: int = 3) -> float:
-    """Generates audio for a single scene using edge-tts, verifies it, and returns duration."""
+    """Generates natural, studio-quality audio for a single scene using edge-tts without harsh filtering."""
     out_path.parent.mkdir(parents=True, exist_ok=True)
     clean_text = clean_narration_text(text)
     
     cmd = [
-        "edge-tts",
+        sys.executable,
+        "-m",
+        "edge_tts",
         "--text", clean_text,
         "--voice", voice,
+        "--rate=+0%",
         "--write-media", str(out_path)
     ]
     
     for attempt in range(1, max_retries + 1):
         try:
-            logging.info(f"Generating voice for scene to {out_path.name} (Attempt {attempt}/{max_retries})")
+            logging.info(f"Generating natural voice for scene to {out_path.name} (Attempt {attempt}/{max_retries})")
             
-            # Run Edge TTS
+            # Run Edge TTS directly to out_path
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             
             # Verify file exists and has content
             if not out_path.exists() or out_path.stat().st_size == 0:
                 raise FileNotFoundError(f"Audio file was not created or is empty: {out_path}")
-                
+
             # Measure actual duration using ffprobe
             duration = get_audio_duration(out_path)
             if duration <= 0.0:
                 raise ValueError("Measured audio duration is 0 seconds")
                 
-            logging.info(f"Successfully generated {out_path.name}: {duration:.2f}s")
+            logging.info(f"Successfully generated natural audio {out_path.name}: {duration:.2f}s")
             return round(duration, 2)
             
         except Exception as e:
