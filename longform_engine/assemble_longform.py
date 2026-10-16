@@ -34,7 +34,7 @@ from longform_engine.horizontal_card_renderer import render_longform_horizontal_
 from longform_engine.motion_engine import render_cinematic_shot
 
 FOOOCUS_URL = os.getenv("FOOOCUS_URL", "http://127.0.0.1:7865")
-FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs"))
+FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs" if Path("D:/Projects/Fooocus/outputs").exists() else "D:/AI-Tools/Fooocus/outputs"))
 EDGE_TTS_VOICE_P1 = "en-US-ChristopherNeural"
 EDGE_TTS_VOICE_P2 = "en-US-ChristopherNeural"
 
