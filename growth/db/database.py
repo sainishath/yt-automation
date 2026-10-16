@@ -17,6 +17,7 @@ def init_db(db_path: Path = DEFAULT_DB_PATH) -> None:
     """Initializes the database schema if tables do not exist and applies migrations."""
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(db_path))
+    conn.execute("PRAGMA journal_mode = MEMORY;")
     try:
         with open(SCHEMA_PATH, "r", encoding="utf-8") as f:
             conn.executescript(f.read())
@@ -131,6 +132,7 @@ def get_db(db_path: Path = DEFAULT_DB_PATH):
     if not db_path.exists():
         init_db(db_path)
     conn = sqlite3.connect(str(db_path))
+    conn.execute("PRAGMA journal_mode = MEMORY;")
     conn.row_factory = sqlite3.Row
     try:
         yield conn

@@ -10,7 +10,7 @@
     "topics": ["Fallen empires", "Ancient lost knowledge", "Classical antiquity", "Industrial counterfactuals"],
     "hooks": ["Active counterfactual framing (If X had not occurred, Y would be true)", "Polar questions"],
     "narrative_structure": "8_beat_divergence",
-    "optimal_duration_seconds": [40, 52],
+    "optimal_duration_seconds": [30, 48],
     "visual_style": "SDXL Photorealistic oil/cinematic digital art",
     "camera_motion": "Candidate A Linear Ken Burns (8% zoom/pan)"
   },

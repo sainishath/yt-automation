@@ -67,9 +67,10 @@ class MultiArmExperimentEvaluator:
     Guarantees N >= 4 per arm, filters viral/technical outliers, and prevents single-video bias.
     """
 
-    def __init__(self, repo: GrowthRepository, min_sample_size: int = 4):
+    def __init__(self, repo: GrowthRepository, min_sample_size: int = 4, win_threshold_pct: float = 5.0):
         self.repo = repo
         self.min_sample_size = min_sample_size
+        self.win_threshold_pct = win_threshold_pct
 
     def _get_arm_metrics(self, experiment_id: str, arm_type: str) -> List[float]:
         """
@@ -170,7 +171,7 @@ class MultiArmExperimentEvaluator:
         # 1. Check Sample Size Hard Guard (N >= 4 required per arm)
         if n_ctrl < min_n or n_treat < min_n:
             reason = (
-                f"Insufficient mature published samples for evaluation: "
+                f"Insufficient real published samples for evaluation: "
                 f"CONTROL has {n_ctrl}/{min_n}, TREATMENT has {n_treat}/{min_n}. "
                 f"Evaluation blocked until N >= {min_n} per arm at 7-day maturity."
             )
@@ -201,20 +202,21 @@ class MultiArmExperimentEvaluator:
         else:
             delta_pct = 0.0
 
-        # Empirical Significance: Delta >= +15.0% APV threshold with N >= 4 per arm
-        if delta_pct >= 15.0:
+        win_thresh = float(exp.get("decision_threshold_apv") or self.win_threshold_pct)
+        # Empirical Significance: Delta >= win_thresh (default +5.0%) with N >= 4 per arm
+        if delta_pct >= win_thresh:
             decision = ExperimentDecision.WIN
             confidence = ConfidenceLevel.HIGH
             reason = (
-                f"Treatment outperformed Control by +{delta_pct:.1f}% median APV (>= +15.0% threshold) "
+                f"Treatment outperformed Control by +{delta_pct:.1f}% median APV (>= +{win_thresh:.1f}% threshold) "
                 f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} mature 7-day samples."
             )
             is_significant = True
-        elif delta_pct <= -15.0:
+        elif delta_pct <= -win_thresh:
             decision = ExperimentDecision.LOSE
             confidence = ConfidenceLevel.HIGH
             reason = (
-                f"Treatment underperformed Control by {delta_pct:.1f}% median APV (<= -15.0% threshold) "
+                f"Treatment underperformed Control by {delta_pct:.1f}% median APV (<= -{win_thresh:.1f}% threshold) "
                 f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} mature 7-day samples."
             )
             is_significant = True
@@ -222,7 +224,7 @@ class MultiArmExperimentEvaluator:
             decision = ExperimentDecision.INCONCLUSIVE
             confidence = ConfidenceLevel.MEDIUM
             reason = (
-                f"Treatment delta ({delta_pct:+.1f}%) is within neutral band (±15.0%). "
+                f"Treatment delta ({delta_pct:+.1f}%) is within neutral band (±{win_thresh:.1f}%). "
                 f"Outcome is inconclusive."
             )
             is_significant = False

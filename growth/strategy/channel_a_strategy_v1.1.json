@@ -20,8 +20,8 @@
     ],
     "narrative_structure": "8_beat_divergence",
     "optimal_duration_seconds": [
-      40,
-      52
+      30,
+      48
     ],
     "visual_style": "SDXL Photorealistic oil/cinematic digital art",
     "camera_motion": "Candidate A Linear Ken Burns (8% zoom/pan)"
@@ -40,5 +40,5 @@
   ],
   "posting_frequency": "3_to_4_shorts_per_week",
   "parent_version": "v1.0",
-  "updated_at": "2026-10-02 13:31:28"
+  "updated_at": "2026-10-16 19:54:10"
 }
