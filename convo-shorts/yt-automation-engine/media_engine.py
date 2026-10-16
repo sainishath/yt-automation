@@ -33,7 +33,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from gradio_client import Client
 
 FOOOCUS_API_URL = "http://127.0.0.1:7865/"
-FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs"))
+FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs" if Path("D:/Projects/Fooocus/outputs").exists() else "D:/AI-Tools/Fooocus/outputs"))
 
 def check_fooocus_online(timeout=3) -> bool:
     """Quick check to verify Fooocus webserver is online before generation."""
@@ -410,7 +410,8 @@ BACKGROUNDS_DIR = Path(os.environ.get("BACKGROUNDS_DIR", _resolve_rel(CFG["backg
 OUTPUT_DIR      = Path(os.environ.get("OUTPUT_DIR", _resolve_rel(CFG["output_dir"])))
 TEMP_DIR        = Path(os.environ.get("TEMP_DIR", _resolve_rel(CFG["temp_dir"])))
 OLLAMA_URL      = os.environ.get("OLLAMA_URL", CFG["ollama_url"])
-OLLAMA_MODEL    = os.environ.get("OLLAMA_MODEL", CFG["ollama_model"])
+OLLAMA_MODEL    = os.environ.get("OLLAMA_MODEL", CFG.get("ollama_model", "gemma4:31b-cloud"))
+OLLAMA_FALLBACK_MODEL = os.environ.get("OLLAMA_FALLBACK_MODEL", "qwen2.5-coder:7b")
 WHISPER_MODEL   = os.environ.get("WHISPER_MODEL", CFG["whisper_model"])
 WHISPER_DEVICE  = os.environ.get("WHISPER_DEVICE", CFG["whisper_device"])
 AUDIO_SPEED     = float(os.environ.get("AUDIO_SPEED", CFG["audio_speed"]))
@@ -1169,11 +1170,16 @@ def generate_script(topic, category, active_strategy=None):
             if not acquired:
                 raise TimeoutError("Pipeline queue timeout capacity reached (GPU lock in Ollama)")
             try:
-                resp = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, timeout=120)
+                try:
+                    resp = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, timeout=120)
+                    resp.raise_for_status()
+                except Exception as ex:
+                    print(f"[MediaEngine Warning] Primary model {payload['model']} failed: {ex}. Falling back to {OLLAMA_FALLBACK_MODEL}...")
+                    payload["model"] = OLLAMA_FALLBACK_MODEL
+                    resp = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, timeout=120)
+                    resp.raise_for_status()
             finally:
                 gpu_lock.release()
-
-            resp.raise_for_status()
             raw = resp.json().get("response", "").strip()
             if raw.startswith("```json"):
                 raw = raw[7:]

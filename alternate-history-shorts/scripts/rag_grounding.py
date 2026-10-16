@@ -42,8 +42,8 @@ logging.basicConfig(
     ]
 )
 
-OLLAMA_URL = "http://127.0.0.1:11434"
-OLLAMA_MODEL = "llama3.2:latest"
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:7b")
 WIKI_USER_AGENT = os.getenv(
     "WIKI_USER_AGENT",
     "YTAutomationPipeline/4.0 (https://github.com/sainishath/yt-automation; automated-video-generator)"

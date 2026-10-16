@@ -9,6 +9,7 @@ and saves to output/{video_id}/metadata.json.
 
 import os
 import sys
+import re
 import json
 import time
 import argparse
@@ -28,8 +29,8 @@ logging.basicConfig(
     ]
 )
 
-OLLAMA_URL = "http://127.0.0.1:11434"
-OLLAMA_MODEL = "llama3.2:latest"
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
+OLLAMA_MODEL = os.getenv("METADATA_MODEL", os.getenv("OLLAMA_FALLBACK_MODEL", "qwen2.5-coder:7b"))
 MAX_RETRIES = 3
 MAX_TITLE_LENGTH = 60
 MIN_TAGS = 10
@@ -37,8 +38,9 @@ MAX_TAGS = 15
 
 
 def parse_llm_json(raw_text: str, default: Any = None) -> Any:
-    """Safely extracts and parses JSON content from LLM output, stripping markdown code fences."""
+    """Safely extracts and parses JSON content from LLM output, stripping markdown code fences or surrounding text."""
     text = raw_text.strip()
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
     if text.startswith("```json"):
         text = text[7:]
     elif text.startswith("```"):
@@ -49,6 +51,12 @@ def parse_llm_json(raw_text: str, default: Any = None) -> Any:
     try:
         return json.loads(text)
     except Exception:
+        match = re.search(r'(\{.*\})', text, re.DOTALL)
+        if match:
+            try:
+                return json.loads(match.group(1))
+            except Exception:
+                pass
         return default
 
 

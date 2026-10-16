@@ -14,7 +14,8 @@ from typing import Dict, Any, Optional
 import os
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:latest")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "gemma4:31b-cloud")
+OLLAMA_FALLBACK_MODEL = os.environ.get("OLLAMA_FALLBACK_MODEL", "qwen2.5-coder:7b")
 
 
 def generate_p2_multi_angle_concept(topic: str, category: str, active_strategy: Dict[str, Any]) -> Dict[str, Any]:
@@ -68,21 +69,22 @@ Category: {category}
 }}
 """
 
-    try:
-        req_data = json.dumps({
-            "model": OLLAMA_MODEL,
-            "prompt": prompt,
-            "stream": False,
-            "format": "json"
-        }).encode("utf-8")
+    for target_model in [OLLAMA_MODEL, OLLAMA_FALLBACK_MODEL]:
+        try:
+            req_data = json.dumps({
+                "model": target_model,
+                "prompt": prompt,
+                "stream": False,
+                "format": "json"
+            }).encode("utf-8")
 
-        req = urllib.request.Request(f"{OLLAMA_URL}/api/generate", data=req_data, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            res_json = json.loads(resp.read().decode("utf-8"))
-            raw = res_json.get("response", "{}")
-            return json.loads(raw)
-    except Exception as e:
-        logging.warning(f"[MultiAngle] Angle generation fallback: {e}")
+            req = urllib.request.Request(f"{OLLAMA_URL}/api/generate", data=req_data, headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=35) as resp:
+                res_json = json.loads(resp.read().decode("utf-8"))
+                raw = res_json.get("response", "{}")
+                return json.loads(raw)
+        except Exception as e:
+            logging.warning(f"[MultiAngle] Model {target_model} generation attempt failed: {e}")
 
     return {
         "selected_angle_id": "angle_1",

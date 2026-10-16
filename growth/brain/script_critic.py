@@ -13,6 +13,28 @@ from dataclasses import dataclass, field
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
+def parse_llm_json(raw_text: str, default: Any = None) -> Any:
+    """Safely extracts and parses JSON content from LLM output, stripping markdown code fences or surrounding text."""
+    text = raw_text.strip()
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+    if text.startswith("```json"):
+        text = text[7:]
+    elif text.startswith("```"):
+        text = text[3:]
+    if text.endswith("```"):
+        text = text[:-3]
+    text = text.strip()
+    try:
+        return json.loads(text)
+    except Exception:
+        match = re.search(r'(\{.*\})', text, re.DOTALL)
+        if match:
+            try:
+                return json.loads(match.group(1))
+            except Exception:
+                pass
+        return default
+
 @dataclass
 class CriticEvaluationResult:
     passed: bool
@@ -29,7 +51,7 @@ class HybridScriptCritic:
     def __init__(self, ollama_url: Optional[str] = None, model: Optional[str] = None):
         import os
         self.ollama_url = ollama_url or os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
-        self.model = model or os.environ.get("OLLAMA_MODEL", "llama3.2:latest")
+        self.model = model or os.environ.get("CRITIC_OLLAMA_MODEL", "qwen2.5-coder:7b")
 
     def evaluate_deterministic(
         self,
@@ -156,10 +178,11 @@ Testing Variable: {tested_variable}
 \"\"\"{script_text}\"\"\"
 
 ### EVALUATION CRITERIA:
-1. HOOK TENSION (0-10): Does the first sentence create immediate curiosity, stakes, or present a concrete historical fact/problem?
-2. ESCALATION & PROGRESSION (0-10): Does the explanation build in momentum and depth without rambling?
-3. CLARITY & FLUFF (0-10): Is every sentence dense and valuable? Is it free of generic conversational filler?
-4. PAYOFF STRENGTH (0-10): Does the ending definitively resolve the premise and leave a lasting memorable takeaway?
+1. HOOK TENSION (0-10): Does the first sentence create immediate curiosity, stakes, or present a concrete shock outcome/in media res hook?
+2. ESCALATION & PROGRESSION (0-10): Does the explanation build in momentum and concrete dominoes without rambling?
+3. CLARITY & FLUFF (0-10): Is every sentence dense and valuable? Is it free of generic filler?
+4. SPECIFICITY DENSITY OVER PLATITUDES (0-10): For alternate-history, grade strictly on presence of concrete nouns, dates, named technologies, and mechanisms. Do NOT penalize speculative claims. Penalize vague platitudes like 'thrived', 'beacon of learning', or 'new heights'.
+5. PAYOFF STRENGTH (0-10): Does the ending definitively resolve the premise or deliver a sharp debate loop question?
 
 ### REQUIRED JSON OUTPUT FORMAT:
 {{
@@ -191,7 +214,9 @@ Testing Variable: {tested_variable}
                 with urllib.request.urlopen(req, timeout=25) as resp:
                     res_json = json.loads(resp.read().decode("utf-8"))
                     raw_response = res_json.get("response", "{}")
-                    parsed = json.loads(raw_response)
+                    parsed = parse_llm_json(raw_response, {})
+                    if not parsed:
+                        raise ValueError(f"Failed to parse JSON response: {raw_response[:100]}")
 
                     score = float(parsed.get("overall_score", 0.0))
                     passes = bool(parsed.get("passes_quality_gate", True)) and score >= 6.5
@@ -202,9 +227,9 @@ Testing Variable: {tested_variable}
                 last_error = str(e)
                 logging.warning(f"[ScriptCritic] Attempt {attempt}/{max_retries} LLM evaluation failed: {e}")
 
-        # Fallback gracefully if LLM critic times out
-        logging.warning(f"[ScriptCritic Warning] Semantic critic timed out; passing with soft fallback: {last_error}")
-        return True, 7.5, [], ["Semantic critic timed out; passed via deterministic validation."]
+        # Fallback: Fail closed when Ollama is unreachable (preserves human gate)
+        logging.error(f"[ScriptCritic Error] Semantic critic unavailable after {max_retries} attempts: {last_error}")
+        return False, 0.0, [f"Semantic critic unavailable: {last_error}"], ["MANUAL_REVIEW_REQUIRED: Semantic critic unreachable."]
 
     def evaluate_script(
         self,
@@ -225,7 +250,7 @@ Testing Variable: {tested_variable}
                 extracted_lines.append(sc.get("narration", ""))
         full_text = " ".join(extracted_lines)
 
-        rate_wps = 2.2 if channel_type == "p1_history" else 2.8
+        rate_wps = 2.85
 
         t1_pass, t1_errors, metrics = self.evaluate_deterministic(
             script_data=script_data,

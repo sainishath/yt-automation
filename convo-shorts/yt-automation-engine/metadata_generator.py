@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2:latest")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:7b")
 
 
 def parse_llm_json(raw_text: str, default: Any = None) -> Any:
