@@ -233,6 +233,7 @@ def upload_video(
         "status": {
             "privacyStatus": privacy,
             "selfDeclaredMadeForKids": False,
+            "containsSyntheticMedia": True,
         }
     }
 
