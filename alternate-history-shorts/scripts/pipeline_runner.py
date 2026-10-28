@@ -210,7 +210,8 @@ def run_pipeline1(
             is_factual=is_factual,
             series_name=series_name,
             part_number=part_number,
-            total_parts=total_parts
+            total_parts=total_parts,
+            force_rebuild=force_rebuild
         )
         if script.get("status") == "BLOCKED":
             manifest["stages"]["script"] = "BLOCKED"
