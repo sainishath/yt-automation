@@ -38,12 +38,13 @@ logging.basicConfig(
     ]
 )
 
-OLLAMA_URL = "http://127.0.0.1:11434"
-OLLAMA_MODEL = "llama3.2:latest"
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
+OLLAMA_MODEL = os.getenv("SCENE_PLANNER_MODEL", os.getenv("OLLAMA_FALLBACK_MODEL", "qwen2.5-coder:7b"))
 
 def parse_llm_json(raw_text: str, default: Any = None) -> Any:
-    """Safely extracts and parses JSON content from LLM output, stripping markdown code fences."""
+    """Safely extracts and parses JSON content from LLM output, stripping markdown code fences or surrounding text."""
     text = raw_text.strip()
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
     if text.startswith("```json"):
         text = text[7:]
     elif text.startswith("```"):
@@ -54,6 +55,12 @@ def parse_llm_json(raw_text: str, default: Any = None) -> Any:
     try:
         return json.loads(text)
     except Exception:
+        match = re.search(r'(\{.*\})', text, re.DOTALL)
+        if match:
+            try:
+                return json.loads(match.group(1))
+            except Exception:
+                pass
         return default
 
 def build_full_narration(scenes: List[Dict[str, Any]]) -> str:
@@ -143,39 +150,25 @@ Full Spoken Narration:
 
 CRITICAL VISUAL DIRECTIVES:
 1. ORIGINAL SCENE BOUNDARIES ARE NOT VISUAL BOUNDARIES. Treat narration as a continuous stream.
-2. NEVER assume:
-   - one input scene = one visual beat
-   - one sentence = one visual beat
-   - every sentence requires a new image
-3. WIDE-ANGLE CINEMATIC DOCUMENTARY FRAMING:
-   - Every visual concept must be a wide-angle or expansive establishing shot with rich environmental detail and deep background perspective.
-   - Images must have breathing room for a slow, continuous documentary camera pan across subjects.
-4. YOU MUST SPLIT A SENTENCE when it contains multiple visually distinct events:
-   EXAMPLE OF SPLITTING A COMPOUND SENTENCE:
-   Text: "At dawn, Caesar's fleet entered Alexandria harbor, and hours later catastrophic flames erupted from the docks."
-   -> Beat 1 excerpt: "At dawn, Caesar's fleet entered Alexandria harbor," (Visual: Sprawling wide shot of Roman fleet anchoring at dawn)
-   -> Beat 2 excerpt: "and hours later catastrophic flames erupted from the docks." (Visual: Wide panoramic view of docks engulfed in fire)
-5. YOU SHOULD MERGE CONSECUTIVE SENTENCES when they describe the exact same subject, location, action, and visual state:
-   EXAMPLE OF MERGING CONSECUTIVE SENTENCES:
-   Text: "Ancient scrolls burned in the dark hall. Rare manuscripts turned to ash."
-   -> Beat excerpt: "Ancient scrolls burned in the dark hall. Rare manuscripts turned to ash." (Visual: Detailed wide interior of library chamber with burning papyrus)
-6. CREATE A NEW BEAT ONLY when there is a meaningful visual change such as:
-   - new subject
-   - new location
-   - major action change
-   - cause/effect event
-   - time transition
-   - before/after state
-   - major change in scale or perspective
-   - major emotional/narrative transition
-7. Target visual beat duration is roughly 3.5 to 5.5 seconds of spoken text.
-8. EVERY beat MUST contain a "narration_text_excerpt" that is an EXACT, UNMODIFIED, CONTIGUOUS excerpt copied directly from the Full Spoken Narration text above. Do NOT paraphrase or alter any words.
-9. EVERY beat MUST define a primary visual focal target:
-   - "focal_keyword": A single critical word from the excerpt that represents the subject being highlighted (e.g. "scrolls", "columns", "scribe", "flames", "harbor").
-   - "focal_u": Normalized horizontal coordinate of this subject in the 9:16 frame (float between 0.20 and 0.80, default 0.50).
-   - "focal_v": Normalized vertical coordinate of this subject in the 9:16 frame (float between 0.20 and 0.65, default 0.40).
-   - "zoom_target": Slow zoom target factor for this beat (float between 1.02 and 1.06, default 1.04).
-10. DO NOT output any numeric timestamps, start times, end times, or durations. Python will derive all timestamps deterministically.
+2. FAST VISUAL PACING (HIGH RETENTION REQUIREMENT):
+   - In the FIRST 6 SECONDS, enforce a visual cut every 2.0 to 2.5 seconds (at least 3 distinct visual shots in the opening hook).
+   - Across the entire Short, generate 10 to 12 distinct visual beats (average 2.5 to 3.2 seconds per shot).
+   - NEVER allow a single image to remain on screen for more than 3.5 seconds.
+3. DIVERSE CINEMATIC CAMERA FRAMING:
+   - Cycle dynamically across varied framing angles:
+     * "Extreme close-up portrait of..." (intense weathered face, eyes, Roman commander or emperor)
+     * "Overhead strategic war map depicting..." (tactical cartography, territories, military arrows)
+     * "Low-angle architectural shot of..." (towering stone columns, aqueducts, monuments)
+     * "Dramatic over-the-shoulder view of..." (commander looking over legions or senate assembly)
+     * "Macro cinematic detail of..." (iron forge, parchment treaty, wax seal)
+   - STRICT BAN: DO NOT repeat "Wide-angle documentary shot of..." on consecutive beats.
+4. YOU MUST SPLIT A SENTENCE when it contains multiple visually distinct events or exceeds 2.5 seconds.
+5. EVERY beat MUST contain a "narration_text_excerpt" that is an EXACT, UNMODIFIED, CONTIGUOUS excerpt copied directly from the Full Spoken Narration text above. Do NOT paraphrase.
+6. EVERY beat MUST define a primary visual focal target:
+   - "focal_keyword": A single critical word from the excerpt that represents the subject being highlighted.
+   - "focal_u": Normalized horizontal coordinate (0.20 to 0.80, default 0.50).
+   - "focal_v": Normalized vertical coordinate (0.20 to 0.65, default 0.40).
+   - "zoom_target": Slow zoom target factor (1.02 to 1.06, default 1.04).
 
 Return ONLY a valid JSON object in this exact schema:
 {{
@@ -183,8 +176,8 @@ Return ONLY a valid JSON object in this exact schema:
     {{
       "beat_id": "beat_001",
       "narration_text_excerpt": "Exact verbatim excerpt copied from narration",
-      "visual_concept": "Detailed wide-angle description of what is visually visible",
-      "camera_shot": "Cinematic wide-angle shot",
+      "visual_concept": "Detailed description of what is visually visible with lighting and mood",
+      "camera_shot": "Extreme close-up portrait | Overhead strategic war map | Low-angle architectural shot | Dramatic over-the-shoulder | Macro cinematic detail",
       "focal_keyword": "flames",
       "focal_u": 0.50,
       "focal_v": 0.40,
@@ -216,6 +209,10 @@ Return ONLY a valid JSON object in this exact schema:
             beats = parsed.get("visual_beats", [])
             if isinstance(beats, list) and len(beats) > 0:
                 logging.info(f"[Visual Planner] Successfully received {len(beats)} semantic beats from Ollama.")
+                try:
+                    requests.post(f"{OLLAMA_URL}/api/generate", json={"model": OLLAMA_MODEL, "keep_alive": 0}, timeout=2)
+                except Exception:
+                    pass
                 return beats
             else:
                 logging.warning(f"[Visual Planner Warning] Ollama returned empty or invalid beats list on attempt {attempt}.")
@@ -254,50 +251,107 @@ def apply_duration_validation_rules(
         beat["duration"] = round(b_end - b_start, 3)
         current_time = b_end
 
-    # 2. Merge short beats (< 2.5s) into previous beat where possible
+    # 2. Merge only micro-beats (< 1.6s) into previous beat where possible
     merged_beats = []
     for beat in beats:
-        if merged_beats and beat["duration"] < 2.5:
+        if merged_beats and beat["duration"] < 1.6:
             prev = merged_beats[-1]
             prev["end_time"] = beat["end_time"]
             prev["duration"] = round(prev["end_time"] - prev["start_time"], 3)
             prev["narration_text"] += " " + beat["narration_text"]
             prev["visual_concept"] += f" / {beat['visual_concept']}"
-            logging.info(f"[Visual Planner Rule] Merged short beat ({beat['duration']:.2f}s) into beat '{prev['beat_id']}'.")
+            logging.info(f"[Visual Planner Rule] Merged micro-beat ({beat['duration']:.2f}s) into beat '{prev['beat_id']}'.")
         else:
             merged_beats.append(beat)
 
-    # 3. Split long beats (> 7.0s) into 2 visual camera variations
-    final_beats = []
-    beat_counter = 1
+    # 3. Dynamic Camera Angle Palette
+    camera_cycle = [
+        ("Extreme close-up portrait", "Intense close-up view focusing on expression and eyes"),
+        ("Overhead strategic war map", "Tactical cartography with regional borders and territorial movements"),
+        ("Low-angle architectural shot", "Dramatic low-angle view emphasizing massive stone structures and scale"),
+        ("Dramatic over-the-shoulder", "Over-the-shoulder perspective observing the historical event"),
+        ("Macro cinematic detail", "Detailed macro shot focusing on technology, forged iron, or documents")
+    ]
+
+    # 4. Split beats longer than 2.6s in first 6s, or longer than 3.6s afterwards
+    split_beats = []
     for beat in merged_beats:
         dur = beat["duration"]
-        if dur > 7.0:
-            mid_time = round(beat["start_time"] + (dur / 2.0), 3)
+        start_t = beat["start_time"]
+        max_allowed = 2.6 if start_t < 6.0 else 3.6
+        if dur > max_allowed:
+            mid_time = round(start_t + (dur / 2.0), 3)
             
-            # Beat Part 1
             b1 = dict(beat)
-            b1["beat_id"] = f"beat_{beat_counter:03d}"
             b1["end_time"] = mid_time
-            b1["duration"] = round(mid_time - beat["start_time"], 3)
-            b1["camera_shot"] = "Cinematic wide shot"
-            final_beats.append(b1)
-            beat_counter += 1
+            b1["duration"] = round(mid_time - start_t, 3)
+            split_beats.append(b1)
 
-            # Beat Part 2
             b2 = dict(beat)
-            b2["beat_id"] = f"beat_{beat_counter:03d}"
             b2["start_time"] = mid_time
             b2["duration"] = round(beat["end_time"] - mid_time, 3)
-            b2["camera_shot"] = "Medium detailed shot"
-            b2["visual_concept"] = f"Detailed view of {beat['visual_concept']}"
-            final_beats.append(b2)
-            beat_counter += 1
-            logging.info(f"[Visual Planner Rule] Split long beat ({dur:.2f}s) into two distinct camera shots.")
+            cycle_idx = len(split_beats) % len(camera_cycle)
+            b2["camera_shot"] = camera_cycle[cycle_idx][0]
+            b2["visual_concept"] = f"{camera_cycle[cycle_idx][1]} of {beat.get('visual_concept', '')}"
+            split_beats.append(b2)
+            logging.info(f"[Visual Planner Rule] Split long beat ({dur:.2f}s) into two camera angles for fast pacing.")
         else:
-            beat["beat_id"] = f"beat_{beat_counter:03d}"
-            final_beats.append(beat)
-            beat_counter += 1
+            split_beats.append(beat)
+
+    # 5. Guarantee 10-12 visual beats per Short: split longest if < 10, merge shortest if > 12
+    while len(split_beats) < 10 and len(split_beats) > 0:
+        longest_idx = max(range(len(split_beats)), key=lambda i: split_beats[i]["duration"])
+        target = split_beats[longest_idx]
+        if target["duration"] < 2.0:
+            break
+        dur = target["duration"]
+        mid = round(target["start_time"] + (dur / 2.0), 3)
+        b1 = dict(target)
+        b1["end_time"] = mid
+        b1["duration"] = round(mid - target["start_time"], 3)
+        
+        b2 = dict(target)
+        b2["start_time"] = mid
+        b2["duration"] = round(target["end_time"] - mid, 3)
+        cycle_idx = len(split_beats) % len(camera_cycle)
+        b2["camera_shot"] = camera_cycle[cycle_idx][0]
+        b2["visual_concept"] = f"{camera_cycle[cycle_idx][1]} of {target.get('visual_concept', '')}"
+
+        split_beats[longest_idx] = b1
+        split_beats.insert(longest_idx + 1, b2)
+
+    while len(split_beats) > 12:
+        best_merge_idx = min(range(len(split_beats) - 1), key=lambda i: split_beats[i]["duration"] + split_beats[i+1]["duration"])
+        prev = split_beats[best_merge_idx]
+        curr = split_beats[best_merge_idx + 1]
+        prev["end_time"] = curr["end_time"]
+        prev["duration"] = round(prev["end_time"] - prev["start_time"], 3)
+        prev["narration_text"] += " " + curr.get("narration_text", "")
+        prev["visual_concept"] += " / " + curr.get("visual_concept", "")
+        split_beats.pop(best_merge_idx + 1)
+
+    # 6. Normalize beat timeline strictly to [0.0, total_duration]
+    total_beats_duration = sum(max(0.5, b["duration"]) for b in split_beats)
+    scale = total_duration / total_beats_duration if total_beats_duration > 0 else 1.0
+
+    curr_time = 0.0
+    for idx, beat in enumerate(split_beats):
+        b_dur = round(max(0.5, beat["duration"]) * scale, 3)
+        b_start = round(curr_time, 3)
+        b_end = round(curr_time + b_dur, 3) if idx < len(split_beats) - 1 else total_duration
+        beat["start_time"] = b_start
+        beat["end_time"] = b_end
+        beat["duration"] = round(b_end - b_start, 3)
+        curr_time = b_end
+
+    # Assign sequential IDs and enforce varied camera shot metadata
+    final_beats = []
+    for idx, beat in enumerate(split_beats):
+        beat["beat_id"] = f"beat_{idx+1:03d}"
+        if not beat.get("camera_shot") or "wide" in beat.get("camera_shot", "").lower():
+            cycle_idx = idx % len(camera_cycle)
+            beat["camera_shot"] = camera_cycle[cycle_idx][0]
+        final_beats.append(beat)
 
     return final_beats
 
