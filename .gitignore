@@ -30,6 +30,12 @@ build/
 *.db
 growth/growth.db
 growth/*.db
+*.db-journal
+*.db-shm
+*.db-wal
+growth/*.db-journal
+growth/*.db-shm
+growth/*.db-wal
 
 # Secrets, API Keys & OAuth Credentials (CRITICAL)
 .env
@@ -42,6 +48,15 @@ growth/*.db
 *credentials*.json
 *.pem
 *.key
+assets/*.txt
+assets/client_secret*
+assets/GOCSPX*
+assets/*key*
+assets/*secret*
+
+# Pipeline 2 & Secondary Modules (Preserved on dedicated branch backup/pipeline-2)
+convo-shorts/
+repograder/
 
 # Runtime Output & Media Assets
 output/
@@ -62,6 +77,17 @@ videos/
 *.jpg
 *.jpeg
 espeak-ng-data/
+
+# Showcase & Visual Grounding Assets (Allowed for Private Repo Context)
+!assets/sample_scenes/**/*.png
+!assets/sample_scenes/**/*.jpg
+!assets/sample_scenes/**/*.jpeg
+
+# Local Unprocessed / Secondary Reference Assets
+assets/*.docx
+assets/*.csv
+assets/*.html
+assets/*.json
 
 # Logs & Runtime State
 *.log

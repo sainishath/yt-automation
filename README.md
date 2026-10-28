@@ -1,18 +1,17 @@
-﻿# YouTube Shorts Automation Engine (Dual-Pipeline Growth Intelligence Platform)
+# YouTube Automation Engine: Factual History Long-Form & Shorts Platform
 
-A production-grade, closed-loop YouTube Shorts generation, validation, review-gating, and empirical learning platform powering two automated channels:
+A production-grade, closed-loop YouTube documentary and viral shorts generation, validation, review-gating, and empirical learning platform.
 
-1. **Pipeline 1: Chronos Shift (`alternate-history-shorts`)**
-   - **Niche**: Alternate History & Groundbreaking Historical "What-If" Documentary Shorts.
-   - **Visuals**: 100% Full-screen 9:16 cinematic SDXL visuals rendered via local Fooocus with subpixel OpenCV Ken Burns directional focal zoom.
-   - **Voice & Audio**: Authoritative documentary narration (`en-US-ChristopherNeural`, Edge-TTS) with cinematic orchestral background music.
-   - **Subtitles**: Dynamic karaoke-style word-highlight ASS subtitles.
+> [!NOTE]
+> The `main` branch is dedicated exclusively to **Pipeline 1: Chronos Shift / Factual Historical Documentaries** (Long-Form 16:9 Master Documentaries + Multi-Shorts 9:16 Hub-and-Spoke Engine).
+> The previous secondary pipeline (`convo-shorts` / Debate Protocol) and SaaS experiments (`repograder`) are preserved intact on the [`backup/pipeline-2`](https://github.com/sainishath/yt-automation/tree/backup/pipeline-2) branch.
 
-2. **Pipeline 2: Debate Protocol / Senior Dev (`convo-shorts`)**
-   - **Niche**: Software Engineering, Architecture, and Technical Deep Dives.
-   - **Visuals**: Full-screen kinetic gameplay background (Minecraft/Subway Surfers) overlaid with 960x720 floating dark-mode code cards (Tokyo Night syntax rendered via Pygments + Consolas vector graphics).
-   - **Voice & Audio**: Senior Technical Narrator (`en_US-ryan-medium.onnx` / Piper TTS) with multi-angle concept generation.
-   - **Subtitles**: Speaker-differentiated highlighted captions (Yellow for Speaker A, Cyan for Speaker B).
+---
+
+## 📖 Primary Documentation & Blueprint
+- **[Full Strategy & Architecture Specification](PIPELINE_1_STRATEGY_AND_ARCHITECTURE.md)**: Complete guide to the Long-Form Hub & Shorts Spoke model, 4-beat viral hook architecture, historical knowledge corpus, and technical pipeline.
+- **[Visual Grounding Showcase](assets/README.md)**: Native 16:9 cinematic master frames and 9:16 vertical reel renders generated via local Fooocus SDXL.
+- **[Historical Knowledge Corpus](growth/knowledge/corpus/)**: Factual dossiers with primary sources (Plutarch, Gibbon, British Board of Trade, etc.) and overlooked historical details.
 
 ---
 
@@ -21,161 +20,144 @@ A production-grade, closed-loop YouTube Shorts generation, validation, review-ga
 ```mermaid
 flowchart TD
     %% ==========================================
-    %% LAYER 1: STRATEGY & CONTENT BRAIN
+    %% LAYER 1: KNOWLEDGE & RESEARCH
     %% ==========================================
-    subgraph BRAIN["Content Brain & Strategic Memory"]
-        DB[("growth.db\n(SQLite Central Memory)")]
-        SM["StrategyManager\n(Active Strategy: v1.0, v1.1...)"]
-        DE["DecisionEngine\n(A/B Cohort Balancing & Topic Ranking)"]
-        CRITIC["HybridScriptCritic\n(Tier 1 Deterministic + Tier 2 Semantic)"]
-        
-        DB <--> SM
-        SM --> DE
+    subgraph RESEARCH["1. Factual History Grounding & Corpus"]
+        CORPUS[("growth/knowledge/corpus/\nPrimary Evidence Dossiers\n(Constantinople, Caesar, Napoleon, Titanic)")]
+        RAG["ScriptArchitect & RAG Grounding\n(Overlooked Detail + Sensory Anchors)"]
+        CORPUS --> RAG
     end
 
     %% ==========================================
-    %% LAYER 2: ISOLATED PRODUCTION PIPELINES
+    %% LAYER 2: PRODUCTION ENGINE
     %% ==========================================
-    subgraph PRODUCTION["Production Execution (Strictly Isolated)"]
-        subgraph P1["Pipeline 1: Chronos Shift (History)"]
-            P1_RUN["pipeline_runner.py"]
-            P1_FOO["Fooocus SDXL (Port 7865)"]
-            P1_KB["OpenCV Subpixel Ken Burns"]
-            P1_QA["17/17 QA Gate"]
+    subgraph PRODUCTION["2. Dual-Format Production Engine"]
+        subgraph LONGFORM["Long-Form Engine (16:9 Widescreen)"]
+            LF_SCRIPT["script_architect.py\n(7 Acts • 80 Shots • 10-15 Min)"]
+            LF_IMAGE["Fooocus SDXL (Port 7865)\n(1344x768 Cinematic Master)"]
+            LF_VOICE["Edge-TTS Narrator\n(en-US-ChristopherNeural)"]
+            LF_COMP["assemble_longform.py\n(Lossless Concat + Chapter Marks)"]
             
-            P1_RUN --> P1_FOO --> P1_KB --> P1_QA
+            LF_SCRIPT --> LF_IMAGE --> LF_VOICE --> LF_COMP
         end
 
-        subgraph P2["Pipeline 2: Debate Protocol (Coding)"]
-            P2_RUN["main.py"]
-            P2_PYG["Pygments Tokyo Night Cards"]
-            P2_COMP["Upper-Zone Compositor (960x720)"]
-            P2_QA["16/16 QA Gate"]
+        subgraph SHORTS["Viral Shorts Engine (9:16 Vertical)"]
+            SH_RUN["pipeline_runner.py / short_splitter.py\n(30-50s Standalone Spoke)"]
+            SH_IMAGE["Fooocus SDXL (Port 7865)\n(896x1152 Vertical Composition)"]
+            SH_KB["OpenCV Subpixel Ken Burns\n(Directional Focal Pan/Zoom)"]
+            SH_SUB["Whisper Karaoke ASS Subtitles\n(Word-by-word Highlight)"]
+            SH_QA["17/17 QA Gate\n(Zero Black Frames / Audio Sync)"]
             
-            P2_RUN --> P2_PYG --> P2_COMP --> P2_QA
+            SH_RUN --> SH_IMAGE --> SH_KB --> SH_SUB --> SH_QA
         end
 
-        DE --> P1_RUN
-        DE --> P2_RUN
-        P1_RUN --- CRITIC
-        P2_RUN --- CRITIC
+        RAG --> LF_SCRIPT
+        LF_COMP -.->|"Automated Act Slicing"| SH_RUN
     end
 
     %% ==========================================
-    %% LAYER 3: HUMAN-IN-THE-LOOP & UPLOAD
+    %% LAYER 3: REVIEW & UPLOAD
     %% ==========================================
-    subgraph REVIEW["Review & Human Gate"]
-        DISCORD["Discord Review Webhook\n(540x960 Video Proxy)"]
-        N8N["n8n Webhook / Approval Trigger"]
-        SERVER["growth/server.py (Port 8010)\nPOST /api/upload-approved"]
-        YT_API["Official Google YouTube Data API v3\n(Chunked Resumable Upload)"]
+    subgraph REVIEW["3. Human Gate & Discord Review"]
+        PROXY["540x960 Mobile Proxy Render"]
+        DISCORD["Discord Review Webhook #1528622690980724807"]
+        APPROVE["Human Approval Gate (/approve <job_id>)"]
+        YT["Official YouTube Data API v3\n(Chunked Resumable Upload)"]
         
-        P1_QA -->|"Job: AWAITING_REVIEW"| DISCORD
-        P2_QA -->|"Job: AWAITING_REVIEW"| DISCORD
-        DISCORD -->|"Human Slash Command"| N8N
-        N8N --> SERVER
-        SERVER --> YT_API
+        LF_COMP --> PROXY
+        SH_QA --> PROXY
+        PROXY --> DISCORD --> APPROVE --> YT
     end
 
     %% ==========================================
     %% LAYER 4: ANALYTICS & CLOSED-LOOP LEARNING
     %% ==========================================
-    subgraph LEARNING["Analytics Ingestion & Closed-Loop Learning"]
-        YT_PLATFORM[("YouTube Platform\n(Live Videos)")]
-        FETCH["fetch_analytics.py\n(1h, 6h, 24h, 48h, 7d, 28d)"]
-        SNAPS[("performance_snapshots Table")]
-        LE["LearningEngine & Evaluator\n(N >= 4 Guard & 7d Maturity)"]
-        EVO["StrategyEvolutionEngine\n(v1.0 -> v1.1 Mutation)"]
+    subgraph LEARNING["4. Closed-Loop Growth Intelligence"]
+        ANALYTICS["fetch_analytics.py\n(1h, 6h, 24h, 48h, 7d Snapshots)"]
+        CRITIC["HybridScriptCritic & LearningEngine\n(APV >= 65% Guard & N >= 4 Audit)"]
+        STRATEGY["Strategy Evolution\n(Hook Mutation & Pacing Optimization)"]
         
-        YT_API --> YT_PLATFORM
-        YT_PLATFORM --> FETCH
-        FETCH --> SNAPS
-        SNAPS --> LE
-        LE -->|"APV < 65% (Hook Failure)"| DB
-        LE -->|"Treatment Delta >= +15%"| EVO
-        EVO -->|"STRATEGY_MUTATION"| SM
+        YT --> ANALYTICS --> CRITIC --> STRATEGY
+        STRATEGY --> RAG
     end
 ```
 
 ---
 
-## 🗄️ Core Database Schema (`growth/growth.db`)
+## 📂 Repository Structure
 
-All pipeline runs, metadata, experiment arms, and performance logs are natively persisted in SQLite:
-
-| Table | Purpose |
-|---|---|
-| `channels` | Channel definitions, default strategies, target upload schedules (`channel_a`, `channel_b`). |
-| `jobs` | Production job lifecycle states (`GENERATING`, `AWAITING_REVIEW`, `UPLOADING`, `PUBLISHED`, `QA_FAILED`). |
-| `videos` | Master registry of rendered videos, metadata (title, description), duration, and YouTube video IDs. |
-| `experiments` | A/B testing definitions, hypotheses, variable tested, and minimum sample size ($N \ge 4$). |
-| `experiment_arms` | Specific control vs treatment variant configurations and live sample counts. |
-| `performance_snapshots` | Empirical performance records across standard evaluation windows (`1h`, `6h`, `24h`, `48h`, `7d`, `28d`). |
-| `learning_events` | Audit trail of Content Brain discoveries, `HOOK_FAILURE` logs, and `STRATEGY_MUTATION` events. |
-| `strategy_versions` | Immutable versions of channel strategy profiles (`v1.0`, `v1.1`, etc.). |
+```
+yt-automations/
+├── PIPELINE_1_STRATEGY_AND_ARCHITECTURE.md   # Complete blueprint & strategic specifications
+├── README.md                                 # This file
+├── GEMINI.md                                 # Production constraints & invariants
+├── alternate-history-shorts/                 # Pipeline 1: Native 9:16 Shorts Generator
+│   ├── config/voice.json                     # TTS Voice configuration (en-US-ChristopherNeural)
+│   └── scripts/
+│       ├── pipeline_runner.py                # Main shorts production orchestrator
+│       ├── generate_script.py                # RAG script writer with Ollama VRAM offload
+│       ├── visual_scene_planner.py           # Beat-by-beat SDXL prompt planner
+│       ├── generate_images.py                # Fooocus SDXL batch generator
+│       ├── generate_metadata.py              # Title, description, tags, hashtags generator
+│       ├── qa_gate.py                        # 17-point automated visual & audio validator
+│       └── upload_video.py                   # Chunked resumable YouTube uploader
+├── longform_engine/                          # Pipeline 1: Native 16:9 Long-Form Generator
+│   ├── script_architect.py                   # 7-Act 80-shot master documentary architect
+│   ├── assemble_longform.py                  # High-res video assembler with chapter marks
+│   └── short_splitter.py                     # Chapter-to-Shorts extraction & vertical reframe
+├── growth/                                   # Growth Intelligence & Core Brain
+│   ├── knowledge/                            # Historical Research Corpus
+│   │   ├── history_harvester.py              # Research dossier fetcher & validator
+│   │   └── corpus/                           # Structured JSON evidence files with primary sources
+│   ├── brain/                                # Cognitive Critic & Evaluation Engine
+│   ├── analytics/                            # Multi-window performance snapshot tracker
+│   ├── topic_engine/                         # Historical topic pool & scoring
+│   ├── strategy/                             # Active Channel A strategy documents
+│   └── tests/                                # Comprehensive unit test suite
+├── assets/                                   # Visual Assets & Reference Samples
+│   ├── README.md                             # Asset guide
+│   └── sample_scenes/                        # Fooocus SDXL master outputs (16:9 and 9:16)
+└── tests/                                    # End-to-end integration test suite
+```
 
 ---
 
-## 🛠️ Operations Manual
+## ⚡ Quick Start & Commands
 
-### 1. Launching Background Services
-Before generating videos, start Ollama, Fooocus SDXL, and verify CUDA acceleration:
-```bat
-start_services.bat
-```
-To launch the Growth REST API Server (Port 8010):
+### 1. Start Local Prerequisites
 ```powershell
-$env:PYTHONIOENCODING="utf-8"; python growth/server.py
+# Start Ollama (Port 11434) and Fooocus SDXL (Port 7865)
+.\start_services.ps1
 ```
 
-### 2. Executing Generation Pipelines
-
-#### Pipeline 1 (Chronos Shift - History Shorts)
+### 2. Harvest New Historical Dossiers
 ```powershell
-$env:PYTHONIOENCODING="utf-8"; python alternate-history-shorts/scripts/pipeline_runner.py --topic "What If the Library of Alexandria Survived?"
+python growth/knowledge/history_harvester.py
 ```
 
-#### Pipeline 2 (Debate Protocol - Technical Coding Shorts)
+### 3. Generate a Standalone 9:16 Viral Short
 ```powershell
-$env:PYTHONIOENCODING="utf-8"; python convo-shorts/yt-automation-engine/main.py --topic "Postgres vs Redis for Session Caching" --category "Coding"
+python alternate-history-shorts/scripts/pipeline_runner.py `
+  --topic "The Unlocked Postern of Constantinople" `
+  --category "historical_paradox" `
+  --force
 ```
 
-### 3. Human Approval & YouTube Upload Trigger
-When a video completes QA, a `540x960` proxy is posted to Discord for human review. To approve and publish:
-
-#### Via n8n / REST API:
-```bash
-curl -X POST http://127.0.0.1:8010/api/upload-approved \
-     -H "Content-Type: application/json" \
-     -d '{"job_id": "YOUR_JOB_ID", "privacy_status": "public"}'
-```
-
-### 4. Running Analytics Ingestion & Learning Engine
-
-#### Run Ingestion for Due Snapshot Windows:
+### 4. Build a 16:9 Long-Form Documentary Package
 ```powershell
-# Live YouTube Analytics API query:
-$env:PYTHONIOENCODING="utf-8"; python growth/analytics/fetch_analytics.py
-
-# Simulation Dry-Run:
-$env:PYTHONIOENCODING="utf-8"; python growth/analytics/fetch_analytics.py --dry-run
+python -c "from longform_engine.assemble_longform import create_longform_package; create_longform_package('doc_1453', 'The Fall of Constantinople 1453', dry_run=False)"
 ```
 
-#### Run Content Brain Learning Cycle & Hook Audit:
+### 5. Run the Test Suite
 ```powershell
-$env:PYTHONIOENCODING="utf-8"; python -c "from growth.brain.learning_engine import LearningEngine; from growth.db.models import GrowthRepository; repo = GrowthRepository(); engine = LearningEngine(repo); print(engine.run_channel_learning_cycle('channel_a'))"
-```
-
-#### Run Full Test Suite:
-```powershell
-$env:PYTHONIOENCODING="utf-8"; python -m unittest discover -s growth/tests -p "test_*.py"
+python -m unittest discover -s growth/tests -p "test_*.py"
 ```
 
 ---
 
 ## 🔒 Strict Production Invariants
 
-1. **Dual-Pipeline Isolation**: Neither pipeline shall ever import, call, or share video assembly wrappers from the other.
-2. **Fooocus SDXL Invariant**: All image generation uses local Fooocus on `http://127.0.0.1:7865`. Zero external cloud image APIs.
-3. **Human Gate Requirement**: Videos are never uploaded automatically without explicit human Discord approval.
+1. **Pipeline 1 Isolation**: Zero reliance on gameplay footage or secondary code cards. 100% cinematic visual compositions.
+2. **Local Fooocus SDXL Invariant**: All image generation uses local Fooocus on `http://127.0.0.1:7865`. Zero external cloud image APIs.
+3. **Human Gate Requirement**: Every video must pass the 17-point QA gate and dispatch a proxy to Discord `#1528622690980724807` before upload.
 4. **Empirical Evidence Dominance**: Strategy promotions require mature 7-day performance data with $N \ge 4$ samples per arm and $\Delta \ge +15.0\%$ APV.
