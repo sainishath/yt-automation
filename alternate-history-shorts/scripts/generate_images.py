@@ -12,6 +12,12 @@ Supports per-beat environment-controlled Fooocus fallback (ALLOW_FOOOCUS_FALLBAC
 
 import os
 import sys
+import io
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 import json
 import time
 import shutil
@@ -21,7 +27,10 @@ import logging
 from pathlib import Path
 from typing import Optional
 from PIL import Image, ImageDraw, ImageFont
-from gradio_client import Client
+try:
+    from gradio_client import Client
+except ImportError:
+    Client = None
 
 # Setup logging to pipeline.log and stdout
 LOG_FILE = Path("pipeline.log")
@@ -252,10 +261,18 @@ def generate_fooocus_image(
             # Filter out state components
             filtered_args = [val for val, ctype in zip(args, ep67.input_component_types) if ctype != 'state']
             
-            outputs_dir = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs"))
             import tempfile
-            gradio_temp = Path(tempfile.gettempdir()) / "gradio"
-            pre_files = (set(outputs_dir.glob("**/*.png")) if outputs_dir.exists() else set()) | (set(gradio_temp.glob("**/*.png")) if gradio_temp.exists() else set())
+            candidate_dirs = [
+                Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Media/AI Generated Art/Fooocus_Outputs")),
+                Path("D:/Media/AI Generated Art/Fooocus_Outputs"),
+                Path("D:/Projects/Fooocus/outputs"),
+                Path("D:/AI-Tools/Fooocus/outputs"),
+                Path(tempfile.gettempdir()) / "gradio"
+            ]
+            outputs_dirs = [d for d in candidate_dirs if d.exists()]
+            pre_files = set()
+            for d in outputs_dirs:
+                pre_files |= set(d.glob("**/*.png"))
             
             # Step 1: Set parameters via predict on fn_index=67
             client.predict(*filtered_args, fn_index=67)
@@ -276,7 +293,9 @@ def generate_fooocus_image(
                 time.sleep(2)
                 
             # Copy generated image from Fooocus outputs using set difference
-            post_files = (set(outputs_dir.glob("**/*.png")) if outputs_dir.exists() else set()) | (set(gradio_temp.glob("**/*.png")) if gradio_temp.exists() else set())
+            post_files = set()
+            for d in outputs_dirs:
+                post_files |= set(d.glob("**/*.png"))
             new_candidate_files = post_files - pre_files
             new_img = None
             if new_candidate_files:
@@ -285,7 +304,11 @@ def generate_fooocus_image(
                     new_img = max(valid_files, key=lambda p: p.stat().st_mtime)
             
             if not new_img:
-                new_img = find_newest_png(outputs_dir, job_start_time - 5.0) or find_newest_png(gradio_temp, job_start_time - 5.0)
+                for d in outputs_dirs:
+                    found = find_newest_png(d, job_start_time - 5.0)
+                    if found:
+                        new_img = found
+                        break
                 
             if new_img and new_img.exists():
                 shutil.copy(new_img, out_path)
