@@ -1,37 +1,34 @@
-﻿# Master Service Launcher for YouTube Automations
-$env:PYTHONIOENCODING = "utf-8"
+# Start Local AI Infrastructure for Pipeline 1 (Fooocus SDXL + Ollama)
+Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host "Starting Chronos Shift AI Infrastructure..." -ForegroundColor Cyan
+Write-Host "==========================================================" -ForegroundColor Cyan
 
-Write-Host "========================================================" -ForegroundColor Cyan
-Write-Host "  YouTube Automations - Master Service Launcher" -ForegroundColor Cyan
-Write-Host "========================================================`n"
-
-# 1. Check Ollama
-Write-Host "[1/3] Checking Ollama Service (Port 11434)..." -NoNewline
-try {
-    $res = Invoke-WebRequest -Uri "http://127.0.0.1:11434/api/tags" -TimeoutSec 3 -UseBasicParsing
-    Write-Host " [OK] ONLINE" -ForegroundColor Green
-} catch {
-    Write-Host " [STARTING] Launching Ollama daemon..." -ForegroundColor Yellow
-    Start-Process -FilePath "ollama" -ArgumentList "serve" -WindowStyle Minimized
-    Start-Sleep -Seconds 3
+# 1. Start Ollama (Port 11434)
+$ollamaRunning = Get-Process -Name "ollama" -ErrorAction SilentlyContinue
+if (-not $ollamaRunning) {
+    Write-Host "[1/2] Starting Ollama background server..." -ForegroundColor Yellow
+    Start-Process -FilePath "ollama" -ArgumentList "serve" -WindowStyle Hidden
+    Start-Sleep -Seconds 2
+} else {
+    Write-Host "[1/2] Ollama server is already running on port 11434." -ForegroundColor Green
 }
 
-# 2. Check Fooocus SDXL
-Write-Host "[2/3] Checking Fooocus SDXL Service (Port 7865)..." -NoNewline
-try {
-    $res = Invoke-WebRequest -Uri "http://127.0.0.1:7865" -TimeoutSec 3 -UseBasicParsing
-    Write-Host " [OK] ONLINE" -ForegroundColor Green
-} catch {
-    Write-Host " [STARTING] Launching Fooocus SDXL server on port 7865..." -ForegroundColor Yellow
-    Start-Process -FilePath "python" -ArgumentList "D:\Projects\Fooocus\launch.py --listen 127.0.0.1 --port 7865" -WorkingDirectory "D:\Projects\Fooocus"
-    Write-Host "Waiting for Fooocus SDXL to initialize..."
-    Start-Sleep -Seconds 10
+# 2. Start Fooocus SDXL (Port 7865)
+$fooocusDir = "D:\AI-Tools\Fooocus"
+if (Test-Path $fooocusDir) {
+    $fooocusPort = 7865
+    $portActive = Get-NetTCPConnection -LocalPort $fooocusPort -State Listen -ErrorAction SilentlyContinue
+    if (-not $portActive) {
+        Write-Host "[2/2] Launching Fooocus SDXL (VRAM offload enabled)..." -ForegroundColor Yellow
+        $pythonExe = Join-Path $fooocusDir "fooocus_env\Scripts\python.exe"
+        $launchPy = Join-Path $fooocusDir "launch.py"
+        Start-Process -FilePath $pythonExe -ArgumentList "$launchPy --listen 127.0.0.1 --port $fooocusPort --disable-in-browser --always-offload-from-vram" -WorkingDirectory $fooocusDir
+        Write-Host "Fooocus launching in background on http://127.0.0.1:7865" -ForegroundColor Green
+    } else {
+        Write-Host "[2/2] Fooocus SDXL is already listening on port 7865." -ForegroundColor Green
+    }
+} else {
+    Write-Host "[2/2] Fooocus directory not found at $fooocusDir" -ForegroundColor Red
 }
 
-# 3. Environment & GPU Verification
-Write-Host "[3/3] Checking CUDA Acceleration & PyTorch..."
-python -c "import torch; print('      [OK] PyTorch:', torch.__version__, '| GPU:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU (WARNING)')"
-
-Write-Host "`n========================================================" -ForegroundColor Cyan
-Write-Host "  All required services are active and ready!" -ForegroundColor Green
-Write-Host "========================================================" -ForegroundColor Cyan
+Write-Host "Infrastructure check complete!" -ForegroundColor Cyan
