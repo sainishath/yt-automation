@@ -1,0 +1,37 @@
+[
+  {
+    "id": "fall_of_constantinople_1453",
+    "title": "The Fall of Constantinople (1453)",
+    "era": "Medieval / Early Modern",
+    "overlooked_twist": "The city had withstood 2 dozen sieges over 1,000 years. It fell not solely from supercannons, but because the 3-foot Kerkoporta sally-port gate was left unlocked by accident by defenders after a sortie, allowing 50 Janissaries to climb the inner rampart.",
+    "file": "growth/knowledge/corpus/fall_of_constantinople_1453.json"
+  },
+  {
+    "id": "caesar_cilician_pirates_75bc",
+    "title": "Julius Caesar Kidnapped by Pirates (75 BC)",
+    "era": "Classical Antiquity",
+    "overlooked_twist": "Pirates demanded 20 talents ($20M). Caesar laughed, said he was worth 50 talents, ordered them to be quiet so he could sleep, made them listen to his speeches, and warned them with a grin he would crucify them. 38 days later, ransom paid, he raised a private fleet, hunted them down, and kept his exact promise.",
+    "file": "growth/knowledge/corpus/caesar_cilician_pirates_75bc.json"
+  },
+  {
+    "id": "napoleon_retreat_from_moscow_1812",
+    "title": "Napoleon's 1812 Russian Retreat & The Tin Button Disaster",
+    "era": "Napoleonic Wars",
+    "overlooked_twist": "The Grande Armée was not destroyed primarily by Russian bayonets. Sub-zero blizzards triggered 'tin pest'—an allotropic disintegration of cheap tin uniform buttons into gray powder—forcing freezing soldiers to clutch their coats with one hand while typhus-carrying body lice decimated 400,000 men.",
+    "file": "growth/knowledge/corpus/napoleon_retreat_from_moscow_1812.json"
+  },
+  {
+    "id": "franz_ferdinand_wrong_turn_1914",
+    "title": "The Assassination of Franz Ferdinand: The Stalled Car (1914)",
+    "era": "World War I",
+    "overlooked_twist": "The assassination plot had completely collapsed after the morning bomb missed. Princip gave up and walked to Schiller's delicatessen. The Archduke decided to visit wounded officers in hospital, but his driver took a wrong turn onto Franz Josef Street, tried to reverse, stalled the un-geared engine, and stopped exactly 5 feet from where Princip was standing on the sidewalk.",
+    "file": "growth/knowledge/corpus/franz_ferdinand_wrong_turn_1914.json"
+  },
+  {
+    "id": "titanic_coal_bunker_fire_1912",
+    "title": "The Titanic's Secret Coal Fire (1912)",
+    "era": "Edwardian / Industrial",
+    "overlooked_twist": "A subterranean smoldering coal fire had ignited in Bunker No. 6 ten days before the voyage. White Star Line kept it secret from passengers. The intense 1,000°C heat warped and weakened the watertight steel bulkhead, which buckled precisely where the iceberg grazed the starboard hull.",
+    "file": "growth/knowledge/corpus/titanic_coal_bunker_fire_1912.json"
+  }
+]

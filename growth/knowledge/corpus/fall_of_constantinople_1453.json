@@ -1,0 +1,23 @@
+{
+  "story_id": "fall_of_constantinople_1453",
+  "title": "The Fall of Constantinople (1453)",
+  "era": "Medieval / Early Modern",
+  "overlooked_twist": "The city had withstood 2 dozen sieges over 1,000 years. It fell not solely from supercannons, but because the 3-foot Kerkoporta sally-port gate was left unlocked by accident by defenders after a sortie, allowing 50 Janissaries to climb the inner rampart.",
+  "primary_sources": [
+    "George Sphrantzes (Chronicon Minus)",
+    "Nicolo Barbaro (Diary of the Siege of Constantinople 1453)",
+    "Edward Gibbon (Decline and Fall)"
+  ],
+  "wikipedia_summary": "The fall of Constantinople, also known as the conquest of Constantinople, was the capture of the capital of the Byzantine Empire by the Ottoman Empire on 29 May 1453. The city fell after a 53-day siege that had begun on 6 April 1453. The Ottoman army was commanded by the twenty-one-year-old Sultan Mehmed II, while the Byzantine army was led by Emperor Constantine XI Palaiologos. The capture of the city marked the end of the Byzantine Empire.",
+  "wikipedia_url": "https://en.wikipedia.org/wiki/Fall_of_Constantinople",
+  "scholarly_papers": [
+    {
+      "title": "The Fall of Constantinople 1453",
+      "year": 1965,
+      "cited_by_count": 298,
+      "doi": "https://doi.org/10.1017/cbo9780511562204",
+      "summary": "Steven Runciman's classic monograph analysing the military, religious, and logistical failures leading to the breach of the Theodosian Walls."
+    }
+  ],
+  "harvested_at": "2026-10-28T15:20:00Z"
+}
