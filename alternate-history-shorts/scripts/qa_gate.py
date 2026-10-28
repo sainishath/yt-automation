@@ -28,6 +28,12 @@ import sys
 import json
 import argparse
 import subprocess
+import io
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 from pathlib import Path
 from typing import Dict, Any, Tuple
 
@@ -283,10 +289,10 @@ def run_pipeline1_qa(video_id: str, output_dir: str = "output") -> Dict[str, Any
         qa_report["metrics"]["mean_volume_db"] = mean_vol
         qa_report["metrics"]["max_volume_db"] = max_vol
 
-        if mean_vol is not None and mean_vol > -45.0 and (max_vol is None or max_vol <= -0.1):
+        if mean_vol is not None and -28.0 <= mean_vol <= -12.0 and (max_vol is None or max_vol <= -0.1):
             qa_report["checks"]["audio_loudness"] = True
         else:
-            qa_report["failures"].append(f"Audio loudness out of bounds: mean={mean_vol}dB, max={max_vol}dB")
+            qa_report["failures"].append(f"Audio loudness out of bounds (target -28.0 to -12.0 dB): mean={mean_vol}dB, max={max_vol}dB")
     except Exception as ae:
         qa_report["warnings"].append(f"Loudness detection check non-fatal error: {ae}")
         qa_report["checks"]["audio_loudness"] = True
