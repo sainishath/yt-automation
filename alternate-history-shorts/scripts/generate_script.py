@@ -892,6 +892,7 @@ Return ONLY a raw JSON object with this exact schema:
                 "prompt": attempt_prompt,
                 "format": "json",
                 "stream": False,
+                "keep_alive": "30m",
                 "options": {
                     "temperature": 0.4 if attempt > 1 else 0.5,
                     "num_predict": 700

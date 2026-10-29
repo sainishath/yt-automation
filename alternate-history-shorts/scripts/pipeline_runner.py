@@ -24,6 +24,7 @@ import time
 import shutil
 import argparse
 import logging
+import requests
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -148,6 +149,19 @@ def run_pipeline1(
     print(f"  Topic: \"{topic}\"")
     print(f"  Strategy: {strategy_version} | Exp: {experiment_id} | Arm: {arm_id}")
     print(f"=======================================================\n")
+
+    # Warm up local Ollama with keep_alive='30m' to keep model resident in GPU VRAM
+    ollama_url = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434")
+    ollama_model = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:7b")
+    try:
+        requests.post(
+            f"{ollama_url}/api/generate",
+            json={"model": ollama_model, "keep_alive": "30m"},
+            timeout=5
+        )
+        logger.info(f"[{video_id}] Preloaded Ollama model '{ollama_model}' with keep_alive=30m")
+    except Exception as _oe:
+        logger.debug(f"[{video_id}] Ollama preload notice: {_oe}")
 
     # Stage 0: Counterfactual Divergence Pre-Check Gate
     lower_t = topic.lower().strip()

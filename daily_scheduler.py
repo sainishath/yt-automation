@@ -112,6 +112,14 @@ def run_pipeline_2(lesson_num: int) -> bool:
     print(f"{'='*60}")
     
     script_path = ROOT_DIR / "convo-shorts" / "yt-automation-engine" / "main.py"
+    if not script_path.exists():
+        external_path = ROOT_DIR.parent / "convo-shorts" / "yt-automation-engine" / "main.py"
+        if external_path.exists():
+            script_path = external_path
+        else:
+            print(f"[PIPELINE 2 SKIPPED] {script_path} not found on this branch. Focusing on Channel A.")
+            return True
+
     cmd = [
         sys.executable,
         str(script_path),
@@ -121,7 +129,7 @@ def run_pipeline_2(lesson_num: int) -> bool:
     env = dict(os.environ)
     env["PYTHONIOENCODING"] = "utf-8"
     
-    res = subprocess.run(cmd, cwd=str(ROOT_DIR), env=env)
+    res = subprocess.run(cmd, cwd=str(script_path.parent), env=env)
     return res.returncode == 0
 
 

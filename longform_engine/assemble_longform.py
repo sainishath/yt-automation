@@ -163,8 +163,6 @@ def generate_16x9_visual(
                 filtered_args = [val for val, ctype in zip(args, ep67.input_component_types) if ctype != 'state']
 
                 gradio_temp = Path(tempfile.gettempdir()) / "gradio"
-                pre_files = (set(FOOOCUS_OUTPUTS_DIR.glob("**/*.png")) if FOOOCUS_OUTPUTS_DIR.exists() else set()) | \
-                            (set(gradio_temp.glob("**/*.png")) if gradio_temp.exists() else set())
 
                 # Step 1: Parameter setter
                 client.predict(*filtered_args, fn_index=67)
@@ -181,14 +179,44 @@ def generate_16x9_visual(
                         raise TimeoutError("Fooocus SDXL generation timed out.")
                     time.sleep(2)
 
-                post_files = (set(FOOOCUS_OUTPUTS_DIR.glob("**/*.png")) if FOOOCUS_OUTPUTS_DIR.exists() else set()) | \
-                             (set(gradio_temp.glob("**/*.png")) if gradio_temp.exists() else set())
-                new_files = post_files - pre_files
+                # Fast Result Extraction: check job.result() directly, avoiding 160 recursive disk globs
                 new_img = None
-                if new_files:
-                    valid_candidates = [f for f in new_files if f.stat().st_size > 50000]
-                    if valid_candidates:
-                        new_img = max(valid_candidates, key=lambda p: p.stat().st_mtime)
+                try:
+                    res = job.result()
+                    if isinstance(res, (list, tuple)):
+                        for item in res:
+                            cand_path = None
+                            if isinstance(item, str) and item.endswith((".png", ".jpg", ".webp")):
+                                cand_path = Path(item)
+                            elif isinstance(item, dict) and "name" in item:
+                                cand_path = Path(item["name"])
+                            elif isinstance(item, (list, tuple)):
+                                for sub in item:
+                                    if isinstance(sub, str) and sub.endswith((".png", ".jpg", ".webp")):
+                                        cand_path = Path(sub)
+                                        break
+                                    elif isinstance(sub, dict) and "name" in sub:
+                                        cand_path = Path(sub["name"])
+                                        break
+                            if cand_path and cand_path.exists() and cand_path.stat().st_size > 50000:
+                                new_img = cand_path
+                                break
+                except Exception as res_err:
+                    logging.debug(f"[Fooocus 16:9] job.result direct extraction notice: {res_err}")
+
+                # Fast fallback: search only files modified since job_start without recursive full-disk scans
+                if not new_img:
+                    candidates = []
+                    search_dirs = [d for d in [FOOOCUS_OUTPUTS_DIR, gradio_temp] if d.exists()]
+                    for s_dir in search_dirs:
+                        for f in s_dir.glob("*.png"):
+                            try:
+                                if f.stat().st_mtime >= (job_start - 1.0) and f.stat().st_size > 50000:
+                                    candidates.append(f)
+                            except Exception:
+                                pass
+                    if candidates:
+                        new_img = max(candidates, key=lambda p: p.stat().st_mtime)
 
                 if new_img and new_img.exists():
                     output_path.parent.mkdir(parents=True, exist_ok=True)

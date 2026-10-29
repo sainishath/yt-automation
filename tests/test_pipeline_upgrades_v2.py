@@ -26,6 +26,8 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 if str(ROOT_DIR / "alternate-history-shorts" / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT_DIR / "alternate-history-shorts" / "scripts"))
+if str(ROOT_DIR / "alternate-history-shorts") not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR / "alternate-history-shorts"))
 if str(ROOT_DIR / "longform_engine") not in sys.path:
     sys.path.insert(0, str(ROOT_DIR / "longform_engine"))
 
@@ -351,6 +353,94 @@ class TestPipelineUpgradesV2(unittest.TestCase):
             self.assertIn("620,1", content)
             self.assertIn("&H0000FFFF", content)
             self.assertIn("In 1453, the walls crumbled.", content)
+
+    def test_15_server_alt_history_path_traversal_and_auth(self):
+        """Verifies path traversal sanitize guards and API key auth on server_alt_history endpoints."""
+        import server_alt_history
+        client = server_alt_history.app.test_client()
+
+        # 1. Path traversal attacks should be rejected with 400
+        res = client.get("/get-video?id=../../etc/passwd")
+        self.assertEqual(res.status_code, 400)
+        self.assertIn("Invalid", res.get_json().get("error", ""))
+
+        res = client.get("/get-status?id=../../boot.ini")
+        self.assertEqual(res.status_code, 400)
+        self.assertIn("Invalid", res.get_json().get("error", ""))
+
+        res = client.post("/generate-alternate-history", json={"video_id": "../hack_dir"})
+        self.assertEqual(res.status_code, 400)
+
+        res = client.post("/upload-youtube", json={"video_id": "../hack_dir"})
+        self.assertEqual(res.status_code, 400)
+
+        # 2. API Key Authentication enforcement
+        os.environ["SERVER_API_KEY"] = "super-secret-test-key-2026"
+        try:
+            # Missing key -> 401
+            res_no_key = client.post("/upload-youtube", json={"video_id": "valid_vid_123"})
+            self.assertEqual(res_no_key.status_code, 401)
+
+            # Invalid key -> 401
+            res_bad_key = client.post(
+                "/upload-youtube",
+                json={"video_id": "valid_vid_123"},
+                headers={"X-API-Key": "wrong-key"}
+            )
+            self.assertEqual(res_bad_key.status_code, 401)
+
+            # Valid key -> auth passes (fails further down due to missing video, not 401)
+            res_auth = client.post(
+                "/upload-youtube",
+                json={"video_id": "valid_vid_123"},
+                headers={"X-API-Key": "super-secret-test-key-2026"}
+            )
+            self.assertNotEqual(res_auth.status_code, 401)
+        finally:
+            del os.environ["SERVER_API_KEY"]
+
+    def test_16_server_alt_history_concurrency_lock(self):
+        """Verifies concurrency control prevents simultaneous GPU generation (returns 429)."""
+        import server_alt_history
+        client = server_alt_history.app.test_client()
+
+        acquired = server_alt_history.pipeline_lock.acquire(blocking=False)
+        self.assertTrue(acquired, "Should acquire pipeline_lock for concurrency test")
+        try:
+            res = client.post("/generate-alternate-history", json={"video_id": "valid_concurrency_123"})
+            self.assertEqual(res.status_code, 429)
+            self.assertIn("Pipeline busy", res.get_json().get("error", ""))
+        finally:
+            server_alt_history.pipeline_lock.release()
+
+    def test_17_qa_gate_fractional_fps_no_eval(self):
+        """Verifies qa_gate.py contains zero eval() calls and parses fractional frame rates via Fraction."""
+        from fractions import Fraction
+        qa_gate_code = (ROOT_DIR / "alternate-history-shorts" / "scripts" / "qa_gate.py").read_text(encoding="utf-8")
+        self.assertNotIn("eval(", qa_gate_code, "qa_gate.py must never use eval() on stream metadata")
+
+        # Verify Fraction parsing accuracy
+        self.assertAlmostEqual(float(Fraction("30000/1001")), 29.970, places=2)
+        self.assertEqual(float(Fraction("24/1")), 24.0)
+        self.assertEqual(float(Fraction("60/1")), 60.0)
+
+    def test_18_growth_database_wal_mode_and_concurrency(self):
+        """Verifies growth database initializes with WAL mode enabled to prevent database locking."""
+        from growth.db.database import init_db, get_db
+        with tempfile.TemporaryDirectory() as tmp:
+            test_db = Path(tmp) / "test_concurrency.db"
+            init_db(test_db)
+            with get_db(test_db) as conn:
+                row = conn.execute("PRAGMA journal_mode;").fetchone()
+                self.assertEqual(row[0].lower(), "wal")
+
+    def test_19_daily_scheduler_pipeline2_graceful_skip(self):
+        """Verifies daily_scheduler handles missing convo-shorts gracefully without throwing unhandled exceptions."""
+        from daily_scheduler import run_pipeline_2
+        with patch("pathlib.Path.exists", return_value=False), patch("subprocess.run") as mock_sub:
+            res = run_pipeline_2(999)
+            self.assertTrue(res, "daily_scheduler run_pipeline_2 should return True when skipping absent pipeline 2")
+            mock_sub.assert_not_called()
 
 
 if __name__ == "__main__":

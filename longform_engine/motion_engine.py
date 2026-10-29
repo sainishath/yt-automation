@@ -89,63 +89,82 @@ def render_cinematic_shot(
         str(output_mp4_path)
     ]
 
-    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    proc = subprocess.Popen(
+        cmd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE
+    )
 
     # Step 3: Frame-by-Frame Motion Generation
-    for i in range(total_frames):
-        t = i / max(1, total_frames - 1)
-        # Smoothstep curve S(t) = 3t^2 - 2t^3
-        s = 3.0 * (t ** 2) - 2.0 * (t ** 3)
+    try:
+        for i in range(total_frames):
+            t = i / max(1, total_frames - 1)
+            # Smoothstep curve S(t) = 3t^2 - 2t^3
+            s = 3.0 * (t ** 2) - 2.0 * (t ** 3)
 
-        if motion_type == "push_in":
-            # Slow push-in: zoom from 1.00x to 1.04x centered
-            zoom = 1.00 + 0.04 * s
-            crop_w = int(w / zoom)
-            crop_h = int(h / zoom)
-            x1 = (w - crop_w) // 2
-            y1 = (h - crop_h) // 2
+            if motion_type == "push_in":
+                # Slow push-in: zoom from 1.00x to 1.04x centered
+                zoom = 1.00 + 0.04 * s
+                crop_w = int(w / zoom)
+                crop_h = int(h / zoom)
+                x1 = (w - crop_w) // 2
+                y1 = (h - crop_h) // 2
 
-        elif motion_type == "pan_right":
-            # Left-to-right tracking pan at 1.035x zoom buffer
-            zoom = 1.035
-            crop_w = int(w / zoom)
-            crop_h = int(h / zoom)
-            max_pan_x = w - crop_w
-            x1 = int(max_pan_x * s)
-            y1 = (h - crop_h) // 2
+            elif motion_type == "pan_right":
+                # Left-to-right tracking pan at 1.035x zoom buffer
+                zoom = 1.035
+                crop_w = int(w / zoom)
+                crop_h = int(h / zoom)
+                max_pan_x = w - crop_w
+                x1 = int(max_pan_x * s)
+                y1 = (h - crop_h) // 2
 
-        elif motion_type == "pull_out":
-            # Slow pull-out: zoom from 1.04x back to 1.00x centered
-            zoom = 1.04 - 0.04 * s
-            crop_w = int(w / zoom)
-            crop_h = int(h / zoom)
-            x1 = (w - crop_w) // 2
-            y1 = (h - crop_h) // 2
+            elif motion_type == "pull_out":
+                # Slow pull-out: zoom from 1.04x back to 1.00x centered
+                zoom = 1.04 - 0.04 * s
+                crop_w = int(w / zoom)
+                crop_h = int(h / zoom)
+                x1 = (w - crop_w) // 2
+                y1 = (h - crop_h) // 2
 
-        elif motion_type == "pan_left_up":
-            # Right-to-left tracking pan with slight upward drift
-            zoom = 1.035
-            crop_w = int(w / zoom)
-            crop_h = int(h / zoom)
-            max_pan_x = w - crop_w
-            max_pan_y = h - crop_h
-            x1 = int(max_pan_x * (1.0 - s))
-            y1 = int(max_pan_y * (1.0 - 0.6 * s))
+            elif motion_type == "pan_left_up":
+                # Right-to-left tracking pan with slight upward drift
+                zoom = 1.035
+                crop_w = int(w / zoom)
+                crop_h = int(h / zoom)
+                max_pan_x = w - crop_w
+                max_pan_y = h - crop_h
+                x1 = int(max_pan_x * (1.0 - s))
+                y1 = int(max_pan_y * (1.0 - 0.6 * s))
 
-        else:
-            # Default subtle push-in
-            zoom = 1.00 + 0.03 * s
-            crop_w = int(w / zoom)
-            crop_h = int(h / zoom)
-            x1 = (w - crop_w) // 2
-            y1 = (h - crop_h) // 2
+            else:
+                # Default subtle push-in
+                zoom = 1.00 + 0.03 * s
+                crop_w = int(w / zoom)
+                crop_h = int(h / zoom)
+                x1 = (w - crop_w) // 2
+                y1 = (h - crop_h) // 2
 
-        # Subpixel window extraction & Lanczos/Cubic scale to 1080p
-        cropped = base_img[y1:y1 + crop_h, x1:x1 + crop_w]
-        frame = cv2.resize(cropped, (1920, 1080), interpolation=cv2.INTER_CUBIC)
-        proc.stdin.write(frame.tobytes())
+            # Subpixel window extraction & Lanczos/Cubic scale to 1080p
+            cropped = base_img[y1:y1 + crop_h, x1:x1 + crop_w]
+            frame = cv2.resize(cropped, (1920, 1080), interpolation=cv2.INTER_CUBIC)
+            proc.stdin.write(frame.tobytes())
 
-    proc.stdin.close()
-    proc.wait()
+        proc.stdin.close()
+        _, stderr_data = proc.communicate(timeout=60)
+    except Exception as e:
+        if proc.stdin and not proc.stdin.closed:
+            try:
+                proc.stdin.close()
+            except Exception:
+                pass
+        proc.kill()
+        stderr_msg = proc.stderr.read().decode("utf-8", errors="replace") if proc.stderr else ""
+        raise RuntimeError(f"FFmpeg motion rendering failed ({e}): {stderr_msg}")
+
+    if proc.returncode != 0:
+        err_msg = stderr_data.decode("utf-8", errors="replace") if stderr_data else "Unknown error"
+        raise RuntimeError(f"FFmpeg motion engine exited with non-zero code {proc.returncode}: {err_msg}")
 
     return output_mp4_path

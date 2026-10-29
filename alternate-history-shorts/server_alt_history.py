@@ -3,12 +3,19 @@
 server_alt_history.py
 ---------------------
 Flask API Backend server on Port 8000 serving n8n requests for Alternate History Shorts.
+Includes:
+- Host binding configuration (default 127.0.0.1 for local isolation)
+- Optional API key authentication (SERVER_API_KEY)
+- Concurrency control (pipeline_lock to prevent concurrent GPU VRAM exhaustion)
+- Strict path traversal protection on video_id parameters
 """
 
 import os
 import sys
+import re
 import json
 import logging
+import threading
 from pathlib import Path
 from flask import Flask, request, jsonify, send_file
 
@@ -22,17 +29,55 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger(__name__)
 
 STYLE_CFG_PATH = _DIR / "config" / "style.json"
+pipeline_lock = threading.Lock()
+
+
+def _require_api_key():
+    """Validates X-API-Key or Authorization header if SERVER_API_KEY is set in environment."""
+    expected_key = os.getenv("SERVER_API_KEY", "").strip()
+    if not expected_key:
+        return None  # Pass-through when no API key is configured
+
+    provided_key = (
+        request.headers.get("X-API-Key", "").strip()
+        or request.headers.get("Authorization", "").replace("Bearer ", "").strip()
+    )
+    if provided_key != expected_key:
+        return jsonify({"status": "error", "error": "Unauthorized: Invalid or missing API key"}), 401
+    return None
+
 
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({"status": "ok", "service": "alternate-history-server", "port": 8000})
+    return jsonify({
+        "status": "ok",
+        "service": "alternate-history-server",
+        "port": 8000,
+        "pipeline_busy": pipeline_lock.locked()
+    })
+
 
 @app.route('/generate-alternate-history', methods=['POST'])
 def generate_alternate_history():
+    auth_err = _require_api_key()
+    if auth_err:
+        return auth_err
+
+    # Concurrency control: prevent simultaneous GPU generation runs from exhausting VRAM
+    if not pipeline_lock.acquire(blocking=False):
+        return jsonify({
+            "status": "error",
+            "error": "Pipeline busy with another render"
+        }), 429
+
     try:
         data = request.get_json() or {}
         topic = data.get("topic", "What if the Library of Alexandria survived?")
         video_id = data.get("video_id", f"video_{os.urandom(4).hex()}")
+
+        # Sanitize video_id
+        if not re.match(r"^[a-zA-Z0-9_\-]+$", video_id):
+            return jsonify({"status": "error", "error": "Invalid video_id parameter format"}), 400
         
         logger.info(f"[ALT-HISTORY] Request received for topic: '{topic}' (video_id={video_id})")
         
@@ -86,12 +131,15 @@ def generate_alternate_history():
     except Exception as e:
         logger.error(f"[ALT-HISTORY FAIL] {e}", exc_info=True)
         return jsonify({"status": "error", "error": str(e)}), 500
+    finally:
+        pipeline_lock.release()
+
 
 @app.route('/get-video', methods=['GET'])
 def get_video():
-    video_id = request.args.get('id')
-    if not video_id:
-        return jsonify({"status": "error", "error": "Missing video id parameter"}), 400
+    video_id = request.args.get('id', '').strip()
+    if not video_id or not re.match(r"^[a-zA-Z0-9_\-]+$", video_id):
+        return jsonify({"status": "error", "error": "Invalid or missing video id"}), 400
         
     out_dir = _DIR / "output" / video_id
     mp4_files = list((out_dir / "final").glob("*.mp4")) + list(out_dir.glob("*.mp4"))
@@ -100,11 +148,12 @@ def get_video():
         
     return send_file(str(mp4_files[0]), mimetype='video/mp4', as_attachment=True, download_name=f"{video_id}.mp4")
 
+
 @app.route('/get-status', methods=['GET'])
 def get_status():
-    video_id = request.args.get('id')
-    if not video_id:
-        return jsonify({"status": "error", "error": "Missing video id parameter"}), 400
+    video_id = request.args.get('id', '').strip()
+    if not video_id or not re.match(r"^[a-zA-Z0-9_\-]+$", video_id):
+        return jsonify({"status": "error", "error": "Invalid or missing video id"}), 400
     
     man_file = _DIR / "output" / video_id / "run_manifest.json"
     if not man_file.exists():
@@ -117,15 +166,20 @@ def get_status():
     except Exception as e:
         return jsonify({"status": "error", "error": str(e)}), 500
 
+
 @app.route('/upload-youtube', methods=['POST'])
 def upload_youtube_endpoint():
+    auth_err = _require_api_key()
+    if auth_err:
+        return auth_err
+
     try:
         data = request.get_json() or {}
-        video_id = data.get("video_id")
+        video_id = data.get("video_id", "").strip()
         privacy = data.get("privacy", "public")
         
-        if not video_id:
-            return jsonify({"status": "error", "error": "Missing video_id parameter"}), 400
+        if not video_id or not re.match(r"^[a-zA-Z0-9_\-]+$", video_id):
+            return jsonify({"status": "error", "error": "Invalid or missing video_id parameter"}), 400
             
         from upload_video import upload_video
         upload_result = upload_video(video_id, output_dir=str(_DIR / "output"), privacy=privacy)
@@ -142,5 +196,8 @@ def upload_youtube_endpoint():
         logger.error(f"[UPLOAD FAIL] {e}", exc_info=True)
         return jsonify({"status": "error", "error": str(e)}), 500
 
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=False)
+    host = os.getenv("SERVER_HOST", "127.0.0.1")
+    port = int(os.getenv("SERVER_PORT", "8000"))
+    app.run(host=host, port=port, debug=False)

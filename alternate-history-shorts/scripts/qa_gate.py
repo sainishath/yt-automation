@@ -28,6 +28,7 @@ import sys
 import json
 import argparse
 import subprocess
+from fractions import Fraction
 import io
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     try:
@@ -243,7 +244,13 @@ def run_pipeline1_qa(video_id: str, output_dir: str = "output") -> Dict[str, Any
             h = int(v_stream.get('height', 0))
             codec_v = v_stream.get('codec_name', '')
             r_fps = v_stream.get('r_frame_rate', '25/1')
-            fps = eval(r_fps) if '/' in r_fps else float(r_fps)
+            try:
+                fps = float(Fraction(r_fps))
+            except Exception:
+                try:
+                    fps = float(r_fps)
+                except Exception:
+                    fps = 25.0
 
             qa_report["metrics"]["resolution"] = f"{w}x{h}"
             qa_report["metrics"]["fps"] = round(fps, 2)
