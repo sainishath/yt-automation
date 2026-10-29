@@ -16,7 +16,7 @@ Saves to longform_engine/drafts/history_10min_80shots.json
 import json
 from pathlib import Path
 
-ROOT_DIR = Path("D:/Projects/yt-automations")
+ROOT_DIR = Path(__file__).resolve().parent.parent
 OUT_JSON = ROOT_DIR / "longform_engine" / "drafts" / "history_10min_80shots.json"
 
 # Load existing base script

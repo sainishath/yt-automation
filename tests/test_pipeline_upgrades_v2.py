@@ -9,6 +9,7 @@ Unit and integration tests for the v2 Pipeline Upgrades calibrated to the @saini
 4. Mobile-Safe Shorts Subtitles (MarginV=620, 72pt bold yellow/white) (Module B: pipeline/compositor.py & assemble_video.py)
 5. Compliant YouTube API Upload, Synthetic Media Disclosure & RAG Citations (Module C: pipeline/upload_guard.py)
 6. Counterfactual Divergence Pre-Check & 6-Step Outlier Title Rubric (growth/scorer.py & growth/topic_engine/topic_scorer.py)
+7. Repository-Wide Webhook Cleanliness & Path Portability (longform_engine/ & growth/)
 """
 
 import os
@@ -25,6 +26,8 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 if str(ROOT_DIR / "alternate-history-shorts" / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT_DIR / "alternate-history-shorts" / "scripts"))
+if str(ROOT_DIR / "longform_engine") not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR / "longform_engine"))
 
 import yt_automations_pipeline_upgrades as root_upgrades
 from pipeline.verify_claims import (
@@ -60,6 +63,7 @@ from generate_script import (
 )
 from generate_images import validate_image, generate_pillow_proof_image
 from visual_scene_planner import build_fallback_scene_plan, clean_visual_prompt_string
+from short_splitter import generate_safe_short_ass
 
 
 class TestPipelineUpgradesV2(unittest.TestCase):
@@ -115,16 +119,14 @@ class TestPipelineUpgradesV2(unittest.TestCase):
 
     def test_05_split_panel_collage_detector_catches_horizontal_divider_and_passes_clean(self):
         with tempfile.TemporaryDirectory() as tmp:
-            # 1. Create a synthetic image with natural texture (should PASS -> detect_split_panel_collage == False)
             rng = np.random.default_rng(123)
             clean_img = rng.integers(30, 220, size=(384, 216), dtype=np.uint8)
             clean_path = Path(tmp) / "clean_single_frame.png"
             cv2.imwrite(str(clean_path), clean_img)
             self.assertFalse(detect_split_panel_collage(str(clean_path)))
 
-            # 2. Inject a solid horizontal split-panel divider bar in the center (should FAIL -> True)
             collage_img = clean_img.copy()
-            collage_img[190:196, :] = 255  # Solid white divider bar across full width
+            collage_img[190:196, :] = 255
             collage_path = Path(tmp) / "split_panel_collage.png"
             cv2.imwrite(str(collage_path), collage_img)
             self.assertTrue(detect_split_panel_collage(str(collage_path)))
@@ -175,22 +177,18 @@ class TestPipelineUpgradesV2(unittest.TestCase):
         self.assertIn("https://en.wikipedia.org/wiki/Battle_of_Stalingrad", body["snippet"]["description"])
 
     def test_09_counterfactual_divergence_precheck_blocks_berlin_wall_tautology(self):
-        # Real history disguised as What-If (Short #5 bug)
         bad_berlin = check_counterfactual_divergence("What If a Single Wall Divided East and West Berlin?")
         self.assertFalse(bad_berlin["is_valid_counterfactual"])
 
-        # Vague clickbait without divergence (Short #2 bug)
         bad_egypt = check_counterfactual_divergence("What If Ancient Egypt Built a Pyramid Like This?")
         self.assertFalse(bad_egypt["is_valid_counterfactual"])
 
-        # True counterfactual divergences
         good_rome = check_counterfactual_divergence("What If the Roman Empire Never Fell?")
         self.assertTrue(good_rome["is_valid_counterfactual"])
 
         good_stalingrad = check_counterfactual_divergence("What If Nazi Germany Captured Stalingrad?")
         self.assertTrue(good_stalingrad["is_valid_counterfactual"])
 
-        # Verify topic_scorer penalizes the non-counterfactual Berlin Wall title
         berlin_score = score_topic("What If a Single Wall Divided East and West Berlin?", "channel_a", "Cold War")
         self.assertLessEqual(berlin_score["final_score"], 0.25)
         self.assertFalse(berlin_score["is_valid_counterfactual"])
@@ -240,7 +238,7 @@ class TestPipelineUpgradesV2(unittest.TestCase):
             ],
         }
         deduped = deduplicate_script_ngrams(script_data)
-        with tempfile.TemporaryDirectory() as tmp, patch("generate_script.requests.post", side_effect= RuntimeError("Ollama offline in unit test")):
+        with tempfile.TemporaryDirectory() as tmp, patch("generate_script.requests.post", side_effect=RuntimeError("Ollama offline in unit test")):
             revised, report = verify_and_revise_script_claims(
                 deduped,
                 {"historical_claims": [{"claim_id": "c1", "claim_type": "FACT", "claim": "Battle of Stalingrad 1942"}]},
@@ -289,11 +287,70 @@ class TestPipelineUpgradesV2(unittest.TestCase):
             cv2.imwrite(str(proof_path), img)
             self.assertFalse(validate_image(proof_path))
 
-    def test_12_no_hardcoded_webhooks_in_discord_review(self):
-        p1_discord = (ROOT_DIR / "alternate-history-shorts" / "scripts" / "discord_review.py").read_text(encoding="utf-8")
-        shared_discord = (ROOT_DIR / "shared" / "discord_review.py").read_text(encoding="utf-8")
-        self.assertNotIn("https://discord.com/api/webhooks/", p1_discord)
-        self.assertNotIn("https://discord.com/api/webhooks/", shared_discord)
+    def test_12_no_hardcoded_webhooks_in_repository(self):
+        """Repository-wide scan: verifies ZERO live Discord webhook URLs exist in tracked codebase files."""
+        scanned_count = 0
+        violations = []
+        ignored_dirs = {".git", ".venv", ".pytest_cache", "__pycache__", "output", "logs", "scratch"}
+        target_exts = {".py", ".json", ".sh", ".ps1", ".yaml", ".yml"}
+        webhook_pattern = "https://" + "discord.com/api/webhooks/"
+
+        for p in ROOT_DIR.rglob("*"):
+            if not p.is_file():
+                continue
+            if p.resolve() == Path(__file__).resolve():
+                continue
+            if any(part in ignored_dirs for part in p.parts):
+                continue
+            if p.suffix.lower() not in target_exts:
+                continue
+            if p.name in (".env", ".env.local"):
+                continue
+
+            try:
+                content = p.read_text(encoding="utf-8", errors="ignore")
+                scanned_count += 1
+                if webhook_pattern in content:
+                    violations.append(str(p.relative_to(ROOT_DIR)))
+            except Exception:
+                pass
+
+        self.assertGreater(scanned_count, 20, "Should scan substantial number of repository files")
+        self.assertEqual(
+            violations,
+            [],
+            f"Found live Discord webhook URLs in tracked files: {violations}",
+        )
+
+    def test_13_longform_engine_path_portability_and_pipeline_guards(self):
+        """Verifies longform_engine and analytics scripts use dynamic root paths and pipeline guards."""
+        checked_files = [
+            ROOT_DIR / "longform_engine" / "assemble_longform.py",
+            ROOT_DIR / "longform_engine" / "generate_80shots_history.py",
+            ROOT_DIR / "longform_engine" / "render_act1_benchmark.py",
+            ROOT_DIR / "longform_engine" / "script_architect.py",
+            ROOT_DIR / "growth" / "analytics" / "sync_youtube_state.py",
+            ROOT_DIR / "verify_release.py",
+        ]
+        for f in checked_files:
+            text = f.read_text(encoding="utf-8")
+            self.assertNotIn("D:/Projects/yt-automations", text, f"Hardcoded path still in {f.name}")
+            self.assertNotIn("d:/Projects/yt-automations", text, f"Hardcoded path still in {f.name}")
+
+        # Check assemble_longform imports pipeline compositor guards
+        asm_text = (ROOT_DIR / "longform_engine" / "assemble_longform.py").read_text(encoding="utf-8")
+        self.assertIn("FOOOCUS_NEGATIVE_PROMPT_LOCK", asm_text)
+        self.assertIn("detect_split_panel_collage", asm_text)
+
+    def test_14_short_splitter_safe_shorts_ass_subtitles(self):
+        """Verifies short_splitter generates MarginV=620 mobile-safe ASS subtitles."""
+        with tempfile.TemporaryDirectory() as tmp:
+            out_ass = Path(tmp) / "test_safe.ass"
+            generate_safe_short_ass("In 1453, the walls crumbled.", 42.0, out_ass)
+            content = out_ass.read_text(encoding="utf-8")
+            self.assertIn("620,1", content)
+            self.assertIn("&H0000FFFF", content)
+            self.assertIn("In 1453, the walls crumbled.", content)
 
 
 if __name__ == "__main__":

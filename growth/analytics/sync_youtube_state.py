@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 
 # Ensure repository root is on sys.path
-ROOT_DIR = Path("D:/Projects/yt-automations")
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 

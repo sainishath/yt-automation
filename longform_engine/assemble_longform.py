@@ -27,14 +27,19 @@ from typing import List, Dict, Any, Optional
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-ROOT_DIR = Path("D:/Projects/yt-automations")
+ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
 from longform_engine.horizontal_card_renderer import render_longform_horizontal_card
 from longform_engine.motion_engine import render_cinematic_shot
+from pipeline.compositor import (
+    build_fooocus_scene_prompt,
+    detect_split_panel_collage,
+    FOOOCUS_NEGATIVE_PROMPT_LOCK,
+)
 
 FOOOCUS_URL = os.getenv("FOOOCUS_URL", "http://127.0.0.1:7865")
-FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/outputs"))
+FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", str(ROOT_DIR.parent / "Fooocus" / "outputs")))
 EDGE_TTS_VOICE_P1 = "en-US-ChristopherNeural"
 EDGE_TTS_VOICE_P2 = "en-US-ChristopherNeural"
 
@@ -133,7 +138,8 @@ def generate_16x9_visual(
                 args[0] = None
                 args[1] = False
                 args[2] = prompt
-                args[3] = negative_prompt
+                locked_neg = f"{negative_prompt}, {FOOOCUS_NEGATIVE_PROMPT_LOCK}" if negative_prompt else FOOOCUS_NEGATIVE_PROMPT_LOCK
+                args[3] = locked_neg
                 args[4] = style_selections or ["Fooocus V2", "Fooocus Masterpiece", "Fooocus Cinematic"]
                 args[5] = "Speed"
 
@@ -187,6 +193,10 @@ def generate_16x9_visual(
                 if new_img and new_img.exists():
                     output_path.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy(new_img, output_path)
+                    if detect_split_panel_collage(str(output_path)):
+                        logging.warning(f"[QA Gate] Defective split-panel collage detected in {output_path.name}; rejecting keyframe.")
+                        output_path.unlink(missing_ok=True)
+                        continue
                     logging.info(f"[Fooocus 16:9] Generated SDXL visual saved -> {output_path.name} ({time.time() - job_start:.1f}s)")
                     return True
 

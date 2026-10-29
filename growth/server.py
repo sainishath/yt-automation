@@ -580,11 +580,11 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
 
                 # 3. Dispatch Discord confirmation notification
                 try:
-                    p1_wh = "https://discord.com/api/webhooks/REDACTED_WEBHOOK"
-                    p2_wh = "https://discord.com/api/webhooks/REDACTED_WEBHOOK"
-                    webhook_url = os.getenv("DISCORD_WEBHOOK_URL_P1" if channel_id == "channel_a" else "DISCORD_WEBHOOK_URL_P2")
-                    if not webhook_url:
-                        webhook_url = p1_wh if channel_id == "channel_a" else p2_wh
+                    webhook_url = (
+                        os.getenv("DISCORD_WEBHOOK_URL_P1" if channel_id == "channel_a" else "DISCORD_WEBHOOK_URL_P2")
+                        or os.getenv("DISCORD_ERROR_WEBHOOK_URL")
+                        or os.getenv("DISCORD_REVIEW_WEBHOOK_URL", "")
+                    )
                     if webhook_url:
                         notif_text = (
                             f"🔴 **[VIDEO SCRAPPED]**\n"

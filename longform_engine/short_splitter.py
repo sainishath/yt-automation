@@ -41,6 +41,32 @@ logger = logging.getLogger("short_splitter")
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
+from pipeline.compositor import (
+    SAFE_SHORTS_ASS_HEADER,
+    SAFE_SHORTS_ASS_STYLE,
+)
+
+
+def generate_safe_short_ass(
+    text: str,
+    duration_sec: float,
+    out_ass_path: Path,
+) -> Path:
+    """
+    Generates a mobile-safe ASS subtitle file with MarginV=620 (SAFE_SHORTS_ASS_HEADER)
+    to avoid YouTube Shorts bottom UI collisions.
+    """
+    out_ass_path.parent.mkdir(parents=True, exist_ok=True)
+    body = [
+        SAFE_SHORTS_ASS_HEADER.strip(),
+        "",
+        "[Events]",
+        "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
+        f"Dialogue: 0,0:00:00.00,0:{int(duration_sec)//60:02d}:{duration_sec%60:05.2f},Default,,0,0,0,,{text}"
+    ]
+    out_ass_path.write_text("\n".join(body), encoding="utf-8")
+    return out_ass_path
+
 
 def extract_act_slice(
     master_video_path: Path,
@@ -50,17 +76,24 @@ def extract_act_slice(
     crop_mode: str = "center",
     target_width: int = 1080,
     target_height: int = 1920,
+    ass_subtitles_path: Optional[Path] = None,
 ) -> Path:
     """
-    Extracts a time segment from master 16:9 video and reframes it into 9:16 vertical.
+    Extracts a time segment from master 16:9 video, reframes it into 9:16 vertical,
+    and optionally burns in mobile-safe MarginV=620 subtitles.
     """
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
-    vf_filter = (
-        f"crop=ih*9/16:ih:(iw-ow)/2:0,"
-        f"scale={target_width}:{target_height}:flags=lanczos,"
-        f"setsar=1"
-    )
+    filter_parts = [
+        "crop=ih*9/16:ih:(iw-ow)/2:0",
+        f"scale={target_width}:{target_height}:flags=lanczos",
+        "setsar=1"
+    ]
+    if ass_subtitles_path and Path(ass_subtitles_path).exists():
+        escaped_ass = str(ass_subtitles_path).replace("\\", "/").replace(":", "\\:")
+        filter_parts.append(f"ass='{escaped_ass}'")
+
+    vf_filter = ",".join(filter_parts)
     
     cmd = [
         "ffmpeg", "-y",
