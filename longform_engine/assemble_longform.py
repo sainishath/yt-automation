@@ -96,6 +96,17 @@ def get_audio_duration(file_path: Path) -> float:
 
 # ── Fooocus 16:9 Visual Generation (Global Rule Compliant) ────────────────────
 
+def check_fooocus_status(url: str = FOOOCUS_URL) -> bool:
+    """Verifies whether the local Fooocus SDXL service is listening and responsive."""
+    import urllib.request
+    try:
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=2.5) as resp:
+            return True
+    except Exception:
+        return False
+
+
 def generate_16x9_visual(
     prompt: str,
     negative_prompt: str,
@@ -298,7 +309,7 @@ def format_youtube_description_timestamps(chapters: List[Dict[str, Any]]) -> str
 
 # ── Channel A Assembly Engine ────────────────────────────────────────────────
 
-def assemble_history_documentary(script_path: Path, output_dir: Path, split_shorts: bool = False) -> Path:
+def assemble_history_documentary(script_path: Path, output_dir: Path, split_shorts: bool = False, allow_proxies: bool = False) -> Path:
     """
     Renders and assembles the 10-Minute Historical Documentary: The Fall of Constantinople (1453):
       1. Synthesizes 7 act voice tracks via edge_tts (authoritative documentary tone).
@@ -322,6 +333,27 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
     print("\n" + "=" * 70)
     print("  ASSEMBLING CHANNEL A: THE FALL OF CONSTANTINOPLE (1453) (1080p)")
     print("=" * 70)
+
+    # Rule 2 Fooocus SDXL Invariant Guard
+    fooocus_live = check_fooocus_status(FOOOCUS_URL)
+    if not fooocus_live:
+        if not allow_proxies:
+            print("\n" + "!" * 75)
+            print("  [RULE 2 INVARIANT] LOCAL FOOOCUS SDXL SERVICE IS NOT ACTIVE")
+            print(f"  Target Endpoint: {FOOOCUS_URL}")
+            print("  Per Rule 2: All visual scenes MUST be generated using local Fooocus SDXL.")
+            print("  Zero external cloud image APIs permitted.")
+            print("")
+            print("  ACTION REQUIRED:")
+            print("  1. Launch Fooocus SDXL on your machine (or AWS GPU instance):")
+            print("     python launch.py --port 7865")
+            print("  2. Once Fooocus is active on http://127.0.0.1:7865, re-run:")
+            print("     python longform_engine/assemble_longform.py --draft longform_engine/drafts/history_10min_80shots.json --split-shorts")
+            print("  (To test assembly, maps, badges, audio ducking, and shorts with proxies, pass --allow-proxies)")
+            print("!" * 75 + "\n")
+            sys.exit(1)
+        else:
+            print("\n  [NOTICE] --allow-proxies flag active. Generating procedural test proxies for SDXL shots.\n")
 
     for act in data["acts"]:
         a_num = act["act_number"]
@@ -705,6 +737,7 @@ def main():
     parser.add_argument("--type", "--channel", dest="type", type=str, default=None, choices=["coding", "history"], help="Pipeline type")
     parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
     parser.add_argument("--split-shorts", action="store_true", help="Automatically carve 5 vertical 9:16 Shorts from master")
+    parser.add_argument("--allow-proxies", action="store_true", help="Allow provisional canvas proxies if Fooocus is not running")
 
     args = parser.parse_args()
     script_path = Path(args.draft)
@@ -726,7 +759,7 @@ def main():
     if pipe_type == "coding":
         assemble_coding_masterclass(script_path, out_dir)
     elif pipe_type == "history":
-        assemble_history_documentary(script_path, out_dir, split_shorts=args.split_shorts)
+        assemble_history_documentary(script_path, out_dir, split_shorts=args.split_shorts, allow_proxies=args.allow_proxies)
 
 
 if __name__ == "__main__":
