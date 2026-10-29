@@ -13,13 +13,25 @@ import os
 import sys
 import json
 import logging
+import argparse
 import urllib.request
+
+if sys.stdout and hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from pipeline.primary_sources import extract_primary_sources
 DRAFTS_DIR = ROOT_DIR / "longform_engine" / "drafts"
 QDRANT_URL = os.getenv("QDRANT_URL", "http://127.0.0.1:6333")
 
@@ -500,8 +512,9 @@ def build_coding_masterclass_script() -> Dict[str, Any]:
 # 2. HISTORY PIPELINE: THE FALL OF CONSTANTINOPLE (1453) (~1,300 WORDS)
 # ═════════════════════════════════════════════════════════════════════════════
 
-def build_history_documentary_script() -> Dict[str, Any]:
-    """Generates the 7-act dramatic historical documentary with SDXL visual prompts and primary grounding."""
+def build_history_documentary_script(mode: str = "factual", event_slug: str = "fall_of_constantinople_1453") -> Dict[str, Any]:
+    """Generates the dramatic historical documentary with SDXL visual prompts and primary grounding in dual modes (factual vs counterfactual)."""
+    primary_sources = extract_primary_sources(event_slug) if mode == "factual" else []
 
     acts_data = [
         {
@@ -723,11 +736,32 @@ def build_history_documentary_script() -> Dict[str, Any]:
 
     total_words = sum(len(a["script"].split()) for a in acts_data)
 
+    # Bind primary sources to corresponding acts in factual mode
+    if mode == "factual" and primary_sources:
+        for idx, act in enumerate(acts_data):
+            matched = [s for s in primary_sources if s.get("act_binding") == act["act_number"]]
+            if not matched and idx < len(primary_sources):
+                matched = [primary_sources[idx]]
+            if matched:
+                act["primary_source_record"] = matched[0]
+                act["historical_grounding"]["primary_source"] = f"{matched[0]['author']}, {matched[0]['original_work']}"
+                act["historical_grounding"]["eyewitness_quote"] = matched[0]["translation"]
+                act["historical_grounding"]["academic_citation"] = matched[0]["academic_citation"]
+
+    video_title = (
+        "The 53 Days That Shattered Rome: The Fall of Constantinople (1453)"
+        if mode == "factual"
+        else "What If the Fall of Constantinople Was Repelled in 1453?"
+    )
+
     return {
-        "channel": "Channel A (Chronos Shift / History Documentary)",
-        "video_title": "The Fall of Constantinople (1453): The 53-Day Siege That Ended the Roman Empire",
+        "channel": "Channel A (Chronos Shift / Factual History & Documentaries)",
+        "video_title": video_title,
+        "mode": mode,
+        "event_slug": event_slug,
+        "primary_sources_count": len(primary_sources),
         "aspect_ratio": "16:9 (1920x1080 Widescreen)",
-        "target_runtime_seconds": 602.0,
+        "target_runtime_seconds": 675.0 if mode == "factual" else 602.0,
         "total_word_count": total_words,
         "target_wpm": round((total_words / (602.0 / 60)), 1),
         "acts": acts_data
@@ -834,10 +868,10 @@ def export_history_review_markdown(data: Dict[str, Any], out_path: Path) -> str:
     return content
 
 
-def run_stage1_generation():
+def run_stage1_generation(mode: str = "factual", topic: str = "fall_of_constantinople_1453"):
     """Main execution entry point: Generates both JSON drafts and review markdown files."""
     print("=" * 70)
-    print("  STAGE 1: LONG-FORM SCRIPT ARCHITECT & RAG GROUNDING ENGINE")
+    print(f"  STAGE 1: LONG-FORM SCRIPT ARCHITECT & RAG GROUNDING ENGINE (MODE: {mode.upper()})")
     print("=" * 70)
 
     DRAFTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -848,31 +882,31 @@ def run_stage1_generation():
     coding_json_path = DRAFTS_DIR / "coding_10min_v1.json"
     with open(coding_json_path, "w", encoding="utf-8") as f:
         json.dump(coding_data, f, indent=2)
-    print(f"  ✔ Saved JSON Payload: {coding_json_path}")
-    print(f"  ✔ Total Modules: {len(coding_data['modules'])} | Total Words: {coding_data['total_word_count']} (~{coding_data['target_wpm']} WPM)")
+    print(f"  [OK] Saved JSON Payload: {coding_json_path}")
+    print(f"  [OK] Total Modules: {len(coding_data['modules'])} | Total Words: {coding_data['total_word_count']} (~{coding_data['target_wpm']} WPM)")
 
     coding_md_path = DRAFTS_DIR / "coding_10min_v1_review.md"
     export_coding_review_markdown(coding_data, coding_md_path)
-    print(f"  ✔ Exported Review Markdown: {coding_md_path}")
+    print(f"  [OK] Exported Review Markdown: {coding_md_path}")
 
     # 2. Generate History Pipeline Script
-    print("\n[2/2] Generating Channel A: 'The Fall of Constantinople (1453)'...")
-    history_data = build_history_documentary_script()
+    print(f"\n[2/2] Generating Channel A ({mode.upper()}): '{topic}'...")
+    history_data = build_history_documentary_script(mode=mode, event_slug=topic)
     history_json_path = DRAFTS_DIR / "history_10min_v1.json"
     with open(history_json_path, "w", encoding="utf-8") as f:
         json.dump(history_data, f, indent=2)
-    print(f"  ✔ Saved JSON Payload: {history_json_path}")
-    print(f"  ✔ Total Acts: {len(history_data['acts'])} | Total Words: {history_data['total_word_count']} (~{history_data['target_wpm']} WPM)")
+    print(f"  [OK] Saved JSON Payload: {history_json_path}")
+    print(f"  [OK] Total Acts: {len(history_data['acts'])} | Total Words: {history_data['total_word_count']} (~{history_data['target_wpm']} WPM)")
 
     history_md_path = DRAFTS_DIR / "history_10min_v1_review.md"
     export_history_review_markdown(history_data, history_md_path)
-    print(f"  ✔ Exported Review Markdown: {history_md_path}")
+    print(f"  [OK] Exported Review Markdown: {history_md_path}")
 
     # 3. Export 80-Shot High-Density Visual Architecture
     from longform_engine.generate_80shots_history import ACTS_80_SHOTS
     shots_80_path = DRAFTS_DIR / "history_10min_80shots.json"
     if shots_80_path.exists():
-        print(f"  ✔ 80-Shot Architecture Verified: {shots_80_path}")
+        print(f"  [OK] 80-Shot Architecture Verified: {shots_80_path}")
 
     print("\n" + "=" * 70)
     print("  STAGE 1 COMPLETE: HALTING FOR SCRIPT REVIEW GATE")
@@ -881,4 +915,9 @@ def run_stage1_generation():
 
 
 if __name__ == "__main__":
-    run_stage1_generation()
+    parser = argparse.ArgumentParser(description="Script Architect & RAG Grounding Engine")
+    parser.add_argument("--mode", choices=["factual", "counterfactual"], default="factual", help="Dual-mode: 'factual' (primary sources) or 'counterfactual' (divergence chains)")
+    parser.add_argument("--topic", default="fall_of_constantinople_1453", help="Historical event slug or topic")
+    args = parser.parse_args()
+
+    run_stage1_generation(mode=args.mode, topic=args.topic)

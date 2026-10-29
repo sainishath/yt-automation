@@ -57,7 +57,7 @@ ACTS_80_SHOTS = [
             },
             {
                 "shot_id": "act01_shot05",
-                "shot_type": "Macro Detail",
+                "shot_type": "Primary Source",
                 "motion": "push_in",
                 "prompt": "16:9 extreme close-up macro of weathered fifth-century Roman limestone bricks bonded with crimson pozzolanic mortar, showing ancient chisel marks, moss, and repaired siege cracks from centuries past"
             },
@@ -199,7 +199,7 @@ ACTS_80_SHOTS = [
             },
             {
                 "shot_id": "act03_shot04",
-                "shot_type": "Macro Projectile",
+                "shot_type": "Primary Source",
                 "motion": "push_in",
                 "prompt": "16:9 macro detail shot of a carved twelve-hundred pound solid Black Sea granite cannonball, textured stone surface, sitting next to heavy oak powder barrels and iron measuring scales"
             },
@@ -279,7 +279,7 @@ ACTS_80_SHOTS = [
             },
             {
                 "shot_id": "act04_shot05",
-                "shot_type": "Overland Haul",
+                "shot_type": "Overland Transit",
                 "motion": "pan_left_up",
                 "prompt": "16:9 epic moonlight spectacle of a wooden war galley with sails unfurled being hauled uphill over timber tracks by hundreds of shouting soldiers and teams of straining oxen, torches blazing"
             },

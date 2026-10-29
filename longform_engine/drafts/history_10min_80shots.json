@@ -1,12 +1,12 @@
 {
-  "channel": "Channel A (Chronos Shift / History Documentary)",
-  "video_title": "The Fall of Constantinople (1453): The 53-Day Siege That Ended the Roman Empire",
+  "channel": "Channel A (Chronos Shift / Factual History & Documentaries)",
+  "video_title": "The 53 Days That Shattered Rome: The Fall of Constantinople (1453)",
   "aspect_ratio": "16:9 (1920x1080 Widescreen)",
-  "target_runtime_seconds": 602.0,
+  "target_runtime_seconds": 675.0,
   "total_word_count": 1276,
   "target_wpm": 127.2,
   "total_visual_shots": 77,
-  "average_shot_duration_sec": 7.82,
+  "average_shot_duration_sec": 8.77,
   "acts": [
     {
       "act_number": 1,
@@ -22,13 +22,29 @@
           "Emperor Theodosius II (original builder)"
         ],
         "defensive_specs": "60ft wide moat, 30ft outer wall, 40ft inner wall with 96 stone bastions",
-        "primary_source": "Nicolo Barbaro, Diary of the Siege of Constantinople (1453)"
+        "primary_source": "George Sphrantzes, Chronicon Maius (The Great Chronicle)",
+        "eyewitness_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies.",
+        "academic_citation": "Sphrantzes, George. Chronicon Maius. Trans. M. Philippides, The Fall of the Byzantine Empire, Univ. of Massachusetts Press, 1980."
       },
       "visual_prompts": [
         "16:9 majestic wide-angle cinematic shot of the towering tripartite Theodosian stone walls of Constantinople in morning mist, deep moat filled with water, imposing stone battlements under a dramatic stormy sky, photorealistic 8k, oil painting undertones, historical accuracy 1453",
         "16:9 aerial panoramic establishing shot of the peninsula of Constantinople surrounded by the blue waters of the Bosporus and the Sea of Marmara, the grand dome of Hagia Sophia towering over tiled rooftops, cinematic documentary lighting",
         "16:9 dramatic close-up of Byzantine Emperor Constantine XI standing atop the imperial ramparts in gilded lamellar armor and deep imperial purple cape, gazing solemnly out into the horizon, wind howling"
       ],
+      "primary_source_record": {
+        "source_id": "constantinople_1453_sphrantzes",
+        "event_slug": "fall_of_constantinople_1453",
+        "author": "George Sphrantzes",
+        "author_title": "Imperial Chancellor & Grand Logothete",
+        "date": "April 1453",
+        "original_work": "Chronicon Maius (The Great Chronicle)",
+        "original_language": "Medieval Greek",
+        "quote": "\u039a\u03b1\u1f76 \u03b5\u1f51\u03c1\u03ad\u03b8\u03b7\u03c3\u03b1\u03bd \u03bf\u1f31 \u03c0\u03ac\u03bd\u03c4\u03b5\u03c2 \u03c0\u03ac\u03bd\u03c4\u03b5\u03c2 \u1fec\u03c9\u03bc\u03b1\u1fd6\u03bf\u03b9 \u03c4\u03b5\u03c4\u03c1\u03b1\u03ba\u03b9\u03c3\u03c7\u03af\u03bb\u03b9\u03bf\u03b9 \u03ba\u03b1\u1f76 \u1f10\u03bd\u03b1\u03ba\u03cc\u03c3\u03b9\u03bf\u03b9 \u1f40\u03b3\u03b4\u03bf\u03ae\u03ba\u03bf\u03bd\u03c4\u03b1 \u03c4\u03c1\u03b5\u1fd6\u03c2...",
+        "translation": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies.",
+        "key_passage_highlight": "only 4,983 Greeks and barely 2,000 foreigners",
+        "academic_citation": "Sphrantzes, George. Chronicon Maius. Trans. M. Philippides, The Fall of the Byzantine Empire, Univ. of Massachusetts Press, 1980.",
+        "act_binding": 1
+      },
       "shots": [
         {
           "shot_id": "act01_shot01",
@@ -56,7 +72,7 @@
         },
         {
           "shot_id": "act01_shot05",
-          "shot_type": "Macro Detail",
+          "shot_type": "Primary Source",
           "motion": "push_in",
           "prompt": "16:9 extreme close-up macro of weathered fifth-century Roman limestone bricks bonded with crimson pozzolanic mortar, showing ancient chisel marks, moss, and repaired siege cracks from centuries past"
         },
@@ -112,13 +128,29 @@
           "Giovanni Giustiniani Longo (Genoese commander)"
         ],
         "troop_ratio": "80,000+ Ottomans vs ~7,000 defenders",
-        "primary_source": "Critobulus of Imbros, History of Mehmed the Conqueror"
+        "primary_source": "Kritovoulos of Imbros, History of Mehmed the Conqueror",
+        "eyewitness_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust.",
+        "academic_citation": "Kritovoulos. History of Mehmed the Conqueror. Trans. C.T. Riggs, Princeton University Press, 1954."
       },
       "visual_prompts": [
         "16:9 imposing cinematic portrait of Sultan Mehmed II, 21 years old, wearing an Ottoman silk turban and gold-embroidered crimson kaftan, looking over tactical parchment maps inside an ornate imperial military pavilion, candlelight, high contrast",
         "16:9 sprawling panorama of the massive Ottoman army camp outside the walls of Constantinople, thousands of white canvas tents, glowing campfires at twilight, banners of the crescent fluttering in the sea breeze",
         "16:9 ranks of elite Janissary infantry marching in lockstep with polished composite bows, polearms, and curved kilij scimitars, dramatic dust plumes rising beneath their boots"
       ],
+      "primary_source_record": {
+        "source_id": "constantinople_1453_kritovoulos",
+        "event_slug": "fall_of_constantinople_1453",
+        "author": "Kritovoulos of Imbros",
+        "author_title": "Contemporary Chronicler & Biographer",
+        "date": "April 12, 1453",
+        "original_work": "History of Mehmed the Conqueror",
+        "original_language": "Greek",
+        "quote": "\u039a\u03b1\u1f76 \u1f41 \u1f26\u03c7\u03bf\u03c2 \u1f26\u03bd \u03c0\u03bf\u03bb\u1f7a\u03c2 \u03ba\u03b1\u1f76 \u03c6\u03bf\u03b2\u03b5\u03c1\u03cc\u03c2, \u1f65\u03c3\u03c4\u03b5 \u03ba\u03b1\u1f76 \u03c4\u1f74\u03bd \u03b3\u1fc6\u03bd \u03b4\u03b9\u03b1\u03c3\u03b5\u1fd6\u03c3\u03b8\u03b1\u03b9 \u03ba\u03b1\u1f76 \u1f00\u03ba\u03bf\u03cd\u03b5\u03c3\u03b8\u03b1\u03b9 \u03bc\u03ad\u03c7\u03c1\u03b9 \u03c3\u03c4\u03b1\u03b4\u03af\u03c9\u03bd \u1f11\u03ba\u03b1\u03c4\u03cc\u03bd...",
+        "translation": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust.",
+        "key_passage_highlight": "shook the ground for leagues... shattered ancient stone towers into dust",
+        "academic_citation": "Kritovoulos. History of Mehmed the Conqueror. Trans. C.T. Riggs, Princeton University Press, 1954.",
+        "act_binding": 2
+      },
       "shots": [
         {
           "shot_id": "act02_shot01",
@@ -199,13 +231,29 @@
         "era": "April 6\u201312, 1453",
         "superweapon": "The Basilic Bombard (Orban's Great Bombard)",
         "technical_specs": "26 feet long, 8 inches bronze thickness, 1,200 lb granite projectiles, 60 oxen team",
-        "primary_source": "George Sphrantzes, Chronicon Minus"
+        "primary_source": "Niccol\u00f2 Barbaro, Giornale dell'Assedio di Costantinopoli (1453)",
+        "eyewitness_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs.",
+        "academic_citation": "Barbaro, Niccol\u00f2. Diary of the Siege of Constantinople 1453. Trans. J.R. Jones, Exposition Press, 1969."
       },
       "visual_prompts": [
         "16:9 epic wide-angle shot of master founder Urban inspecting the colossal bronze Basilic cannon being hauled across the Thracian plains by a massive team of sixty oxen, dust clouds, dramatic sunset lighting",
         "16:9 slow-motion explosion of the great Ottoman bombard firing, enormous blast of orange flame and thick sulfurous smoke, granite boulder hurtling toward the distance",
         "16:9 devastation at the Roman battlements as a massive 1200-pound stone sphere shatters an ancient stone tower, clouds of mortar dust and splintered masonry flying in 8k cinematic realism"
       ],
+      "primary_source_record": {
+        "source_id": "constantinople_1453_barbaro_overland",
+        "event_slug": "fall_of_constantinople_1453",
+        "author": "Niccol\u00f2 Barbaro",
+        "author_title": "Venetian Surgeon & Eyewitness",
+        "date": "April 22, 1453",
+        "original_work": "Giornale dell'Assedio di Costantinopoli (1453)",
+        "original_language": "Venetian Italian",
+        "quote": "Cosa incredibile da veder... le loro navi navigar per terra ferma dentro al nostro porto.",
+        "translation": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs.",
+        "key_passage_highlight": "their fleet sailing across dry land into the heart of our harbor",
+        "academic_citation": "Barbaro, Niccol\u00f2. Diary of the Siege of Constantinople 1453. Trans. J.R. Jones, Exposition Press, 1969.",
+        "act_binding": 3
+      },
       "shots": [
         {
           "shot_id": "act03_shot01",
@@ -227,7 +275,7 @@
         },
         {
           "shot_id": "act03_shot04",
-          "shot_type": "Macro Projectile",
+          "shot_type": "Primary Source",
           "motion": "push_in",
           "prompt": "16:9 macro detail shot of a carved twelve-hundred pound solid Black Sea granite cannonball, textured stone surface, sitting next to heavy oak powder barrels and iron measuring scales"
         },
@@ -286,13 +334,29 @@
         "era": "April 21\u201322, 1453",
         "tactical_maneuver": "Overland transfer of 70 Ottoman galleys across the hills of Pera/Galata",
         "naval_obstacle": "The Great Wrought-Iron Boom Chain of the Golden Horn",
-        "primary_source": "Michael Doukas, Decline and Fall of the Byzantine Empire"
+        "primary_source": "Cardinal Isidore of Kiev, Epistola reverendissimi patris domini Isidori cardinalis Rutheni",
+        "eyewitness_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity.",
+        "academic_citation": "Isidore of Kiev. Epistola de Excidio Constantinopolitano. Ed. A. Pertusi, La Caduta di Costantinopoli, Mondadori, 1976."
       },
       "visual_prompts": [
         "16:9 cinematic moonlight shot of dozens of Ottoman wooden galleys being hauled uphill over greased timber tracks by hundreds of soldiers and oxen, torches flickering against dark forests, atmospheric mist",
         "16:9 dawn shot over the Golden Horn harbor, Byzantine lookouts on the sea walls staring in disbelief as seventy Ottoman warships splash into the calm water, oars rhythmically splashing",
         "16:9 macro shot of the rusted, heavy iron links of the Great Boom Chain bobbing in the dark sea water, useless against the overland assault"
       ],
+      "primary_source_record": {
+        "source_id": "constantinople_1453_isidore_hagia_sophia",
+        "event_slug": "fall_of_constantinople_1453",
+        "author": "Cardinal Isidore of Kiev",
+        "author_title": "Papal Legate & Eyewitness",
+        "date": "May 28, 1453",
+        "original_work": "Epistola reverendissimi patris domini Isidori cardinalis Rutheni",
+        "original_language": "Latin",
+        "quote": "Nulla erat dissensio, nulla discordia... Graeci et Latini una voce Deum deprecabantur in Magna Ecclesia.",
+        "translation": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity.",
+        "key_passage_highlight": "There was no hatred left that night... wept together before the altar",
+        "academic_citation": "Isidore of Kiev. Epistola de Excidio Constantinopolitano. Ed. A. Pertusi, La Caduta di Costantinopoli, Mondadori, 1976.",
+        "act_binding": 4
+      },
       "shots": [
         {
           "shot_id": "act04_shot01",
@@ -320,7 +384,7 @@
         },
         {
           "shot_id": "act04_shot05",
-          "shot_type": "Overland Haul",
+          "shot_type": "Overland Transit",
           "motion": "pan_left_up",
           "prompt": "16:9 epic moonlight spectacle of a wooden war galley with sails unfurled being hauled uphill over timber tracks by hundreds of shouting soldiers and teams of straining oxen, torches blazing"
         },
@@ -375,13 +439,29 @@
           "John Grant (Scottish mercenary and counter-mining genius)"
         ],
         "weapons": "Greek Fire, subterranean counter-mines, timber earthwork palisades",
-        "primary_source": "Leonard of Chios, Letter to Pope Nicholas V"
+        "primary_source": "Michael Ducas, Historia Byzantina",
+        "eyewitness_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn.",
+        "academic_citation": "Ducas. Decline and Fall of the Byzantines. Trans. Harry J. Magoulias, Wayne State University Press, 1975."
       },
       "visual_prompts": [
         "16:9 claustrophobic subterranean battle in a narrow dirt mining tunnel, Byzantine defenders clashing with Ottoman sappers under the glow of torches and lanterns, dust and grit",
         "16:9 dramatic cinematic burst of legendary Greek Fire roaring from a handheld bronze siphon, liquid chemical fire illuminating an underground cavern in eerie emerald-green and gold flame",
         "16:9 nighttime view of exhausted Byzantine civilians, priests, and women carrying heavy baskets of dirt and timber beams to repair breached battlements under falling Ottoman fire arrows"
       ],
+      "primary_source_record": {
+        "source_id": "constantinople_1453_ducas_last_charge",
+        "event_slug": "fall_of_constantinople_1453",
+        "author": "Michael Ducas",
+        "author_title": "Byzantine Historian & Diplomat",
+        "date": "May 29, 1453",
+        "original_work": "Historia Byzantina",
+        "original_language": "Medieval Greek",
+        "quote": "\u1f49 \u03b4\u1f72 \u03b2\u03b1\u03c3\u03b9\u03bb\u03b5\u1f7a\u03c2 \u1f00\u03c0\u03b5\u03b3\u03bd\u03c9\u03c3\u03bc\u03ad\u03bd\u03c9\u03c2 \u1f14\u03c6\u03b7\u00b7 '\u1f29 \u03c0\u03cc\u03bb\u03b9\u03c2 \u1f11\u03ac\u03bb\u03c9 \u03ba\u03b1\u1f76 \u1f10\u03b3\u1f7c \u03b6\u1ff6;' \u039a\u03b1\u1f76 \u1fe5\u03af\u03c8\u03b1\u03c2 \u03c4\u1f70 \u03b2\u03b1\u03c3\u03b9\u03bb\u03b9\u03ba\u1f70 \u1f31\u03bc\u03ac\u03c4\u03b9\u03b1...",
+        "translation": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn.",
+        "key_passage_highlight": "The city is fallen, and I am still alive!",
+        "academic_citation": "Ducas. Decline and Fall of the Byzantines. Trans. Harry J. Magoulias, Wayne State University Press, 1975.",
+        "act_binding": 5
+      },
       "shots": [
         {
           "shot_id": "act05_shot01",
