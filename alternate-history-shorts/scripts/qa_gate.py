@@ -14,7 +14,7 @@ Validates 17 critical technical, visual, audio, content, and artifact criteria:
 8. Audio stream exists
 9. Video stream exists
 10. Audio is not silent (mean volume > -40 dB, max volume <= -0.1 dB)
-11. Image count matches scene/beat count exactly
+11. Image count matches scene/beat count AND passes Split-Panel Collage QA Gate (detect_split_panel_collage)
 12. script.json exists and is valid JSON
 13. scene_plan.json exists and contains visual beats
 14. evidence_packet.json exists and is non-empty
@@ -36,6 +36,12 @@ if sys.stdout and hasattr(sys.stdout, "reconfigure"):
         pass
 from pathlib import Path
 from typing import Dict, Any, Tuple
+
+_ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+if str(_ROOT_REPO) not in sys.path:
+    sys.path.insert(0, str(_ROOT_REPO))
+
+from pipeline.compositor import detect_split_panel_collage
 
 
 def run_pipeline1_qa(video_id: str, output_dir: str = "output") -> Dict[str, Any]:
@@ -66,6 +72,7 @@ def run_pipeline1_qa(video_id: str, output_dir: str = "output") -> Dict[str, Any
             "video_present": False,
             "audio_loudness": False,
             "image_count_match": False,
+            "no_split_panel_collage": False,
             "script_valid": False,
             "scene_plan_valid": False,
             "evidence_packet_valid": False,
@@ -178,7 +185,7 @@ def run_pipeline1_qa(video_id: str, output_dir: str = "output") -> Dict[str, Any
     else:
         qa_report["failures"].append("claim_verification.json missing")
 
-    # Validate images count
+    # Validate images count & Split-Panel Collage QA Gate (17th axis)
     images_dir = video_dir / "images"
     if images_dir.exists():
         png_files = [p for p in images_dir.glob("*.png") if not p.name.startswith("scene_")]
@@ -191,6 +198,15 @@ def run_pipeline1_qa(video_id: str, output_dir: str = "output") -> Dict[str, Any
             qa_report["checks"]["image_count_match"] = True
         else:
             qa_report["failures"].append(f"Images count ({len(png_files)}) does not meet planned beat count ({expected_beats})")
+
+        split_panel_files = [p.name for p in png_files if detect_split_panel_collage(str(p))]
+        qa_report["metrics"]["split_panel_collages_detected"] = len(split_panel_files)
+        if not split_panel_files:
+            qa_report["checks"]["no_split_panel_collage"] = True
+        else:
+            qa_report["failures"].append(
+                f"Split-panel collage divider detected in keyframes: {', '.join(split_panel_files)}"
+            )
     else:
         qa_report["failures"].append("images directory missing")
 

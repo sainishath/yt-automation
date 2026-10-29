@@ -1,7 +1,7 @@
 {
   "style_name": "cinematic_historical",
-  "base_style_keywords": "ultra-wide cinematic documentary composition, photorealistic historical realism, atmospheric volumetric lighting, highly detailed environmental textures, 8k resolution, masterpiece framing, deep background perspective",
-  "negative_prompt": "modern vehicles, tanks, firearms, guns, missiles, planes, modern military, machinery, satellites, phones, modern architecture, anachronistic technology, modern clothes, modern armor, modern, flat illustration, cartoon, low quality, blurry, distorted text, low resolution, 3d render, plastic skin, uncanny, extreme close-up, cropped face",
+  "base_style_keywords": "Single full-bleed vertical 9:16 cinematic photograph, ultra-wide cinematic documentary composition, photorealistic historical realism, dramatic volumetric lighting, historically authentic wardrobe and architecture, 35mm archival film grain, highly detailed environmental textures, 8k resolution, masterpiece framing, deep background perspective, no text, no split screen",
+  "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs, modern vehicles, tanks, firearms, guns, missiles, planes, modern military, machinery, satellites, phones, modern architecture, anachronistic technology, modern clothes, modern armor, modern, flat illustration, cartoon, low quality, distorted text, low resolution, 3d render, plastic skin, uncanny, extreme close-up, cropped face",
   "aspect_ratio": "768*1344",
   "performance": "Speed",
   "styles": [

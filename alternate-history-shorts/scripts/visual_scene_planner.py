@@ -4,7 +4,7 @@ visual_scene_planner.py
 -----------------------
 Standalone Pipeline-1 module for semantic visual scene planning.
 
-Utilizes local Ollama (llama3.2:latest) to analyze narration text and identify
+Utilizes local Ollama to analyze narration text and identify
 semantic visual beats, then uses deterministic token matching against
 alignment_cache.json to establish accurate audio-driven start and end timestamps.
 
@@ -22,10 +22,14 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 
-# Import local whisper_alignment and rag_grounding modules
+# Import local whisper_alignment, rag_grounding, and pipeline.compositor modules
 sys.path.append(str(Path(__file__).parent))
+_REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 from whisper_alignment import normalize_word, align_video_job
 from rag_grounding import retrieve_beat_visual_evidence
+from pipeline.compositor import FOOOCUS_NEGATIVE_PROMPT_LOCK, build_fooocus_scene_prompt
 
 # Setup logging to pipeline.log and stdout
 LOG_FILE = Path("pipeline.log")
@@ -136,7 +140,7 @@ def request_ollama_semantic_beats(
     max_retries: int = 2
 ) -> List[Dict[str, Any]]:
     """
-    Queries Ollama (llama3.2:latest) to group narration text into semantic visual beats.
+    Queries Ollama to group narration text into semantic visual beats.
     The LLM outputs strictly semantic JSON with verbatim narration text excerpts (NO timestamps).
     """
     prompt = f"""You are an expert visual director for historical YouTube Shorts.
@@ -154,21 +158,21 @@ CRITICAL VISUAL DIRECTIVES:
    - In the FIRST 6 SECONDS, enforce a visual cut every 2.0 to 2.5 seconds (at least 3 distinct visual shots in the opening hook).
    - Across the entire Short, generate 10 to 12 distinct visual beats (average 2.5 to 3.2 seconds per shot).
    - NEVER allow a single image to remain on screen for more than 3.5 seconds.
-3. DIVERSE CINEMATIC CAMERA FRAMING:
+3. DIVERSE CINEMATIC CAMERA FRAMING (SINGLE FULL-BLEED 9:16 FRAME, NO SPLIT SCREEN, NO POSTERS/TEXT):
    - Cycle dynamically across varied framing angles:
-     * "Extreme close-up portrait of..." (intense weathered face, eyes, Roman commander or emperor)
-     * "Overhead strategic war map depicting..." (tactical cartography, territories, military arrows)
+     * "Extreme close-up portrait of..." (intense weathered face, eyes, historical commander or figure)
+     * "Overhead strategic war map depicting..." (tactical cartography without text labels, terrain, military formations)
      * "Low-angle architectural shot of..." (towering stone columns, aqueducts, monuments)
-     * "Dramatic over-the-shoulder view of..." (commander looking over legions or senate assembly)
-     * "Macro cinematic detail of..." (iron forge, parchment treaty, wax seal)
-   - STRICT BAN: DO NOT repeat "Wide-angle documentary shot of..." on consecutive beats.
+     * "Dramatic over-the-shoulder view of..." (commander looking over legions or assembly)
+     * "Macro cinematic detail of..." (iron forge, wax seal, papyrus scroll)
+   - STRICT BAN: NEVER request posters, signage, typography, or split-screen collages.
 4. YOU MUST SPLIT A SENTENCE when it contains multiple visually distinct events or exceeds 2.5 seconds.
 5. EVERY beat MUST contain a "narration_text_excerpt" that is an EXACT, UNMODIFIED, CONTIGUOUS excerpt copied directly from the Full Spoken Narration text above. Do NOT paraphrase.
 6. EVERY beat MUST define a primary visual focal target:
    - "focal_keyword": A single critical word from the excerpt that represents the subject being highlighted.
    - "focal_u": Normalized horizontal coordinate (0.20 to 0.80, default 0.50).
    - "focal_v": Normalized vertical coordinate (0.20 to 0.65, default 0.40).
-   - "zoom_target": Slow zoom target factor (1.02 to 1.06, default 1.04).
+   - "zoom_target": Slow zoom target factor (1.04 to 1.18, default 1.12).
 
 Return ONLY a valid JSON object in this exact schema:
 {{
@@ -176,12 +180,12 @@ Return ONLY a valid JSON object in this exact schema:
     {{
       "beat_id": "beat_001",
       "narration_text_excerpt": "Exact verbatim excerpt copied from narration",
-      "visual_concept": "Detailed description of what is visually visible with lighting and mood",
+      "visual_concept": "Detailed description of what is visually visible with lighting and mood (no text, no split screen)",
       "camera_shot": "Extreme close-up portrait | Overhead strategic war map | Low-angle architectural shot | Dramatic over-the-shoulder | Macro cinematic detail",
       "focal_keyword": "flames",
       "focal_u": 0.50,
       "focal_v": 0.40,
-      "zoom_target": 1.04,
+      "zoom_target": 1.12,
       "visual_transition_reason": "Specific semantic visual reason why the image changes here"
     }}
   ]
@@ -228,8 +232,8 @@ def apply_duration_validation_rules(
     """
     Applies deterministic duration validation & rules to aligned visual beats:
     - Guarantees complete continuous timeline (start_0 = 0.0, end_last = total_duration, start_i = end_{i-1}).
-    - Merges beats shorter than 2.5s with adjacent beats.
-    - Splits beats longer than 7.0s at sentence/phrase midpoints into 2 camera angles.
+    - Merges beats shorter than 1.6s with adjacent beats.
+    - Splits beats longer than 2.6s (first 6s) or 3.6s into 2 camera angles.
     """
     if not beats:
         return []
@@ -365,7 +369,6 @@ def build_fallback_scene_plan(
     """
     logging.warning("[Visual Planner Fallback] Using sentence-boundary fallback scene planner.")
     scenes = script.get("scenes", [])
-    global_timeline = alignment_cache.get("global_timeline", [])
     total_duration = alignment_cache.get("total_duration", 40.0)
 
     fallback_beats = []
@@ -374,7 +377,8 @@ def build_fallback_scene_plan(
     for idx, s in enumerate(scenes):
         narration = s.get("narration", "")
         s_dur = s.get("actual_duration_seconds", s.get("estimated_duration_seconds", 5.0))
-        vis_prompt = s.get("visual_prompt", f"Cinematic shot illustrating {script.get('topic')}")
+        raw_vis_prompt = s.get("visual_prompt", f"Cinematic shot illustrating {script.get('topic')}")
+        fooocus_spec = build_fooocus_scene_prompt(raw_vis_prompt, script.get("topic", "Historical era"))
 
         start_t = round(global_offset, 3)
         end_t = round(global_offset + s_dur, 3)
@@ -388,7 +392,8 @@ def build_fallback_scene_plan(
             "duration": round(end_t - start_t, 3),
             "narration_text": narration,
             "visual_concept": narration[:60],
-            "visual_prompt": vis_prompt,
+            "visual_prompt": fooocus_spec["prompt"],
+            "negative_prompt": fooocus_spec["negative_prompt"],
             "camera_shot": "Cinematic shot",
             "visual_transition_reason": "Script scene transition (fallback)",
             "alignment_status": "fallback_scene",
@@ -399,15 +404,21 @@ def build_fallback_scene_plan(
     return fallback_beats
 
 def clean_visual_prompt_string(cam_shot: str, vis_concept: str, prompt_hint: str) -> str:
-    """Constructs a clean, high-detail Fooocus visual prompt optimized for wide-angle documentary panning."""
+    """
+    Constructs a clean, single-frame vertical 9:16 Fooocus visual prompt.
+    Strips any split-screen, collage, or poster-text triggers to prevent AI gibberish text or multi-panel grids.
+    """
     cam = cam_shot.strip().rstrip(".,:;")
     concept = vis_concept.strip()
-    
-    # Ensure camera shot explicitly emphasizes wide-angle cinematic perspective for documentary panning
-    if not any(w in cam.lower() for w in ("wide", "panoramic", "establishing", "aerial", "landscape")):
-        cam = f"Cinematic wide-angle documentary shot of {cam}" if cam else "Cinematic wide-angle shot"
 
-    # Strip existing camera shot prefixes from vis_concept if already present
+    # Strip any split-screen or poster-text triggers
+    concept = re.sub(r"(?i)\bsplit[- ]screen\b", "single-frame", concept)
+    concept = re.sub(r"(?i)\bpropaganda posters?\b", "military banners without text", concept)
+    concept = re.sub(r"(?i)\bposters?\b", "banners without text", concept)
+    
+    if not any(w in cam.lower() for w in ("wide", "panoramic", "establishing", "aerial", "landscape")):
+        cam = f"Single full-bleed vertical 9:16 cinematic shot, {cam}" if cam else "Single full-bleed vertical 9:16 cinematic shot"
+
     cam_prefixes = (
         "cinematic wide shot of", "wide shot of", "medium shot of", "close-up shot of",
         "close-up of", "low-angle shot of", "cinematic shot of", "aerial shot of",
@@ -419,15 +430,14 @@ def clean_visual_prompt_string(cam_shot: str, vis_concept: str, prompt_hint: str
             concept = concept[len(pfx):].strip()
             break
 
-    # Strip redundant leading articles
     concept = re.sub(r'^(a\s+|an\s+|the\s+)', '', concept, flags=re.IGNORECASE)
-    
-    # Build clean base prompt
     base = f"{cam} of {concept}" if not cam.lower().endswith("of") else f"{cam} {concept}"
     base = base.rstrip(".,:; ")
     
-    # Add quality & wide-angle breathing room descriptors for documentary panning
-    detail_boosters = "ultra-wide cinematic framing, expansive environmental depth, highly detailed historical realism, 8k resolution, atmospheric volumetric lighting"
+    detail_boosters = (
+        "dramatic volumetric lighting, historically authentic wardrobe and architecture, "
+        "35mm archival film grain, 8k resolution, no text, no split screen"
+    )
     parts = [base]
     if prompt_hint:
         clean_hint = prompt_hint.strip().rstrip(".,; ")
@@ -438,7 +448,6 @@ def clean_visual_prompt_string(cam_shot: str, vis_concept: str, prompt_hint: str
         parts.append(detail_boosters)
             
     final_prompt = ", ".join(parts)
-    # Clean up double punctuation and spaces
     final_prompt = re.sub(r'\s*,\s*', ', ', final_prompt)
     final_prompt = re.sub(r'\s*\.\s*', '. ', final_prompt)
     final_prompt = re.sub(r'of\s+of', 'of', final_prompt, flags=re.IGNORECASE)
@@ -518,15 +527,15 @@ def plan_visual_scenes(
             focal_kw = str(beat.get("focal_keyword", "")).strip().lower()
             focal_u = float(beat.get("focal_u", 0.50))
             focal_v = float(beat.get("focal_v", 0.40))
-            zoom_tgt = float(beat.get("zoom_target", 1.04))
+            zoom_tgt = float(beat.get("zoom_target", 1.12))
 
             # Clamp coordinates to safe documentary framing boundaries
             focal_u = max(0.20, min(0.80, focal_u))
             focal_v = max(0.20, min(0.65, focal_v))
-            zoom_tgt = max(1.02, min(1.06, zoom_tgt))
+            zoom_tgt = max(1.04, min(1.18, zoom_tgt))
 
             # Locate timestamp of focal_keyword within beat start/end
-            t_hit_rel = (end_t - start_t) * 0.55  # Default hit time at 55% of beat duration
+            t_hit_rel = (end_t - start_t) * 0.55
             if focal_kw:
                 for w in global_timeline:
                     if w.get("global_start", 0) >= start_t - 0.1 and w.get("global_end", 0) <= end_t + 0.1:
@@ -548,6 +557,7 @@ def plan_visual_scenes(
                 "narration_text": excerpt,
                 "visual_concept": vis_concept,
                 "visual_prompt": enriched_prompt,
+                "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
                 "camera_shot": cam_shot,
                 "focal_keyword": focal_kw,
                 "focal_u": round(focal_u, 3),

@@ -3,8 +3,9 @@
 generate_metadata.py
 --------------------
 Pipeline 1 Stage 5: Generates YouTube Shorts metadata (title, description, tags).
-Loads script.json, generates title/description/tags via Ollama, validates constraints,
-and saves to output/{video_id}/metadata.json.
+Loads script.json & evidence_packet.json, generates title/description/tags via Ollama,
+auto-appends verified RAG source citations & synthetic media disclosure, validates
+against the Counterfactual Divergence Pre-Check, and saves to output/{video_id}/metadata.json.
 """
 
 import os
@@ -17,6 +18,12 @@ import logging
 import requests
 from pathlib import Path
 from typing import Any, Tuple
+
+_ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+if str(_ROOT_REPO) not in sys.path:
+    sys.path.insert(0, str(_ROOT_REPO))
+
+from pipeline.upload_guard import append_rag_citations_to_description
 
 # Setup logging to pipeline.log and stdout
 LOG_FILE = Path("pipeline.log")
@@ -125,17 +132,26 @@ def validate_metadata(metadata: dict) -> Tuple[bool, Any]:
 def generate_video_metadata(video_id: str, output_dir: str = "output") -> dict:
     """
     Main Stage 5 metadata generation function.
-    Loads script.json for a video, generates title/description/tags via Ollama,
-    validates them, and saves to metadata.json.
+    Loads script.json & evidence_packet.json for a video, generates title/description/tags via Ollama,
+    auto-appends verified RAG citations, validates them, and saves to metadata.json.
     """
     video_path = Path(output_dir) / video_id
     script_path = video_path / "script.json"
+    evidence_path = video_path / "evidence_packet.json"
 
     if not script_path.exists():
         raise FileNotFoundError(f"script.json not found for {video_id}")
 
     with open(script_path, "r", encoding="utf-8") as f:
         script = json.load(f)
+
+    evidence_packet = None
+    if evidence_path.exists():
+        try:
+            with open(evidence_path, "r", encoding="utf-8") as ef:
+                evidence_packet = json.load(ef)
+        except Exception:
+            evidence_packet = None
 
     topic = script.get("topic", video_id.replace("_", " "))
     hook = script.get("hook", "")
@@ -151,9 +167,9 @@ Hook: "{hook}"
 Synopsis: "{synopsis}"
 
 Requirements:
-- title: Under {MAX_TITLE_LENGTH} characters. MUST be directly about the topic "{topic}". Front-load the hook, curiosity-driven, starts with or includes "What If". Keep it short so it is not truncated on mobile screens.
-- description: A compelling description that starts immediately with the hook line. Follow with 1-2 sentences summarizing the premise and a call to action. (Do not write any hashtags here — they will be appended automatically).
-- tags: A list of exactly {MIN_TAGS}-{MAX_TAGS} strings. Mix broad terms ("history", "alternate history", "what if", "history shorts") with specific entity names strictly from the topic "{topic}". Do not include unrelated historical entities.
+- title: Under {MAX_TITLE_LENGTH} characters. MUST be directly about the topic "{topic}". Front-load the hook, curiosity-driven, starts with or includes "What If" (or states the counterfactual divergence clearly). Never use vague phrases like "Like This?".
+- description: A compelling description that starts immediately with the hook line. Follow with 1-2 sentences summarizing the counterfactual premise and a call to action. (Do not write any hashtags here — they will be appended automatically).
+- tags: A list of exactly {MIN_TAGS}-{MAX_TAGS} strings. Mix broad terms ("history", "alternate history", "what if", "history shorts", "chronos shift") with specific entity names strictly from the topic "{topic}". Do not include unrelated historical entities.
 
 Return ONLY valid JSON with no other text:
 {{
@@ -169,13 +185,17 @@ Return ONLY valid JSON with no other text:
         try:
             metadata = call_ollama_json(prompt)
             metadata["video_id"] = video_id
+            metadata["category_id"] = "27"  # Education (higher RPM than Entertainment)
 
             desc = metadata.get("description", "").strip()
-            topic_tag = "#" + topic.split()[-1].strip("?").capitalize()
-            hashtag_suffix = f"\n\n#Shorts #WhatIf #AlternateHistory {topic_tag}"
+            topic_tag = "#" + re.sub(r"[^a-zA-Z0-9]", "", topic.split()[-1]).capitalize()
+            hashtag_suffix = f"\n\n#Shorts #WhatIf #AlternateHistory #ChronosShift {topic_tag}"
             
             if "#Shorts" not in desc and "#shorts" not in desc:
-                metadata["description"] = f"{desc} {hashtag_suffix}".strip()
+                desc = f"{desc} {hashtag_suffix}".strip()
+
+            # Auto-append verified RAG source citations and synthetic media disclosure
+            metadata["description"] = append_rag_citations_to_description(desc, evidence_packet)
 
             valid, result = validate_metadata(metadata)
             if valid:

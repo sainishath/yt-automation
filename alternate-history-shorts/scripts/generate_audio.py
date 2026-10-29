@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+generate_audio.py
+-----------------
+Pipeline 1 Stage 2 TTS Audio Synthesis (Edge-TTS en-US-ChristopherNeural) +
+Optional Multi-Language Dubbing (Spanish, Portuguese, German, Hindi via pipeline/tts.py).
+"""
+
 import os
 import sys
 import json
@@ -6,6 +14,13 @@ import argparse
 import subprocess
 import logging
 from pathlib import Path
+from typing import Optional, List
+
+_ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+if str(_ROOT_REPO) not in sys.path:
+    sys.path.insert(0, str(_ROOT_REPO))
+
+from pipeline.tts import synthesize_multilang_tracks
 
 # Setup logging to pipeline.log and stdout
 LOG_FILE = Path("pipeline.log")
@@ -27,25 +42,17 @@ def clean_narration_text(text: str) -> str:
         text = str(text) if text is not None else ""
         
     text = text.strip()
-    # 1. Strip bracketed / parenthetical word count metadata (e.g. (15 words), [14 words], [Word count: 12], (12-16 words), [15 words total])
     text = re.sub(r'[\(\[\{]\s*(?:word\s*count\s*:?\s*)?\d+(?:\s*-\s*\d+)?\s*(?:spoken\s*)?words?\s*(?:total|approx)?[\)\]\}]', '', text, flags=re.IGNORECASE)
     text = re.sub(r'[\(\[\{]\s*(?:word\s*count|words?)\b[^\)\]\}]*[\)\]\}]', '', text, flags=re.IGNORECASE)
-    
-    # 2. Strip standalone / trailing word counts like: '- 16 words', '— 15 words.', '14 words'
     text = re.sub(r'[\s,;—–-]+(?:word\s*count\s*:?\s*)?\d+(?:\s*-\s*\d+)?\s*(?:spoken\s*)?words?\s*(?:total|approx)?[\.\?!]?(?=$|[\s,;—–-])', '', text, flags=re.IGNORECASE)
     text = re.sub(r'[\(\[]?\b\d+\s*words?\b[\)\]]?', '', text, flags=re.IGNORECASE)
-    
-    # 3. Strip stray scene indicators like 'Scene 1:', '[Scene 2]', '(Scene 3: ...)'
     text = re.sub(r'^(?:scene\s*\d+|hook|narration)\s*:\s*', '', text, flags=re.IGNORECASE)
     text = re.sub(r'[\(\[]\s*scene\s*\d+[^\]\)]*[\)\]]', '', text, flags=re.IGNORECASE)
-    
-    # 4. Strip stray empty parentheses, brackets, or leading/trailing hyphens/dashes
     text = re.sub(r'[\(\[\{]\s*[\)\]\}]', '', text)
     text = re.sub(r'\s+([,\.\?!])', r'\1', text)
     text = re.sub(r'\s{2,}', ' ', text)
     text = text.strip(' \t\n\r—–-"\'')
     
-    # 5. Ensure valid terminal punctuation if text is non-empty
     if text and not text.endswith(('.', '!', '?', '."', '!"', '?"')):
         text += '.'
         
@@ -76,15 +83,11 @@ def generate_scene_audio(text: str, voice: str, out_path: Path, max_retries: int
     for attempt in range(1, max_retries + 1):
         try:
             logging.info(f"Generating voice for scene to {out_path.name} (Attempt {attempt}/{max_retries})")
-            
-            # Run Edge TTS
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             
-            # Verify file exists and has content
             if not out_path.exists() or out_path.stat().st_size == 0:
                 raise FileNotFoundError(f"Audio file was not created or is empty: {out_path}")
                 
-            # Measure actual duration using ffprobe
             duration = get_audio_duration(out_path)
             if duration <= 0.0:
                 raise ValueError("Measured audio duration is 0 seconds")
@@ -102,14 +105,18 @@ def generate_scene_audio(text: str, voice: str, out_path: Path, max_retries: int
                     
     raise RuntimeError(f"Failed to generate valid audio for scene after {max_retries} attempts.")
 
-def process_video_audio(video_id: str, output_dir: str = "output") -> dict:
+def process_video_audio(
+    video_id: str,
+    output_dir: str = "output",
+    multilang: bool = False,
+    languages: Optional[List[str]] = None
+) -> dict:
     video_path = Path(output_dir) / video_id
     script_path = video_path / "script.json"
     
     if not script_path.exists():
         raise FileNotFoundError(f"script.json not found for {video_id} at {script_path}")
         
-    # Load voice config
     _BASE_DIR = Path(__file__).parent.parent.resolve()
     voice_path = _BASE_DIR / "config" / "voice.json"
     if not voice_path.exists():
@@ -137,28 +144,33 @@ def process_video_audio(video_id: str, output_dir: str = "output") -> dict:
     print(f"{'Scene':<6} | {'Words':<5} | {'Est. (s)':<8} | {'Act. (s)':<8} | {'Delta (s)':<9}")
     print("-" * 50)
     
+    full_narration_parts = []
     for idx, scene in enumerate(scenes):
         narration = clean_narration_text(scene.get("narration", ""))
         scene["narration"] = narration
+        full_narration_parts.append(narration)
         words = len(narration.split())
         est_duration = scene.get("estimated_duration_seconds", 0.0)
         total_estimated += est_duration
         
-        # Output file path
         out_path = audio_dir / f"scene_{idx:03d}.mp3"
-        
-        # Generate and measure
         actual_duration = generate_scene_audio(narration, voice, out_path)
         total_actual += actual_duration
-        
-        # Save actual duration back to the script data
         scene["actual_duration_seconds"] = actual_duration
         
-        # Calculate delta
         delta = actual_duration - est_duration
         print(f"#{idx:<4} | {words:<5} | {est_duration:<8.1f} | {actual_duration:<8.2f} | {delta:<+9.2f}")
+
+    multilang_tracks = {}
+    if multilang:
+        try:
+            full_text = " ".join(full_narration_parts)
+            multilang_tracks = synthesize_multilang_tracks(full_text, audio_dir / "multilang", languages=languages)
+            script["multilang_audio_tracks"] = multilang_tracks
+            logging.info(f"Generated multi-language audio tracks: {list(multilang_tracks.keys())}")
+        except Exception as mle:
+            logging.warning(f"Multi-language track generation warning: {mle}")
         
-    # Save the updated script back to the folder
     with open(script_path, "w", encoding="utf-8") as f:
         json.dump(script, f, indent=2, ensure_ascii=False)
         
@@ -171,17 +183,19 @@ def process_video_audio(video_id: str, output_dir: str = "output") -> dict:
         "video_id": video_id,
         "total_estimated": round(total_estimated, 2),
         "total_actual": round(total_actual, 2),
-        "total_delta": round(total_delta, 2)
+        "total_delta": round(total_delta, 2),
+        "multilang_tracks": multilang_tracks
     }
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--video_id", required=True, help="Video folder name to process")
     parser.add_argument("--output_dir", default="output", help="Base output directory")
+    parser.add_argument("--multilang", action="store_true", help="Synthesize localized ES/PT/DE/HI audio tracks")
     args = parser.parse_args()
     
     try:
-        process_video_audio(args.video_id, args.output_dir)
+        process_video_audio(args.video_id, args.output_dir, multilang=args.multilang)
     except Exception as e:
         logging.error(f"TTS audio generation failed: {e}")
         sys.exit(1)

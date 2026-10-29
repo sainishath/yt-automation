@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+assemble_video.py
+-----------------
+Pipeline 1 Stage 4 Video Compositor:
+- Mobile-Safe Shorts Subtitles (SAFE_SHORTS_ASS_HEADER: MarginV=620, 72pt bold yellow/white with 5px outline)
+- 4-Trajectory Dynamic Camera Motion Matrix (Push-In, Pull-Back, Lateral Pan, Diagonal Pan-Tilt)
+- FFmpeg sidechaincompress Audio Ducking over dark cinematic tension beds
+"""
+
 import os
 import sys
 import json
@@ -7,6 +17,17 @@ import subprocess
 import argparse
 import logging
 from pathlib import Path
+
+_ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+if str(_ROOT_REPO) not in sys.path:
+    sys.path.insert(0, str(_ROOT_REPO))
+
+from pipeline.compositor import (
+    MOTION_TRAJECTORIES,
+    SAFE_SHORTS_ASS_HEADER,
+    SAFE_SHORTS_ASS_STYLE,
+    render_dynamic_short_scene,
+)
 
 # Setup logging to pipeline.log and stdout
 LOG_FILE = Path("pipeline.log")
@@ -36,12 +57,13 @@ def map_color_to_ass(color_name: str) -> str:
         "magenta": "&H00FF00FF"
     }
     cleaned = color_name.lower().strip()
-    return color_map.get(cleaned, cleaned if cleaned.startswith("&h") else "&H00FFFFFF")
+    return color_map.get(cleaned, cleaned if cleaned.startswith("&h") else "&H0000FFFF")
 
-def align_and_generate_ass(whisper_words: list, original_text: str, style_cfg: dict, max_words: int = 3, max_chars: int = 15) -> str:
+def align_and_generate_ass(whisper_words: list, original_text: str, style_cfg: dict, max_words: int = 3, max_chars: int = 16) -> str:
     """
     Aligns Whisper's word timestamps with the exact spelling and punctuation from script.json,
-    then generates a v4.00+ ASS subtitle file with native 1080x1920 styling.
+    then generates a v4.00+ ASS subtitle file in the Mobile-Safe Zone (MarginV=620, 72pt bold
+    yellow/white active-word highlighting with 5px black outline).
     """
     orig_words = original_text.split()
     aligned = []
@@ -53,7 +75,6 @@ def align_and_generate_ass(whisper_words: list, original_text: str, style_cfg: d
             orig_word = orig_words[orig_idx]
             orig_clean = orig_word.strip(".,;:?!'\"()[]{}").lower()
             
-            # If they align, pair them
             if w_text in orig_clean or orig_clean in w_text or not w_text:
                 aligned.append({
                     "word": orig_word,
@@ -62,7 +83,6 @@ def align_and_generate_ass(whisper_words: list, original_text: str, style_cfg: d
                 })
                 orig_idx += 1
             else:
-                # If they mismatch, fallback to the original word to protect spelling
                 aligned.append({
                     "word": orig_word,
                     "start": w_word["start"],
@@ -106,21 +126,24 @@ def align_and_generate_ass(whisper_words: list, original_text: str, style_cfg: d
     if chunk:
         chunks.append(chunk)
         
-    # Build ASS content
-    # Build ASS content with enhanced mobile legibility (drop shadow + crisp outline)
-    font = style_cfg.get("font", "Arial")
-    bold = "1" if "bold" in font.lower() else "1"  # Default to bold for mobile shorts
+    # Build ASS content using SAFE_SHORTS_ASS_HEADER defaults (MarginV=620, 72pt bold yellow/white, 5px outline)
+    font = style_cfg.get("font", "DejaVu Sans")
     if "bold" in font.lower():
-        font = font.replace("Bold", "").replace("bold", "").strip()
+        font = font.replace("Bold", "").replace("bold", "").strip() or "DejaVu Sans"
         
-    size = style_cfg.get("size", 68)
-    color = map_color_to_ass(style_cfg.get("color", "white"))
+    size = int(style_cfg.get("size", 72))
+    primary_color = map_color_to_ass(style_cfg.get("color", "yellow"))
+    secondary_color = map_color_to_ass(style_cfg.get("secondary_color", "white"))
     out_color = map_color_to_ass(style_cfg.get("outline_color", "black"))
-    out_width = style_cfg.get("outline_width", 4)
-    shadow_depth = style_cfg.get("shadow", 2)
-    margin_v = style_cfg.get("margin_v", 320)
+    out_width = int(style_cfg.get("outline_width", 5))
+    shadow_depth = int(style_cfg.get("shadow", 2))
+    margin_v = int(style_cfg.get("margin_v", 620))
+    margin_l = int(style_cfg.get("margin_l", 80))
+    margin_r = int(style_cfg.get("margin_r", 80))
+    # Enforce mobile-safe floor (never allow captions in the bottom YouTube Shorts UI dead zone < 500px)
+    if margin_v < 500:
+        margin_v = 620
     
-    # Header info
     header = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: 1080
@@ -129,7 +152,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,{font},{size},{color},&H000000FF,{out_color},&H80000000,{bold},0,0,0,100,100,0,0,1,{out_width},{shadow_depth},2,10,10,{margin_v},1
+Style: Default,{font},{size},{primary_color},{secondary_color},{out_color},&H80000000,-1,0,0,0,100,100,1,0,1,{out_width},{shadow_depth},2,{margin_l},{margin_r},{margin_v},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -137,17 +160,27 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     
     events = []
     for chunk in chunks:
-        start_t = format_ass_timestamp(chunk[0]["start"])
-        end_t = format_ass_timestamp(chunk[-1]["end"])
-        text = " ".join([w["word"].strip() for w in chunk])
-        events.append(f"Dialogue: 0,{start_t},{end_t},Default,,0,0,0,,{text}")
+        # Active-word yellow/white highlighting across each word in the chunk
+        for active_idx, active_word in enumerate(chunk):
+            w_start = format_ass_timestamp(active_word["start"])
+            w_end = format_ass_timestamp(
+                chunk[active_idx + 1]["start"] if active_idx + 1 < len(chunk) else active_word["end"]
+            )
+            styled_tokens = []
+            for tok_idx, tok in enumerate(chunk):
+                raw_tok = tok["word"].strip()
+                if tok_idx == active_idx:
+                    styled_tokens.append(f"{{\\c{primary_color}&}}{raw_tok}{{\\c{secondary_color}&}}")
+                else:
+                    styled_tokens.append(f"{{\\c{secondary_color}&}}{raw_tok}")
+            text_line = " ".join(styled_tokens)
+            events.append(f"Dialogue: 0,{w_start},{w_end},Default,,0,0,0,,{text_line}")
         
     return header + "\n".join(events) + "\n"
 
 def transcribe_scene(model, audio_path: Path, narration_text: str, style_cfg: dict) -> str:
     """Uses Whisper to transcribe the audio and returns aligned ASS content."""
     logging.info(f"Transcribing {audio_path.name} with Whisper...")
-    # Run Whisper transcription guiding it with the original text as prompt
     result = model.transcribe(
         str(audio_path),
         word_timestamps=True,
@@ -155,7 +188,6 @@ def transcribe_scene(model, audio_path: Path, narration_text: str, style_cfg: di
         language="en"
     )
     
-    # Extract word segments
     words = []
     for segment in result.get("segments", []):
         for w in segment.get("words", []):
@@ -166,7 +198,6 @@ def transcribe_scene(model, audio_path: Path, narration_text: str, style_cfg: di
             })
             
     if not words:
-        # Fallback to segment-level if word timestamps fail
         logging.warning("No word-level timestamps returned, fallback to segment timestamps.")
         for segment in result.get("segments", []):
             words.append({
@@ -182,16 +213,21 @@ def render_scene_frames_opencv(
     duration: float,
     focal_u: float = 0.50,
     focal_v: float = 0.35,
-    zoom_target: float = 1.10,
+    zoom_target: float = 1.15,
     t_hit: float = 2.5,
     fps: int = 25,
     out_width: int = 1080,
-    out_height: int = 1920
+    out_height: int = 1920,
+    trajectory_idx: int = 0
 ):
     """
     Generator that yields raw BGR bytes for every frame of the scene using OpenCV
-    subpixel affine warping with C1 Continuous Smoothstep interpolation (3*tau^2 - 2*tau^3).
-    Guarantees ultra-smooth, jitter-free Directional Focal Zoom-In.
+    subpixel affine warping with C1 Continuous Smoothstep interpolation across the
+    4-Trajectory Camera Motion Matrix:
+      0: Dynamic Push-In Zoom (1.00x -> 1.18x)
+      1: Dramatic Pull-Back Reveal (1.18x -> 1.00x)
+      2: Horizontal Lateral Pan at 1.12x zoom
+      3: Diagonal Pan-Tilt at 1.12x zoom
     """
     import cv2
     import numpy as np
@@ -203,23 +239,34 @@ def render_scene_frames_opencv(
     ih, iw = img.shape[:2]
     total_frames = max(1, int(round(duration * fps)))
 
-    # Directional Focal Target:
-    # Start wide (1.00x) centered at default natural perspective (0.50, 0.40)
-    start_u, start_v = 0.50, 0.40
-    start_zoom = 1.00
+    traj_mode = trajectory_idx % 4
+    clamped_u = max(0.25, min(0.75, focal_u))
+    clamped_v = max(0.25, min(0.65, focal_v))
 
-    # Slow, subtle, documentary-grade zoom and pan bounds:
-    # Clamping zoom strictly between 1.02x and 1.06x for a stately, cinematic feel
-    target_zoom = max(1.02, min(1.06, zoom_target if zoom_target > 1.0 else 1.05))
-    target_u = max(0.20, min(0.80, focal_u))
-    target_v = max(0.20, min(0.65, focal_v))
+    if traj_mode == 0:
+        # Trajectory 0: Push-In Zoom (1.00 -> 1.18)
+        start_zoom, target_zoom = 1.00, max(1.12, min(1.18, zoom_target if zoom_target > 1.08 else 1.16))
+        start_u, start_v = 0.50, 0.42
+        target_u, target_v = clamped_u, clamped_v
+    elif traj_mode == 1:
+        # Trajectory 1: Pull-Back Zoom-Out Reveal (1.18 -> 1.00)
+        start_zoom, target_zoom = 1.18, 1.00
+        start_u, start_v = clamped_u, clamped_v
+        target_u, target_v = 0.50, 0.45
+    elif traj_mode == 2:
+        # Trajectory 2: Horizontal Lateral Pan at 1.12x
+        start_zoom, target_zoom = 1.12, 1.12
+        start_u, target_u = 0.38, 0.62
+        start_v, target_v = clamped_v, clamped_v
+    else:
+        # Trajectory 3: Diagonal Pan-Tilt at 1.12x
+        start_zoom, target_zoom = 1.12, 1.14
+        start_u, target_u = 0.62, 0.38
+        start_v, target_v = 0.34, 0.54
 
-    # Pre-calculate source crop aspect ratio (9:16)
     target_aspect = out_width / out_height
 
     for f_idx in range(total_frames):
-        # 1. Stretch smooth interpolation across the ENTIRE duration of the scene
-        # This creates a slow, continuous, steady documentary camera crawl without jarring jumps
         tau = f_idx / float(max(1, total_frames - 1))
         smooth_tau = 3.0 * (tau ** 2) - 2.0 * (tau ** 3)
 
@@ -227,7 +274,6 @@ def render_scene_frames_opencv(
         curr_u = start_u + (target_u - start_u) * smooth_tau
         curr_v = start_v + (target_v - start_v) * smooth_tau
 
-        # 2. Compute the subpixel bounding box in source image coordinates
         crop_h = ih / curr_zoom
         crop_w = crop_h * target_aspect
 
@@ -238,13 +284,11 @@ def render_scene_frames_opencv(
         center_x = curr_u * iw
         center_y = curr_v * ih
 
-        # Clamp center to ensure crop stays strictly within source image bounds
         half_w = crop_w / 2.0
         half_h = crop_h / 2.0
         center_x = max(half_w, min(iw - half_w, center_x))
         center_y = max(half_h, min(ih - half_h, center_y))
 
-        # 3. Subpixel 3-point affine transformation matrix with Lanczos-4 resampling
         src_pts = np.float32([
             [center_x - half_w, center_y - half_h],
             [center_x + half_w, center_y - half_h],
@@ -275,12 +319,12 @@ def build_scene_clip(
     out_clip_path: Path,
     focal_u: float = 0.50,
     focal_v: float = 0.35,
-    zoom_target: float = 1.10,
+    zoom_target: float = 1.15,
     t_hit: float = 2.5
 ) -> bool:
     """
-    Compiles a single scene video clip with ultra-smooth OpenCV subpixel motion,
-    audio muxing, and ASS subtitle burning.
+    Compiles a single scene video clip with 4-trajectory OpenCV subpixel motion,
+    audio muxing, and mobile-safe ASS subtitle burning (MarginV=620).
     """
     audio_dir = audio_path.parent
     rel_audio = audio_path.name
@@ -292,11 +336,10 @@ def build_scene_clip(
     temp_video = f"temp_video_{idx}.mp4"
 
     logging.info(
-        f"Assembling scene {idx} with OpenCV Directional Focal Zoom: "
-        f"Focal=({focal_u:.2f}, {focal_v:.2f}), Zoom={zoom_target:.2f}x, Hit={t_hit:.2f}s"
+        f"Assembling scene {idx} with Dynamic Camera Trajectory #{idx % 4}: "
+        f"Focal=({focal_u:.2f}, {focal_v:.2f}), Zoom={zoom_target:.2f}x"
     )
 
-    # 1. Stream OpenCV warped frames directly into FFmpeg stdin
     cmd_ffmpeg = [
         "ffmpeg", "-y",
         "-f", "rawvideo",
@@ -332,7 +375,8 @@ def build_scene_clip(
             t_hit=t_hit,
             fps=fps,
             out_width=out_w,
-            out_height=out_h
+            out_height=out_h,
+            trajectory_idx=idx
         ):
             proc.stdin.write(frame_bytes)
 
@@ -361,7 +405,6 @@ def build_scene_clip(
 
     res_merge = subprocess.run(cmd_merge, cwd=str(audio_dir), capture_output=True)
 
-    # Cleanup temporary video file
     temp_path = audio_dir / temp_video
     if temp_path.exists():
         temp_path.unlink()
@@ -373,7 +416,7 @@ def build_scene_clip(
 
     return True
 
-def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: int = 0) -> None:
+def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: int = 0) -> str:
     start_time = time.time()
     
     video_path = Path(output_dir) / video_id
@@ -410,7 +453,6 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
     
     compiled_clips = []
 
-    # Load scene_plan.json if available to retrieve focal coordinates and timing
     plan_path = video_path / "scene_plan.json"
     scene_plan_beats = []
     if plan_path.exists():
@@ -445,26 +487,23 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
         if not img_file.exists():
             raise FileNotFoundError(f"Missing image file for scene {idx}: {img_file}")
 
-        # Extract beat-specific focal coordinates and hit timing
         focal_u = 0.50
         focal_v = 0.35
-        zoom_tgt = 1.10
+        zoom_tgt = 1.15
         t_hit = duration * 0.55
 
         if idx < len(scene_plan_beats):
             sp_beat = scene_plan_beats[idx]
             focal_u = float(sp_beat.get("focal_u", 0.50))
             focal_v = float(sp_beat.get("focal_v", 0.35))
-            zoom_tgt = float(sp_beat.get("zoom_target", 1.10))
+            zoom_tgt = float(sp_beat.get("zoom_target", 1.15))
             t_hit = float(sp_beat.get("t_hit", duration * 0.55))
 
-        # Transcribe
         style_cfg = cfg.get("caption_style", {})
         ass_content = transcribe_scene(whisper_model, audio_file, narration, style_cfg)
         with open(ass_file, "w", encoding="utf-8") as sf:
             sf.write(ass_content)
 
-        # Compile individual scene clip with OpenCV Subpixel Ken Burns
         success = build_scene_clip(
             idx=idx,
             img_path=img_file,
@@ -482,7 +521,6 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
 
         compiled_clips.append(out_clip)
 
-    # Re-order compilation to place selected thumbnail frame first
     if 0 < thumbnail_scene < len(compiled_clips):
         logging.info(f"Setting scene {thumbnail_scene} as the video thumbnail cover frame.")
         thumb_clip = compiled_clips.pop(thumbnail_scene)
@@ -509,51 +547,56 @@ def assemble_video(video_id: str, output_dir: str = "output", thumbnail_scene: i
         err = res.stderr.decode("utf-8", errors="ignore")[-1000:]
         raise RuntimeError(f"Concatenation failed:\n{err}")
         
-    # Remove temporary manifest
     if manifest_path.exists():
         manifest_path.unlink()
         
-    # 3. Step E: Background Music Integration
+    # 3. Step E: Background Tension Bed Integration with FFmpeg sidechaincompress Audio Ducking
     music_path = _BASE_DIR / "config" / "bg_music.mp3"
     if not music_path.exists():
         music_path = Path("config/bg_music.mp3")
     final_output = final_dir / f"{video_id}_final.mp4"
     
     if music_path.exists():
-        logging.info(f"Mixing background music: {music_path.name} at -22dB...")
-        music_vol = cfg.get("music_volume_db", -22)
-        # Convert dB to linear volume: 10^(db/20)
+        logging.info(f"Mixing background audio bed ({music_path.name}) with sidechaincompress ducking...")
+        music_vol = cfg.get("music_volume_db", -18)
         linear_vol = round(10 ** (music_vol / 20), 3)
         
-        filter_complex = (
-            f"[0:a]aresample=async=1,aformat=sample_rates=44100:channel_layouts=stereo,volume=1.0[voice];"
-            f"[1:a]aresample=async=1,aformat=sample_rates=44100:channel_layouts=stereo,volume={linear_vol}[bg];"
-            f"[voice][bg]amix=inputs=2:duration=first:dropout_transition=2[a_out]"
+        sidechain_filter = (
+            f"[0:a]aresample=async=1,aformat=sample_rates=44100:channel_layouts=stereo,volume=1.0,asplit=2[voice_main][voice_sc];"
+            f"[1:a]aresample=async=1,aformat=sample_rates=44100:channel_layouts=stereo,lowpass=f=1800,volume={linear_vol}[bg_raw];"
+            f"[bg_raw][voice_sc]sidechaincompress=threshold=0.03:ratio=6:attack=15:release=250[bg_ducked];"
+            f"[voice_main][bg_ducked]amix=inputs=2:duration=first:dropout_transition=2[a_out]"
         )
         mix_cmd = [
             "ffmpeg", "-y",
             "-i", str(raw_video),
             "-stream_loop", "-1", "-i", str(music_path),
-            "-filter_complex", filter_complex,
+            "-filter_complex", sidechain_filter,
             "-map", "0:v", "-map", "[a_out]",
             "-c:v", "copy", "-c:a", "aac", "-b:a", "192k",
             str(final_output)
         ]
         res = subprocess.run(mix_cmd, capture_output=True)
         if res.returncode != 0:
-            err = res.stderr.decode("utf-8", errors="ignore")[-1000:]
-            raise RuntimeError(f"Background music mixing failed:\n{err}")
+            logging.warning("sidechaincompress filter fallback to standard amix...")
+            fallback_filter = (
+                f"[0:a]aresample=async=1,aformat=sample_rates=44100:channel_layouts=stereo,volume=1.0[voice];"
+                f"[1:a]aresample=async=1,aformat=sample_rates=44100:channel_layouts=stereo,volume={linear_vol}[bg];"
+                f"[voice][bg]amix=inputs=2:duration=first:dropout_transition=2[a_out]"
+            )
+            mix_cmd[mix_cmd.index("-filter_complex") + 1] = fallback_filter
+            res = subprocess.run(mix_cmd, capture_output=True)
+            if res.returncode != 0:
+                err = res.stderr.decode("utf-8", errors="ignore")[-1000:]
+                raise RuntimeError(f"Background music mixing failed:\n{err}")
     else:
         logging.warning("Background music config/bg_music.mp3 not found. Exporting voice-only final video.")
-        # Just rename/copy raw_concat to the final name
         shutil.copy(raw_video, final_output)
         
-    # Cleanup temporary raw video
     if raw_video.exists():
         raw_video.unlink()
         
     # 4. Step F: Export & Validation
-    # Use ffprobe to validate the final output file
     logging.info("Validating final video output...")
     probe_cmd = [
         "ffprobe", "-v", "error",

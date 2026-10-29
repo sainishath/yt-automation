@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+upload_video.py
+---------------
+Pipeline 1 Stage 5: Compliant YouTube Data API v3 Uploader.
+Enforces:
+- Category 27 (Education)
+- Mandatory synthetic media disclosure (status.containsSyntheticMedia = True)
+- Auto-appended RAG source citations from evidence_packet.json
+- Idempotency & human-review rejection guard
+"""
+
 import os
 import sys
 import json
@@ -5,6 +17,15 @@ import time
 import argparse
 import logging
 from pathlib import Path
+
+_ROOT_REPO = Path(__file__).resolve().parent.parent.parent
+if str(_ROOT_REPO) not in sys.path:
+    sys.path.insert(0, str(_ROOT_REPO))
+
+from pipeline.upload_guard import (
+    append_rag_citations_to_description,
+    build_youtube_insert_body,
+)
 
 # Setup logging to pipeline.log and stdout
 LOG_FILE = Path("pipeline.log")
@@ -70,7 +91,6 @@ def get_authenticated_service(force_reauth: bool = False):
 
     credentials = None
 
-    # Load existing token if available and not forcing reauth
     if not force_reauth and TOKEN_FILE.exists():
         try:
             credentials = Credentials.from_authorized_user_file(
@@ -81,19 +101,16 @@ def get_authenticated_service(force_reauth: bool = False):
             logging.warning(f"Could not load existing token: {e}. Will re-authenticate.")
             credentials = None
 
-    # Refresh if expired
     if credentials and credentials.expired and credentials.refresh_token:
         try:
             credentials.refresh(Request())
             logging.info("Token refreshed successfully.")
-            # Save refreshed token
             with open(TOKEN_FILE, "w") as f:
                 f.write(credentials.to_json())
         except Exception as e:
             logging.warning(f"Token refresh failed: {e}. Will re-authenticate.")
             credentials = None
 
-    # Run full OAuth flow if needed
     if not credentials or not credentials.valid or force_reauth:
         if not CLIENT_SECRETS_FILE.exists():
             raise FileNotFoundError(
@@ -113,7 +130,6 @@ def get_authenticated_service(force_reauth: bool = False):
         )
         credentials = flow.run_local_server(port=0, prompt="select_account consent", open_browser=True)
 
-        # Save token for future runs
         TOKEN_FILE.parent.mkdir(parents=True, exist_ok=True)
         with open(TOKEN_FILE, "w") as f:
             f.write(credentials.to_json())
@@ -131,12 +147,12 @@ def upload_video(
     final_mp4: Path = None,
     title: str = None,
     description: str = None,
-    tags: list = None
+    tags: list = None,
+    publish_at_iso: str = None
 ) -> dict:
     """
-    Uploads a single video to YouTube with its generated metadata.
-    Defaults to 'public' privacy with automatic fallback to 'private' if API rejects unverified OAuth.
-    Returns dict with video_id, youtube_video_id, and studio_url.
+    Uploads a single video to YouTube with its generated metadata, RAG citations,
+    and mandatory synthetic media disclosure (containsSyntheticMedia=True).
     """
     from googleapiclient.http import MediaFileUpload
     from googleapiclient.errors import HttpError
@@ -162,6 +178,15 @@ def upload_video(
     if metadata_path.exists():
         with open(metadata_path, "r", encoding="utf-8") as f:
             metadata = json.load(f)
+
+    evidence_packet = None
+    evidence_path = video_path / "evidence_packet.json"
+    if evidence_path.exists():
+        try:
+            with open(evidence_path, "r", encoding="utf-8") as ef:
+                evidence_packet = json.load(ef)
+        except Exception:
+            evidence_packet = None
 
     # Rejection & Scrapped Protection Guard
     manifest_path = video_path / "run_manifest.json"
@@ -198,14 +223,11 @@ def upload_video(
     if tags is None:
         tags = metadata.get("tags", [])
 
-    # Ensure #Shorts is in the description
     if "#Shorts" not in description and "#shorts" not in description:
         description += "\n\n#Shorts"
 
-    # Synthetic media disclosure note
-    synthetic_note = "\n\n[Altered or Synthetic Content: This video contains AI-generated visual and audio content.]"
-    if synthetic_note not in description:
-        description += synthetic_note
+    # Auto-append RAG citations and synthetic media disclosure
+    description = append_rag_citations_to_description(description, evidence_packet)
 
     # Check quota before uploading
     tracker = load_quota_tracker()
@@ -222,34 +244,29 @@ def upload_video(
 
     youtube = get_authenticated_service()
 
-    body = {
-        "snippet": {
-            "title": title,
-            "description": description,
-            "tags": tags,
-            "categoryId": CATEGORY_EDUCATION,
-            "defaultLanguage": "en",
-        },
-        "status": {
-            "privacyStatus": privacy,
-            "selfDeclaredMadeForKids": False,
-            "containsSyntheticMedia": True,
-        }
-    }
+    body = build_youtube_insert_body(
+        title=title,
+        description=description,
+        tags=tags,
+        category_id=CATEGORY_EDUCATION,
+        publish_at_iso=publish_at_iso,
+    )
+    if not publish_at_iso:
+        body["status"]["privacyStatus"] = privacy
 
     file_size_mb = final_mp4.stat().st_size / (1024 * 1024)
     logging.info(
         f"Uploading {final_mp4.name} ({file_size_mb:.1f} MB) "
-        f"as '{title[:60]}...' | Privacy: {privacy}"
+        f"as '{title[:60]}...' | Privacy: {body['status']['privacyStatus']}"
     )
     print(f"\n  Uploading: {final_mp4.name} ({file_size_mb:.1f} MB)")
     print(f"  Title: {title}")
-    print(f"  Privacy: {privacy}")
+    print(f"  Privacy: {body['status']['privacyStatus']}")
 
     media = MediaFileUpload(
         str(final_mp4),
         mimetype="video/mp4",
-        chunksize=5 * 1024 * 1024,  # 5 MB chunks
+        chunksize=5 * 1024 * 1024,
         resumable=True
     )
 
@@ -263,7 +280,6 @@ def upload_video(
         response = None
         start_time = time.time()
 
-        # Chunked resumable upload with progress reporting
         while response is None:
             status, response = insert_request.next_chunk()
             if status:
@@ -271,12 +287,11 @@ def upload_video(
                 elapsed = time.time() - start_time
                 print(f"\r  Upload progress: {pct}% ({elapsed:.0f}s elapsed)", end="", flush=True)
 
-        print()  # newline after progress
+        print()
 
     except HttpError as e:
         error_content = json.loads(e.content.decode()) if e.content else {}
         error_msg = error_content.get("error", {}).get("message", str(e))
-        # Fallback to private if public upload rejected due to unverified OAuth client or permission
         if privacy == "public":
             logging.warning(f"Public upload rejected by YouTube API ({error_msg}). Falling back to 'private' privacy...")
             print(f"\n  [UPLOAD WARNING] Public upload rejected ({error_msg}). Retrying as 'private'...")
@@ -312,7 +327,6 @@ def upload_video(
 
     upload_time = time.time() - start_time
 
-    # Update quota tracker
     tracker["units_used"] += QUOTA_UNITS_PER_UPLOAD
     tracker["uploads"].append({
         "video_id": video_id or str(final_mp4.stem),
@@ -323,7 +337,6 @@ def upload_video(
     })
     save_quota_tracker(tracker)
 
-    # Save the YouTube video ID back to metadata.json
     metadata["youtube_video_id"] = yt_video_id
     metadata["youtube_url"] = public_url
     metadata["privacy"] = privacy
