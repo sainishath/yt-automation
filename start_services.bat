@@ -61,10 +61,13 @@ echo   All production services are verified and active!
 echo ========================================================
 echo.
 echo Available Production Commands:
-echo   Pipeline 1 (Chronos Shift):
+echo   Pipeline 1 Shorts (Chronos Shift):
 echo     python alternate-history-shorts\scripts\pipeline_runner.py --topic "Your Topic"
 echo.
-echo   Pipeline 2 (Debate Protocol):
-echo     python convo-shorts\yt-automation-engine\main.py --topic "Your Coding Topic" --category "Coding"
+echo   Long-Form 10-Minute Engine (Chronos Shift):
+echo     python longform_engine\assemble_longform.py --draft longform_engine\drafts\history_10min_80shots.json
+echo.
+echo   Derived Shorts Extraction:
+echo     python longform_engine\short_splitter.py --master-video "output\your_video.mp4"
 echo ========================================================
 pause
