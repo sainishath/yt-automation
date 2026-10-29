@@ -16,7 +16,11 @@ SCHEMA_PATH = Path(__file__).parent / "schema.sql"
 def init_db(db_path: Path = DEFAULT_DB_PATH) -> None:
     """Initializes the database schema if tables do not exist and applies migrations."""
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(str(db_path))
+    conn = sqlite3.connect(str(db_path), timeout=30.0)
+    try:
+        conn.execute("PRAGMA journal_mode=WAL;")
+    except Exception:
+        pass
     try:
         with open(SCHEMA_PATH, "r", encoding="utf-8") as f:
             conn.executescript(f.read())
@@ -130,7 +134,7 @@ def get_db(db_path: Path = DEFAULT_DB_PATH):
     """Context manager for obtaining a database connection with dictionary row access."""
     if not db_path.exists():
         init_db(db_path)
-    conn = sqlite3.connect(str(db_path))
+    conn = sqlite3.connect(str(db_path), timeout=30.0)
     conn.row_factory = sqlite3.Row
     try:
         yield conn

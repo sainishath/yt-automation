@@ -170,7 +170,7 @@ class MultiArmExperimentEvaluator:
         # 1. Check Sample Size Hard Guard (N >= 4 required per arm)
         if n_ctrl < min_n or n_treat < min_n:
             reason = (
-                f"Insufficient mature published samples for evaluation: "
+                f"Insufficient real published samples (mature 7-day) for evaluation: "
                 f"CONTROL has {n_ctrl}/{min_n}, TREATMENT has {n_treat}/{min_n}. "
                 f"Evaluation blocked until N >= {min_n} per arm at 7-day maturity."
             )
@@ -202,19 +202,19 @@ class MultiArmExperimentEvaluator:
             delta_pct = 0.0
 
         # Empirical Significance: Delta >= +15.0% APV threshold with N >= 4 per arm
-        if delta_pct >= 15.0:
+        if delta_pct >= 10.0:
             decision = ExperimentDecision.WIN
             confidence = ConfidenceLevel.HIGH
             reason = (
-                f"Treatment outperformed Control by +{delta_pct:.1f}% median APV (>= +15.0% threshold) "
+                f"Treatment outperformed Control by +{delta_pct:.1f}% median APV (>= +10.0% threshold) "
                 f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} mature 7-day samples."
             )
             is_significant = True
-        elif delta_pct <= -15.0:
+        elif delta_pct <= -10.0:
             decision = ExperimentDecision.LOSE
             confidence = ConfidenceLevel.HIGH
             reason = (
-                f"Treatment underperformed Control by {delta_pct:.1f}% median APV (<= -15.0% threshold) "
+                f"Treatment underperformed Control by {delta_pct:.1f}% median APV (<= -10.0% threshold) "
                 f"({treat_med:.1f}% vs {ctrl_med:.1f}%) across N={n_ctrl+n_treat} mature 7-day samples."
             )
             is_significant = True
@@ -222,7 +222,7 @@ class MultiArmExperimentEvaluator:
             decision = ExperimentDecision.INCONCLUSIVE
             confidence = ConfidenceLevel.MEDIUM
             reason = (
-                f"Treatment delta ({delta_pct:+.1f}%) is within neutral band (±15.0%). "
+                f"Treatment delta ({delta_pct:+.1f}%) is within neutral band (±10.0%). "
                 f"Outcome is inconclusive."
             )
             is_significant = False

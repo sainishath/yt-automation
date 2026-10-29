@@ -202,9 +202,9 @@ Testing Variable: {tested_variable}
                 last_error = str(e)
                 logging.warning(f"[ScriptCritic] Attempt {attempt}/{max_retries} LLM evaluation failed: {e}")
 
-        # Fallback gracefully if LLM critic times out
-        logging.warning(f"[ScriptCritic Warning] Semantic critic timed out; passing with soft fallback: {last_error}")
-        return True, 7.5, [], ["Semantic critic timed out; passed via deterministic validation."]
+        # Fail closed when LLM critic is unreachable or times out
+        logging.warning(f"[ScriptCritic Warning] Semantic critic unavailable; failing closed: {last_error}")
+        return False, 0.0, [f"Semantic critic unavailable: {last_error}"], [f"MANUAL_REVIEW_REQUIRED: LLM critic unreachable ({last_error})"]
 
     def evaluate_script(
         self,
