@@ -32,6 +32,19 @@ sys.path.insert(0, str(ROOT_DIR))
 
 from longform_engine.horizontal_card_renderer import render_longform_horizontal_card
 from longform_engine.motion_engine import render_cinematic_shot
+from longform_engine.tactical_map_renderer import (
+    render_tactical_siege_map,
+    render_overland_fleet_transit,
+)
+from longform_engine.interactive_overlays import (
+    burn_act_badge,
+    burn_source_card,
+    apply_sidechain_ducking,
+)
+from pipeline.primary_sources import (
+    extract_primary_sources,
+    render_source_card,
+)
 from pipeline.compositor import (
     build_fooocus_scene_prompt,
     detect_split_panel_collage,
@@ -341,23 +354,62 @@ def assemble_history_documentary(script_path: Path, output_dir: Path) -> Path:
 
             for s_idx, s in enumerate(shots, start=1):
                 shot_id = s.get("shot_id", f"act{a_num:02d}_shot{s_idx:02d}")
+                shot_type = s.get("shot_type", "").strip()
                 img_path = images_cache / f"{shot_id}.png"
                 clip_path = temp_dir / f"clip_{shot_id}.mp4"
                 motion_type = s.get("motion", "push_in")
 
-                # Generate or reuse image
-                if not img_path.exists():
-                    generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768")
-
-                # Render smoothstep clip with zero-stretch enforcement
                 if not clip_path.exists():
-                    render_cinematic_shot(
-                        image_path=img_path,
-                        output_mp4_path=clip_path,
-                        duration_sec=shot_dur,
-                        motion_type=motion_type,
-                        fps=30
-                    )
+                    # Route specialized tactical visual shot types
+                    if shot_type in ["Tactical Map", "Siege Map", "Ballistics Map"]:
+                        logging.info(f"    [Tactical Map] Rendering animated siege vectors ({shot_dur:.1f}s)...")
+                        render_tactical_siege_map(
+                            vectors=s.get("map_vectors"),
+                            output_mp4_path=clip_path,
+                            duration_sec=shot_dur,
+                            title=f"ACT {a_num}: {a_title.upper()}"
+                        )
+                    elif shot_type in ["Overland Route", "Overland Fleet", "Fleet Transit", "Overland Transit"]:
+                        logging.info(f"    [Overland Transit] Rendering Galata ridge fleet transit ({shot_dur:.1f}s)...")
+                        render_overland_fleet_transit(
+                            ship_count=70,
+                            output_mp4_path=clip_path,
+                            duration_sec=shot_dur
+                        )
+                    elif shot_type in ["Primary Source", "Manuscript Card", "Manuscript Callout"]:
+                        logging.info(f"    [Primary Source] Rendering manuscript overlay callout ({shot_dur:.1f}s)...")
+                        if not img_path.exists():
+                            generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768")
+                        base_clip = temp_dir / f"base_{shot_id}.mp4"
+                        render_cinematic_shot(
+                            image_path=img_path,
+                            output_mp4_path=base_clip,
+                            duration_sec=shot_dur,
+                            motion_type=motion_type,
+                            fps=30
+                        )
+                        source_dict = s.get("primary_source")
+                        if not source_dict:
+                            sources = extract_primary_sources("fall_of_constantinople_1453")
+                            source_dict = sources[min(a_num - 1, len(sources) - 1)] if sources else {}
+                        if source_dict:
+                            card_png = temp_dir / f"card_{shot_id}.png"
+                            render_source_card(source_dict, card_png)
+                            burn_source_card(base_clip, clip_path, card_png, start_sec=0.5, duration_sec=max(2.0, shot_dur - 1.0))
+                        else:
+                            clip_path = base_clip
+                    else:
+                        # Standard Photorealistic Cinematic SDXL Visual Shot
+                        if not img_path.exists():
+                            generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768")
+                        render_cinematic_shot(
+                            image_path=img_path,
+                            output_mp4_path=clip_path,
+                            duration_sec=shot_dur,
+                            motion_type=motion_type,
+                            fps=30
+                        )
+
                 act_clips.append(clip_path)
 
             # Concatenate act clips into act video segment
@@ -388,8 +440,17 @@ def assemble_history_documentary(script_path: Path, output_dir: Path) -> Path:
                 str(seg_mp4)
             ]
             subprocess.run(cmd_mux, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-            video_segments.append(seg_mp4)
-            print(f"    Rendered 1080p High-Density Act Segment ({num_shots} shots, {duration:.2f}s)")
+
+            # Burn Upper-Right Act Progress Badge (X=1520, Y=60) with 0.5s fade-in/out
+            seg_badged = temp_dir / f"seg_act_{a_num:02d}_badged.mp4"
+            hist_date = act.get("historical_date", "1453 AD")
+            try:
+                burn_act_badge(seg_mp4, seg_badged, a_num, a_title, hist_date, duration=duration)
+                video_segments.append(seg_badged)
+            except Exception as badge_err:
+                logging.warning(f"Failed to burn act badge ({badge_err}); using unbadged segment.")
+                video_segments.append(seg_mp4)
+            print(f"    Rendered 1080p High-Density Act Segment with Badges ({num_shots} shots, {duration:.2f}s)")
 
         else:
             # ── Single-Shot Fallback ──────────────────────────────────────────
@@ -438,22 +499,41 @@ def assemble_history_documentary(script_path: Path, output_dir: Path) -> Path:
     ]
     subprocess.run(cmd_concat, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
-    # 6. Audio Ducking with Ambient Orchestral BGM
+    # 6. Audio Ducking with Ambient Orchestral BGM (Sidechaincompress)
     master_with_bgm = temp_dir / "master_with_bgm.mp4"
     if bgm_file.exists():
-        print(f"\n--> Ducking ambient orchestral BGM (7% volume)...")
-        cmd_duck = [
-            "ffmpeg", "-y",
-            "-i", str(raw_master),
-            "-stream_loop", "-1", "-i", str(bgm_file),
-            "-filter_complex",
-            "[1:a]volume=0.07[bgm];[0:a]volume=1.0[voice];[voice][bgm]amix=inputs=2:duration=first:dropout_transition=3[aout]",
-            "-map", "0:v", "-map", "[aout]",
-            "-c:v", "copy",
-            "-c:a", "aac", "-b:a", "192k",
-            str(master_with_bgm)
-        ]
-        subprocess.run(cmd_duck, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        print(f"\n--> Applying FFmpeg sidechaincompress audio ducking (threshold=0.08, ratio=6, release=250ms)...")
+        ducked_audio = temp_dir / "master_ducked_audio.m4a"
+        try:
+            raw_audio = temp_dir / "raw_master_voice.aac"
+            subprocess.run(["ffmpeg", "-y", "-i", str(raw_master), "-vn", "-c:a", "copy", str(raw_audio)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+            apply_sidechain_ducking(raw_audio, bgm_file, ducked_audio, threshold=0.08, ratio=6.0, release_ms=250)
+            cmd_final_mux = [
+                "ffmpeg", "-y",
+                "-i", str(raw_master),
+                "-i", str(ducked_audio),
+                "-map", "0:v",
+                "-map", "1:a",
+                "-c:v", "copy",
+                "-c:a", "copy",
+                "-shortest",
+                str(master_with_bgm)
+            ]
+            subprocess.run(cmd_final_mux, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        except Exception as duck_err:
+            logging.warning(f"Sidechain ducking fallback ({duck_err}); using amix.")
+            cmd_duck = [
+                "ffmpeg", "-y",
+                "-i", str(raw_master),
+                "-stream_loop", "-1", "-i", str(bgm_file),
+                "-filter_complex",
+                "[1:a]volume=0.07[bgm];[0:a]volume=1.0[voice];[voice][bgm]amix=inputs=2:duration=first:dropout_transition=3[aout]",
+                "-map", "0:v", "-map", "[aout]",
+                "-c:v", "copy",
+                "-c:a", "aac", "-b:a", "192k",
+                str(master_with_bgm)
+            ]
+            subprocess.run(cmd_duck, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     else:
         master_with_bgm = raw_master
 
