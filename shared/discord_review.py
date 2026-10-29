@@ -1,9 +1,10 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 discord_review.py
 -----------------
 Pipeline 2 (Debate Protocol / convo-shorts) Discord review integration.
-Generates < 8MB video proxies, enforces human-gated review posting, and raises explicit HTTP errors on delivery failure.
+Generates < 8MB video proxies, enforces human-gated review posting via environment variables,
+and raises explicit HTTP errors on delivery failure.
 """
 
 import os
@@ -17,8 +18,7 @@ from typing import List, Optional, Tuple, Dict, Any
 
 try:
     from dotenv import load_dotenv
-    # Load .env from workspace root and local paths
-    _root_env = Path(__file__).resolve().parent.parent.parent / ".env"
+    _root_env = Path(__file__).resolve().parent.parent / ".env"
     if _root_env.exists():
         load_dotenv(_root_env)
     load_dotenv()
@@ -27,7 +27,6 @@ except ImportError:
 
 logger = logging.getLogger("DiscordReviewP2")
 
-DEFAULT_WEBHOOK_P2 = "https://discord.com/api/webhooks/1528609697089982494/fv9TUyDcJOxxZn1PxKqw-ac3nBBstahSV2CpFEJi0b9sged8hWikgY6uwV8eViqw9nag"
 MAX_DISCORD_PAYLOAD_BYTES = 7900000  # 7.9 MB (strictly within 8MB non-nitro limit)
 
 
@@ -45,7 +44,6 @@ def generate_review_proxy(input_video_path: str, output_proxy_path: str, max_siz
 
     print(f"[Proxy] Generating compact 540x960 review proxy for {input_path.name}...")
 
-    # Pass 1: Standard high-efficiency CRF 30
     cmd_pass1 = [
         "ffmpeg", "-y",
         "-i", str(input_path),
@@ -66,7 +64,6 @@ def generate_review_proxy(input_video_path: str, output_proxy_path: str, max_siz
     size_mb = size_bytes / (1024 * 1024)
     print(f"[Proxy] Pass 1 complete: {proxy_path.name} ({size_mb:.2f} MB)")
 
-    # Pass 2: Adaptive aggressive compression if size exceeds 7.9 MB limit
     if size_bytes > max_size_bytes:
         print(f"[Proxy] Warning: Proxy size ({size_mb:.2f} MB) exceeds limit ({max_size_bytes / (1024*1024):.2f} MB). Running Pass 2 (CRF 36)...")
         cmd_pass2 = [
@@ -95,21 +92,25 @@ def generate_review_proxy(input_video_path: str, output_proxy_path: str, max_siz
 
 def post_for_review(pipeline_name: str, job_id: str, media_paths: list, media_type: str, webhook_url: Optional[str] = None) -> bool:
     """
-    Posts a review notification and proxy media to the Discord review webhook.
-    - If media_type is "video", compresses it to a < 8MB review proxy and uploads it.
-    - If media_type is "image", uploads segment images labeled with their segment_ids.
-    Raises RuntimeError if delivery fails.
+    Posts a review notification and proxy media to the Discord review webhook configured in .env.
     """
-    target_url = webhook_url or os.getenv("DISCORD_WEBHOOK_URL_P2") or os.getenv("DISCORD_WEBHOOK_CHANNEL_B") or DEFAULT_WEBHOOK_P2
+    target_url = (
+        webhook_url
+        or os.getenv("DISCORD_WEBHOOK_URL_P2")
+        or os.getenv("DISCORD_WEBHOOK_CHANNEL_B")
+        or os.getenv("DISCORD_REVIEW_WEBHOOK_URL")
+    )
 
     if not target_url:
-        raise ValueError("No Discord webhook URL provided or found in environment.")
+        raise RuntimeError(
+            "Missing required environment variable: DISCORD_WEBHOOK_URL_P2 (or DISCORD_WEBHOOK_CHANNEL_B / DISCORD_REVIEW_WEBHOOK_URL)."
+        )
 
     files = {}
     temp_files_to_cleanup = []
-    message_text = f"**[DEBATE PROTOCOL (PIPELINE 2) - HUMAN REVIEW GATE]**\n"
+    message_text = "**[DEBATE PROTOCOL (PIPELINE 2) - HUMAN REVIEW GATE]**\n"
     message_text += f"Job ID: `{job_id}`\n"
-    message_text += f"Status: `AWAITING_REVIEW`\n"
+    message_text += "Status: `AWAITING_REVIEW`\n"
 
     try:
         if media_type == "video":

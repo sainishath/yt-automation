@@ -4,16 +4,17 @@ pipeline_runner.py
 ------------------
 Unified Production Orchestrator for Pipeline 1 (Alternate-History Shorts).
 Executes the full automated workflow from Topic to QA-verified Final MP4 without manual intervention:
+0. Counterfactual Divergence Pre-Check Gate (growth/scorer.py)
 1. Initialize clean workspace and run_manifest.json
 2. RAG v4 Evidence Generation & Sufficiency Gating
-3. Script Generation & Claim Verification
+3. Script Generation & Two-Phase Counterfactual Claim Verification
 4. TTS Audio Generation (Edge-TTS)
 5. Whisper Word-Level Acoustic Alignment
 6. Semantic Visual Scene Planning & RAG Visual Evidence Injection
-7. Beat-Level Image Generation (Fooocus / Fallback Proofing)
-8. Video Assembly (Motion + ASS Highlights + Audio Muxing + Music)
-9. YouTube Metadata Generation
-10. Final QA Gate Validation
+7. Beat-Level Image Generation (Fooocus SDXL + Negative Prompt Lock + Split-Panel QA Gate)
+8. Video Assembly (4-Trajectory Motion + MarginV=620 ASS Highlights + sidechaincompress Audio Ducking)
+9. YouTube Metadata Generation (with RAG Citations & Synthetic Media Disclosure)
+10. Final 17-Point QA Gate Validation
 """
 
 import os
@@ -28,7 +29,10 @@ from typing import Dict, Any, Optional
 
 _DIR = Path(__file__).parent.resolve()
 _BASE_DIR = _DIR.parent.resolve()
+_ROOT_REPO = _BASE_DIR.parent.resolve()
 sys.path.insert(0, str(_DIR))
+if str(_ROOT_REPO) not in sys.path:
+    sys.path.insert(0, str(_ROOT_REPO))
 
 from rag_grounding import generate_evidence_packet
 from generate_script import generate_script
@@ -39,6 +43,7 @@ from generate_images import process_video_images
 from assemble_video import assemble_video
 from generate_metadata import generate_video_metadata
 from qa_gate import run_pipeline1_qa
+from growth.scorer import check_counterfactual_divergence
 
 # Logging setup
 LOG_FILE = _BASE_DIR / "pipeline.log"
@@ -80,10 +85,6 @@ def run_pipeline1(
     video_path.mkdir(parents=True, exist_ok=True)
 
     # 1. Content Brain v1 Strategic Initialization
-    ROOT_REPO = Path(__file__).resolve().parent.parent.parent
-    if str(ROOT_REPO) not in sys.path:
-        sys.path.insert(0, str(ROOT_REPO))
-
     from growth.strategy.strategy_manager import StrategyManager
     from growth.brain.decision_engine import DecisionEngine
     from growth.brain.memory import BrainMemory
@@ -109,13 +110,13 @@ def run_pipeline1(
     except Exception as de_err:
         logger.info(f"[Content Brain] Running under baseline strategy: {de_err}")
 
-    # 1. Initialize run_manifest.json with Content Brain Lineage
+    # Initialize run_manifest.json with Content Brain Lineage
     manifest_path = video_path / "run_manifest.json"
     manifest = {
         "video_id": video_id,
         "topic": topic,
         "started_at": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "pipeline_version": "1.0-production",
+        "pipeline_version": "2.0-production",
         "status": "RUNNING",
         "content_brain": {
             "strategy_version": strategy_version,
@@ -124,6 +125,7 @@ def run_pipeline1(
             "tested_variable": tested_variable
         },
         "stages": {
+            "divergence_precheck": "PENDING",
             "rag": "PENDING",
             "script": "PENDING",
             "audio": "PENDING",
@@ -146,6 +148,23 @@ def run_pipeline1(
     print(f"  Topic: \"{topic}\"")
     print(f"  Strategy: {strategy_version} | Exp: {experiment_id} | Arm: {arm_id}")
     print(f"=======================================================\n")
+
+    # Stage 0: Counterfactual Divergence Pre-Check Gate
+    lower_t = topic.lower().strip()
+    inferred_factual = is_factual if is_factual is not None else not (
+        lower_t.startswith(("what if", "imagine if", "suppose", "had ", "what would")) or "what if" in lower_t
+    )
+    div_check = check_counterfactual_divergence(topic, is_factual_mode=bool(inferred_factual))
+    if not div_check["is_valid_counterfactual"]:
+        manifest["stages"]["divergence_precheck"] = "BLOCKED"
+        manifest["status"] = "BLOCKED"
+        manifest["failures"].extend(div_check["issues"])
+        with open(manifest_path, "w", encoding="utf-8") as mf:
+            json.dump(manifest, mf, indent=2, ensure_ascii=False)
+        logger.error(f"[{video_id}] Blocked by Counterfactual Divergence Pre-Check: {div_check['issues']}")
+        return {"status": "BLOCKED", "reason": "NON_COUNTERFACTUAL_TOPIC", "manifest": manifest}
+
+    manifest["stages"]["divergence_precheck"] = "PASS"
 
     # ----------------------------------------------------
     # Sync with Growth Intelligence Database (growth.db)
@@ -213,7 +232,7 @@ def run_pipeline1(
             total_parts=total_parts,
             force_rebuild=force_rebuild
         )
-        if script.get("status") == "BLOCKED":
+        if script.get("status", "").startswith("BLOCKED"):
             manifest["stages"]["script"] = "BLOCKED"
             manifest["status"] = "BLOCKED"
             manifest["failures"].append("Script generation blocked by RAG / Critic gate")

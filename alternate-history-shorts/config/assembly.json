@@ -1,16 +1,20 @@
 {
   "resolution": "1080x1920",
-  "zoom_range": [1.0, 1.1],
+  "zoom_range": [1.0, 1.18],
   "crossfade_duration": 0.2,
   "caption_style": {
-    "font": "Arial Bold",
-    "size": 64,
-    "color": "white",
+    "font": "DejaVu Sans",
+    "size": 72,
+    "color": "yellow",
+    "secondary_color": "white",
     "outline_color": "black",
-    "outline_width": 3,
+    "outline_width": 5,
+    "shadow": 2,
     "position": "center-lower-safe-zone",
-    "margin_v": 320
+    "margin_v": 620,
+    "margin_l": 80,
+    "margin_r": 80
   },
-  "music_volume_db": -22,
+  "music_volume_db": -18,
   "whisper_model": "base.en"
 }
