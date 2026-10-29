@@ -96,6 +96,13 @@ ACTS_80_SHOTS = [
                 "shot_type": "Climactic Wide",
                 "motion": "pull_out",
                 "prompt": "16:9 epic sweeping wide shot of the entire unbroken four-mile Theodosian wall system glowing in the last fiery amber rays of sunset, eternal fortress standing alone against the darkness"
+            },
+            {
+                "shot_id": "act01_shot12",
+                "shot_type": "Manuscript",
+                "motion": "push_in",
+                "prompt": "16:9 archival manuscript illumination of the Byzantine imperial golden bull and patriarchal seal certifying the census of defenders in April 1453, Latin and Greek calligraphy on parchment, ancient wax seal, macro detail",
+                "primary_source_quote": "We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies. — George Sphrantzes"
             }
         ]
     },
@@ -244,6 +251,13 @@ ACTS_80_SHOTS = [
                 "shot_type": "Ruined Breach",
                 "motion": "pan_left_up",
                 "prompt": "16:9 wide shot of the smoking jagged breach along the Lycus River wall, ancient imperial towers transformed into shattered gravel piles, the illusion of invulnerability broken"
+            },
+            {
+                "shot_id": "act03_shot12",
+                "shot_type": "Tactical Map",
+                "motion": "pan_right",
+                "prompt": "16:9 tactical naval route map of the Golden Horn showing the iron boom chain severed and Ottoman vanguard galleys establishing harbor dominance under night fog, parchment cartography, illuminated red vectors",
+                "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. — Niccolò Barbaro"
             }
         ]
     },
@@ -392,6 +406,13 @@ ACTS_80_SHOTS = [
                 "shot_type": "The Relentless Clock",
                 "motion": "pan_left_up",
                 "prompt": "16:9 view of the battered land wall at mid-May twilight, smoke rising continuously from smoldering wooden palisades, the defensive line hanging by a thread"
+            },
+            {
+                "shot_id": "act05_shot12",
+                "shot_type": "Macro",
+                "motion": "pull_out",
+                "prompt": "16:9 macro close-up of Emperor Constantine XI's fallen golden double-headed eagle brooch resting in the pulverized stone mortar of the St. Romanus breach, dust settling under morning sunlight",
+                "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' — Michael Ducas"
             }
         ]
     },
@@ -562,9 +583,27 @@ full_data = {
     "acts": []
 }
 
+import sys
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+from pipeline.compositor import FOOOCUS_NEGATIVE_PROMPT_LOCK
+
 for b_act, s_act in zip(base_data["acts"], ACTS_80_SHOTS):
     merged_act = dict(b_act)
-    merged_act["shots"] = s_act["shots"]
+    shots_list = []
+    for s in s_act["shots"]:
+        shot_entry = dict(s)
+        # Ensure negative prompt lock and act metadata are bound
+        shot_entry["negative_prompt"] = FOOOCUS_NEGATIVE_PROMPT_LOCK
+        shot_entry["act_number"] = b_act["act_number"]
+        shot_entry["act_title"] = b_act["title"]
+        shot_entry["historical_date"] = b_act.get("historical_date", "1453 AD")
+        if "primary_source_quote" not in shot_entry and b_act.get("primary_source_record"):
+            shot_entry["primary_source_quote"] = b_act["primary_source_record"].get("translation", "")
+        shots_list.append(shot_entry)
+
+    merged_act["shots"] = shots_list
+    merged_act["visual_shots"] = shots_list
     full_data["acts"].append(merged_act)
 
 OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
