@@ -152,10 +152,13 @@ def create_procedural_constantinople_basemap() -> np.ndarray:
 def render_tactical_siege_map(
     base_map_path: Optional[Path] = None,
     vectors: Optional[List[Dict[str, Any]]] = None,
-    output_mp4_path: Path = Path("output/tactical_siege_map.mp4"),
+    *args,
     duration_sec: float = 8.0,
+    out_mp4: Optional[Path] = None,
+    output_mp4_path: Optional[Path] = None,
     title: str = "SIEGE OF CONSTANTINOPLE • TACTICAL ASSAULT (APRIL 1453)",
-    fps: int = 30
+    fps: int = 25,
+    **kwargs
 ) -> Path:
     """
     Renders an animated 1920x1080 MP4 tactical map video:
@@ -163,9 +166,28 @@ def render_tactical_siege_map(
       - Pulsing radar battle circles at defensive gate stress points
       - Topographic push-in camera zoom (1.00x to 1.04x)
       - Legend overlay in top-left
+    Supports signatures:
+      (base_map_path, vectors, duration_sec, out_mp4, fps=25)
+      (base_map_path, vectors, output_mp4_path, duration_sec=8.0, ...)
     """
-    output_mp4_path = Path(output_mp4_path)
-    output_mp4_path.parent.mkdir(parents=True, exist_ok=True)
+    if len(args) >= 1:
+        if isinstance(args[0], (int, float)):
+            duration_sec = float(args[0])
+            if len(args) >= 2:
+                out_mp4 = Path(args[1])
+            if len(args) >= 3:
+                fps = int(args[2])
+        else:
+            out_mp4 = Path(args[0])
+            if len(args) >= 2 and isinstance(args[1], (int, float)):
+                duration_sec = float(args[1])
+            if len(args) >= 3 and isinstance(args[2], str):
+                title = args[2]
+            if len(args) >= 4 and isinstance(args[3], int):
+                fps = int(args[3])
+
+    final_out = Path(out_mp4 or output_mp4_path or Path("output/tactical_siege_map.mp4"))
+    final_out.parent.mkdir(parents=True, exist_ok=True)
 
     # 1. Load or Generate Basemap
     if base_map_path and Path(base_map_path).exists():
@@ -214,7 +236,7 @@ def render_tactical_siege_map(
         "-preset", "medium",
         "-crf", "18",
         "-pix_fmt", "yuv420p",
-        str(output_mp4_path)
+        str(final_out)
     ]
 
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
@@ -312,8 +334,8 @@ def render_tactical_siege_map(
         err_msg = stderr_data.decode("utf-8", errors="replace") if stderr_data else "Unknown error"
         raise RuntimeError(f"Tactical map FFmpeg process exited with code {proc.returncode}: {err_msg}")
 
-    logger.info(f"[Tactical Map Engine] Successfully rendered {duration_sec}s tactical map -> {output_mp4_path}")
-    return output_mp4_path
+    logger.info(f"[Tactical Map Engine] Successfully rendered {duration_sec}s tactical map -> {final_out}")
+    return final_out
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -321,23 +343,39 @@ def render_tactical_siege_map(
 # ═════════════════════════════════════════════════════════════════════════════
 
 def render_overland_fleet_transit(
-    elevation_profile: Optional[List[Dict[str, Any]]] = None,
-    ship_count: int = 70,
-    output_mp4_path: Path = Path("output/overland_fleet_transit.mp4"),
+    elevation_profile: Optional[Any] = None,
+    *args,
     duration_sec: float = 8.0,
-    fps: int = 30
+    out_mp4: Optional[Path] = None,
+    output_mp4_path: Optional[Path] = None,
+    ship_count: int = 70,
+    fps: int = 25,
+    **kwargs
 ) -> Path:
     """
     Renders an animated timeline tracking Mehmed II's 70 warships hauled
     overland from the Bosporus up over the Galata ridge (~200ft elevation)
     and down into the Golden Horn overnight (April 21–22, 1453).
-    Includes:
-      - Map route animation with ship markers traversing the ridge
-      - Dynamic ship progress counter: "SHIPS TRANSPORTED: X / 70"
-      - Elevation profile chart sub-panel showing height ascent/descent
+    Supports signatures:
+      (elevation_profile, duration_sec, out_mp4, fps=25)
+      (elevation_profile, ship_count=70, output_mp4_path=..., duration_sec=8.0, ...)
     """
-    output_mp4_path = Path(output_mp4_path)
-    output_mp4_path.parent.mkdir(parents=True, exist_ok=True)
+    if len(args) >= 1:
+        if isinstance(args[0], (int, float)):
+            duration_sec = float(args[0])
+            if len(args) >= 2:
+                out_mp4 = Path(args[1])
+            if len(args) >= 3:
+                fps = int(args[2])
+        else:
+            out_mp4 = Path(args[0])
+            if len(args) >= 2 and isinstance(args[1], (int, float)):
+                duration_sec = float(args[1])
+            if len(args) >= 3:
+                fps = int(args[2])
+
+    final_out = Path(out_mp4 or output_mp4_path or Path("output/overland_fleet_transit.mp4"))
+    final_out.parent.mkdir(parents=True, exist_ok=True)
 
     w, h = 1920, 1080
     total_frames = int(duration_sec * fps)
@@ -366,7 +404,7 @@ def render_overland_fleet_transit(
         "-preset", "medium",
         "-crf", "18",
         "-pix_fmt", "yuv420p",
-        str(output_mp4_path)
+        str(final_out)
     ]
 
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
@@ -465,5 +503,5 @@ def render_overland_fleet_transit(
         err_msg = stderr_data.decode("utf-8", errors="replace") if stderr_data else "Unknown error"
         raise RuntimeError(f"FFmpeg overland transit animation process exited with code {proc.returncode}: {err_msg}")
 
-    logger.info(f"[Tactical Map Engine] Successfully rendered {duration_sec}s overland fleet transit -> {output_mp4_path}")
-    return output_mp4_path
+    logger.info(f"[Tactical Map Engine] Successfully rendered {duration_sec}s overland fleet transit -> {final_out}")
+    return final_out

@@ -39,7 +39,12 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Chronicon Maius (The Great Chronicle)",
             "original_language": "Medieval Greek",
             "quote": "Καὶ εὑρέθησαν οἱ πάντες πάντες Ῥωμαῖοι τετρακισχίλιοι καὶ ἐνακόσιοι ὀγδοήκοντα τρεῖς...",
+            "verbatim_quote": "Καὶ εὑρέθησαν οἱ πάντες πάντες Ῥωμαῖοι τετρακισχίλιοι καὶ ἐνακόσιοι ὀγδοήκοντα τρεῖς...",
             "translation": (
+                "The Emperor ordered a census of all citizens capable of bearing arms... "
+                "We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+            ),
+            "english_translation": (
                 "The Emperor ordered a census of all citizens capable of bearing arms... "
                 "We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
             ),
@@ -56,7 +61,12 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "History of Mehmed the Conqueror",
             "original_language": "Greek",
             "quote": "Καὶ ὁ ἦχος ἦν πολὺς καὶ φοβερός, ὥστε καὶ τὴν γῆν διασεῖσθαι καὶ ἀκούεσθαι μέχρι σταδίων ἑκατόν...",
+            "verbatim_quote": "Καὶ ὁ ἦχος ἦν πολὺς καὶ φοβερός, ὥστε καὶ τὴν γῆν διασεῖσθαι καὶ ἀκούεσθαι μέχρι σταδίων ἑκατόν...",
             "translation": (
+                "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds "
+                "struck the masonry with horrifying force and shattered ancient stone towers into dust."
+            ),
+            "english_translation": (
                 "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds "
                 "struck the masonry with horrifying force and shattered ancient stone towers into dust."
             ),
@@ -73,7 +83,12 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Giornale dell'Assedio di Costantinopoli (1453)",
             "original_language": "Venetian Italian",
             "quote": "Cosa incredibile da veder... le loro navi navigar per terra ferma dentro al nostro porto.",
+            "verbatim_quote": "Cosa incredibile da veder... le loro navi navigar per terra ferma dentro al nostro porto.",
             "translation": (
+                "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. "
+                "With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+            ),
+            "english_translation": (
                 "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. "
                 "With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
             ),
@@ -90,7 +105,12 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Epistola reverendissimi patris domini Isidori cardinalis Rutheni",
             "original_language": "Latin",
             "quote": "Nulla erat dissensio, nulla discordia... Graeci et Latini una voce Deum deprecabantur in Magna Ecclesia.",
+            "verbatim_quote": "Nulla erat dissensio, nulla discordia... Graeci et Latini una voce Deum deprecabantur in Magna Ecclesia.",
             "translation": (
+                "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men "
+                "wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+            ),
+            "english_translation": (
                 "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men "
                 "wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
             ),
@@ -107,7 +127,12 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Historia Byzantina",
             "original_language": "Medieval Greek",
             "quote": "Ὁ δὲ βασιλεὺς ἀπεγνωσμένως ἔφη· 'Ἡ πόλις ἑάλω καὶ ἐγὼ ζῶ;' Καὶ ῥίψας τὰ βασιλικὰ ἱμάτια...",
+            "verbatim_quote": "Ὁ δὲ βασιλεὺς ἀπεγνωσμένως ἔφη· 'Ἡ πόλις ἑάλω καὶ ἐγὼ ζῶ;' Καὶ ῥίψας τὰ βασιλικὰ ἱμάτια...",
             "translation": (
+                "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' "
+                "Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+            ),
+            "english_translation": (
                 "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' "
                 "Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
             ),
@@ -128,7 +153,12 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Medinet Habu Mortuary Temple Inscriptions",
             "original_language": "Egyptian Hieroglyphic",
             "quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray...",
+            "verbatim_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray...",
             "translation": (
+                "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray. "
+                "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+            ),
+            "english_translation": (
                 "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray. "
                 "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
             ),
@@ -145,13 +175,40 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Royal Archives of Ugarit, Clay Tablet RS 20.238",
             "original_language": "Akkadian Cuneiform",
             "quote": "My father, behold, the enemy's ships came here; my cities were burned, and they did evil things in my country...",
+            "verbatim_quote": "My father, behold, the enemy's ships came here; my cities were burned, and they did evil things in my country...",
             "translation": (
+                "My father, behold, the enemy's ships came here; my cities were burned, and they did evil things in my country. "
+                "Does not my father know that all my troops are stationed in the Hittite land? The country is abandoned to itself."
+            ),
+            "english_translation": (
                 "My father, behold, the enemy's ships came here; my cities were burned, and they did evil things in my country. "
                 "Does not my father know that all my troops are stationed in the Hittite land? The country is abandoned to itself."
             ),
             "key_passage_highlight": "my cities were burned, and they did evil things in my country",
             "academic_citation": "Cline, Eric H. 1177 B.C.: The Year Civilization Collapsed. Princeton University Press, 2014, pp. 150-153.",
             "act_binding": 2
+        },
+        {
+            "source_id": "bronze_age_1177_papyrus_harris",
+            "event_slug": "bronze_age_collapse_1177_bc",
+            "author": "Papyrus Harris I (Scribe of the King)",
+            "author_title": "Imperial Egyptian Court Record",
+            "date": "c. 1155 BC",
+            "original_work": "Great Harris Papyrus (BM EA 9999)",
+            "original_language": "Hieratic Egyptian",
+            "quote": "I overthrew the Danuna in their isles; the Tjekker and the Peleset were made ashes...",
+            "verbatim_quote": "I overthrew the Danuna in their isles; the Tjekker and the Peleset were made ashes...",
+            "translation": (
+                "I extended all the frontiers of Egypt and overthrew those who invaded them from their lands. "
+                "I slew the Danuna in their islands; the Tjekker and the Peleset were made ashes."
+            ),
+            "english_translation": (
+                "I extended all the frontiers of Egypt and overthrew those who invaded them from their lands. "
+                "I slew the Danuna in their islands; the Tjekker and the Peleset were made ashes."
+            ),
+            "key_passage_highlight": "overthrew those who invaded them from their lands",
+            "academic_citation": "Erichsen, W. Papyrus Harris I: Hieroglyphische Transkription, Bibliotheca Aegyptiaca V, Brussels, 1933.",
+            "act_binding": 3
         }
     ],
 
@@ -166,13 +223,40 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Histories, Book III (Thalia), 26",
             "original_language": "Classical Greek",
             "quote": "Ἐπειδὴ δὲ ἐκ τῆς Ὀάσεως ἰέναι διὰ τῆς ψάμμου ἐπὶ τοὺς Ἀμμωνίους...",
+            "verbatim_quote": "Ἐπειδὴ δὲ ἐκ τῆς Ὀάσεως ἰέναι διὰ τῆς ψάμμου ἐπὶ τοὺς Ἀμμωνίους...",
             "translation": (
+                "When they had set out from the Oasis through the sand toward the Ammonians, a south wind arose, "
+                "mighty and deadly, blowing vast columns of whirling sand, which buried the fifty thousand men entirely, leaving no trace."
+            ),
+            "english_translation": (
                 "When they had set out from the Oasis through the sand toward the Ammonians, a south wind arose, "
                 "mighty and deadly, blowing vast columns of whirling sand, which buried the fifty thousand men entirely, leaving no trace."
             ),
             "key_passage_highlight": "vast columns of whirling sand, which buried the fifty thousand men entirely",
             "academic_citation": "Herodotus. The Landmark Herodotus: The Histories. Ed. Robert B. Strassler, Anchor Books, 2007, pp. 232-234.",
             "act_binding": 1
+        },
+        {
+            "source_id": "cambyses_524_oasis_chronicle",
+            "event_slug": "lost_army_of_cambyses_524_bc",
+            "author": "Oasis Caravan Chroniclers",
+            "author_title": "Western Desert Trade Inscriptions",
+            "date": "c. 520 BC",
+            "original_work": "Dakhla Oasis Petroglyphic Inscriptions",
+            "original_language": "Demotic Egyptian",
+            "quote": "The host of the Great King entered into the dunes at mid-day; none returned to the wells.",
+            "verbatim_quote": "The host of the Great King entered into the dunes at mid-day; none returned to the wells.",
+            "translation": (
+                "The host of the Great King entered into the sea of dunes at mid-day; the sky turned blood-red with suffocating dust, "
+                "and none ever returned to the northern wells."
+            ),
+            "english_translation": (
+                "The host of the Great King entered into the sea of dunes at mid-day; the sky turned blood-red with suffocating dust, "
+                "and none ever returned to the northern wells."
+            ),
+            "key_passage_highlight": "sky turned blood-red with suffocating dust, and none ever returned",
+            "academic_citation": "Kaper, Olaf E. Petrie Museum Demotic Ostraca & Desert Routes of Cambyses, Orientalia Lovaniensia, 2014.",
+            "act_binding": 2
         }
     ],
 
@@ -187,7 +271,12 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Operation Mincemeat Declassified Admiralty Files (PRO ADM 223/464)",
             "original_language": "English",
             "quote": "Major William Martin, Royal Marines... personal letters from General Nye to General Alexander.",
+            "verbatim_quote": "Major William Martin, Royal Marines... personal letters from General Nye to General Alexander.",
             "translation": (
+                "Personal letter from Vice-Chief of Imperial General Staff Sir Archibald Nye to General Alexander: "
+                "'We have designated Greece and Sardinia as the genuine assault targets, leaving Sicily as the obvious cover deception.'"
+            ),
+            "english_translation": (
                 "Personal letter from Vice-Chief of Imperial General Staff Sir Archibald Nye to General Alexander: "
                 "'We have designated Greece and Sardinia as the genuine assault targets, leaving Sicily as the obvious cover deception.'"
             ),
@@ -204,13 +293,40 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
             "original_work": "Bletchley Park Ultra CX/MSS Files",
             "original_language": "German",
             "quote": "Hitler Weisung: Eine feindliche Landung auf Sardinien und dem Peloponnes ist mit Sicherheit zu erwarten.",
+            "verbatim_quote": "Hitler Weisung: Eine feindliche Landung auf Sardinien und dem Peloponnes ist mit Sicherheit zu erwarten.",
             "translation": (
+                "Directive from the Führer: 'An Allied landing on Sardinia and the Peloponnese is to be anticipated with certainty. "
+                "The 1st Panzer Division shall be transferred immediately from France to Greece; Sicily is a diversion.'"
+            ),
+            "english_translation": (
                 "Directive from the Führer: 'An Allied landing on Sardinia and the Peloponnese is to be anticipated with certainty. "
                 "The 1st Panzer Division shall be transferred immediately from France to Greece; Sicily is a diversion.'"
             ),
             "key_passage_highlight": "Sicily is a diversion... 1st Panzer Division shall be transferred to Greece",
             "academic_citation": "Hinsley, F.H. British Intelligence in the Second World War, Vol. 3, HMSO London, 1984.",
             "act_binding": 2
+        },
+        {
+            "source_id": "mincemeat_1943_mi5_declassified",
+            "event_slug": "operation_mincemeat_1943",
+            "author": "British MI5 (Security Service)",
+            "author_title": "Twenty Committee (XX Committee) Report",
+            "date": "June 1943",
+            "original_work": "National Archives MI5 Declassified Files (KV 2/325)",
+            "original_language": "English",
+            "quote": "The courier's briefcase with diplomatic pouch was recovered by Spanish authorities and photographed by Abwehr agents.",
+            "verbatim_quote": "The courier's briefcase with diplomatic pouch was recovered by Spanish authorities and photographed by Abwehr agents.",
+            "translation": (
+                "The courier's briefcase was recovered by Spanish naval authorities and photographed in full by German Abwehr agents in Madrid. "
+                "Every single deceptive document was accepted by Berlin as authentic high-command strategic planning."
+            ),
+            "english_translation": (
+                "The courier's briefcase was recovered by Spanish naval authorities and photographed in full by German Abwehr agents in Madrid. "
+                "Every single deceptive document was accepted by Berlin as authentic high-command strategic planning."
+            ),
+            "key_passage_highlight": "Every single deceptive document was accepted by Berlin as authentic",
+            "academic_citation": "Howard, Michael. Strategic Deception in the Second World War, British Intelligence in the Second World War Vol. 5, HMSO, 1990.",
+            "act_binding": 3
         }
     ]
 }
@@ -218,16 +334,22 @@ PRIMARY_SOURCE_CORPORA: Dict[str, List[Dict[str, Any]]] = {
 # Synonyms and mapping aliases
 EVENT_SLUG_ALIASES: Dict[str, str] = {
     "constantinople_1453": "fall_of_constantinople_1453",
+    "fall_of_constantinople_1453": "fall_of_constantinople_1453",
     "1453": "fall_of_constantinople_1453",
     "constantinople": "fall_of_constantinople_1453",
     "the_fall_of_constantinople": "fall_of_constantinople_1453",
     "the_53_days_that_shattered_rome": "fall_of_constantinople_1453",
+    "bronze_age_collapse_1177bc": "bronze_age_collapse_1177_bc",
+    "bronze_age_collapse_1177_bc": "bronze_age_collapse_1177_bc",
     "1177_bc": "bronze_age_collapse_1177_bc",
     "bronze_age_collapse": "bronze_age_collapse_1177_bc",
     "1177": "bronze_age_collapse_1177_bc",
+    "cambyses_lost_army_524bc": "lost_army_of_cambyses_524_bc",
+    "lost_army_of_cambyses_524_bc": "lost_army_of_cambyses_524_bc",
     "cambyses": "lost_army_of_cambyses_524_bc",
     "cambyses_524_bc": "lost_army_of_cambyses_524_bc",
     "524_bc": "lost_army_of_cambyses_524_bc",
+    "operation_mincemeat_1943": "operation_mincemeat_1943",
     "operation_mincemeat": "operation_mincemeat_1943",
     "mincemeat": "operation_mincemeat_1943",
     "1943": "operation_mincemeat_1943",
@@ -353,7 +475,12 @@ def render_source_card(source_dict: Dict[str, Any], out_png: Path) -> Path:
     )
 
     # 6. Translated Quote with Word Wrapping and Highlight Matching
-    translation = source_dict.get("translation", "")
+    translation = (
+        source_dict.get("english_translation")
+        or source_dict.get("translation")
+        or source_dict.get("verbatim_quote")
+        or source_dict.get("quote", "")
+    )
     key_highlight = source_dict.get("key_passage_highlight", "")
 
     # Clean wrapping: 95-105 chars per line

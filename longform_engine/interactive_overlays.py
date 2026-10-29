@@ -87,27 +87,73 @@ def create_act_badge_png(
 
 
 def burn_act_badge(
-    input_video: Path,
-    output_video: Path,
-    act_number: int,
-    act_title: str,
-    historical_date: str,
-    duration: float,
+    clip_path: Optional[Path] = None,
+    *args,
+    input_video: Optional[Path] = None,
+    output_video: Optional[Path] = None,
+    act_number: Optional[int] = None,
+    act_title: Optional[str] = None,
+    historical_date: Optional[str] = None,
+    out_path: Optional[Path] = None,
+    duration: Optional[float] = None,
     fade_in_sec: float = 0.5,
     fade_out_sec: float = 0.5,
     pos_x: int = 1520,
-    pos_y: int = 60
+    pos_y: int = 60,
+    **kwargs
 ) -> Path:
     """
     Burns an Upper-Right Act Progress Badge into the video at (X=1520, Y=60).
     Fades in at start (0.5s fade) and fades out at act conclusion (0.5s fade).
+    Supports signatures:
+      burn_act_badge(clip_path, act_number, act_title, historical_date, out_path)
+      burn_act_badge(input_video, output_video, act_number, act_title, historical_date, duration)
     """
-    input_video = Path(input_video)
-    output_video = Path(output_video)
-    output_video.parent.mkdir(parents=True, exist_ok=True)
+    in_video = Path(clip_path or input_video or (args[0] if len(args) > 0 and isinstance(args[0], (str, Path)) else None))
+    if in_video is None:
+        raise ValueError("Input video path must be provided.")
+
+    # Unpack polymorphic arguments
+    if len(args) >= 1:
+        if isinstance(args[0], int):
+            act_number = args[0]
+            if len(args) >= 2:
+                act_title = str(args[1])
+            if len(args) >= 3:
+                historical_date = str(args[2])
+            if len(args) >= 4:
+                out_path = Path(args[3])
+        elif isinstance(args[0], (str, Path)):
+            out_path = Path(args[0])
+            if len(args) >= 2 and isinstance(args[1], int):
+                act_number = args[1]
+            if len(args) >= 3:
+                act_title = str(args[2])
+            if len(args) >= 4:
+                historical_date = str(args[3])
+            if len(args) >= 5 and isinstance(args[4], (int, float)):
+                duration = float(args[4])
+
+    final_out = Path(out_path or output_video or (in_video.parent / f"{in_video.stem}_badged.mp4"))
+    final_out.parent.mkdir(parents=True, exist_ok=True)
+
+    act_number = act_number or 1
+    act_title = act_title or "Chapter"
+    historical_date = historical_date or "1453 AD"
+
+    # Auto-detect duration via ffprobe if not explicitly supplied
+    if duration is None:
+        try:
+            probe = subprocess.run([
+                "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                "-of", "default=noprint_wrappers=1:nokey=1", str(in_video)
+            ], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True)
+            duration = float(probe.stdout.strip())
+        except Exception:
+            duration = 8.0
 
     # Temporary badge PNG
-    badge_png = output_video.parent / f"badge_act_{act_number:02d}.png"
+    badge_png = final_out.parent / f"badge_act_{act_number:02d}.png"
     create_act_badge_png(act_number, act_title, historical_date, badge_png)
 
     # Fade timing
@@ -122,7 +168,7 @@ def burn_act_badge(
 
     cmd = [
         "ffmpeg", "-y",
-        "-i", str(input_video),
+        "-i", str(in_video),
         "-i", str(badge_png),
         "-filter_complex", filtergraph,
         "-map", "[vout]",
@@ -131,12 +177,12 @@ def burn_act_badge(
         "-preset", "fast",
         "-crf", "18",
         "-c:a", "copy",
-        str(output_video)
+        str(final_out)
     ]
 
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=True)
-    logger.info(f"[Interactive Overlays] Burned Act {act_number} badge at ({pos_x}, {pos_y}) -> {output_video.name}")
-    return output_video
+    logger.info(f"[Interactive Overlays] Burned Act {act_number} badge at ({pos_x}, {pos_y}) -> {final_out.name}")
+    return final_out
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -192,55 +238,90 @@ def burn_source_card(
 # ═════════════════════════════════════════════════════════════════════════════
 
 def apply_sidechain_ducking(
-    voice_path: Path,
-    bgm_path: Path,
-    output_audio: Path,
+    narration_wav: Optional[Path] = None,
+    bgm_wav: Optional[Path] = None,
+    *args,
+    sfx_wav: Optional[Path] = None,
+    out_wav: Optional[Path] = None,
+    voice_path: Optional[Path] = None,
+    bgm_path: Optional[Path] = None,
+    output_audio: Optional[Path] = None,
     threshold: float = 0.08,
     ratio: float = 6.0,
     release_ms: int = 250,
-    bgm_volume: float = 0.18
+    bgm_volume: float = 0.18,
+    **kwargs
 ) -> Path:
     """
     Applies FFmpeg sidechaincompress to dynamically duck the background orchestral
     score under the voiceover track.
-    Parameters match spec:
-      - threshold: 0.08
-      - ratio: 6.0
-      - release: 250ms
+    Supports signatures:
+      apply_sidechain_ducking(narration_wav, bgm_wav, sfx_wav, out_wav)
+      apply_sidechain_ducking(voice_path, bgm_path, output_audio, ...)
     """
-    voice_path = Path(voice_path)
-    bgm_path = Path(bgm_path)
-    output_audio = Path(output_audio)
-    output_audio.parent.mkdir(parents=True, exist_ok=True)
+    v_path = Path(narration_wav or voice_path or (args[0] if len(args) > 0 else None))
+    b_path = Path(bgm_wav or bgm_path or (args[1] if len(args) > 1 else None))
 
-    if not bgm_path.exists():
-        logger.warning(f"[Sidechain Ducking] BGM file '{bgm_path}' not found; passing raw voiceover.")
-        cmd = ["ffmpeg", "-y", "-i", str(voice_path), "-c:a", "aac", "-b:a", "192k", str(output_audio)]
+    # Handle remaining positional args
+    if len(args) >= 3:
+        if len(args) == 3:
+            # Called with (voice, bgm, output)
+            target_out = Path(args[2])
+        else:
+            # Called with (voice, bgm, sfx, output)
+            sfx_wav = Path(args[2]) if args[2] is not None else None
+            target_out = Path(args[3])
+    else:
+        target_out = Path(out_wav or output_audio or (v_path.parent / f"{v_path.stem}_ducked.m4a"))
+
+    target_out.parent.mkdir(parents=True, exist_ok=True)
+
+    if not b_path.exists():
+        logger.warning(f"[Sidechain Ducking] BGM file '{b_path}' not found; passing raw voiceover.")
+        cmd = ["ffmpeg", "-y", "-i", str(v_path), "-c:a", "aac", "-b:a", "192k", str(target_out)]
         subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-        return output_audio
+        return target_out
 
-    # Filtergraph:
-    # 1. Loop BGM to match voice duration, adjust base volume
-    # 2. Sidechaincompress bgm using voiceover as sidechain control trigger
-    # 3. Mix compressed BGM + Voiceover
-    filtergraph = (
-        f"[1:a]volume={bgm_volume}[bgm_norm];"
-        f"[bgm_norm][0:a]sidechaincompress="
-        f"threshold={threshold}:ratio={ratio}:attack=20:release={release_ms}[ducked_bgm];"
-        f"[0:a][ducked_bgm]amix=inputs=2:duration=first:dropout_transition=2[aout]"
-    )
-
-    cmd = [
-        "ffmpeg", "-y",
-        "-i", str(voice_path),
-        "-stream_loop", "-1", "-i", str(bgm_path),
-        "-filter_complex", filtergraph,
-        "-map", "[aout]",
-        "-c:a", "aac",
-        "-b:a", "192k",
-        str(output_audio)
-    ]
+    # Build filtergraph
+    has_sfx = sfx_wav is not None and Path(sfx_wav).exists()
+    if has_sfx:
+        filtergraph = (
+            f"[1:a]volume={bgm_volume}[bgm_norm];"
+            f"[2:a]volume=0.25[sfx_norm];"
+            f"[bgm_norm][sfx_norm]amix=inputs=2[bed];"
+            f"[bed][0:a]sidechaincompress="
+            f"threshold={threshold}:ratio={ratio}:attack=20:release={release_ms}[ducked_bed];"
+            f"[0:a][ducked_bed]amix=inputs=2:duration=first:dropout_transition=2[aout]"
+        )
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", str(v_path),
+            "-stream_loop", "-1", "-i", str(b_path),
+            "-stream_loop", "-1", "-i", str(sfx_wav),
+            "-filter_complex", filtergraph,
+            "-map", "[aout]",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            str(target_out)
+        ]
+    else:
+        filtergraph = (
+            f"[1:a]volume={bgm_volume}[bgm_norm];"
+            f"[bgm_norm][0:a]sidechaincompress="
+            f"threshold={threshold}:ratio={ratio}:attack=20:release={release_ms}[ducked_bgm];"
+            f"[0:a][ducked_bgm]amix=inputs=2:duration=first:dropout_transition=2[aout]"
+        )
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", str(v_path),
+            "-stream_loop", "-1", "-i", str(b_path),
+            "-filter_complex", filtergraph,
+            "-map", "[aout]",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            str(target_out)
+        ]
 
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, check=True)
-    logger.info(f"[Sidechain Audio Ducking] Applied sidechaincompress (ratio={ratio}, release={release_ms}ms) -> {output_audio.name}")
-    return output_audio
+    logger.info(f"[Sidechain Audio Ducking] Applied sidechaincompress (ratio={ratio}, release={release_ms}ms) -> {target_out.name}")
+    return target_out

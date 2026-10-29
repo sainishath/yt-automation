@@ -298,7 +298,7 @@ def format_youtube_description_timestamps(chapters: List[Dict[str, Any]]) -> str
 
 # ── Channel A Assembly Engine ────────────────────────────────────────────────
 
-def assemble_history_documentary(script_path: Path, output_dir: Path) -> Path:
+def assemble_history_documentary(script_path: Path, output_dir: Path, split_shorts: bool = False) -> Path:
     """
     Renders and assembles the 10-Minute Historical Documentary: The Fall of Constantinople (1453):
       1. Synthesizes 7 act voice tracks via edge_tts (authoritative documentary tone).
@@ -573,6 +573,15 @@ def assemble_history_documentary(script_path: Path, output_dir: Path) -> Path:
     print(f"  Description: {yt_desc_path}")
     print("=" * 70)
 
+    if split_shorts:
+        print("\n" + "-" * 70)
+        print("  --> AUTO-SPLITTING 16:9 MASTER INTO 5 VIRAL 9:16 SHORTS (--split-shorts)")
+        print("-" * 70)
+        from longform_engine.short_splitter import split_master_into_shorts
+        shorts_dir = output_dir / "shorts"
+        split_master_into_shorts(final_master, manifest_path=script_path, output_dir=shorts_dir)
+        print(f"  ✔ 5 Mobile-Safe 9:16 Shorts Generated in: {shorts_dir}")
+
     return final_master
 
 
@@ -692,23 +701,32 @@ def assemble_coding_masterclass(script_path: Path, output_dir: Path) -> Path:
 
 def main():
     parser = argparse.ArgumentParser(description="10-Minute Long-Form Media Assembly Pipeline")
-    parser.add_argument("--script", type=str, required=True, help="Path to Stage-1 script JSON draft")
-    parser.add_argument("--type", type=str, choices=["coding", "history"], required=True, help="Pipeline type")
+    parser.add_argument("--draft", "--script", "--input", dest="draft", type=str, required=True, help="Path to Stage-1 script JSON draft")
+    parser.add_argument("--type", "--channel", dest="type", type=str, default=None, choices=["coding", "history"], help="Pipeline type")
     parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
+    parser.add_argument("--split-shorts", action="store_true", help="Automatically carve 5 vertical 9:16 Shorts from master")
 
     args = parser.parse_args()
-    script_path = Path(args.script)
+    script_path = Path(args.draft)
     if not script_path.exists():
         print(f"Error: Script file not found: {script_path}")
         sys.exit(1)
 
-    out_dir = Path(args.output_dir) if args.output_dir else (ROOT_DIR / "longform_engine" / "output" / f"{args.type}_10min")
+    pipe_type = args.type
+    if not pipe_type:
+        name_lower = script_path.name.lower()
+        if "coding" in name_lower or "python" in name_lower:
+            pipe_type = "coding"
+        else:
+            pipe_type = "history"
+
+    out_dir = Path(args.output_dir) if args.output_dir else (ROOT_DIR / "longform_engine" / "output" / f"{pipe_type}_10min")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    if args.type == "coding":
+    if pipe_type == "coding":
         assemble_coding_masterclass(script_path, out_dir)
-    elif args.type == "history":
-        assemble_history_documentary(script_path, out_dir)
+    elif pipe_type == "history":
+        assemble_history_documentary(script_path, out_dir, split_shorts=args.split_shorts)
 
 
 if __name__ == "__main__":

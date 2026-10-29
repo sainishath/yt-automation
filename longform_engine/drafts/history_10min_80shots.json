@@ -5,8 +5,8 @@
   "target_runtime_seconds": 675.0,
   "total_word_count": 1276,
   "target_wpm": 127.2,
-  "total_visual_shots": 77,
-  "average_shot_duration_sec": 8.77,
+  "total_visual_shots": 80,
+  "average_shot_duration_sec": 8.44,
   "acts": [
     {
       "act_number": 1,
@@ -50,67 +50,267 @@
           "shot_id": "act01_shot01",
           "shot_type": "Wide Establishing",
           "motion": "push_in",
-          "prompt": "16:9 majestic wide-angle cinematic shot of the towering tripartite Theodosian stone walls of Constantinople rising out of dense morning spring mist, flooded moat, Roman defensive battlements under a dramatic stormy sky, photorealistic 8k, oil painting undertones, historical accuracy 1453"
+          "prompt": "16:9 majestic wide-angle cinematic shot of the towering tripartite Theodosian stone walls of Constantinople rising out of dense morning spring mist, flooded moat, Roman defensive battlements under a dramatic stormy sky, photorealistic 8k, oil painting undertones, historical accuracy 1453",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot02",
           "shot_type": "Tactical Map",
           "motion": "pan_right",
-          "prompt": "16:9 top-down parchment tactical siege map of Constantinople peninsula in 1453, showing the Golden Horn, Sea of Marmara, and the four-mile land wall barrier, aged vellum texture, antique ink calligraphy, compass rose, dramatic candlelight illumination"
+          "prompt": "16:9 top-down parchment tactical siege map of Constantinople peninsula in 1453, showing the Golden Horn, Sea of Marmara, and the four-mile land wall barrier, aged vellum texture, antique ink calligraphy, compass rose, dramatic candlelight illumination",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot03",
           "shot_type": "Medium Troop",
           "motion": "pull_out",
-          "prompt": "16:9 cinematic medium shot of Byzantine sentries in iron conical helmets and weathered lamellar armor standing watch atop high stone battlements, gazing out into the misty horizon with solemn tense expressions"
+          "prompt": "16:9 cinematic medium shot of Byzantine sentries in iron conical helmets and weathered lamellar armor standing watch atop high stone battlements, gazing out into the misty horizon with solemn tense expressions",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot04",
           "shot_type": "Atmospheric Landscape",
           "motion": "pan_left_up",
-          "prompt": "16:9 aerial panoramic shot looking down into the deep sixty-foot wide stone-lined flooded moat outside Constantinople, muddy water reflecting grey clouds, sharpened wooden stakes protruding along the breastwork"
+          "prompt": "16:9 aerial panoramic shot looking down into the deep sixty-foot wide stone-lined flooded moat outside Constantinople, muddy water reflecting grey clouds, sharpened wooden stakes protruding along the breastwork",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot05",
           "shot_type": "Primary Source",
           "motion": "push_in",
-          "prompt": "16:9 extreme close-up macro of weathered fifth-century Roman limestone bricks bonded with crimson pozzolanic mortar, showing ancient chisel marks, moss, and repaired siege cracks from centuries past"
+          "prompt": "16:9 extreme close-up macro of weathered fifth-century Roman limestone bricks bonded with crimson pozzolanic mortar, showing ancient chisel marks, moss, and repaired siege cracks from centuries past",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot06",
           "shot_type": "Wide Urban",
           "motion": "pan_right",
-          "prompt": "16:9 desolate street view inside Constantinople in April 1453, sparse citizens in medieval cloaks walking past decaying classical marble colonnades and overgrown Roman ruins, melancholic atmospheric lighting"
+          "prompt": "16:9 desolate street view inside Constantinople in April 1453, sparse citizens in medieval cloaks walking past decaying classical marble colonnades and overgrown Roman ruins, melancholic atmospheric lighting",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot07",
           "shot_type": "Interior Sacred",
           "motion": "pull_out",
-          "prompt": "16:9 awe-inspiring cinematic interior of Hagia Sophia cathedral, soaring dome with gold mosaic icons catching ethereal dust-mote sunbeams streaming through high arched clerestory windows, solemn silence"
+          "prompt": "16:9 awe-inspiring cinematic interior of Hagia Sophia cathedral, soaring dome with gold mosaic icons catching ethereal dust-mote sunbeams streaming through high arched clerestory windows, solemn silence",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot08",
           "shot_type": "Heroic Portrait",
           "motion": "push_in",
-          "prompt": "16:9 dramatic cinematic portrait of Byzantine Emperor Constantine XI Palaiologos, 49 years old, wearing gilded Roman lamellar armor and deep imperial purple mantle, intense dignified eyes, heavy beard, wind blowing"
+          "prompt": "16:9 dramatic cinematic portrait of Byzantine Emperor Constantine XI Palaiologos, 49 years old, wearing gilded Roman lamellar armor and deep imperial purple mantle, intense dignified eyes, heavy beard, wind blowing",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot09",
           "shot_type": "Architectural Detail",
           "motion": "pan_right",
-          "prompt": "16:9 imposing stone bastion tower of the inner Theodosian wall, double-headed eagle Byzantine standard fluttering proudly in the sea wind against an approaching dark squall line"
+          "prompt": "16:9 imposing stone bastion tower of the inner Theodosian wall, double-headed eagle Byzantine standard fluttering proudly in the sea wind against an approaching dark squall line",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot10",
           "shot_type": "Atmospheric Sentry",
           "motion": "pan_left_up",
-          "prompt": "16:9 silhouette of a lone Roman archer atop the highest fortress tower at dusk, looking toward the dark Thracian forest as distant black birds scatter into the stormy sky"
+          "prompt": "16:9 silhouette of a lone Roman archer atop the highest fortress tower at dusk, looking toward the dark Thracian forest as distant black birds scatter into the stormy sky",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
         },
         {
           "shot_id": "act01_shot11",
           "shot_type": "Climactic Wide",
           "motion": "pull_out",
-          "prompt": "16:9 epic sweeping wide shot of the entire unbroken four-mile Theodosian wall system glowing in the last fiery amber rays of sunset, eternal fortress standing alone against the darkness"
+          "prompt": "16:9 epic sweeping wide shot of the entire unbroken four-mile Theodosian wall system glowing in the last fiery amber rays of sunset, eternal fortress standing alone against the darkness",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot12",
+          "shot_type": "Manuscript",
+          "motion": "push_in",
+          "prompt": "16:9 archival manuscript illumination of the Byzantine imperial golden bull and patriarchal seal certifying the census of defenders in April 1453, Latin and Greek calligraphy on parchment, ancient wax seal, macro detail",
+          "primary_source_quote": "We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies. \u2014 George Sphrantzes",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD"
+        }
+      ],
+      "visual_shots": [
+        {
+          "shot_id": "act01_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 majestic wide-angle cinematic shot of the towering tripartite Theodosian stone walls of Constantinople rising out of dense morning spring mist, flooded moat, Roman defensive battlements under a dramatic stormy sky, photorealistic 8k, oil painting undertones, historical accuracy 1453",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot02",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 top-down parchment tactical siege map of Constantinople peninsula in 1453, showing the Golden Horn, Sea of Marmara, and the four-mile land wall barrier, aged vellum texture, antique ink calligraphy, compass rose, dramatic candlelight illumination",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot03",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic medium shot of Byzantine sentries in iron conical helmets and weathered lamellar armor standing watch atop high stone battlements, gazing out into the misty horizon with solemn tense expressions",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot04",
+          "shot_type": "Atmospheric Landscape",
+          "motion": "pan_left_up",
+          "prompt": "16:9 aerial panoramic shot looking down into the deep sixty-foot wide stone-lined flooded moat outside Constantinople, muddy water reflecting grey clouds, sharpened wooden stakes protruding along the breastwork",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot05",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 extreme close-up macro of weathered fifth-century Roman limestone bricks bonded with crimson pozzolanic mortar, showing ancient chisel marks, moss, and repaired siege cracks from centuries past",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot06",
+          "shot_type": "Wide Urban",
+          "motion": "pan_right",
+          "prompt": "16:9 desolate street view inside Constantinople in April 1453, sparse citizens in medieval cloaks walking past decaying classical marble colonnades and overgrown Roman ruins, melancholic atmospheric lighting",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot07",
+          "shot_type": "Interior Sacred",
+          "motion": "pull_out",
+          "prompt": "16:9 awe-inspiring cinematic interior of Hagia Sophia cathedral, soaring dome with gold mosaic icons catching ethereal dust-mote sunbeams streaming through high arched clerestory windows, solemn silence",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot08",
+          "shot_type": "Heroic Portrait",
+          "motion": "push_in",
+          "prompt": "16:9 dramatic cinematic portrait of Byzantine Emperor Constantine XI Palaiologos, 49 years old, wearing gilded Roman lamellar armor and deep imperial purple mantle, intense dignified eyes, heavy beard, wind blowing",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot09",
+          "shot_type": "Architectural Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 imposing stone bastion tower of the inner Theodosian wall, double-headed eagle Byzantine standard fluttering proudly in the sea wind against an approaching dark squall line",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot10",
+          "shot_type": "Atmospheric Sentry",
+          "motion": "pan_left_up",
+          "prompt": "16:9 silhouette of a lone Roman archer atop the highest fortress tower at dusk, looking toward the dark Thracian forest as distant black birds scatter into the stormy sky",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot11",
+          "shot_type": "Climactic Wide",
+          "motion": "pull_out",
+          "prompt": "16:9 epic sweeping wide shot of the entire unbroken four-mile Theodosian wall system glowing in the last fiery amber rays of sunset, eternal fortress standing alone against the darkness",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor ordered a census of all citizens capable of bearing arms... We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies."
+        },
+        {
+          "shot_id": "act01_shot12",
+          "shot_type": "Manuscript",
+          "motion": "push_in",
+          "prompt": "16:9 archival manuscript illumination of the Byzantine imperial golden bull and patriarchal seal certifying the census of defenders in April 1453, Latin and Greek calligraphy on parchment, ancient wax seal, macro detail",
+          "primary_source_quote": "We found only 4,983 Greeks and barely 2,000 foreigners to defend four miles of walls against a sea of enemies. \u2014 George Sphrantzes",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 1,
+          "act_title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+          "historical_date": "1453 AD"
         }
       ]
     },
@@ -156,67 +356,245 @@
           "shot_id": "act02_shot01",
           "shot_type": "Character Portrait",
           "motion": "push_in",
-          "prompt": "16:9 imposing close-up portrait of Sultan Mehmed II, 21 years old, sharp calculating eyes, wearing a white silk turban with a gold jewel agraffe and crimson fur-lined kaftan, illuminated by flickering tent torches"
+          "prompt": "16:9 imposing close-up portrait of Sultan Mehmed II, 21 years old, sharp calculating eyes, wearing a white silk turban with a gold jewel agraffe and crimson fur-lined kaftan, illuminated by flickering tent torches",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot02",
           "shot_type": "Tactical Study",
           "motion": "pan_right",
-          "prompt": "16:9 overhead shot of Mehmed II leaning over a massive wooden table covered in architectural sketches of Constantinople's walls, holding brass dividers, surrounded by viziers in silk robes"
+          "prompt": "16:9 overhead shot of Mehmed II leaning over a massive wooden table covered in architectural sketches of Constantinople's walls, holding brass dividers, surrounded by viziers in silk robes",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot03",
           "shot_type": "Fortress Architecture",
           "motion": "pull_out",
-          "prompt": "16:9 cinematic shot of the newly completed fortress Rumeli Hisari on the steep forested banks of the Bosporus straits, massive grey stone towers guarding the narrow water channel, morning mist"
+          "prompt": "16:9 cinematic shot of the newly completed fortress Rumeli Hisari on the steep forested banks of the Bosporus straits, massive grey stone towers guarding the narrow water channel, morning mist",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot04",
           "shot_type": "Naval Blockade",
           "motion": "pan_left_up",
-          "prompt": "16:9 row of Ottoman cannons pointing from Rumeli Hisari battlements down at the rushing dark waters of the Bosporus, cutting off Black Sea trade ships"
+          "prompt": "16:9 row of Ottoman cannons pointing from Rumeli Hisari battlements down at the rushing dark waters of the Bosporus, cutting off Black Sea trade ships",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot05",
           "shot_type": "Mass Gathering",
           "motion": "push_in",
-          "prompt": "16:9 sprawling panoramic vista of the Ottoman military encampment outside Constantinople, eighty thousand soldiers, thousands of white canvas tents and red pavilions stretching to the horizon"
+          "prompt": "16:9 sprawling panoramic vista of the Ottoman military encampment outside Constantinople, eighty thousand soldiers, thousands of white canvas tents and red pavilions stretching to the horizon",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot06",
           "shot_type": "Elite Troops",
           "motion": "pan_right",
-          "prompt": "16:9 ranks of disciplined Janissary infantry marching in strict formation, tall white bork capes with gold embroidery, holding recurve composite bows and heavy halberds, dust rising"
+          "prompt": "16:9 ranks of disciplined Janissary infantry marching in strict formation, tall white bork capes with gold embroidery, holding recurve composite bows and heavy halberds, dust rising",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot07",
           "shot_type": "Cavalry Formation",
           "motion": "pull_out",
-          "prompt": "16:9 Ottoman Sipahi heavy cavalry on armored Arabian stallions, pennants bearing crescent moons fluttering, galloping across the Thracian hills toward the siege lines"
+          "prompt": "16:9 Ottoman Sipahi heavy cavalry on armored Arabian stallions, pennants bearing crescent moons fluttering, galloping across the Thracian hills toward the siege lines",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot08",
           "shot_type": "Defender Contrast",
           "motion": "push_in",
-          "prompt": "16:9 somber medium shot of Genoese mercenary captain Giovanni Giustiniani Longo inspecting his company of seven hundred Italian plate-armored crossbowmen inside the Roman courtyard"
+          "prompt": "16:9 somber medium shot of Genoese mercenary captain Giovanni Giustiniani Longo inspecting his company of seven hundred Italian plate-armored crossbowmen inside the Roman courtyard",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot09",
           "shot_type": "Weapon Inspection",
           "motion": "pan_right",
-          "prompt": "16:9 macro shot of a Genoese steel crossbow being spanned with a goat's foot lever, heavy iron-tipped quarrel loaded into the polished walnut groove"
+          "prompt": "16:9 macro shot of a Genoese steel crossbow being spanned with a goat's foot lever, heavy iron-tipped quarrel loaded into the polished walnut groove",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot10",
           "shot_type": "Tactical Confrontation",
           "motion": "pan_left_up",
-          "prompt": "16:9 dramatic telephoto lens shot from the Byzantine battlements looking across the clearing at the Ottoman advance guard deploying siege mantlets and red battle standards"
+          "prompt": "16:9 dramatic telephoto lens shot from the Byzantine battlements looking across the clearing at the Ottoman advance guard deploying siege mantlets and red battle standards",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         },
         {
           "shot_id": "act02_shot11",
           "shot_type": "Atmospheric War Camp",
           "motion": "pull_out",
-          "prompt": "16:9 twilight panorama of the siege lines, thousands of Ottoman cooking fires twinkling like stars across the plain, war horns sounding in the cold spring air"
+          "prompt": "16:9 twilight panorama of the siege lines, thousands of Ottoman cooking fires twinkling like stars across the plain, war horns sounding in the cold spring air",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        }
+      ],
+      "visual_shots": [
+        {
+          "shot_id": "act02_shot01",
+          "shot_type": "Character Portrait",
+          "motion": "push_in",
+          "prompt": "16:9 imposing close-up portrait of Sultan Mehmed II, 21 years old, sharp calculating eyes, wearing a white silk turban with a gold jewel agraffe and crimson fur-lined kaftan, illuminated by flickering tent torches",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot02",
+          "shot_type": "Tactical Study",
+          "motion": "pan_right",
+          "prompt": "16:9 overhead shot of Mehmed II leaning over a massive wooden table covered in architectural sketches of Constantinople's walls, holding brass dividers, surrounded by viziers in silk robes",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot03",
+          "shot_type": "Fortress Architecture",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic shot of the newly completed fortress Rumeli Hisari on the steep forested banks of the Bosporus straits, massive grey stone towers guarding the narrow water channel, morning mist",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot04",
+          "shot_type": "Naval Blockade",
+          "motion": "pan_left_up",
+          "prompt": "16:9 row of Ottoman cannons pointing from Rumeli Hisari battlements down at the rushing dark waters of the Bosporus, cutting off Black Sea trade ships",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot05",
+          "shot_type": "Mass Gathering",
+          "motion": "push_in",
+          "prompt": "16:9 sprawling panoramic vista of the Ottoman military encampment outside Constantinople, eighty thousand soldiers, thousands of white canvas tents and red pavilions stretching to the horizon",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot06",
+          "shot_type": "Elite Troops",
+          "motion": "pan_right",
+          "prompt": "16:9 ranks of disciplined Janissary infantry marching in strict formation, tall white bork capes with gold embroidery, holding recurve composite bows and heavy halberds, dust rising",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot07",
+          "shot_type": "Cavalry Formation",
+          "motion": "pull_out",
+          "prompt": "16:9 Ottoman Sipahi heavy cavalry on armored Arabian stallions, pennants bearing crescent moons fluttering, galloping across the Thracian hills toward the siege lines",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot08",
+          "shot_type": "Defender Contrast",
+          "motion": "push_in",
+          "prompt": "16:9 somber medium shot of Genoese mercenary captain Giovanni Giustiniani Longo inspecting his company of seven hundred Italian plate-armored crossbowmen inside the Roman courtyard",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot09",
+          "shot_type": "Weapon Inspection",
+          "motion": "pan_right",
+          "prompt": "16:9 macro shot of a Genoese steel crossbow being spanned with a goat's foot lever, heavy iron-tipped quarrel loaded into the polished walnut groove",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot10",
+          "shot_type": "Tactical Confrontation",
+          "motion": "pan_left_up",
+          "prompt": "16:9 dramatic telephoto lens shot from the Byzantine battlements looking across the clearing at the Ottoman advance guard deploying siege mantlets and red battle standards",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
+        },
+        {
+          "shot_id": "act02_shot11",
+          "shot_type": "Atmospheric War Camp",
+          "motion": "pull_out",
+          "prompt": "16:9 twilight panorama of the siege lines, thousands of Ottoman cooking fires twinkling like stars across the plain, war horns sounding in the cold spring air",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 2,
+          "act_title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The blast shook the ground for leagues... the stone projectile of twelve hundred pounds struck the masonry with horrifying force and shattered ancient stone towers into dust."
         }
       ]
     },
@@ -259,67 +637,267 @@
           "shot_id": "act03_shot01",
           "shot_type": "Industrial Foundry",
           "motion": "push_in",
-          "prompt": "16:9 intense interior shot of master founder Urban's cannon foundry in Edirne, glowing molten bronze being poured from a clay crucible into a massive underground casting mould, bright orange sparks"
+          "prompt": "16:9 intense interior shot of master founder Urban's cannon foundry in Edirne, glowing molten bronze being poured from a clay crucible into a massive underground casting mould, bright orange sparks",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot02",
           "shot_type": "Engineer Portrait",
           "motion": "pan_right",
-          "prompt": "16:9 close-up portrait of Hungarian master cannon engineer Urban, soot-streaked face, leather apron, measuring the bronze barrel calipers with intense scientific focus"
+          "prompt": "16:9 close-up portrait of Hungarian master cannon engineer Urban, soot-streaked face, leather apron, measuring the bronze barrel calipers with intense scientific focus",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot03",
           "shot_type": "Colossal Transport",
           "motion": "pull_out",
-          "prompt": "16:9 epic wide shot of the twenty-six foot long Basilic bronze bombard mounted on heavy timber carriages, hauled by sixty oxen and two hundred laborers across the muddy plains of Thrace"
+          "prompt": "16:9 epic wide shot of the twenty-six foot long Basilic bronze bombard mounted on heavy timber carriages, hauled by sixty oxen and two hundred laborers across the muddy plains of Thrace",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot04",
           "shot_type": "Primary Source",
           "motion": "push_in",
-          "prompt": "16:9 macro detail shot of a carved twelve-hundred pound solid Black Sea granite cannonball, textured stone surface, sitting next to heavy oak powder barrels and iron measuring scales"
+          "prompt": "16:9 macro detail shot of a carved twelve-hundred pound solid Black Sea granite cannonball, textured stone surface, sitting next to heavy oak powder barrels and iron measuring scales",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot05",
           "shot_type": "Gun Battery Position",
           "motion": "pan_left_up",
-          "prompt": "16:9 massive timber earthwork battery constructed opposite the Roman Lycus valley walls, Ottoman master gunners loading black powder sacks with wooden rammers into the giant bronze cannon"
+          "prompt": "16:9 massive timber earthwork battery constructed opposite the Roman Lycus valley walls, Ottoman master gunners loading black powder sacks with wooden rammers into the giant bronze cannon",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot06",
           "shot_type": "The Ignition",
           "motion": "push_in",
-          "prompt": "16:9 tense dramatic close-up of an Ottoman gunner applying a glowing linstock match to the touch-hole of the Basilic bombard, smoke hissing before the detonation"
+          "prompt": "16:9 tense dramatic close-up of an Ottoman gunner applying a glowing linstock match to the touch-hole of the Basilic bombard, smoke hissing before the detonation",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot07",
           "shot_type": "Cataclysmic Firing",
           "motion": "pull_out",
-          "prompt": "16:9 explosive ultra-slow-motion blast as the Basilic cannon fires, massive fireball erupting from the muzzle, shockwave blowing back soldiers, dense black sulfur smoke engulfing the battery"
+          "prompt": "16:9 explosive ultra-slow-motion blast as the Basilic cannon fires, massive fireball erupting from the muzzle, shockwave blowing back soldiers, dense black sulfur smoke engulfing the battery",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot08",
           "shot_type": "Flight of Projectile",
           "motion": "pan_right",
-          "prompt": "16:9 dynamic cinematic tracking shot following the massive granite boulder tearing through the sky toward the ancient stone fortifications of Constantinople"
+          "prompt": "16:9 dynamic cinematic tracking shot following the massive granite boulder tearing through the sky toward the ancient stone fortifications of Constantinople",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot09",
           "shot_type": "Impact & Demolition",
           "motion": "push_in",
-          "prompt": "16:9 catastrophic impact as the 1200-pound granite stone shatters an ancient Roman stone tower, wall exploding into thousands of fragments, limestone dust billowing violently"
+          "prompt": "16:9 catastrophic impact as the 1200-pound granite stone shatters an ancient Roman stone tower, wall exploding into thousands of fragments, limestone dust billowing violently",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot10",
           "shot_type": "Defenders in Terror",
           "motion": "pull_out",
-          "prompt": "16:9 Byzantine defenders on the ramparts coughing in white limestone dust, shielding their faces as masonry rains down, clutching iron shields amidst ringing ears"
+          "prompt": "16:9 Byzantine defenders on the ramparts coughing in white limestone dust, shielding their faces as masonry rains down, clutching iron shields amidst ringing ears",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
         },
         {
           "shot_id": "act03_shot11",
           "shot_type": "Ruined Breach",
           "motion": "pan_left_up",
-          "prompt": "16:9 wide shot of the smoking jagged breach along the Lycus River wall, ancient imperial towers transformed into shattered gravel piles, the illusion of invulnerability broken"
+          "prompt": "16:9 wide shot of the smoking jagged breach along the Lycus River wall, ancient imperial towers transformed into shattered gravel piles, the illusion of invulnerability broken",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot12",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 tactical naval route map of the Golden Horn showing the iron boom chain severed and Ottoman vanguard galleys establishing harbor dominance under night fog, parchment cartography, illuminated red vectors",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. \u2014 Niccol\u00f2 Barbaro",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD"
+        }
+      ],
+      "visual_shots": [
+        {
+          "shot_id": "act03_shot01",
+          "shot_type": "Industrial Foundry",
+          "motion": "push_in",
+          "prompt": "16:9 intense interior shot of master founder Urban's cannon foundry in Edirne, glowing molten bronze being poured from a clay crucible into a massive underground casting mould, bright orange sparks",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot02",
+          "shot_type": "Engineer Portrait",
+          "motion": "pan_right",
+          "prompt": "16:9 close-up portrait of Hungarian master cannon engineer Urban, soot-streaked face, leather apron, measuring the bronze barrel calipers with intense scientific focus",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot03",
+          "shot_type": "Colossal Transport",
+          "motion": "pull_out",
+          "prompt": "16:9 epic wide shot of the twenty-six foot long Basilic bronze bombard mounted on heavy timber carriages, hauled by sixty oxen and two hundred laborers across the muddy plains of Thrace",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot04",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 macro detail shot of a carved twelve-hundred pound solid Black Sea granite cannonball, textured stone surface, sitting next to heavy oak powder barrels and iron measuring scales",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot05",
+          "shot_type": "Gun Battery Position",
+          "motion": "pan_left_up",
+          "prompt": "16:9 massive timber earthwork battery constructed opposite the Roman Lycus valley walls, Ottoman master gunners loading black powder sacks with wooden rammers into the giant bronze cannon",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot06",
+          "shot_type": "The Ignition",
+          "motion": "push_in",
+          "prompt": "16:9 tense dramatic close-up of an Ottoman gunner applying a glowing linstock match to the touch-hole of the Basilic bombard, smoke hissing before the detonation",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot07",
+          "shot_type": "Cataclysmic Firing",
+          "motion": "pull_out",
+          "prompt": "16:9 explosive ultra-slow-motion blast as the Basilic cannon fires, massive fireball erupting from the muzzle, shockwave blowing back soldiers, dense black sulfur smoke engulfing the battery",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot08",
+          "shot_type": "Flight of Projectile",
+          "motion": "pan_right",
+          "prompt": "16:9 dynamic cinematic tracking shot following the massive granite boulder tearing through the sky toward the ancient stone fortifications of Constantinople",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot09",
+          "shot_type": "Impact & Demolition",
+          "motion": "push_in",
+          "prompt": "16:9 catastrophic impact as the 1200-pound granite stone shatters an ancient Roman stone tower, wall exploding into thousands of fragments, limestone dust billowing violently",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot10",
+          "shot_type": "Defenders in Terror",
+          "motion": "pull_out",
+          "prompt": "16:9 Byzantine defenders on the ramparts coughing in white limestone dust, shielding their faces as masonry rains down, clutching iron shields amidst ringing ears",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot11",
+          "shot_type": "Ruined Breach",
+          "motion": "pan_left_up",
+          "prompt": "16:9 wide shot of the smoking jagged breach along the Lycus River wall, ancient imperial towers transformed into shattered gravel piles, the illusion of invulnerability broken",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. With sails hoisted and oars churning the air, seventy warships were hauled over the hills on greased timber logs."
+        },
+        {
+          "shot_id": "act03_shot12",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 tactical naval route map of the Golden Horn showing the iron boom chain severed and Ottoman vanguard galleys establishing harbor dominance under night fog, parchment cartography, illuminated red vectors",
+          "primary_source_quote": "A thing incredible to see... their fleet sailing across dry land into the heart of our harbor. \u2014 Niccol\u00f2 Barbaro",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 3,
+          "act_title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+          "historical_date": "1453 AD"
         }
       ]
     },
@@ -362,67 +940,245 @@
           "shot_id": "act04_shot01",
           "shot_type": "Harbor Barrier",
           "motion": "push_in",
-          "prompt": "16:9 atmospheric shot of the Great Boom Chain stretching across the mouth of the Golden Horn harbor, massive rusted wrought-iron links floating on wooden pontoons, blocking Ottoman galleys"
+          "prompt": "16:9 atmospheric shot of the Great Boom Chain stretching across the mouth of the Golden Horn harbor, massive rusted wrought-iron links floating on wooden pontoons, blocking Ottoman galleys",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot02",
           "shot_type": "Naval Impasse",
           "motion": "pan_right",
-          "prompt": "16:9 Byzantine and Venetian war galleys anchored securely inside the calm waters of the Golden Horn harbor, looking out at the frustrated Ottoman fleet outside the iron boom"
+          "prompt": "16:9 Byzantine and Venetian war galleys anchored securely inside the calm waters of the Golden Horn harbor, looking out at the frustrated Ottoman fleet outside the iron boom",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot03",
           "shot_type": "Tactical Revelation",
           "motion": "pull_out",
-          "prompt": "16:9 Sultan Mehmed II standing on a hilltop in Galata at night, gesturing toward the forested ridge between the Bosporus and the harbor, surrounded by shipwrights holding torches"
+          "prompt": "16:9 Sultan Mehmed II standing on a hilltop in Galata at night, gesturing toward the forested ridge between the Bosporus and the harbor, surrounded by shipwrights holding torches",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot04",
           "shot_type": "Timber Road Engineering",
           "motion": "push_in",
-          "prompt": "16:9 Ottoman engineers laying heavy greased timber rollers and wooden tracks across the rugged earthen hillside of Pera, smearing animal tallow along the wooden logs"
+          "prompt": "16:9 Ottoman engineers laying heavy greased timber rollers and wooden tracks across the rugged earthen hillside of Pera, smearing animal tallow along the wooden logs",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot05",
           "shot_type": "Overland Transit",
           "motion": "pan_left_up",
-          "prompt": "16:9 epic moonlight spectacle of a wooden war galley with sails unfurled being hauled uphill over timber tracks by hundreds of shouting soldiers and teams of straining oxen, torches blazing"
+          "prompt": "16:9 epic moonlight spectacle of a wooden war galley with sails unfurled being hauled uphill over timber tracks by hundreds of shouting soldiers and teams of straining oxen, torches blazing",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot06",
           "shot_type": "Diversionary Barrage",
           "motion": "pull_out",
-          "prompt": "16:9 night sky illuminated by flashes of diversionary Ottoman mortar fire striking the seawalls of Galata, masking the screeching sound of wooden rollers"
+          "prompt": "16:9 night sky illuminated by flashes of diversionary Ottoman mortar fire striking the seawalls of Galata, masking the screeching sound of wooden rollers",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot07",
           "shot_type": "Crest of the Ridge",
           "motion": "push_in",
-          "prompt": "16:9 dramatic low-angle shot of the prow of an Ottoman galley cresting the hill of Galata, silhouettes of oarsmen perched on gunwales under a silver crescent moon"
+          "prompt": "16:9 dramatic low-angle shot of the prow of an Ottoman galley cresting the hill of Galata, silhouettes of oarsmen perched on gunwales under a silver crescent moon",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot08",
           "shot_type": "Harbor Splashdown",
           "motion": "pan_right",
-          "prompt": "16:9 dawn shot of an Ottoman warship sliding down the wooden ramp and splashing into the glassy green waters of the Golden Horn, wake spreading toward the city walls"
+          "prompt": "16:9 dawn shot of an Ottoman warship sliding down the wooden ramp and splashing into the glassy green waters of the Golden Horn, wake spreading toward the city walls",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot09",
           "shot_type": "Byzantine Lookout Shock",
           "motion": "pull_out",
-          "prompt": "16:9 Byzantine sentry on the northern harbor ramparts rubbing his eyes in horror as morning fog clears to reveal seventy Ottoman galleys anchored beneath the vulnerable sea wall"
+          "prompt": "16:9 Byzantine sentry on the northern harbor ramparts rubbing his eyes in horror as morning fog clears to reveal seventy Ottoman galleys anchored beneath the vulnerable sea wall",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot10",
           "shot_type": "Alarm Bells",
           "motion": "push_in",
-          "prompt": "16:9 church bells of Constantinople swinging violently in stone belfries, bronze clappers striking in frantic cadence as flock of pigeons take flight in panic"
+          "prompt": "16:9 church bells of Constantinople swinging violently in stone belfries, bronze clappers striking in frantic cadence as flock of pigeons take flight in panic",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         },
         {
           "shot_id": "act04_shot11",
           "shot_type": "Divided Defense",
           "motion": "pan_left_up",
-          "prompt": "16:9 Emperor Constantine XI directing small detachments of exhausted soldiers to split away from the main land wall, spreading the thin defense across miles of northern sea battlements"
+          "prompt": "16:9 Emperor Constantine XI directing small detachments of exhausted soldiers to split away from the main land wall, spreading the thin defense across miles of northern sea battlements",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        }
+      ],
+      "visual_shots": [
+        {
+          "shot_id": "act04_shot01",
+          "shot_type": "Harbor Barrier",
+          "motion": "push_in",
+          "prompt": "16:9 atmospheric shot of the Great Boom Chain stretching across the mouth of the Golden Horn harbor, massive rusted wrought-iron links floating on wooden pontoons, blocking Ottoman galleys",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot02",
+          "shot_type": "Naval Impasse",
+          "motion": "pan_right",
+          "prompt": "16:9 Byzantine and Venetian war galleys anchored securely inside the calm waters of the Golden Horn harbor, looking out at the frustrated Ottoman fleet outside the iron boom",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot03",
+          "shot_type": "Tactical Revelation",
+          "motion": "pull_out",
+          "prompt": "16:9 Sultan Mehmed II standing on a hilltop in Galata at night, gesturing toward the forested ridge between the Bosporus and the harbor, surrounded by shipwrights holding torches",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot04",
+          "shot_type": "Timber Road Engineering",
+          "motion": "push_in",
+          "prompt": "16:9 Ottoman engineers laying heavy greased timber rollers and wooden tracks across the rugged earthen hillside of Pera, smearing animal tallow along the wooden logs",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot05",
+          "shot_type": "Overland Transit",
+          "motion": "pan_left_up",
+          "prompt": "16:9 epic moonlight spectacle of a wooden war galley with sails unfurled being hauled uphill over timber tracks by hundreds of shouting soldiers and teams of straining oxen, torches blazing",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot06",
+          "shot_type": "Diversionary Barrage",
+          "motion": "pull_out",
+          "prompt": "16:9 night sky illuminated by flashes of diversionary Ottoman mortar fire striking the seawalls of Galata, masking the screeching sound of wooden rollers",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot07",
+          "shot_type": "Crest of the Ridge",
+          "motion": "push_in",
+          "prompt": "16:9 dramatic low-angle shot of the prow of an Ottoman galley cresting the hill of Galata, silhouettes of oarsmen perched on gunwales under a silver crescent moon",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot08",
+          "shot_type": "Harbor Splashdown",
+          "motion": "pan_right",
+          "prompt": "16:9 dawn shot of an Ottoman warship sliding down the wooden ramp and splashing into the glassy green waters of the Golden Horn, wake spreading toward the city walls",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot09",
+          "shot_type": "Byzantine Lookout Shock",
+          "motion": "pull_out",
+          "prompt": "16:9 Byzantine sentry on the northern harbor ramparts rubbing his eyes in horror as morning fog clears to reveal seventy Ottoman galleys anchored beneath the vulnerable sea wall",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot10",
+          "shot_type": "Alarm Bells",
+          "motion": "push_in",
+          "prompt": "16:9 church bells of Constantinople swinging violently in stone belfries, bronze clappers striking in frantic cadence as flock of pigeons take flight in panic",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
+        },
+        {
+          "shot_id": "act04_shot11",
+          "shot_type": "Divided Defense",
+          "motion": "pan_left_up",
+          "prompt": "16:9 Emperor Constantine XI directing small detachments of exhausted soldiers to split away from the main land wall, spreading the thin defense across miles of northern sea battlements",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 4,
+          "act_title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "There was no hatred left that night. Greeks and Latins, monks and soldiers, bishops and common men wept together before the altar of Hagia Sophia. Division ceased in the presence of imminent eternity."
         }
       ]
     },
@@ -467,67 +1223,267 @@
           "shot_id": "act05_shot01",
           "shot_type": "Night Reconstruction",
           "motion": "push_in",
-          "prompt": "16:9 frantic nighttime scene at the breached walls, Byzantine civilians, priests, and women hauling wicker baskets of earth, timber logs, and gravel to rebuild palisades under fire"
+          "prompt": "16:9 frantic nighttime scene at the breached walls, Byzantine civilians, priests, and women hauling wicker baskets of earth, timber logs, and gravel to rebuild palisades under fire",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot02",
           "shot_type": "Subterranean Shaft",
           "motion": "pan_right",
-          "prompt": "16:9 claustrophobic mining tunnel beneath the earth, Serbian sappers in loincloths chipping through limestone bedrock by the dim orange glow of tallow candles, wooden props supporting the ceiling"
+          "prompt": "16:9 claustrophobic mining tunnel beneath the earth, Serbian sappers in loincloths chipping through limestone bedrock by the dim orange glow of tallow candles, wooden props supporting the ceiling",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot03",
           "shot_type": "Acoustic Detection",
           "motion": "pull_out",
-          "prompt": "16:9 Scottish mercenary engineer John Grant kneeling on the cellar floor inside the wall, staring intently at a polished copper bowl of water showing rhythmic circular vibration ripples"
+          "prompt": "16:9 Scottish mercenary engineer John Grant kneeling on the cellar floor inside the wall, staring intently at a polished copper bowl of water showing rhythmic circular vibration ripples",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot04",
           "shot_type": "Counter-Mine Digging",
           "motion": "push_in",
-          "prompt": "16:9 Byzantine counter-miners digging furiously into the dirt wall, pickaxes striking sparks, suddenly breaking through into an enemy subterranean shaft with a burst of air"
+          "prompt": "16:9 Byzantine counter-miners digging furiously into the dirt wall, pickaxes striking sparks, suddenly breaking through into an enemy subterranean shaft with a burst of air",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot05",
           "shot_type": "Subterranean Combat",
           "motion": "pan_left_up",
-          "prompt": "16:9 brutal hand-to-hand fight in the suffocating darkness of a narrow mining gallery, Byzantine soldiers and Ottoman miners clashing with picks, daggers, and wooden clubs"
+          "prompt": "16:9 brutal hand-to-hand fight in the suffocating darkness of a narrow mining gallery, Byzantine soldiers and Ottoman miners clashing with picks, daggers, and wooden clubs",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot06",
           "shot_type": "Greek Fire Preparation",
           "motion": "push_in",
-          "prompt": "16:9 Byzantine engineer pressurizing a heavy bronze siphon cylinder with hand bellows, viscous petroleum and sulfur liquid bubbling through bronze pipes"
+          "prompt": "16:9 Byzantine engineer pressurizing a heavy bronze siphon cylinder with hand bellows, viscous petroleum and sulfur liquid bubbling through bronze pipes",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot07",
           "shot_type": "Greek Fire Eruption",
           "motion": "pull_out",
-          "prompt": "16:9 terrifying jet of liquid Greek Fire spewing from the bronze nozzle, roaring sheet of emerald-green and gold chemical flame illuminating the subterranean tunnel and burning upon dirt walls"
+          "prompt": "16:9 terrifying jet of liquid Greek Fire spewing from the bronze nozzle, roaring sheet of emerald-green and gold chemical flame illuminating the subterranean tunnel and burning upon dirt walls",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot08",
           "shot_type": "Tunnel Collapse",
           "motion": "pan_right",
-          "prompt": "16:9 burning timber props splintering and giving way under intense fire, tons of earth and stone crashing down into the subterranean shaft, suffocating the Ottoman mining operation"
+          "prompt": "16:9 burning timber props splintering and giving way under intense fire, tons of earth and stone crashing down into the subterranean shaft, suffocating the Ottoman mining operation",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot09",
           "shot_type": "Exhausted Hero",
           "motion": "push_in",
-          "prompt": "16:9 soot-covered Scottish engineer John Grant emerging from a stone cellar trapdoor onto the daylight ramparts, wiping sweat and blood from his forehead, breathing heavily"
+          "prompt": "16:9 soot-covered Scottish engineer John Grant emerging from a stone cellar trapdoor onto the daylight ramparts, wiping sweat and blood from his forehead, breathing heavily",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot10",
           "shot_type": "Famine & Scarcity",
           "motion": "pull_out",
-          "prompt": "16:9 grim interior of a Byzantine storehouse, empty grain bins and crying children clutching hollow crusts of bread, despair etched into gaunt sunken faces"
+          "prompt": "16:9 grim interior of a Byzantine storehouse, empty grain bins and crying children clutching hollow crusts of bread, despair etched into gaunt sunken faces",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
         },
         {
           "shot_id": "act05_shot11",
           "shot_type": "The Relentless Clock",
           "motion": "pan_left_up",
-          "prompt": "16:9 view of the battered land wall at mid-May twilight, smoke rising continuously from smoldering wooden palisades, the defensive line hanging by a thread"
+          "prompt": "16:9 view of the battered land wall at mid-May twilight, smoke rising continuously from smoldering wooden palisades, the defensive line hanging by a thread",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot12",
+          "shot_type": "Macro",
+          "motion": "pull_out",
+          "prompt": "16:9 macro close-up of Emperor Constantine XI's fallen golden double-headed eagle brooch resting in the pulverized stone mortar of the St. Romanus breach, dust settling under morning sunlight",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' \u2014 Michael Ducas",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD"
+        }
+      ],
+      "visual_shots": [
+        {
+          "shot_id": "act05_shot01",
+          "shot_type": "Night Reconstruction",
+          "motion": "push_in",
+          "prompt": "16:9 frantic nighttime scene at the breached walls, Byzantine civilians, priests, and women hauling wicker baskets of earth, timber logs, and gravel to rebuild palisades under fire",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot02",
+          "shot_type": "Subterranean Shaft",
+          "motion": "pan_right",
+          "prompt": "16:9 claustrophobic mining tunnel beneath the earth, Serbian sappers in loincloths chipping through limestone bedrock by the dim orange glow of tallow candles, wooden props supporting the ceiling",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot03",
+          "shot_type": "Acoustic Detection",
+          "motion": "pull_out",
+          "prompt": "16:9 Scottish mercenary engineer John Grant kneeling on the cellar floor inside the wall, staring intently at a polished copper bowl of water showing rhythmic circular vibration ripples",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot04",
+          "shot_type": "Counter-Mine Digging",
+          "motion": "push_in",
+          "prompt": "16:9 Byzantine counter-miners digging furiously into the dirt wall, pickaxes striking sparks, suddenly breaking through into an enemy subterranean shaft with a burst of air",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot05",
+          "shot_type": "Subterranean Combat",
+          "motion": "pan_left_up",
+          "prompt": "16:9 brutal hand-to-hand fight in the suffocating darkness of a narrow mining gallery, Byzantine soldiers and Ottoman miners clashing with picks, daggers, and wooden clubs",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot06",
+          "shot_type": "Greek Fire Preparation",
+          "motion": "push_in",
+          "prompt": "16:9 Byzantine engineer pressurizing a heavy bronze siphon cylinder with hand bellows, viscous petroleum and sulfur liquid bubbling through bronze pipes",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot07",
+          "shot_type": "Greek Fire Eruption",
+          "motion": "pull_out",
+          "prompt": "16:9 terrifying jet of liquid Greek Fire spewing from the bronze nozzle, roaring sheet of emerald-green and gold chemical flame illuminating the subterranean tunnel and burning upon dirt walls",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot08",
+          "shot_type": "Tunnel Collapse",
+          "motion": "pan_right",
+          "prompt": "16:9 burning timber props splintering and giving way under intense fire, tons of earth and stone crashing down into the subterranean shaft, suffocating the Ottoman mining operation",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot09",
+          "shot_type": "Exhausted Hero",
+          "motion": "push_in",
+          "prompt": "16:9 soot-covered Scottish engineer John Grant emerging from a stone cellar trapdoor onto the daylight ramparts, wiping sweat and blood from his forehead, breathing heavily",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot10",
+          "shot_type": "Famine & Scarcity",
+          "motion": "pull_out",
+          "prompt": "16:9 grim interior of a Byzantine storehouse, empty grain bins and crying children clutching hollow crusts of bread, despair etched into gaunt sunken faces",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot11",
+          "shot_type": "The Relentless Clock",
+          "motion": "pan_left_up",
+          "prompt": "16:9 view of the battered land wall at mid-May twilight, smoke rising continuously from smoldering wooden palisades, the defensive line hanging by a thread",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' Tearing off his royal purple boots and imperial robes so none might recognize him, he plunged into the breach with sword drawn."
+        },
+        {
+          "shot_id": "act05_shot12",
+          "shot_type": "Macro",
+          "motion": "pull_out",
+          "prompt": "16:9 macro close-up of Emperor Constantine XI's fallen golden double-headed eagle brooch resting in the pulverized stone mortar of the St. Romanus breach, dust settling under morning sunlight",
+          "primary_source_quote": "The Emperor shouted in anguish: 'The city is fallen, and I am still alive!' \u2014 Michael Ducas",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 5,
+          "act_title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+          "historical_date": "1453 AD"
         }
       ]
     },
@@ -557,67 +1513,223 @@
           "shot_id": "act06_shot01",
           "shot_type": "Candlelight Procession",
           "motion": "push_in",
-          "prompt": "16:9 solemn midnight procession on May 28 through the streets of Constantinople, Greek Orthodox priests and Latin Catholic bishops carrying sacred gold icons together in candlelight"
+          "prompt": "16:9 solemn midnight procession on May 28 through the streets of Constantinople, Greek Orthodox priests and Latin Catholic bishops carrying sacred gold icons together in candlelight",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot02",
           "shot_type": "Final Liturgy",
           "motion": "pull_out",
-          "prompt": "16:9 emotional panorama inside Hagia Sophia, thousands of citizens weeping and embracing, Emperor Constantine taking the holy communion in the great church for the final time"
+          "prompt": "16:9 emotional panorama inside Hagia Sophia, thousands of citizens weeping and embracing, Emperor Constantine taking the holy communion in the great church for the final time",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot03",
           "shot_type": "Midnight Assault",
           "motion": "push_in",
-          "prompt": "16:9 pitch-black night suddenly illuminated by hundreds of Ottoman siege flares and war torches, thousands of irregular bashi-bazouk fighters charging the shattered Lycus valley breach"
+          "prompt": "16:9 pitch-black night suddenly illuminated by hundreds of Ottoman siege flares and war torches, thousands of irregular bashi-bazouk fighters charging the shattered Lycus valley breach",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot04",
           "shot_type": "Desperate Defense",
           "motion": "pan_right",
-          "prompt": "16:9 ferocious combat on the earthwork barricades, Genoese and Byzantine soldiers thrusting spears and discharging crossbows down into the surging Ottoman assault waves"
+          "prompt": "16:9 ferocious combat on the earthwork barricades, Genoese and Byzantine soldiers thrusting spears and discharging crossbows down into the surging Ottoman assault waves",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot05",
           "shot_type": "Janissary Vanguard",
           "motion": "pull_out",
-          "prompt": "16:9 Sultan Mehmed II signaling his fresh elite Janissaries, ranks of towering soldiers advancing shoulder-to-shoulder with drawn curved kilij swords through the smoke"
+          "prompt": "16:9 Sultan Mehmed II signaling his fresh elite Janissaries, ranks of towering soldiers advancing shoulder-to-shoulder with drawn curved kilij swords through the smoke",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot06",
           "shot_type": "The Fatal Wound",
           "motion": "push_in",
-          "prompt": "16:9 tragic slow-motion moment as Genoese general Giovanni Giustiniani Longo is struck in the breastplate by an iron crossbow bolt, blood blooming on polished steel"
+          "prompt": "16:9 tragic slow-motion moment as Genoese general Giovanni Giustiniani Longo is struck in the breastplate by an iron crossbow bolt, blood blooming on polished steel",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot07",
           "shot_type": "Panic Spreads",
           "motion": "pan_left_up",
-          "prompt": "16:9 Giustiniani being carried toward the harbor by weeping Genoese retainers, defensive ranks wavering as Italian soldiers abandon the inner stockade in confusion"
+          "prompt": "16:9 Giustiniani being carried toward the harbor by weeping Genoese retainers, defensive ranks wavering as Italian soldiers abandon the inner stockade in confusion",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot08",
           "shot_type": "The Unlocked Postern",
           "motion": "push_in",
-          "prompt": "16:9 low-angle shot of the small sunken stone postern gate\u2014the Kerkoporta\u2014ajar in the northern wall, Ottoman skirmishers peeking through and realizing it is unlocked"
+          "prompt": "16:9 low-angle shot of the small sunken stone postern gate\u2014the Kerkoporta\u2014ajar in the northern wall, Ottoman skirmishers peeking through and realizing it is unlocked",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot09",
           "shot_type": "The Crescent Rises",
           "motion": "pull_out",
-          "prompt": "16:9 Ottoman soldiers swarming up the spiral stone stairs of the Kerkoporta tower, unfurling a red banner bearing the crescent moon over the high battlements"
+          "prompt": "16:9 Ottoman soldiers swarming up the spiral stone stairs of the Kerkoporta tower, unfurling a red banner bearing the crescent moon over the high battlements",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot10",
           "shot_type": "Emperor's Last Stand",
           "motion": "push_in",
-          "prompt": "16:9 iconic heroic shot of Emperor Constantine XI tearing off his gilded imperial insignia and purple cloak, drawing his double-edged spatha sword, and charging into the breach"
+          "prompt": "16:9 iconic heroic shot of Emperor Constantine XI tearing off his gilded imperial insignia and purple cloak, drawing his double-edged spatha sword, and charging into the breach",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act06_shot11",
           "shot_type": "The Fall of Rome",
           "motion": "pan_right",
-          "prompt": "16:9 sunrise breaking through thick black battlefield smoke over the breached walls of Constantinople, Ottoman forces flooding through the ruins, the Roman Empire fading into history"
+          "prompt": "16:9 sunrise breaking through thick black battlefield smoke over the breached walls of Constantinople, Ottoman forces flooding through the ruins, the Roman Empire fading into history",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        }
+      ],
+      "visual_shots": [
+        {
+          "shot_id": "act06_shot01",
+          "shot_type": "Candlelight Procession",
+          "motion": "push_in",
+          "prompt": "16:9 solemn midnight procession on May 28 through the streets of Constantinople, Greek Orthodox priests and Latin Catholic bishops carrying sacred gold icons together in candlelight",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot02",
+          "shot_type": "Final Liturgy",
+          "motion": "pull_out",
+          "prompt": "16:9 emotional panorama inside Hagia Sophia, thousands of citizens weeping and embracing, Emperor Constantine taking the holy communion in the great church for the final time",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot03",
+          "shot_type": "Midnight Assault",
+          "motion": "push_in",
+          "prompt": "16:9 pitch-black night suddenly illuminated by hundreds of Ottoman siege flares and war torches, thousands of irregular bashi-bazouk fighters charging the shattered Lycus valley breach",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot04",
+          "shot_type": "Desperate Defense",
+          "motion": "pan_right",
+          "prompt": "16:9 ferocious combat on the earthwork barricades, Genoese and Byzantine soldiers thrusting spears and discharging crossbows down into the surging Ottoman assault waves",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot05",
+          "shot_type": "Janissary Vanguard",
+          "motion": "pull_out",
+          "prompt": "16:9 Sultan Mehmed II signaling his fresh elite Janissaries, ranks of towering soldiers advancing shoulder-to-shoulder with drawn curved kilij swords through the smoke",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot06",
+          "shot_type": "The Fatal Wound",
+          "motion": "push_in",
+          "prompt": "16:9 tragic slow-motion moment as Genoese general Giovanni Giustiniani Longo is struck in the breastplate by an iron crossbow bolt, blood blooming on polished steel",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot07",
+          "shot_type": "Panic Spreads",
+          "motion": "pan_left_up",
+          "prompt": "16:9 Giustiniani being carried toward the harbor by weeping Genoese retainers, defensive ranks wavering as Italian soldiers abandon the inner stockade in confusion",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot08",
+          "shot_type": "The Unlocked Postern",
+          "motion": "push_in",
+          "prompt": "16:9 low-angle shot of the small sunken stone postern gate\u2014the Kerkoporta\u2014ajar in the northern wall, Ottoman skirmishers peeking through and realizing it is unlocked",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot09",
+          "shot_type": "The Crescent Rises",
+          "motion": "pull_out",
+          "prompt": "16:9 Ottoman soldiers swarming up the spiral stone stairs of the Kerkoporta tower, unfurling a red banner bearing the crescent moon over the high battlements",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot10",
+          "shot_type": "Emperor's Last Stand",
+          "motion": "push_in",
+          "prompt": "16:9 iconic heroic shot of Emperor Constantine XI tearing off his gilded imperial insignia and purple cloak, drawing his double-edged spatha sword, and charging into the breach",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act06_shot11",
+          "shot_type": "The Fall of Rome",
+          "motion": "pan_right",
+          "prompt": "16:9 sunrise breaking through thick black battlefield smoke over the breached walls of Constantinople, Ottoman forces flooding through the ruins, the Roman Empire fading into history",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 6,
+          "act_title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+          "historical_date": "1453 AD"
         }
       ]
     },
@@ -647,67 +1759,223 @@
           "shot_id": "act07_shot01",
           "shot_type": "The Conqueror's Entry",
           "motion": "push_in",
-          "prompt": "16:9 Sultan Mehmed the Conqueror riding a majestic white stallion through the Bronze Gate into the captured city of Constantinople, escort of viziers and Janissary honor guards"
+          "prompt": "16:9 Sultan Mehmed the Conqueror riding a majestic white stallion through the Bronze Gate into the captured city of Constantinople, escort of viziers and Janissary honor guards",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot02",
           "shot_type": "Sanctuary Preserved",
           "motion": "pull_out",
-          "prompt": "16:9 Mehmed II standing beneath the monumental dome of Hagia Sophia, bending down to touch marble dust to his turban in reverence, ordering the grand basilica preserved as an imperial mosque"
+          "prompt": "16:9 Mehmed II standing beneath the monumental dome of Hagia Sophia, bending down to touch marble dust to his turban in reverence, ordering the grand basilica preserved as an imperial mosque",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot03",
           "shot_type": "Exodus at Sea",
           "motion": "pan_right",
-          "prompt": "16:9 Italian merchant galleys sailing away from Constantinople into the Sea of Marmara at dusk, sails billowing, smoke rising on the distant horizon behind them"
+          "prompt": "16:9 Italian merchant galleys sailing away from Constantinople into the Sea of Marmara at dusk, sails billowing, smoke rising on the distant horizon behind them",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot04",
           "shot_type": "Rescued Knowledge",
           "motion": "push_in",
-          "prompt": "16:9 Greek scholars on the deck of a rolling wooden ship, carefully clutching leather-bound manuscript chests containing original ancient scrolls of Plato, Aristotle, and Euclid"
+          "prompt": "16:9 Greek scholars on the deck of a rolling wooden ship, carefully clutching leather-bound manuscript chests containing original ancient scrolls of Plato, Aristotle, and Euclid",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot05",
           "shot_type": "Arrival in Italy",
           "motion": "pull_out",
-          "prompt": "16:9 arrival of Byzantine scholars at the stone docks of Venice, Italian scholars in velvet cloaks eagerly greeting them, unloading wooden crates of Greek classical philosophy"
+          "prompt": "16:9 arrival of Byzantine scholars at the stone docks of Venice, Italian scholars in velvet cloaks eagerly greeting them, unloading wooden crates of Greek classical philosophy",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot06",
           "shot_type": "Florentine Academy",
           "motion": "pan_left_up",
-          "prompt": "16:9 interior of the Platonic Academy in Florence under warm candlelight, Italian humanist scholars and artists gathered around an open Greek codex, the spark of the Renaissance"
+          "prompt": "16:9 interior of the Platonic Academy in Florence under warm candlelight, Italian humanist scholars and artists gathered around an open Greek codex, the spark of the Renaissance",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot07",
           "shot_type": "Trade Route Severed",
           "motion": "push_in",
-          "prompt": "16:9 silhouette of an Ottoman customs outpost along the spice road trade route in Anatolia, European trade caravans turning back from high tariffs"
+          "prompt": "16:9 silhouette of an Ottoman customs outpost along the spice road trade route in Anatolia, European trade caravans turning back from high tariffs",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot08",
           "shot_type": "The Call to the Sea",
           "motion": "pull_out",
-          "prompt": "16:9 Portuguese and Spanish navigators in Lisbon studying navigational charts and astrolabes by lanterns, looking westward toward the vast unexplored Atlantic Ocean"
+          "prompt": "16:9 Portuguese and Spanish navigators in Lisbon studying navigational charts and astrolabes by lanterns, looking westward toward the vast unexplored Atlantic Ocean",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot09",
           "shot_type": "Caravels at Dawn",
           "motion": "pan_right",
-          "prompt": "16:9 three 15th-century caravels with cross-marked sails setting voyage across golden morning ocean waves, embarking on the Age of Discovery"
+          "prompt": "16:9 three 15th-century caravels with cross-marked sails setting voyage across golden morning ocean waves, embarking on the Age of Discovery",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot10",
           "shot_type": "Ancient to Modern",
           "motion": "push_in",
-          "prompt": "16:9 evocative split-screen composition: left shows the ancient weathered stone ruins of Constantinople's walls; right shows the bustling dome of the Florence Cathedral under a golden sky"
+          "prompt": "16:9 evocative split-screen composition: left shows the ancient weathered stone ruins of Constantinople's walls; right shows the bustling dome of the Florence Cathedral under a golden sky",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         },
         {
           "shot_id": "act07_shot11",
           "shot_type": "Monumental Finale",
           "motion": "pull_out",
-          "prompt": "16:9 cinematic closing aerial view of Istanbul and the Bosporus at sunset, minarets and ancient domes silhouetted against a crimson sky, where the ancient world ended and the modern world began"
+          "prompt": "16:9 cinematic closing aerial view of Istanbul and the Bosporus at sunset, minarets and ancient domes silhouetted against a crimson sky, where the ancient world ended and the modern world began",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        }
+      ],
+      "visual_shots": [
+        {
+          "shot_id": "act07_shot01",
+          "shot_type": "The Conqueror's Entry",
+          "motion": "push_in",
+          "prompt": "16:9 Sultan Mehmed the Conqueror riding a majestic white stallion through the Bronze Gate into the captured city of Constantinople, escort of viziers and Janissary honor guards",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot02",
+          "shot_type": "Sanctuary Preserved",
+          "motion": "pull_out",
+          "prompt": "16:9 Mehmed II standing beneath the monumental dome of Hagia Sophia, bending down to touch marble dust to his turban in reverence, ordering the grand basilica preserved as an imperial mosque",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot03",
+          "shot_type": "Exodus at Sea",
+          "motion": "pan_right",
+          "prompt": "16:9 Italian merchant galleys sailing away from Constantinople into the Sea of Marmara at dusk, sails billowing, smoke rising on the distant horizon behind them",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot04",
+          "shot_type": "Rescued Knowledge",
+          "motion": "push_in",
+          "prompt": "16:9 Greek scholars on the deck of a rolling wooden ship, carefully clutching leather-bound manuscript chests containing original ancient scrolls of Plato, Aristotle, and Euclid",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot05",
+          "shot_type": "Arrival in Italy",
+          "motion": "pull_out",
+          "prompt": "16:9 arrival of Byzantine scholars at the stone docks of Venice, Italian scholars in velvet cloaks eagerly greeting them, unloading wooden crates of Greek classical philosophy",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot06",
+          "shot_type": "Florentine Academy",
+          "motion": "pan_left_up",
+          "prompt": "16:9 interior of the Platonic Academy in Florence under warm candlelight, Italian humanist scholars and artists gathered around an open Greek codex, the spark of the Renaissance",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot07",
+          "shot_type": "Trade Route Severed",
+          "motion": "push_in",
+          "prompt": "16:9 silhouette of an Ottoman customs outpost along the spice road trade route in Anatolia, European trade caravans turning back from high tariffs",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot08",
+          "shot_type": "The Call to the Sea",
+          "motion": "pull_out",
+          "prompt": "16:9 Portuguese and Spanish navigators in Lisbon studying navigational charts and astrolabes by lanterns, looking westward toward the vast unexplored Atlantic Ocean",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot09",
+          "shot_type": "Caravels at Dawn",
+          "motion": "pan_right",
+          "prompt": "16:9 three 15th-century caravels with cross-marked sails setting voyage across golden morning ocean waves, embarking on the Age of Discovery",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot10",
+          "shot_type": "Ancient to Modern",
+          "motion": "push_in",
+          "prompt": "16:9 evocative split-screen composition: left shows the ancient weathered stone ruins of Constantinople's walls; right shows the bustling dome of the Florence Cathedral under a golden sky",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
+        },
+        {
+          "shot_id": "act07_shot11",
+          "shot_type": "Monumental Finale",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic closing aerial view of Istanbul and the Bosporus at sunset, minarets and ancient domes silhouetted against a crimson sky, where the ancient world ended and the modern world began",
+          "negative_prompt": "text, letters, typography, watermark, signature, gibberish text, poster text, signage, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs",
+          "act_number": 7,
+          "act_title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+          "historical_date": "1453 AD"
         }
       ]
     }

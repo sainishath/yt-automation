@@ -211,15 +211,29 @@ def split_master_into_shorts(
             idx += 1
             
     results = []
-    for act in acts:
-        act_idx = act.get("act_index", 1)
-        start = float(act.get("start_sec", 0.0))
-        dur = float(act.get("duration_sec", 42.0))
+    target_acts = acts[:5] if len(acts) >= 5 else acts
+    for act in target_acts:
+        act_idx = act.get("act_index") or act.get("act_number", 1)
+        start = float(act.get("start_sec") if "start_sec" in act else act.get("est_start_sec", 0.0))
+        if "duration_sec" in act:
+            dur = float(act["duration_sec"])
+        elif "est_end_sec" in act:
+            dur = min(45.0, max(30.0, float(act["est_end_sec"]) - start))
+        else:
+            dur = 42.0
+
         act_title = act.get("title", f"Act_{act_idx}")
-        hook = act.get("hook", f"The bizarre turning point of {longform_title}")
+        hook = act.get("hook")
+        if not hook and "script" in act:
+            first_sentence = act["script"].split(".")[0].strip()
+            hook = f"{first_sentence}."
+        if not hook:
+            hook = f"The bizarre turning point of {longform_title}"
         
         short_file = out_base / f"short_{act_idx:02d}_{start:.0f}s.mp4"
         meta_file = out_base / f"short_{act_idx:02d}_metadata.json"
+        ass_file = out_base / f"short_{act_idx:02d}_subtitles.ass"
+        generate_safe_short_ass(hook, dur, ass_file)
         
         try:
             rendered_short = extract_act_slice(
@@ -227,6 +241,7 @@ def split_master_into_shorts(
                 start_sec=start,
                 duration_sec=dur,
                 output_path=short_file,
+                ass_subtitles_path=ass_file,
             )
             meta = generate_short_metadata(
                 topic=longform_title,
