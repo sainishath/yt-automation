@@ -30,7 +30,7 @@ import json
 import subprocess
 from pathlib import Path
 
-ROOT = Path("d:/Projects/yt-automations").resolve()
+ROOT = Path(__file__).resolve().parent
 P1_DIR = ROOT / "alternate-history-shorts"
 P2_DIR = ROOT / "convo-shorts" / "yt-automation-engine"
 

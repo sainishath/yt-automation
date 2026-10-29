@@ -19,7 +19,7 @@ from typing import List, Dict, Any, Optional
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-ROOT_DIR = Path("D:/Projects/yt-automations")
+ROOT_DIR = Path(__file__).resolve().parent.parent
 DRAFTS_DIR = ROOT_DIR / "longform_engine" / "drafts"
 QDRANT_URL = os.getenv("QDRANT_URL", "http://127.0.0.1:6333")
 

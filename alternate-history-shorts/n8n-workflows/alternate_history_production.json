@@ -139,7 +139,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://discord.com/api/webhooks/1528622690980724807/0LU5dDQwTA3bd2nbnx4DIUix_DJq3tYH0KykuMYqu67XVWupfrS_7KB5hK5uZWdUkQv0",
+        "url": "={{$env.DISCORD_WEBHOOK_URL_P1}}",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"content\": \"✅ **[ALTERNATE HISTORY APPROVED & PUBLISHED]**\\n**Title:** {{ $('Generate & QA Alternate History Video').item.json.title }}\\n**Watch on YouTube:** {{ $json.url || $json.youtube_id }}\\n**Status:** {{ $json.upload_status }}\"\n}",
@@ -157,7 +157,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://discord.com/api/webhooks/1528622690980724807/0LU5dDQwTA3bd2nbnx4DIUix_DJq3tYH0KykuMYqu67XVWupfrS_7KB5hK5uZWdUkQv0",
+        "url": "={{$env.DISCORD_WEBHOOK_URL_P1}}",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"content\": \"❌ **[ALTERNATE HISTORY REJECTED]**\\nVideo was rejected for topic: **{{ $('Parse Topic & Metadata').item.json.topic }}**\\nExecution stopped. No video was published.\"\n}",

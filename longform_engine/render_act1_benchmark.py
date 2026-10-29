@@ -17,7 +17,7 @@ import time
 import subprocess
 from pathlib import Path
 
-ROOT_DIR = Path("D:/Projects/yt-automations")
+ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
 from longform_engine.assemble_longform import (

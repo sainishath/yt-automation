@@ -59,13 +59,20 @@ def generate_alternate_history():
                 pass
 
         # Post for Discord Review Approval
-        discord_webhook_url = "https://discord.com/api/webhooks/1528622690980724807/0LU5dDQwTA3bd2nbnx4DIUix_DJq3tYH0KykuMYqu67XVWupfrS_7KB5hK5uZWdUkQv0"
-        try:
-            from discord_review import post_for_review
-            post_for_review("alternate-history", video_id, [str(final_mp4)], "video", discord_webhook_url)
-            logger.info(f"[ALT-HISTORY] Posted video review for {video_id} to Discord webhook")
-        except Exception as de:
-            logger.warning(f"[ALT-HISTORY] Discord review posting failed: {de}")
+        discord_webhook_url = (
+            os.getenv("DISCORD_WEBHOOK_URL_P1")
+            or os.getenv("DISCORD_REVIEW_WEBHOOK_URL")
+            or os.getenv("DISCORD_WEBHOOK_URL", "")
+        )
+        if discord_webhook_url:
+            try:
+                from discord_review import post_for_review
+                post_for_review("alternate-history", video_id, [str(final_mp4)], "video", discord_webhook_url)
+                logger.info(f"[ALT-HISTORY] Posted video review for {video_id} to Discord webhook")
+            except Exception as de:
+                logger.warning(f"[ALT-HISTORY] Discord review posting failed: {de}")
+        else:
+            logger.warning("[ALT-HISTORY] DISCORD_WEBHOOK_URL_P1 not set; skipping Discord review post.")
             
         return jsonify({
           "status": "success",
