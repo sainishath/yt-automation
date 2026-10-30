@@ -29,10 +29,12 @@ if %ERRORLEVEL% equ 0 (
     echo       [OK] Fooocus SDXL is ONLINE on http://127.0.0.1:7865.
 ) else (
     echo       [STARTING] Launching Fooocus SDXL server with dedicated environment...
-    if exist "D:\AI-Tools\Fooocus\fooocus_env\Scripts\python.exe" (
+    if exist "D:\Projects\Fooocus\python_embeded\python.exe" (
+        start "Fooocus SDXL" /d "D:\Projects\Fooocus" cmd /k "set PYTHONIOENCODING=utf-8 && D:\Projects\Fooocus\python_embeded\python.exe D:\Projects\Fooocus\Fooocus\launch.py --listen 127.0.0.1 --port 7865 --always-offload-from-vram"
+    ) else if exist "D:\AI-Tools\Fooocus\fooocus_env\Scripts\python.exe" (
         start "Fooocus SDXL" /d "D:\AI-Tools\Fooocus" cmd /k "set PYTHONIOENCODING=utf-8 && D:\AI-Tools\Fooocus\fooocus_env\Scripts\python.exe launch.py --listen 127.0.0.1 --port 7865 --always-offload-from-vram"
     ) else (
-        start "Fooocus SDXL" /d "D:\AI-Tools\Fooocus" cmd /k "set PYTHONIOENCODING=utf-8 && python launch.py --listen 127.0.0.1 --port 7865 --always-offload-from-vram"
+        start "Fooocus SDXL" /d "D:\Projects\Fooocus" cmd /k "set PYTHONIOENCODING=utf-8 && python launch.py --listen 127.0.0.1 --port 7865 --always-offload-from-vram"
     )
     echo       Waiting for Fooocus SDXL to initialize...
     timeout /t 10 >nul
@@ -49,7 +51,9 @@ if %ERRORLEVEL% equ 0 (
 
 :: 5. Verify GPU & Environment Readiness
 echo [4/4] Checking CUDA Acceleration & PyTorch (Fooocus SDXL Engine)...
-if exist "D:\AI-Tools\Fooocus\fooocus_env\Scripts\python.exe" (
+if exist "D:\Projects\Fooocus\python_embeded\python.exe" (
+    "D:\Projects\Fooocus\python_embeded\python.exe" -c "import torch; print('      [OK] PyTorch:', torch.__version__, '| CUDA Device:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU (WARNING)')"
+) else if exist "D:\AI-Tools\Fooocus\fooocus_env\Scripts\python.exe" (
     "D:\AI-Tools\Fooocus\fooocus_env\Scripts\python.exe" -c "import torch; print('      [OK] PyTorch:', torch.__version__, '| CUDA Device:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU (WARNING)')"
 ) else (
     python -c "import torch; print('      [OK] PyTorch:', torch.__version__, '| CUDA Device:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU (WARNING)')"

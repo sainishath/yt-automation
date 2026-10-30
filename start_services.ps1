@@ -14,21 +14,33 @@ if (-not $ollamaRunning) {
 }
 
 # 2. Start Fooocus SDXL (Port 7865)
-$fooocusDir = "D:\AI-Tools\Fooocus"
-if (Test-Path $fooocusDir) {
+$fooocusDir = $null
+if (Test-Path "D:\Projects\Fooocus") {
+    $fooocusDir = "D:\Projects\Fooocus"
+} elseif (Test-Path "D:\AI-Tools\Fooocus") {
+    $fooocusDir = "D:\AI-Tools\Fooocus"
+}
+
+if ($fooocusDir) {
     $fooocusPort = 7865
     $portActive = Get-NetTCPConnection -LocalPort $fooocusPort -State Listen -ErrorAction SilentlyContinue
     if (-not $portActive) {
         Write-Host "[2/2] Launching Fooocus SDXL (VRAM offload enabled)..." -ForegroundColor Yellow
-        $pythonExe = Join-Path $fooocusDir "fooocus_env\Scripts\python.exe"
-        $launchPy = Join-Path $fooocusDir "launch.py"
+        $pythonExe = Join-Path $fooocusDir "python_embeded\python.exe"
+        if (-not (Test-Path $pythonExe)) {
+            $pythonExe = Join-Path $fooocusDir "fooocus_env\Scripts\python.exe"
+        }
+        $launchPy = Join-Path $fooocusDir "Fooocus\launch.py"
+        if (-not (Test-Path $launchPy)) {
+            $launchPy = Join-Path $fooocusDir "launch.py"
+        }
         Start-Process -FilePath $pythonExe -ArgumentList "$launchPy --listen 127.0.0.1 --port $fooocusPort --disable-in-browser --always-offload-from-vram" -WorkingDirectory $fooocusDir
         Write-Host "Fooocus launching in background on http://127.0.0.1:7865" -ForegroundColor Green
     } else {
         Write-Host "[2/2] Fooocus SDXL is already listening on port 7865." -ForegroundColor Green
     }
 } else {
-    Write-Host "[2/2] Fooocus directory not found at $fooocusDir" -ForegroundColor Red
+    Write-Host "[2/2] Fooocus directory not found at D:\Projects\Fooocus or D:\AI-Tools\Fooocus" -ForegroundColor Red
 }
 
 Write-Host "Infrastructure check complete!" -ForegroundColor Cyan
