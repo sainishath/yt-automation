@@ -1,0 +1,1198 @@
+{
+  "channel": "Chronos Shift (@ChronosShiftHistory)",
+  "video_title": "The Corpse That Fooled Hitler: Operation Mincemeat (1943)",
+  "event_slug": "operation_mincemeat_1943",
+  "mode": "factual",
+  "aspect_ratio": "16:9",
+  "target_runtime_seconds": 685.0,
+  "total_word_count": 1288,
+  "target_wpm": 145,
+  "total_visual_shots": 80,
+  "average_shot_duration_sec": 8.56,
+  "acts": [
+    {
+      "act_number": 1,
+      "title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+      "est_start_sec": 0.0,
+      "est_end_sec": 95.0,
+      "rag_query": "Operation Mincemeat April 30 1943 Huelva Spain Jose Antonio Rey Maria Major William Martin",
+      "script": "At seven-thirty in the morning on April thirtieth, 1943, a Spanish sardine fisherman named Jose Antonio Rey Maria spotted a waterlogged bundle bobbing in the Atlantic surf off the beach of Punta Umbria, near Huelva in southern Spain. When coastal authorities hauled the body ashore, they found a dead British Royal Marines officer wearing a battle-dress uniform and a deflated yellow Mae West life jacket. His identity card read Captain, Acting Major, William Martin, number zero-nine-five-eight-four. Chained to his leather belt by a steel courier strap was a black leather official briefcase embossed with the Royal cipher of King George the Sixth. Within days, German military intelligence agents in Spain photographed the top-secret invasion letters inside that briefcase and rushed them directly to Adolf Hitler's Wolf's Lair headquarters. Hitler immediately pulled whole Panzer divisions away from Sicily and sent them to Greece. There was only one problem: Major William Martin never existed. The body on the beach was a penniless thirty-four-year-old Welsh labourer who had died in a London warehouse three months earlier.",
+      "historical_grounding": {
+        "era": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+        "key_figures": [
+          "José Antonio Rey María",
+          "Major William Martin (Glyndwr Michael)"
+        ],
+        "defensive_specs": "Royal Marines uniform, ID card No. 09584, chained leather courier briefcase",
+        "primary_source": "British National Archives (Kew) WO 208/3262 & Ewen Montagu Official Report",
+        "primary_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+      },
+      "visual_prompts": [
+        "16:9 moody cinematic dawn wide shot of a foggy Atlantic beach at Huelva Spain in 1943, a small wooden fishing boat approaching a figure floating in the surf, 8k, historical accuracy",
+        "16:9 extreme close-up macro shot of a wet black leather official courier briefcase chained by a steel security strap to a British Royal Marines officer trench coat belt in wet sand, 8k",
+        "16:9 archival callout of Major William Martin's forged Naval Identity Card No. 09584 and MI5 declassified dossier WO 208/3262"
+      ],
+      "shots": [
+        {
+          "shot_id": "act01_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 moody cinematic dawn wide shot of a foggy Atlantic beach at Huelva Spain in 1943, a small wooden fishing boat approaching a figure floating in the surf, 8k, historical accuracy",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot02",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 extreme close-up macro shot of a wet black leather official courier briefcase chained by a steel security strap to a British Royal Marines officer trench coat belt in wet sand, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot03",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "prompt": "16:9 archival callout of Major William Martin's forged Naval Identity Card No. 09584 and MI5 declassified dossier WO 208/3262",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot04",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 wartime strategic map of the Western Mediterranean in Spring 1943 showing North Africa, Sicily, Sardinia, Greece, and Huelva on the southern coast of Spain",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 moody cinematic dawn wide shot of a foggy Atlantic beach at Huelva Spain in 1943, a small wooden fishing boat approaching a figure floating in the surf, 8k, historical accuracy, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot06",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 extreme close-up macro shot of a wet black leather official courier briefcase chained by a steel security strap to a British Royal Marines officer trench coat belt in wet sand, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot07",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "prompt": "16:9 archival callout of Major William Martin's forged Naval Identity Card No. 09584 and MI5 declassified dossier WO 208/3262, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot08",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 wartime strategic map of the Western Mediterranean in Spring 1943 showing North Africa, Sicily, Sardinia, Greece, and Huelva on the southern coast of Spain, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 moody cinematic dawn wide shot of a foggy Atlantic beach at Huelva Spain in 1943, a small wooden fishing boat approaching a figure floating in the surf, 8k, historical accuracy, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot10",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 extreme close-up macro shot of a wet black leather official courier briefcase chained by a steel security strap to a British Royal Marines officer trench coat belt in wet sand, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot11",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "prompt": "16:9 archival callout of Major William Martin's forged Naval Identity Card No. 09584 and MI5 declassified dossier WO 208/3262, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        },
+        {
+          "shot_id": "act01_shot12",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 wartime strategic map of the Western Mediterranean in Spring 1943 showing North Africa, Sicily, Sardinia, Greece, and Huelva on the southern coast of Spain, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 1,
+          "act_title": "Cold Open: The Dead Fisherman on the Beach at Huelva",
+          "historical_date": "April 30, 1943 (Punta Umbria, Huelva, Spain)",
+          "primary_source_quote": "At 0730 hours on 30 April 1943, the body of a British Royal Marines officer was recovered off the coast of Huelva."
+        }
+      ]
+    },
+    {
+      "act_number": 2,
+      "title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+      "est_start_sec": 95.0,
+      "est_end_sec": 195.0,
+      "rag_query": "Operation Husky Sicily 1943 Churchill everyone but an idiot knows it is Sicily Trout Memo Room 13",
+      "script": "By January 1943, Allied armies had cornered Axis forces in North Africa. Every military commander in Europe knew the next step had to be an amphibious invasion across the Mediterranean. Look at the map: the island of Sicily sits just ninety miles off the tip of Tunisia. As Winston Churchill famously remarked, everyone but an idiot knew that the next target was Sicily. If the German High Command fortified Sicily's beaches with Panzer divisions and Luftwaffe squadrons, the planned Allied invasion—Operation Husky—would turn into a slaughterhouse costing tens of thousands of lives. Inside a windowless basement beneath the Admiralty in Whitehall called Room Thirteen, two brilliant intelligence officers—Lieutenant Commander Ewen Montagu of Naval Intelligence and Flight Lieutenant Charles Cholmondeley of MI5—dusted off an audacious idea from the 1939 Trout Memo, co-written in Rear Admiral John Godfrey's office with his assistant Ian Fleming, the future creator of James Bond: plant false top-secret war plans on a dead body and float it onto a coastline crawling with Nazi spies.",
+      "historical_grounding": {
+        "era": "January–February 1943 (Room 13, Whitehall, London)",
+        "key_figures": [
+          "Lt. Cmdr. Ewen Montagu",
+          "Flt. Lt. Charles Cholmondeley",
+          "Winston Churchill",
+          "Ian Fleming"
+        ],
+        "defensive_specs": "Operation Husky: 160,000 Allied troops scheduled to land on Sicily on July 10, 1943",
+        "primary_source": "The Trout Memo (1939, Item 28) & Montagu, The Man Who Never Was (1953)",
+        "primary_quote": "Anybody but a damn fool would know it is Sicily."
+      },
+      "visual_prompts": [
+        "16:9 wartime map of the Mediterranean showing the 90-mile strait between Tunisia and Sicily versus the deception targets of Greece and Sardinia",
+        "16:9 atmospheric medium shot of two British intelligence officers in 1943 Naval and RAF uniforms examining maps and files under a green banker's lamp in a smoky underground Whitehall bunker, 8k",
+        "16:9 archival document callout of the 1939 Trout Memo Item 28 describing planting false papers on a body with a parachute or plane crash"
+      ],
+      "shots": [
+        {
+          "shot_id": "act02_shot01",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 wartime map of the Mediterranean showing the 90-mile strait between Tunisia and Sicily versus the deception targets of Greece and Sardinia",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot02",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 atmospheric medium shot of two British intelligence officers in 1943 Naval and RAF uniforms examining maps and files under a green banker's lamp in a smoky underground Whitehall bunker, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot03",
+          "shot_type": "Primary Source",
+          "motion": "pan_left_up",
+          "prompt": "16:9 archival document callout of the 1939 Trout Memo Item 28 describing planting false papers on a body with a parachute or plane crash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot04",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 cinematic wide shot of London's Whitehall Admiralty building during the 1943 wartime blackout, searchlights sweeping the night clouds, vintage cars with hooded headlights, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot05",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 wartime map of the Mediterranean showing the 90-mile strait between Tunisia and Sicily versus the deception targets of Greece and Sardinia, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot06",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 atmospheric medium shot of two British intelligence officers in 1943 Naval and RAF uniforms examining maps and files under a green banker's lamp in a smoky underground Whitehall bunker, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot07",
+          "shot_type": "Primary Source",
+          "motion": "pan_left_up",
+          "prompt": "16:9 archival document callout of the 1939 Trout Memo Item 28 describing planting false papers on a body with a parachute or plane crash, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot08",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 cinematic wide shot of London's Whitehall Admiralty building during the 1943 wartime blackout, searchlights sweeping the night clouds, vintage cars with hooded headlights, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot09",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 wartime map of the Mediterranean showing the 90-mile strait between Tunisia and Sicily versus the deception targets of Greece and Sardinia, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot10",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 atmospheric medium shot of two British intelligence officers in 1943 Naval and RAF uniforms examining maps and files under a green banker's lamp in a smoky underground Whitehall bunker, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot11",
+          "shot_type": "Primary Source",
+          "motion": "pan_left_up",
+          "prompt": "16:9 archival document callout of the 1939 Trout Memo Item 28 describing planting false papers on a body with a parachute or plane crash, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        },
+        {
+          "shot_id": "act02_shot12",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 cinematic wide shot of London's Whitehall Admiralty building during the 1943 wartime blackout, searchlights sweeping the night clouds, vintage cars with hooded headlights, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 2,
+          "act_title": "The Sicilian Dilemma and the Trout Memo in Room 13",
+          "historical_date": "January–February 1943 (Room 13, Whitehall, London)",
+          "primary_source_quote": "Anybody but a damn fool would know it is Sicily."
+        }
+      ]
+    },
+    {
+      "act_number": 3,
+      "title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+      "est_start_sec": 195.0,
+      "est_end_sec": 295.0,
+      "rag_query": "Glyndwr Michael rat poison phosphorus Bernard Spilsbury drowning pathology Hackneys mortuary",
+      "script": "Finding a corpse in wartime London sounded easy. It was nearly impossible. Any missing soldier had family who would talk, and if a Spanish pathologist performed an autopsy, the lungs had to look like a man who had drowned at sea after an airplane crash. Montagu and Cholmondeley consulted Britain's legendary forensic pathologist, Sir Bernard Spilsbury. Spilsbury told them that if a person died with fluid already in their lungs from pneumonia or chemical poisoning, a coastal Spanish doctor—especially a devout Roman Catholic reluctant to dissect a decorated Allied officer—would attribute the fluid to drowning at sea. In late January 1943, St Pancras Coroner Bentley Purchase quietly called Montagu. A thirty-four-year-old homeless Welshman named Glyndwr Michael, with no living parents or relatives, had died at St Pancras Hospital after ingesting rat poison containing phosphorus smeared on bread crusts. Spilsbury confirmed his lungs were filled with fluid that would perfectly mimic sea drowning. His body was placed in a cold-storage vault at Hackney Mortuary at thirty-nine degrees Fahrenheit while MI5 built him a brand-new life.",
+      "historical_grounding": {
+        "era": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+        "key_figures": [
+          "Glyndwr Michael (1909–1943)",
+          "Sir Bernard Spilsbury",
+          "Coroner Bentley Purchase"
+        ],
+        "defensive_specs": "Cold storage at 4C (39F) to prevent tissue ice crystals while halting decomposition",
+        "primary_source": "MI5 Case File KV 4/232 & Bentley Purchase Coroner Records",
+        "primary_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+      },
+      "visual_prompts": [
+        "16:9 somber cinematic shot of a 1940s British forensic pathologist in a dark coat and spectacles inspecting medical notes inside a dimly lit Victorian London mortuary corridor, 8k",
+        "16:9 close-up shot of a Royal Marines officer khaki battle-dress tunic being carefully fitted with Major rank insignia crowns and combined operations patches on a wooden table, 8k",
+        "16:9 archival MI5 memorandum confirming the identity of Glyndwr Michael of Aberbargoed Wales as the body behind Major William Martin"
+      ],
+      "shots": [
+        {
+          "shot_id": "act03_shot01",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 somber cinematic shot of a 1940s British forensic pathologist in a dark coat and spectacles inspecting medical notes inside a dimly lit Victorian London mortuary corridor, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot02",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 close-up shot of a Royal Marines officer khaki battle-dress tunic being carefully fitted with Major rank insignia crowns and combined operations patches on a wooden table, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot03",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival MI5 memorandum confirming the identity of Glyndwr Michael of Aberbargoed Wales as the body behind Major William Martin",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot04",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "prompt": "16:9 atmospheric night shot of fog-shrouded St Pancras streets in 1943 London, wet cobblestones reflecting dim gaslight, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot05",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 somber cinematic shot of a 1940s British forensic pathologist in a dark coat and spectacles inspecting medical notes inside a dimly lit Victorian London mortuary corridor, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot06",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 close-up shot of a Royal Marines officer khaki battle-dress tunic being carefully fitted with Major rank insignia crowns and combined operations patches on a wooden table, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot07",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival MI5 memorandum confirming the identity of Glyndwr Michael of Aberbargoed Wales as the body behind Major William Martin, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot08",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "prompt": "16:9 atmospheric night shot of fog-shrouded St Pancras streets in 1943 London, wet cobblestones reflecting dim gaslight, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot09",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 somber cinematic shot of a 1940s British forensic pathologist in a dark coat and spectacles inspecting medical notes inside a dimly lit Victorian London mortuary corridor, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot10",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 close-up shot of a Royal Marines officer khaki battle-dress tunic being carefully fitted with Major rank insignia crowns and combined operations patches on a wooden table, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        },
+        {
+          "shot_id": "act03_shot11",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival MI5 memorandum confirming the identity of Glyndwr Michael of Aberbargoed Wales as the body behind Major William Martin, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 3,
+          "act_title": "Glyndwr Michael and the Forensics of Sir Bernard Spilsbury",
+          "historical_date": "January 28 – March 1943 (St Pancras & Hackney Mortuary, London)",
+          "primary_source_quote": "There is fluid in the lungs which no Spanish doctor will distinguish from drowning after several days in the sea."
+        }
+      ]
+    },
+    {
+      "act_number": 4,
+      "title": "Pocket Litter and the Forged Invasion Letter",
+      "est_start_sec": 295.0,
+      "est_end_sec": 400.0,
+      "rag_query": "Archibald Nye letter to Alexander Operation Husky cover target Greece Sardinia Pam love letters",
+      "script": "German Abwehr intelligence was ruthless. If Major William Martin's pockets contained only military papers, they would smell a trap immediately. So Montagu and Cholmondeley created the most intricate legend in espionage history—what spies call pocket litter. Because you cannot photograph a corpse and make him look alive, Montagu found a living lookalike in MI5 named Captain Ronnie Reed to pose for Identity Card zero-nine-five-eight-four, rubbing the card on his trousers for weeks to give it authentic pocket wear. Into Martin's pockets went two passionate love letters from a fictional fiancée named Pam—actually MI5 secretary Jean Leslie, who even contributed a snapshot of herself in a bathing suit—along with a bill for a fifty-three-pound diamond engagement ring from a Bond Street jeweler, an angry overdraft warning from Lloyds Bank, and two ticket stubs from the Prince of Wales Theatre dated April twenty-second. And inside the chained briefcase sat the crown jewel: a personal, top-secret letter from General Sir Archibald Nye, Vice-Chief of the Imperial General Staff, to General Sir Harold Alexander in Tunisia. It casually revealed that Sicily was merely a fake cover story for the real Allied double-invasion: Greece under Operation Husky, and Sardinia under Operation Brimstone.",
+      "historical_grounding": {
+        "era": "March–April 1943",
+        "key_figures": [
+          "General Sir Archibald Nye",
+          "General Sir Harold Alexander",
+          "Jean Leslie ('Pam')"
+        ],
+        "defensive_specs": "Personal Vice-Chief to Commander-in-Chief letter bypassing official signals to explain 'cover target'",
+        "primary_source": "Archibald Nye Deception Letter (Dated April 23, 1943, National Archives CAB 154/61)",
+        "primary_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+      },
+      "visual_prompts": [
+        "16:9 overhead macro flat-lay shot of Major William Martin's wallet contents on a wooden desk: Naval ID card, black-and-white photo of a 1940s woman, theatre ticket stubs, jeweler receipt, keys, and silver coins, 8k",
+        "16:9 archival document callout of General Sir Archibald Nye's personal letter to General Alexander with a real black eyelash trapped inside the wax envelope seal",
+        "16:9 medium shot of an MI5 officer sealing an official War Office envelope with red sealing wax and slowly tucking a single tiny dark eyelash under the flap for tamper detection, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act04_shot01",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 overhead macro flat-lay shot of Major William Martin's wallet contents on a wooden desk: Naval ID card, black-and-white photo of a 1940s woman, theatre ticket stubs, jeweler receipt, keys, and silver coins, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot02",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival document callout of General Sir Archibald Nye's personal letter to General Alexander with a real black eyelash trapped inside the wax envelope seal",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot03",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 medium shot of an MI5 officer sealing an official War Office envelope with red sealing wax and slowly tucking a single tiny dark eyelash under the flap for tamper detection, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot04",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 strategic deception map contrasting the fake Allied landing arrows pointing at Kalamata (Greece) and Sardinia against the true target of Sicily",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot05",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 overhead macro flat-lay shot of Major William Martin's wallet contents on a wooden desk: Naval ID card, black-and-white photo of a 1940s woman, theatre ticket stubs, jeweler receipt, keys, and silver coins, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot06",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival document callout of General Sir Archibald Nye's personal letter to General Alexander with a real black eyelash trapped inside the wax envelope seal, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot07",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 medium shot of an MI5 officer sealing an official War Office envelope with red sealing wax and slowly tucking a single tiny dark eyelash under the flap for tamper detection, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot08",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 strategic deception map contrasting the fake Allied landing arrows pointing at Kalamata (Greece) and Sardinia against the true target of Sicily, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot09",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 overhead macro flat-lay shot of Major William Martin's wallet contents on a wooden desk: Naval ID card, black-and-white photo of a 1940s woman, theatre ticket stubs, jeweler receipt, keys, and silver coins, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot10",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival document callout of General Sir Archibald Nye's personal letter to General Alexander with a real black eyelash trapped inside the wax envelope seal, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        },
+        {
+          "shot_id": "act04_shot11",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 medium shot of an MI5 officer sealing an official War Office envelope with red sealing wax and slowly tucking a single tiny dark eyelash under the flap for tamper detection, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 4,
+          "act_title": "Pocket Litter and the Forged Invasion Letter",
+          "historical_date": "March–April 1943",
+          "primary_source_quote": "We have a good chance of making them think we will go for Sicily—it is an obvious objective and one about which they must be nervous."
+        }
+      ]
+    },
+    {
+      "act_number": 5,
+      "title": "HMS Seraph and the Midnight Canister Drop off Spain",
+      "est_start_sec": 400.0,
+      "est_end_sec": 495.0,
+      "rag_query": "HMS Seraph Lieutenant Bill Jewell Holy Loch canister dry ice April 30 1943 Huelva",
+      "script": "On April seventeenth, 1943, the dressed body of Major Martin was packed inside a custom four-hundred-pound steel cylinder insulated with twenty-one pounds of dry ice. The sublimating carbon dioxide displaced all oxygen inside the tube, keeping the body preserved without freezing it.Montagu and Cholmondeley drove the canister overnight in a Fordson van to Holy Loch in Scotland and loaded it aboard the Royal Navy submarine HMS Seraph, commanded by Lieutenant Bill Jewell. Jewell told his crew the steel cylinder labeled Optical Instruments was a top-secret meteorological buoy. For eleven days, HMS Seraph slipped past German U-boat patrols and depth charges through the Bay of Biscay. At four-fifteen in the morning on April thirtieth, one mile off the mouth of the Huelva River—chosen because its strong onshore current led directly to a town where German Abwehr agent Adolf Clauss operated freely with corrupt Spanish officials—Jewell ordered all enlisted crew below deck. Five officers opened the canister on the wet submarine casing, read Psalm thirty-nine aloud, inflated the life vest, and pushed Major William Martin into the tide.",
+      "historical_grounding": {
+        "era": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+        "key_figures": [
+          "Lt. Norman 'Bill' Jewell",
+          "HMS Seraph (P219)",
+          "Abwehr Agent Adolf Clauss"
+        ],
+        "defensive_specs": "400-lb airtight steel canister packed with dry ice; dropped at 04:15 hrs on April 30, 1943",
+        "primary_source": "HMS Seraph Patrol Log (ADM 199/1847) & Lt. Bill Jewell Operational Report",
+        "primary_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+      },
+      "visual_prompts": [
+        "16:9 dramatic night wide shot of a British S-class submarine (HMS Seraph) surfaced in dark choppy Atlantic waves off the Spanish coast under a crescent moon, 8k",
+        "16:9 tense medium shot of five British Royal Navy submarine officers in dark wool sweaters on the wet forward deck casing opening a heavy bolted steel cylinder at night, 8k",
+        "16:9 naval navigation map tracking HMS Seraph's 11-day voyage from Holy Loch Scotland around the Iberian Peninsula to the exact drop point 1 mile off Huelva"
+      ],
+      "shots": [
+        {
+          "shot_id": "act05_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 dramatic night wide shot of a British S-class submarine (HMS Seraph) surfaced in dark choppy Atlantic waves off the Spanish coast under a crescent moon, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot02",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 tense medium shot of five British Royal Navy submarine officers in dark wool sweaters on the wet forward deck casing opening a heavy bolted steel cylinder at night, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot03",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 naval navigation map tracking HMS Seraph's 11-day voyage from Holy Loch Scotland around the Iberian Peninsula to the exact drop point 1 mile off Huelva",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot04",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 close-up of a heavy grey steel cylinder stamped 'HANDLE WITH CARE - OPTICAL INSTRUMENTS' with frost forming around the bolted lid, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 dramatic night wide shot of a British S-class submarine (HMS Seraph) surfaced in dark choppy Atlantic waves off the Spanish coast under a crescent moon, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot06",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 tense medium shot of five British Royal Navy submarine officers in dark wool sweaters on the wet forward deck casing opening a heavy bolted steel cylinder at night, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot07",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 naval navigation map tracking HMS Seraph's 11-day voyage from Holy Loch Scotland around the Iberian Peninsula to the exact drop point 1 mile off Huelva, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot08",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 close-up of a heavy grey steel cylinder stamped 'HANDLE WITH CARE - OPTICAL INSTRUMENTS' with frost forming around the bolted lid, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 dramatic night wide shot of a British S-class submarine (HMS Seraph) surfaced in dark choppy Atlantic waves off the Spanish coast under a crescent moon, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot10",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 tense medium shot of five British Royal Navy submarine officers in dark wool sweaters on the wet forward deck casing opening a heavy bolted steel cylinder at night, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot11",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 naval navigation map tracking HMS Seraph's 11-day voyage from Holy Loch Scotland around the Iberian Peninsula to the exact drop point 1 mile off Huelva, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        },
+        {
+          "shot_id": "act05_shot12",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 close-up of a heavy grey steel cylinder stamped 'HANDLE WITH CARE - OPTICAL INSTRUMENTS' with frost forming around the bolted lid, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 5,
+          "act_title": "HMS Seraph and the Midnight Canister Drop off Spain",
+          "historical_date": "April 19–30, 1943 (Holy Loch to Huelva Coast)",
+          "primary_source_quote": "At 0415 the canister was opened on the forward casing, the 39th Psalm was read, and Major Martin was slipped into the inshore current."
+        }
+      ]
+    },
+    {
+      "act_number": 6,
+      "title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+      "est_start_sec": 495.0,
+      "est_end_sec": 595.0,
+      "rag_query": "Adolf Clauss Karl-Erich Kuhlenthal Bletchley Park Ultra Enigma intercept Mincemeat swallowed whole",
+      "script": "In Huelva, the Spanish autopsy lasted less than thirty minutes. Exhausted by the midday heat and the smell of decomposition, Doctor Eduardo Fernandez del Torno certified death by asphyxiation through immersion in the sea. Major William Martin was buried with full military honors at the cemetery of Nuestra Senora de la Soledad on May second. Meanwhile, behind closed doors, pro-German elements in the Spanish Navy handed the wet leather briefcase to Major Karl-Erich Kuhlenthal of the German Abwehr in Madrid. Using steaming needles and delicate forceps, German technicians extracted the letters without breaking the wax seals, photographed every page on Leica microfilm, dried the paper, folded the letters back inside, and returned the briefcase to the British Embassy. When MI5 flew the briefcase back to London and examined the letters under ultraviolet light, the tiny black eyelash Montagu had placed inside the fold was gone—and the paper fibers showed microscopic salt-water drying rings. Days later, codebreakers at Bletchley Park decrypted a top-secret German Ultra Enigma telegram from Berlin High Command: the landings in the Peloponnese of Greece were designated top priority. Montagu sent a three-word cable to Winston Churchill in Washington: Mincemeat swallowed whole.",
+      "historical_grounding": {
+        "era": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+        "key_figures": [
+          "Dr. Eduardo Fernández del Torno",
+          "Major Karl-Erich Kühlenthal (Abwehr)",
+          "Bletchley Park Codebreakers"
+        ],
+        "defensive_specs": "Missing eyelash tamper trap; Bletchley Park Ultra decrypt confirming OKW order of May 12, 1943",
+        "primary_source": "Bletchley Park Ultra Decrypts (HW 1/1677) & Churchill Cable ('Mincemeat Swallowed Whole')",
+        "primary_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+      },
+      "visual_prompts": [
+        "16:9 suspenseful medium shot of German intelligence technicians in a dark Madrid room using a Leica camera on a copy stand to photograph British War Office letters by red safelight, 8k",
+        "16:9 archival callout of Adolf Hitler's May 1943 OKW Directive ordering reinforcements to Greece, paired with Ewen Montagu's cable 'MINCEMEAT SWALLOWED WHOLE'",
+        "16:9 forensic laboratory close-up of a British expert examining the unsealed War Office letter with a magnifying glass and tweezers under a bright forensic lamp, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act06_shot01",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 suspenseful medium shot of German intelligence technicians in a dark Madrid room using a Leica camera on a copy stand to photograph British War Office letters by red safelight, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot02",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "prompt": "16:9 archival callout of Adolf Hitler's May 1943 OKW Directive ordering reinforcements to Greece, paired with Ewen Montagu's cable 'MINCEMEAT SWALLOWED WHOLE'",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot03",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 forensic laboratory close-up of a British expert examining the unsealed War Office letter with a magnifying glass and tweezers under a bright forensic lamp, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot04",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 cinematic shot of the sunlit Spanish cemetery in Huelva as a British vice-consul and Spanish naval officers stand beside the white marble grave of Major William Martin, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot05",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 suspenseful medium shot of German intelligence technicians in a dark Madrid room using a Leica camera on a copy stand to photograph British War Office letters by red safelight, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot06",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "prompt": "16:9 archival callout of Adolf Hitler's May 1943 OKW Directive ordering reinforcements to Greece, paired with Ewen Montagu's cable 'MINCEMEAT SWALLOWED WHOLE', intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot07",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 forensic laboratory close-up of a British expert examining the unsealed War Office letter with a magnifying glass and tweezers under a bright forensic lamp, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot08",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 cinematic shot of the sunlit Spanish cemetery in Huelva as a British vice-consul and Spanish naval officers stand beside the white marble grave of Major William Martin, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot09",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 suspenseful medium shot of German intelligence technicians in a dark Madrid room using a Leica camera on a copy stand to photograph British War Office letters by red safelight, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot10",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "prompt": "16:9 archival callout of Adolf Hitler's May 1943 OKW Directive ordering reinforcements to Greece, paired with Ewen Montagu's cable 'MINCEMEAT SWALLOWED WHOLE', intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        },
+        {
+          "shot_id": "act06_shot11",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 forensic laboratory close-up of a British expert examining the unsealed War Office letter with a magnifying glass and tweezers under a bright forensic lamp, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 6,
+          "act_title": "The Eyelash Trap and the Enigma Intercepts at Bletchley Park",
+          "historical_date": "May 2–14, 1943 (Huelva, Madrid, Bletchley Park, London)",
+          "primary_source_quote": "The Fuhrer does not agree with Duce that the most likely invasion point is Sicily. Furthermore, he believes that the discovered Anglo-Saxon order confirms the assumption that the planned attacks will be directed mainly against Sardinia and the Peloponnese."
+        }
+      ]
+    },
+    {
+      "act_number": 7,
+      "title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+      "est_start_sec": 595.0,
+      "est_end_sec": 685.0,
+      "rag_query": "1st Panzer Division moved to Greece Operation Husky July 10 1943 Glyndwr Michael grave inscription",
+      "script": "The strategic fallout was immediate and catastrophic for Nazi Germany. Convinced by the briefcase from Huelva, Adolf Hitler overruled Benito Mussolini and Field Marshal Kesselring. He ordered the elite First Panzer Division transferred all the way from France to Greece. He diverted German E-boat naval flotillas from Sicily to the Aegean Sea, laid three new minefields off the Greek coast, and dispatched Field Marshal Erwin Rommel to Athens to take command. When one hundred and sixty thousand Allied soldiers stormed the beaches of Sicily at dawn on July tenth, 1943, they caught Axis defenders completely off balance. Even after Allied troops were ashore on Sicilian soil, Hitler remained so mesmerized by Major Martin's letter that he waited twenty-four critical hours before releasing reserves, convinced Sicily was still the diversion. British commanders estimated expected first-week casualties at ten thousand dead and wounded; actual casualties were a fraction of that, and Sicily fell in thirty-eight days, toppling Mussolini's regime. Today, on the quiet white marble headstone in Huelva, Spain, beneath the name of Major William Martin, a second inscription is carved in stone: Glyndwr Michael; Served as Major William Martin, RM. A homeless man who had nothing in life had altered the course of World War Two in death.",
+      "historical_grounding": {
+        "era": "July 10, 1943 – Present",
+        "key_figures": [
+          "Field Marshal Erwin Rommel",
+          "Adolf Hitler",
+          "Glyndwr Michael"
+        ],
+        "defensive_specs": "1st Panzer Division redeployed from France to Peloponnese; German R-boats moved from Sicily to Aegean",
+        "primary_source": "OKW War Diary (May–July 1943) & Commonwealth War Graves Commission (Huelva Grave)",
+        "primary_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+      },
+      "visual_prompts": [
+        "16:9 animated strategic map of Europe in June 1943 showing the 1st Panzer Division moving east to Greece while Allied Operation Husky amphibious task forces converge on Sicily",
+        "16:9 epic dawn wide shot of hundreds of Allied landing craft and warships approaching the golden beaches of Sicily on July 10 1943, naval guns flashing on the horizon, 8k",
+        "16:9 poignant close-up of the white marble gravestone in Huelva Spain engraved with 'William Martin' and 'Glyndwr Michael; Served as Major William Martin, RM', fresh red poppies resting on the stone, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act07_shot01",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 animated strategic map of Europe in June 1943 showing the 1st Panzer Division moving east to Greece while Allied Operation Husky amphibious task forces converge on Sicily",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot02",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 epic dawn wide shot of hundreds of Allied landing craft and warships approaching the golden beaches of Sicily on July 10 1943, naval guns flashing on the horizon, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot03",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 poignant close-up of the white marble gravestone in Huelva Spain engraved with 'William Martin' and 'Glyndwr Michael; Served as Major William Martin, RM', fresh red poppies resting on the stone, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot04",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 final historiographical tribute card summarizing Operation Mincemeat's casualty reduction and Commonwealth War Graves recognition in 1997",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot05",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 animated strategic map of Europe in June 1943 showing the 1st Panzer Division moving east to Greece while Allied Operation Husky amphibious task forces converge on Sicily, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot06",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 epic dawn wide shot of hundreds of Allied landing craft and warships approaching the golden beaches of Sicily on July 10 1943, naval guns flashing on the horizon, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot07",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 poignant close-up of the white marble gravestone in Huelva Spain engraved with 'William Martin' and 'Glyndwr Michael; Served as Major William Martin, RM', fresh red poppies resting on the stone, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot08",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 final historiographical tribute card summarizing Operation Mincemeat's casualty reduction and Commonwealth War Graves recognition in 1997, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot09",
+          "shot_type": "Tactical Map",
+          "motion": "pull_out",
+          "prompt": "16:9 animated strategic map of Europe in June 1943 showing the 1st Panzer Division moving east to Greece while Allied Operation Husky amphibious task forces converge on Sicily, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot10",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 epic dawn wide shot of hundreds of Allied landing craft and warships approaching the golden beaches of Sicily on July 10 1943, naval guns flashing on the horizon, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        },
+        {
+          "shot_id": "act07_shot11",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 poignant close-up of the white marble gravestone in Huelva Spain engraved with 'William Martin' and 'Glyndwr Michael; Served as Major William Martin, RM', fresh red poppies resting on the stone, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "operation_mincemeat_1943",
+          "act_number": 7,
+          "act_title": "The Payoff: Hitler Moves His Panzers and 10,000 Lives Are Saved",
+          "historical_date": "July 10, 1943 – Present",
+          "primary_source_quote": "Glyndwr Michael; Served as Major William Martin, RM."
+        }
+      ]
+    }
+  ],
+  "derived_shorts": [
+    {
+      "short_id": "w4_short_01",
+      "title": "How a Dead Homeless Man Fooled Hitler and Saved 10,000 Troops",
+      "source_act": 1,
+      "start_sec": 0.0,
+      "duration_sec": 45.0,
+      "hook_script": "On April 30, 1943, Spanish fishermen pulled the body of a British Royal Marines officer from the surf with a top-secret leather briefcase chained to his belt. Inside were Allied invasion plans that convinced Adolf Hitler to move his Panzer divisions away from Sicily to Greece. The twist? Major William Martin never existed—he was a penniless Welshman who had died in London three months earlier."
+    },
+    {
+      "short_id": "w4_short_02",
+      "title": "The Fake Fiancée and Pocket Litter Inside Major Martin's Coat",
+      "source_act": 4,
+      "start_sec": 295.0,
+      "duration_sec": 45.0,
+      "hook_script": "To make Nazi spies believe a dead courier was real, British MI5 filled his pockets with an entire fake life: love letters from a fictional fiancée named Pam, a bill for a fifty-three-pound diamond engagement ring on Bond Street, an angry overdraft letter from Lloyds Bank, and London theatre ticket stubs from eight days before his body washed ashore."
+    },
+    {
+      "short_id": "w4_short_03",
+      "title": "The 400-Pound Dry Ice Canister Aboard HMS Seraph",
+      "source_act": 5,
+      "start_sec": 400.0,
+      "duration_sec": 44.0,
+      "hook_script": "How do you carry a corpse on a submarine for eleven days without the crew finding out? In April 1943, MI5 packed the body of Major William Martin inside a four-hundred-pound airtight steel cylinder filled with dry ice and stamped 'Optical Instruments.' At 4:15 AM off the Spanish coast, five officers sent the crew below, read Psalm 39, and pushed him into the tide."
+    },
+    {
+      "short_id": "w4_short_04",
+      "title": "How a Single Black Eyelash Proved Nazi Spies Took the Bait",
+      "source_act": 6,
+      "start_sec": 495.0,
+      "duration_sec": 44.0,
+      "hook_script": "Before sealing the fake Allied invasion letter inside Major Martin's briefcase, MI5 officer Ewen Montagu tucked a single tiny black eyelash inside the fold of the paper. When the Spanish Navy returned the briefcase as 'unopened,' the eyelash was gone—proving German spies had steamed open the envelope, photographed the fake plans, and sent them straight to Hitler."
+    },
+    {
+      "short_id": "w4_short_05",
+      "title": "Why Hitler Moved His Panzers to Greece Right Before Sicily",
+      "source_act": 7,
+      "start_sec": 595.0,
+      "duration_sec": 43.0,
+      "hook_script": "Fooled by the fake briefcase found off Spain, Adolf Hitler overruled Mussolini, sent the First Panzer Division from France all the way to Greece, and dispatched Erwin Rommel to Athens. When 160,000 Allied troops stormed Sicily on July 10, 1943, Hitler still held back reserves for 24 hours—convinced Sicily was a diversion."
+    }
+  ]
+}

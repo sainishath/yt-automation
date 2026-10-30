@@ -1,0 +1,1196 @@
+{
+  "channel": "Chronos Shift (@ChronosShiftHistory)",
+  "video_title": "1177 BC: The Year Civilization Reset (The Bronze Age Collapse)",
+  "event_slug": "bronze_age_collapse_1177bc",
+  "mode": "factual",
+  "aspect_ratio": "16:9",
+  "target_runtime_seconds": 675.0,
+  "total_word_count": 1188,
+  "target_wpm": 145,
+  "total_visual_shots": 80,
+  "average_shot_duration_sec": 8.44,
+  "acts": [
+    {
+      "act_number": 1,
+      "title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+      "est_start_sec": 0.0,
+      "est_end_sec": 92.0,
+      "rag_query": "Ugarit tablet RS 20.238 Ammurapi king of Alashiya Sea Peoples 1177 BC",
+      "script": "In the rubble of a burned palace on the coast of Syria, archaeologists pulled a fist-sized lump of clay from the ash. It was a royal letter, pressed with urgent cuneiform wedges over three thousand years ago. It was never sent. It never even made it into the firing kiln. Instead, it was baked hard by the flames of the burning palace itself. The message inside was from King Ammurapi of Ugarit, pleading for help from the neighboring island of Cyprus. Listen to his exact words: My father, behold, the enemy ships came. My cities were burned, and they did evil things in my country. Does my father not know that all my troops are in the Hittite land, and all my ships are in Lukka? Thus, the country is abandoned to itself. Within forty-eight hours of those words being pressed into wet clay, Ugarit was erased from the earth. A six-foot layer of ash buried its streets. And Ugarit was not alone.",
+      "historical_grounding": {
+        "era": "1177 BC (Late Bronze Age)",
+        "key_figures": [
+          "King Ammurapi of Ugarit",
+          "King of Alashiya (Cyprus)"
+        ],
+        "defensive_specs": "2-meter destruction ash layer at Ras Shamra (Ugarit) with bronze arrowheads",
+        "primary_source": "Ugarit Tablet RS 20.238 (Louvre / National Museum of Damascus)",
+        "primary_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+      },
+      "visual_prompts": [
+        "16:9 extreme close-up macro shot of an ancient unbaked cuneiform clay tablet resting in black char and glowing embers inside a ruined Bronze Age Syrian palace, sharp wedge inscriptions, dramatic firelight, photorealistic 8k, historical accuracy 1177 BC",
+        "16:9 archival archaeological callout of Ugarit Tablet RS 20.238 with glowing amber translation highlights over cuneiform script, aged museum lighting",
+        "16:9 wide cinematic shot of the coastal Bronze Age port city of Ugarit burning at night, dark wooden warships with curved prows silhouetted against orange flames on the Mediterranean water, photorealistic 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act01_shot01",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 extreme close-up macro shot of an ancient unbaked cuneiform clay tablet resting in black char and glowing embers inside a ruined Bronze Age Syrian palace, sharp wedge inscriptions, dramatic firelight, photorealistic 8k, historical accuracy 1177 BC",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot02",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archival archaeological callout of Ugarit Tablet RS 20.238 with glowing amber translation highlights over cuneiform script, aged museum lighting",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot03",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide cinematic shot of the coastal Bronze Age port city of Ugarit burning at night, dark wooden warships with curved prows silhouetted against orange flames on the Mediterranean water, photorealistic 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot04",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 top-down antique bronze and parchment map of the Eastern Mediterranean in 1177 BC showing Cyprus, Ugarit, Hattusa, and Mycenae with red flame destruction markers",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot05",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 extreme close-up macro shot of an ancient unbaked cuneiform clay tablet resting in black char and glowing embers inside a ruined Bronze Age Syrian palace, sharp wedge inscriptions, dramatic firelight, photorealistic 8k, historical accuracy 1177 BC, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot06",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archival archaeological callout of Ugarit Tablet RS 20.238 with glowing amber translation highlights over cuneiform script, aged museum lighting, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot07",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide cinematic shot of the coastal Bronze Age port city of Ugarit burning at night, dark wooden warships with curved prows silhouetted against orange flames on the Mediterranean water, photorealistic 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot08",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 top-down antique bronze and parchment map of the Eastern Mediterranean in 1177 BC showing Cyprus, Ugarit, Hattusa, and Mycenae with red flame destruction markers, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot09",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 extreme close-up macro shot of an ancient unbaked cuneiform clay tablet resting in black char and glowing embers inside a ruined Bronze Age Syrian palace, sharp wedge inscriptions, dramatic firelight, photorealistic 8k, historical accuracy 1177 BC, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot10",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archival archaeological callout of Ugarit Tablet RS 20.238 with glowing amber translation highlights over cuneiform script, aged museum lighting, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot11",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide cinematic shot of the coastal Bronze Age port city of Ugarit burning at night, dark wooden warships with curved prows silhouetted against orange flames on the Mediterranean water, photorealistic 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        },
+        {
+          "shot_id": "act01_shot12",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 top-down antique bronze and parchment map of the Eastern Mediterranean in 1177 BC showing Cyprus, Ugarit, Hattusa, and Mycenae with red flame destruction markers, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 1,
+          "act_title": "Cold Open: The Unbaked Clay Letter of Ugarit",
+          "historical_date": "1177 BC (Late Bronze Age)",
+          "primary_source_quote": "My father, behold, the enemy ships came; my cities were burned, and they did evil things in my country."
+        }
+      ]
+    },
+    {
+      "act_number": 2,
+      "title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+      "est_start_sec": 92.0,
+      "est_end_sec": 188.0,
+      "rag_query": "Uluburun shipwreck copper ingots tin Afghanistan Cyprus Late Bronze Age trade network",
+      "script": "To understand why the world ended in 1177 BC, you have to understand what stood before it. Across the Eastern Mediterranean stretched the first truly globalized world system in human history. Eight great superpowers—Egypt under the New Kingdom Pharaohs, the Hittite Empire in Anatolia, the Mycenaean citadel-kings of Greece, Babylon, Assyria, Cyprus, Canaan, and Minoan Crete—were bound together by diplomatic treaties, royal marriages, and a single military technology: bronze. Bronze was the steel and oil of the ancient world. To forge a single chariot axle or a thousand spearheads, a king needed nine parts copper and one part tin. Copper came from the mines of Cyprus. Tin had to be hauled by donkey caravan over three thousand miles from the mountains of Badakhshan in modern Afghanistan. When archaeologists excavated the Uluburun shipwreck off the coast of Turkey, they found ten tons of Cypriot copper ingots alongside a ton of Central Asian tin, Egyptian gold scarabs, Baltic amber, and Mesopotamian glass on a single fifty-foot merchant hull. If a single link in that fragile supply chain snapped, every army from Greece to the Nile would lose the ability to make weapons.",
+      "historical_grounding": {
+        "era": "1300–1200 BC",
+        "key_figures": [
+          "Pharaoh Ramesses II",
+          "Hittite King Hattusili III"
+        ],
+        "defensive_specs": "Uluburun cargo: 10 tons copper (354 oxhide ingots), 1 ton tin (9:1 alloy ratio)",
+        "primary_source": "Amarna Letters (EA 35) & Uluburun Archaeological Excavation Report",
+        "primary_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+      },
+      "visual_prompts": [
+        "16:9 animated tactical trade route map connecting Badakhshan tin mines in Afghanistan, Cypriot copper mines, Mycenae, Hattusa, and Egyptian Nile Delta, glowing golden shipping lanes",
+        "16:9 cinematic close-up of Bronze Age foundry workers pouring molten glowing orange bronze into stone sword molds, sparks flying, oxhide copper ingots stacked nearby, 8k",
+        "16:9 wide shot of a heavily laden Canaanite cedar merchant ship with a square linen sail gliding into a bustling Mediterranean stone harbor, amphorae and copper ingots on deck, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act02_shot01",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 animated tactical trade route map connecting Badakhshan tin mines in Afghanistan, Cypriot copper mines, Mycenae, Hattusa, and Egyptian Nile Delta, glowing golden shipping lanes",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot02",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic close-up of Bronze Age foundry workers pouring molten glowing orange bronze into stone sword molds, sparks flying, oxhide copper ingots stacked nearby, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot03",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 wide shot of a heavily laden Canaanite cedar merchant ship with a square linen sail gliding into a bustling Mediterranean stone harbor, amphorae and copper ingots on deck, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot04",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium shot of Mycenaean warriors in Dendra bronze plate armor and boar-tusk helmets standing beside two-horse war chariots outside the Lion Gate of Mycenae, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot05",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 animated tactical trade route map connecting Badakhshan tin mines in Afghanistan, Cypriot copper mines, Mycenae, Hattusa, and Egyptian Nile Delta, glowing golden shipping lanes, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot06",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic close-up of Bronze Age foundry workers pouring molten glowing orange bronze into stone sword molds, sparks flying, oxhide copper ingots stacked nearby, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot07",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 wide shot of a heavily laden Canaanite cedar merchant ship with a square linen sail gliding into a bustling Mediterranean stone harbor, amphorae and copper ingots on deck, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot08",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium shot of Mycenaean warriors in Dendra bronze plate armor and boar-tusk helmets standing beside two-horse war chariots outside the Lion Gate of Mycenae, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot09",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 animated tactical trade route map connecting Badakhshan tin mines in Afghanistan, Cypriot copper mines, Mycenae, Hattusa, and Egyptian Nile Delta, glowing golden shipping lanes, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot10",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic close-up of Bronze Age foundry workers pouring molten glowing orange bronze into stone sword molds, sparks flying, oxhide copper ingots stacked nearby, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot11",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 wide shot of a heavily laden Canaanite cedar merchant ship with a square linen sail gliding into a bustling Mediterranean stone harbor, amphorae and copper ingots on deck, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        },
+        {
+          "shot_id": "act02_shot12",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium shot of Mycenaean warriors in Dendra bronze plate armor and boar-tusk helmets standing beside two-horse war chariots outside the Lion Gate of Mycenae, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 2,
+          "act_title": "The First Globalized Super-Network: The Tin and Copper Lifeline",
+          "historical_date": "1300–1200 BC",
+          "primary_source_quote": "Behold, I have sent to you five hundred talents of copper as a greeting-gift for my brother."
+        }
+      ]
+    },
+    {
+      "act_number": 3,
+      "title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+      "est_start_sec": 188.0,
+      "est_end_sec": 284.0,
+      "rag_query": "3.2 kiloyear event drought pollen cores Dead Sea Hittite grain famine letters",
+      "script": "The first crack did not come from a sword. It came from the sky. Modern paleoclimatologists drilling fossilized pollen cores from the Dead Sea, Lake Van, and the coastal lagoons of Cyprus discovered a sudden, catastrophic shift around 1200 BC: a three-hundred-year mega-drought. Winter rains across Greece, Anatolia, and the Levant vanished. Rivers dried into cracked mud. In the royal archives of Hattusa, the capital of the mighty Hittite Empire, clay letters reveal panic turning into terror. A Hittite king writes frantically to Ugarit: Do you not know that there is a famine in the midst of my lands? It is a matter of life and death! Pharaoh Merneptah of Egypt tried to bail out his starving allies, recording on the Karnak inscriptions that he dispatched massive cargos of Egyptian grain in ships to keep the land of Hatti alive. Then, the earth itself convulsed. Seismologists uncovered an earthquake storm—a chain-reaction unzipping of the North Anatolian and Dead Sea fault lines over fifty years—that cracked the cyclopean limestone walls of Mycenae, Tiryns, Troy VI, and Ugarit.",
+      "historical_grounding": {
+        "era": "1210–1185 BC",
+        "key_figures": [
+          "Pharaoh Merneptah",
+          "Hittite King Suppiluliuma II"
+        ],
+        "defensive_specs": "300-year aridification event confirmed by Kaniewski et al. (2013) Cyprus pollen cores",
+        "primary_source": "Hittite Court Correspondence (RS 20.212) & Merneptah Great Karnak Inscription",
+        "primary_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+      },
+      "visual_prompts": [
+        "16:9 wide cinematic landscape of parched, cracked Anatolian wheat fields under a blazing brass sky, withered crops, dust blowing across empty irrigation canals, photorealistic 8k",
+        "16:9 manuscript callout of Hittite famine tablet RS 20.212 and Karnak hieroglyphic inscription recording emergency grain shipments to Hatti",
+        "16:9 medium dramatic shot of cyclopean limestone fortress walls at Mycenae cracking and collapsing during a violent seismic tremor, dust clouds rising, terrified bronze-armored guards"
+      ],
+      "shots": [
+        {
+          "shot_id": "act03_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide cinematic landscape of parched, cracked Anatolian wheat fields under a blazing brass sky, withered crops, dust blowing across empty irrigation canals, photorealistic 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot02",
+          "shot_type": "Primary Source",
+          "motion": "pan_left_up",
+          "prompt": "16:9 manuscript callout of Hittite famine tablet RS 20.212 and Karnak hieroglyphic inscription recording emergency grain shipments to Hatti",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot03",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium dramatic shot of cyclopean limestone fortress walls at Mycenae cracking and collapsing during a violent seismic tremor, dust clouds rising, terrified bronze-armored guards",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot04",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 seismic fault-line map of the Eastern Mediterranean showing earthquake epicenters across Mycenae, Tiryns, Troy, Hattusa, and Megiddo",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide cinematic landscape of parched, cracked Anatolian wheat fields under a blazing brass sky, withered crops, dust blowing across empty irrigation canals, photorealistic 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot06",
+          "shot_type": "Primary Source",
+          "motion": "pan_left_up",
+          "prompt": "16:9 manuscript callout of Hittite famine tablet RS 20.212 and Karnak hieroglyphic inscription recording emergency grain shipments to Hatti, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot07",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium dramatic shot of cyclopean limestone fortress walls at Mycenae cracking and collapsing during a violent seismic tremor, dust clouds rising, terrified bronze-armored guards, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot08",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 seismic fault-line map of the Eastern Mediterranean showing earthquake epicenters across Mycenae, Tiryns, Troy, Hattusa, and Megiddo, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide cinematic landscape of parched, cracked Anatolian wheat fields under a blazing brass sky, withered crops, dust blowing across empty irrigation canals, photorealistic 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot10",
+          "shot_type": "Primary Source",
+          "motion": "pan_left_up",
+          "prompt": "16:9 manuscript callout of Hittite famine tablet RS 20.212 and Karnak hieroglyphic inscription recording emergency grain shipments to Hatti, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        },
+        {
+          "shot_id": "act03_shot11",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium dramatic shot of cyclopean limestone fortress walls at Mycenae cracking and collapsing during a violent seismic tremor, dust clouds rising, terrified bronze-armored guards, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 3,
+          "act_title": "The Four Horsemen: Mega-Drought, Earthquakes, and Famine",
+          "historical_date": "1210–1185 BC",
+          "primary_source_quote": "Do you not know that there is a famine in the midst of my lands? It is a matter of life and death!"
+        }
+      ]
+    },
+    {
+      "act_number": 4,
+      "title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+      "est_start_sec": 284.0,
+      "est_end_sec": 385.0,
+      "rag_query": "Sea Peoples Peleset Sherden Shekelesh Denyen Weshesh Medinet Habu reliefs",
+      "script": "Starving populations do not sit quietly and wait to die. They move. And when they moved, they took their weapons and their families with them. Out of the Aegean islands, Sicily, Sardinia, and coastal Anatolia surged a terrifying, multi-ethnic armada that the Egyptians called the Nine Bows of the Sea—known to history as the Sea Peoples. Egyptian scribes at Medinet Habu recorded their names in stone: the Peleset, the Sherden with their horned bronze helmets, the Shekelesh, the Denyen, and the Tjeker. These were not mere pirate raiders. Look closely at the carved limestone walls of Pharaoh Ramesses the Third's mortuary temple. Behind the warriors with their round shields and Naue Type II long slashing swords roll heavy wooden ox-carts carrying women, children, cooking pots, and livestock. This was an armed mass migration. Every city they conquered swelled their ranks with desperate survivors and displaced mercenaries.",
+      "historical_grounding": {
+        "era": "1185–1177 BC",
+        "key_figures": [
+          "Peleset",
+          "Sherden",
+          "Shekelesh",
+          "Denyen",
+          "Tjeker"
+        ],
+        "defensive_specs": "Naue Type II flange-hilted slashing swords; feathered and horned bronze helmets",
+        "primary_source": "Medinet Habu Mortuary Temple Reliefs of Ramesses III (Year 8 Inscription)",
+        "primary_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+      },
+      "visual_prompts": [
+        "16:9 epic wide cinematic shot of hundreds of Bronze Age warships with bird-head prows sailing in formation through dense sea fog toward the Levantine coast, photorealistic 8k",
+        "16:9 medium shot of Sea Peoples warriors on a wooden ship deck wearing feathered headdresses and horned bronze helmets, holding round shields and bronze Naue II swords, 8k",
+        "16:9 high-contrast close-up of the carved limestone relief at Medinet Habu showing Sea Peoples warriors and two-wheeled ox-carts carrying families, highlighted with archival translation card"
+      ],
+      "shots": [
+        {
+          "shot_id": "act04_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 epic wide cinematic shot of hundreds of Bronze Age warships with bird-head prows sailing in formation through dense sea fog toward the Levantine coast, photorealistic 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot02",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium shot of Sea Peoples warriors on a wooden ship deck wearing feathered headdresses and horned bronze helmets, holding round shields and bronze Naue II swords, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot03",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 high-contrast close-up of the carved limestone relief at Medinet Habu showing Sea Peoples warriors and two-wheeled ox-carts carrying families, highlighted with archival translation card",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot04",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 macro close-up of a bronze Naue Type II flange-hilted sword gleaming in firelight beside a horned Sherden bronze helmet, weathered battle scratches, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 epic wide cinematic shot of hundreds of Bronze Age warships with bird-head prows sailing in formation through dense sea fog toward the Levantine coast, photorealistic 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot06",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium shot of Sea Peoples warriors on a wooden ship deck wearing feathered headdresses and horned bronze helmets, holding round shields and bronze Naue II swords, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot07",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 high-contrast close-up of the carved limestone relief at Medinet Habu showing Sea Peoples warriors and two-wheeled ox-carts carrying families, highlighted with archival translation card, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot08",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 macro close-up of a bronze Naue Type II flange-hilted sword gleaming in firelight beside a horned Sherden bronze helmet, weathered battle scratches, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 epic wide cinematic shot of hundreds of Bronze Age warships with bird-head prows sailing in formation through dense sea fog toward the Levantine coast, photorealistic 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot10",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 medium shot of Sea Peoples warriors on a wooden ship deck wearing feathered headdresses and horned bronze helmets, holding round shields and bronze Naue II swords, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        },
+        {
+          "shot_id": "act04_shot11",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 high-contrast close-up of the carved limestone relief at Medinet Habu showing Sea Peoples warriors and two-wheeled ox-carts carrying families, highlighted with archival translation card, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 4,
+          "act_title": "The Mysterious Confederations: Who Were the Sea Peoples?",
+          "historical_date": "1185–1177 BC",
+          "primary_source_quote": "The foreign countries made a conspiracy in their islands. All at once the lands were removed and scattered in the fray."
+        }
+      ]
+    },
+    {
+      "act_number": 5,
+      "title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+      "est_start_sec": 385.0,
+      "est_end_sec": 485.0,
+      "rag_query": "destruction of Hattusa Pylos Linear B tablet Jn 829 Megiddo Hazor 1177 BC",
+      "script": "Between 1200 and 1177 BC, the great capitals fell like dominoes across a thousand miles. In southern Greece, at the palace of Pylos, scribes were frantically etching Linear B clay tablets ordering bronze to be stripped from religious temples to forge emergency spear points, and deploying coastal lookouts to watch the sea. Days later, Pylos was burned so hot that its mudbrick walls vitrified into glass. Mycenae and Tiryns collapsed in flames. High on the Anatolian plateau, the impregnable Hittite capital of Hattusa was abandoned by its royal court and put to the torch. Down the coast of Canaan, Ashkelon, Hazor, and Megiddo were razed to the ground. As Pharaoh Ramesses the Third carved in his Year Eight chronicle at Medinet Habu: No land could stand before their arms: from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time. A camp was set up in Amurru. They desolated its people, and its land was like that which has never come into being.",
+      "historical_grounding": {
+        "era": "1180–1177 BC",
+        "key_figures": [
+          "King of Pylos",
+          "Suppiluliuma II of Hatti",
+          "Pharaoh Ramesses III"
+        ],
+        "defensive_specs": "Pylos Linear B tablets (An 657 coastal watchers; Jn 829 temple bronze requisition)",
+        "primary_source": "Pylos Linear B Archives & Medinet Habu Year 8 Great Inscription",
+        "primary_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+      },
+      "visual_prompts": [
+        "16:9 tactical siege map of the Eastern Mediterranean showing sequential destruction vectors striking Pylos, Mycenae, Hattusa, Cyprus, Ugarit, and Megiddo",
+        "16:9 wide cinematic shot of the mountain fortress capital of Hattusa engulfed in towering red flames at dusk, stone lion gates crumbling, smoke filling the valley, 8k",
+        "16:9 macro shot of a Mycenaean Linear B clay tablet being etched with a bone stylus by candlelight as shadows of smoke flicker across the stone table, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act05_shot01",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 tactical siege map of the Eastern Mediterranean showing sequential destruction vectors striking Pylos, Mycenae, Hattusa, Cyprus, Ugarit, and Megiddo",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot02",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "prompt": "16:9 wide cinematic shot of the mountain fortress capital of Hattusa engulfed in towering red flames at dusk, stone lion gates crumbling, smoke filling the valley, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot03",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 macro shot of a Mycenaean Linear B clay tablet being etched with a bone stylus by candlelight as shadows of smoke flicker across the stone table, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot04",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of bronze-armored defenders fighting desperately inside a burning palace courtyard in Canaan, falling wooden roof beams, sparks and ash, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot05",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 tactical siege map of the Eastern Mediterranean showing sequential destruction vectors striking Pylos, Mycenae, Hattusa, Cyprus, Ugarit, and Megiddo, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot06",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "prompt": "16:9 wide cinematic shot of the mountain fortress capital of Hattusa engulfed in towering red flames at dusk, stone lion gates crumbling, smoke filling the valley, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot07",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 macro shot of a Mycenaean Linear B clay tablet being etched with a bone stylus by candlelight as shadows of smoke flicker across the stone table, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot08",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of bronze-armored defenders fighting desperately inside a burning palace courtyard in Canaan, falling wooden roof beams, sparks and ash, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot09",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 tactical siege map of the Eastern Mediterranean showing sequential destruction vectors striking Pylos, Mycenae, Hattusa, Cyprus, Ugarit, and Megiddo, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot10",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "prompt": "16:9 wide cinematic shot of the mountain fortress capital of Hattusa engulfed in towering red flames at dusk, stone lion gates crumbling, smoke filling the valley, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot11",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 macro shot of a Mycenaean Linear B clay tablet being etched with a bone stylus by candlelight as shadows of smoke flicker across the stone table, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        },
+        {
+          "shot_id": "act05_shot12",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of bronze-armored defenders fighting desperately inside a burning palace courtyard in Canaan, falling wooden roof beams, sparks and ash, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 5,
+          "act_title": "The Dominoes Fall: Hattusa, Mycenae, and Cyprus Burn",
+          "historical_date": "1180–1177 BC",
+          "primary_source_quote": "No land could stand before their arms, from Hatti, Kode, Carchemish, Arzawa, and Alashiya on, being cut off at one time."
+        }
+      ]
+    },
+    {
+      "act_number": 6,
+      "title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+      "est_start_sec": 485.0,
+      "est_end_sec": 585.0,
+      "rag_query": "Battle of the Delta 1177 BC Ramesses III ambush archers Medinet Habu naval battle",
+      "script": "By 1177 BC, only one superpower remained standing: Egypt. And as the inscription at Medinet Habu warns, the invaders were coming with fire prepared before them, forward toward Egypt. Their confederation declared that their hearts were confident and trustful: Our plans will succeed! Pharaoh Ramesses the Third knew he could not defeat their massive fleet on the open sea. Instead, he laid a brilliant, lethal trap inside the marshy mouths of the Nile Delta. First, he crushed their overland vanguard and ox-carts on the frontier of Djahy in Canaan. Then, as the Sea Peoples' warships rowed into the narrow, reed-choked channels of the Nile estuary, Ramesses sprang his ambush. Egyptian warships closed the river mouth behind them like a net. Hidden along both mudbanks stood thousands of elite Nubian and Egyptian composite bowmen. As Ramesses recorded on the temple walls: They were dragged in, enclosed, and prostrated on the beach, killed, and made into heaps from tail to head. Their ships and their goods were as if fallen into the water.",
+      "historical_grounding": {
+        "era": "1177 BC (Year 8 of Ramesses III)",
+        "key_figures": [
+          "Pharaoh Ramesses III",
+          "Egyptian Composite Archers",
+          "Sherden & Peleset Fleet"
+        ],
+        "defensive_specs": "Nile estuary naval ambush using grappling hooks and massed riverbank composite bow volleys",
+        "primary_source": "Medinet Habu Naval Battle Relief & Papyrus Harris I",
+        "primary_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+      },
+      "visual_prompts": [
+        "16:9 tactical battle map of the Nile Delta mouth in 1177 BC showing the Sea Peoples fleet entering the narrow river channel surrounded by Egyptian archer lines on both banks",
+        "16:9 epic chaotic naval battle inside the reed-lined Nile Delta, dozens of wooden warships locked together, arrows raining down from the riverbanks, shields raised, 8k",
+        "16:9 medium shot of Pharaoh Ramesses III in blue war crown (Khepresh) and scale armor drawing a golden composite bow on the riverbank surrounded by elite archers, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act06_shot01",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 tactical battle map of the Nile Delta mouth in 1177 BC showing the Sea Peoples fleet entering the narrow river channel surrounded by Egyptian archer lines on both banks",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot02",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 epic chaotic naval battle inside the reed-lined Nile Delta, dozens of wooden warships locked together, arrows raining down from the riverbanks, shields raised, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot03",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of Pharaoh Ramesses III in blue war crown (Khepresh) and scale armor drawing a golden composite bow on the riverbank surrounded by elite archers, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot04",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival stone relief from Medinet Habu showing capsized Sea Peoples ships and grappling hooks with translated hieroglyphic victory text overlay",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot05",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 tactical battle map of the Nile Delta mouth in 1177 BC showing the Sea Peoples fleet entering the narrow river channel surrounded by Egyptian archer lines on both banks, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot06",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 epic chaotic naval battle inside the reed-lined Nile Delta, dozens of wooden warships locked together, arrows raining down from the riverbanks, shields raised, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot07",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of Pharaoh Ramesses III in blue war crown (Khepresh) and scale armor drawing a golden composite bow on the riverbank surrounded by elite archers, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot08",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 archival stone relief from Medinet Habu showing capsized Sea Peoples ships and grappling hooks with translated hieroglyphic victory text overlay, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot09",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 tactical battle map of the Nile Delta mouth in 1177 BC showing the Sea Peoples fleet entering the narrow river channel surrounded by Egyptian archer lines on both banks, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot10",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 epic chaotic naval battle inside the reed-lined Nile Delta, dozens of wooden warships locked together, arrows raining down from the riverbanks, shields raised, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        },
+        {
+          "shot_id": "act06_shot11",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of Pharaoh Ramesses III in blue war crown (Khepresh) and scale armor drawing a golden composite bow on the riverbank surrounded by elite archers, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 6,
+          "act_title": "The Last Stand: The Battle of the Nile Delta (1177 BC)",
+          "historical_date": "1177 BC (Year 8 of Ramesses III)",
+          "primary_source_quote": "Those who reached my frontier, their seed is not; their heart and their soul are finished forever and ever."
+        }
+      ]
+    },
+    {
+      "act_number": 7,
+      "title": "The 300-Year Dark Age and the Birth of the Iron Age",
+      "est_start_sec": 585.0,
+      "est_end_sec": 675.0,
+      "rag_query": "Greek Dark Ages loss of Linear B literacy rise of Iron Age Phoenicians Israelites",
+      "script": "Egypt survived, but it was a hollow, bleeding victory. Drained of treasury and cut off from every trading partner it had known for a millennium, the New Kingdom entered a terminal decline—vividly captured in the Turin Strike Papyrus, which records the first labor strike in history when royal tomb builders at Deir el-Medina went unpaid in grain. Across Greece and Anatolia, civilization suffered a total system reset. Population dropped by up to seventy-five percent. Monumental stone architecture ceased. In Greece, the art of writing Linear B was completely forgotten for four hundred years. Yet out of the ashes of the Bronze Age Collapse, a new world was forged. Because the tin caravans from Afghanistan were severed forever, blacksmiths in Cyprus and the Levant turned to a common, stubborn metal that lay under their own feet: iron. And in the power vacuum left by the fallen empires, smaller agile nations emerged—the Phoenicians with their phonetic alphabet, the early Israelites, and the city-states of Classical Greece. Civilization did not end forever in 1177 BC—it was reborn in iron.",
+      "historical_grounding": {
+        "era": "1177–800 BC (Early Iron Age)",
+        "key_figures": [
+          "Deir el-Medina Tomb Artisans",
+          "Phoenician Mariners"
+        ],
+        "defensive_specs": "Loss of Linear B script; transition from imported 9:1 copper-tin bronze to local carburized iron",
+        "primary_source": "Turin Strike Papyrus (Year 29 of Ramesses III) & Papyrus Harris I",
+        "primary_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+      },
+      "visual_prompts": [
+        "16:9 haunting wide cinematic shot of the overgrown, silent stone ruins of the Lion Gate at Mycenae under twilight clouds, a lone shepherd walking past fallen columns, 8k",
+        "16:9 macro shot of an early Iron Age blacksmith hammering a glowing red-hot iron blade on a stone anvil, white-hot sparks illuminating a dark forge, 8k",
+        "16:9 manuscript callout of the Turin Strike Papyrus (Deir el-Medina) detailing the grain rations crisis in late New Kingdom Egypt"
+      ],
+      "shots": [
+        {
+          "shot_id": "act07_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 haunting wide cinematic shot of the overgrown, silent stone ruins of the Lion Gate at Mycenae under twilight clouds, a lone shepherd walking past fallen columns, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot02",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 macro shot of an early Iron Age blacksmith hammering a glowing red-hot iron blade on a stone anvil, white-hot sparks illuminating a dark forge, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot03",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 manuscript callout of the Turin Strike Papyrus (Deir el-Medina) detailing the grain rations crisis in late New Kingdom Egypt",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot04",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 Mediterranean transition map showing the rise of Phoenician maritime alphabet routes, Iron Age Israel, and Archaic Greek city-states emerging from the Bronze Age ruins",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 haunting wide cinematic shot of the overgrown, silent stone ruins of the Lion Gate at Mycenae under twilight clouds, a lone shepherd walking past fallen columns, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot06",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 macro shot of an early Iron Age blacksmith hammering a glowing red-hot iron blade on a stone anvil, white-hot sparks illuminating a dark forge, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot07",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 manuscript callout of the Turin Strike Papyrus (Deir el-Medina) detailing the grain rations crisis in late New Kingdom Egypt, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot08",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "prompt": "16:9 Mediterranean transition map showing the rise of Phoenician maritime alphabet routes, Iron Age Israel, and Archaic Greek city-states emerging from the Bronze Age ruins, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 haunting wide cinematic shot of the overgrown, silent stone ruins of the Lion Gate at Mycenae under twilight clouds, a lone shepherd walking past fallen columns, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot10",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 macro shot of an early Iron Age blacksmith hammering a glowing red-hot iron blade on a stone anvil, white-hot sparks illuminating a dark forge, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        },
+        {
+          "shot_id": "act07_shot11",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "prompt": "16:9 manuscript callout of the Turin Strike Papyrus (Deir el-Medina) detailing the grain rations crisis in late New Kingdom Egypt, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "bronze_age_collapse_1177bc",
+          "act_number": 7,
+          "act_title": "The 300-Year Dark Age and the Birth of the Iron Age",
+          "historical_date": "1177–800 BC (Early Iron Age)",
+          "primary_source_quote": "We have reached this place because of hunger and thirst; there is no clothing, no ointment, no fish, no vegetables."
+        }
+      ]
+    }
+  ],
+  "derived_shorts": [
+    {
+      "short_id": "w2_short_01",
+      "title": "The Unsent Clay Letter Baked by a Burning Empire (1177 BC)",
+      "source_act": 1,
+      "start_sec": 0.0,
+      "duration_sec": 44.0,
+      "hook_script": "In the ashes of a destroyed Syrian palace, archaeologists found a royal clay letter that never made it into the kiln—it was baked hard by the flames of the burning palace itself. King Ammurapi of Ugarit wrote: 'My father, behold, the enemy ships came. My cities were burned, and they did evil things in my country.' Forty-eight hours later, Ugarit was erased under six feet of ash. Watch the full documentary on how eight empires collapsed at once."
+    },
+    {
+      "short_id": "w2_short_02",
+      "title": "Why 8 Ancient Superpowers Depended on One Single Ship",
+      "source_act": 2,
+      "start_sec": 92.0,
+      "duration_sec": 45.0,
+      "hook_script": "In 1200 BC, every army from Greece to Egypt depended on a single military metal: bronze. To make it, kings needed nine parts copper from Cyprus and one part tin hauled three thousand miles by donkey from Afghanistan. On a single sunken hull at Uluburun, divers found ten tons of copper and one ton of tin—enough to equip an entire Bronze Age army. When that supply chain snapped, the ancient world went dark."
+    },
+    {
+      "short_id": "w2_short_03",
+      "title": "Who Were the Mysterious Sea Peoples of 1177 BC?",
+      "source_act": 4,
+      "start_sec": 284.0,
+      "duration_sec": 45.0,
+      "hook_script": "They toppled the Hittite Empire, burned Mycenae, and erased Ugarit—yet for centuries nobody knew where the Sea Peoples came from. Look closely at the carved walls of Medinet Habu in Egypt: behind the warriors in horned helmets and slashing bronze swords roll wooden ox-carts carrying women, children, and livestock. This wasn't a pirate raid—it was an armed migration of starving nations."
+    },
+    {
+      "short_id": "w2_short_04",
+      "title": "How Ramesses III Trapped the Sea Peoples in the Nile",
+      "source_act": 6,
+      "start_sec": 485.0,
+      "duration_sec": 44.0,
+      "hook_script": "By 1177 BC, every empire in the Mediterranean had burned except Egypt. Knowing he couldn't beat the Sea Peoples' armada on the open sea, Pharaoh Ramesses the Third lured their ships into the narrow, reed-choked channels of the Nile Delta. Egyptian warships sealed the exit behind them while thousands of hidden archers opened fire from both mudbanks—saving Egypt from total annihilation."
+    },
+    {
+      "short_id": "w2_short_05",
+      "title": "The Collapse That Made Humanity Forget How to Write",
+      "source_act": 7,
+      "start_sec": 585.0,
+      "duration_sec": 42.0,
+      "hook_script": "The Bronze Age Collapse of 1177 BC was so severe that population in Greece dropped by seventy-five percent, stone architecture stopped, and the Mycenaeans completely forgot how to read and write for four hundred years. Yet because tin shipments from Afghanistan were cut off forever, blacksmiths turned to a stubborn metal under their own feet: iron."
+    }
+  ]
+}

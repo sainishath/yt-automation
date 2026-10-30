@@ -302,6 +302,67 @@ class TestFactualLearningEngine(unittest.TestCase):
         self.assertIn("extract_primary_sources", content)
         self.assertIn("--split-shorts", content)
 
+    # ── 8. Weeks 2–4 80-Shot Production Drafts & Derived Shorts Schema ───────
+
+    def test_10_weeks_2_to_4_drafts_and_derived_shorts_schema(self):
+        """Verifies 4 weekly 80-shot master drafts (320 shots) and 20 derived shorts manifests."""
+        drafts_dir = ROOT_DIR / "longform_engine" / "drafts"
+        expected_drafts = [
+            ("history_10min_80shots.json", "constantinople_1453", "w1_short_"),
+            ("bronze_age_collapse_1177bc_80shots.json", "bronze_age_collapse_1177bc", "w2_short_"),
+            ("cambyses_lost_army_524bc_80shots.json", "cambyses_lost_army_524bc", "w3_short_"),
+            ("operation_mincemeat_1943_80shots.json", "operation_mincemeat_1943", "w4_short_"),
+        ]
+
+        total_shots_all_weeks = 0
+        total_shorts_all_weeks = 0
+
+        for draft_filename, expected_slug, short_prefix in expected_drafts:
+            draft_path = drafts_dir / draft_filename
+            self.assertTrue(draft_path.exists(), f"Draft file {draft_filename} must exist")
+
+            with open(draft_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            # 7 Acts
+            acts = data.get("acts", [])
+            self.assertEqual(len(acts), 7, f"{draft_filename} must have exactly 7 acts")
+
+            # 80 Total Shots
+            week_shots = 0
+            for act in acts:
+                shots = act.get("shots", [])
+                week_shots += len(shots)
+                for shot in shots:
+                    self.assertTrue("shot_id" in shot or "shot_number" in shot, "Shot must have shot_id or shot_number")
+                    self.assertIn("prompt", shot)
+                    self.assertIn("negative_prompt", shot)
+                    self.assertTrue(len(shot["negative_prompt"].strip()) > 0, "Negative prompt lock must be non-empty")
+                    self.assertIn("shot_type", shot)
+
+            self.assertEqual(week_shots, 80, f"{draft_filename} must have exactly 80 visual shots")
+            total_shots_all_weeks += week_shots
+
+            # 5 Derived Shorts Manifest
+            derived_shorts = data.get("derived_shorts", [])
+            self.assertEqual(len(derived_shorts), 5, f"{draft_filename} must have exactly 5 derived shorts")
+            total_shorts_all_weeks += len(derived_shorts)
+
+            for short in derived_shorts:
+                self.assertIn("short_id", short)
+                self.assertTrue(short["short_id"].startswith(short_prefix))
+                self.assertIn("title", short)
+                self.assertIn("source_act", short)
+                self.assertIn("start_sec", short)
+                self.assertIn("duration_sec", short)
+                self.assertIn("hook_script", short)
+                self.assertTrue(1 <= short["source_act"] <= 7)
+                self.assertGreater(short["duration_sec"], 0)
+                self.assertTrue(len(short["hook_script"].strip()) > 0)
+
+        self.assertEqual(total_shots_all_weeks, 320, "Total visual shots across all 4 weeks must be 320")
+        self.assertEqual(total_shorts_all_weeks, 20, "Total derived shorts across all 4 weeks must be 20")
+
 
 if __name__ == "__main__":
     unittest.main()

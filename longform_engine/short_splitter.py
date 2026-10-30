@@ -28,6 +28,7 @@ import argparse
 import subprocess
 from pathlib import Path
 from typing import List, Dict, Any, Optional
+from datetime import datetime, timedelta, timezone
 
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     try:
@@ -62,8 +63,21 @@ def generate_safe_short_ass(
         "",
         "[Events]",
         "Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text",
-        f"Dialogue: 0,0:00:00.00,0:{int(duration_sec)//60:02d}:{duration_sec%60:05.2f},Default,,0,0,0,,{text}"
     ]
+    words = text.strip().split()
+    if len(words) <= 7:
+        body.append(f"Dialogue: 0,0:00:00.00,0:{int(duration_sec)//60:02d}:{duration_sec%60:05.2f},Default,,0,0,0,,{text}")
+    else:
+        chunk_size = 6
+        chunks = [" ".join(words[i:i + chunk_size]) for i in range(0, len(words), chunk_size)]
+        chunk_dur = duration_sec / max(1, len(chunks))
+        for i, c in enumerate(chunks):
+            t_start = i * chunk_dur
+            t_end = min(duration_sec, (i + 1) * chunk_dur)
+            start_fmt = f"0:{int(t_start)//60:02d}:{t_start%60:05.2f}"
+            end_fmt = f"0:{int(t_end)//60:02d}:{t_end%60:05.2f}"
+            body.append(f"Dialogue: 0,{start_fmt},{end_fmt},Default,,0,0,0,,{c}")
+
     out_ass_path.write_text("\n".join(body), encoding="utf-8")
     return out_ass_path
 
@@ -177,14 +191,99 @@ def split_master_into_shorts(
     out_base.mkdir(parents=True, exist_ok=True)
     
     acts = []
+    derived_shorts = []
     longform_title = master_path.stem.replace("_", " ").title()
-    
+    manifest_data = {}
+
     if manifest_path and Path(manifest_path).exists():
         with open(manifest_path, "r", encoding="utf-8") as f:
             manifest_data = json.load(f)
             longform_title = manifest_data.get("title", longform_title)
             acts = manifest_data.get("acts", [])
-            
+            derived_shorts = manifest_data.get("derived_shorts", [])
+
+    results = []
+
+    # Fast-path: If explicit derived_shorts manifest is present, carve them directly
+    if derived_shorts:
+        logger.info(f"Using explicit 'derived_shorts' manifest ({len(derived_shorts)} items)")
+        base_dt = datetime.now(timezone.utc) + timedelta(days=1)
+
+        for s_idx, s in enumerate(derived_shorts, start=1):
+            short_id = s.get("short_id", f"short_{s_idx:02d}")
+            title = s.get("title", f"Short {s_idx}")
+            source_act = s.get("source_act", 1)
+            start = float(s.get("start_sec", 0.0))
+            dur = float(s.get("duration_sec", 45.0))
+            hook_script = s.get("hook_script", "")
+
+            # Schedule slot at 07:30 UTC (13:00 IST) for consecutive days
+            slot_dt = datetime(base_dt.year, base_dt.month, base_dt.day, 7, 30, 0, tzinfo=timezone.utc) + timedelta(days=s_idx - 1)
+            publish_at_iso = slot_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+            short_file = out_base / f"{short_id}.mp4"
+            ass_file = out_base / f"{short_id}_subtitles.ass"
+            meta_file = out_base / f"{short_id}_meta.json"
+            meta_compat_file = out_base / f"{short_id}_metadata.json"
+
+            generate_safe_short_ass(hook_script or title, dur, ass_file)
+
+            try:
+                rendered_short = extract_act_slice(
+                    master_video_path=master_path,
+                    start_sec=start,
+                    duration_sec=dur,
+                    output_path=short_file,
+                    ass_subtitles_path=ass_file,
+                )
+
+                pinned_comment = (
+                    f"🚨 This is just one chapter of the story.\n\n"
+                    f"Watch the full documentary on our channel: '{longform_title}'.\n"
+                    f"Link pinned on channel page or search '{longform_title}' on YouTube!"
+                )
+                description = (
+                    f"{hook_script}\n\n"
+                    f"Full Documentary: '{longform_title}'\n"
+                    f"Watch on {channel_name}.\n\n"
+                    f"#History #Shorts #Documentary #UntoldHistory #FactualStories"
+                )
+                meta = {
+                    "short_id": short_id,
+                    "title": title[:100],
+                    "description": description,
+                    "pinned_comment": pinned_comment,
+                    "tags": ["history", "documentary", "untold history", "shorts", "factual history"],
+                    "source_act": source_act,
+                    "start_sec": start,
+                    "duration_sec": dur,
+                    "hook_script": hook_script,
+                    "longform_reference": longform_title,
+                    "scheduled_publish_slot": publish_at_iso,
+                    "publish_at_iso": publish_at_iso,
+                    "privacy_status": "private",
+                }
+
+                out_base.mkdir(parents=True, exist_ok=True)
+                with open(meta_file, "w", encoding="utf-8") as f:
+                    json.dump(meta, f, indent=2, ensure_ascii=False)
+                with open(meta_compat_file, "w", encoding="utf-8") as f:
+                    json.dump(meta, f, indent=2, ensure_ascii=False)
+
+                results.append({
+                    "short_id": short_id,
+                    "act_index": source_act,
+                    "short_video": str(rendered_short),
+                    "metadata_file": str(meta_file),
+                    "title": meta["title"],
+                    "publish_at_iso": publish_at_iso,
+                })
+            except Exception as e:
+                logger.error(f"Failed to extract derived short {short_id}: {e}")
+
+        logger.info(f"Successfully generated {len(results)} explicit derived 9:16 Shorts from {master_path.name}")
+        return results
+
     if not acts:
         probe_cmd = [
             "ffprobe", "-v", "error",
