@@ -362,6 +362,156 @@ def split_master_into_shorts(
     return results
 
 
+def _create_vertical_proxy(title: str, prompt: str, out_path: Path) -> Path:
+    """Generates a clean high-contrast 1080x1920 vertical canvas proxy for testing."""
+    from PIL import Image, ImageDraw, ImageFont
+    img = Image.new("RGB", (1080, 1920), color=(14, 18, 28))
+    draw = ImageDraw.Draw(img)
+    draw.rectangle([40, 80, 1040, 1840], outline=(60, 80, 120), width=4)
+    font = ImageFont.load_default()
+    draw.text((80, 140), "STANDALONE CAUSAL SHORT TEST", fill=(255, 204, 0), font=font)
+    draw.text((80, 200), title[:80], fill=(220, 230, 255), font=font)
+    # Wrap prompt text
+    lines = [prompt[i:i + 45] for i in range(0, min(300, len(prompt)), 45)]
+    y = 280
+    for l in lines:
+        draw.text((80, y), l, fill=(160, 180, 200), font=font)
+        y += 30
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    img.save(str(out_path))
+    return out_path
+
+
+def render_standalone_causal_short(
+    draft_json_path: Path,
+    out_mp4_path: Path,
+    allow_proxies: bool = False
+) -> Path:
+    """
+    Renders a standalone 5-beat causal Short (Beginning -> Middle -> End) directly
+    from the 'standalone_short_test' block in a causal draft JSON.
+    Guarantees:
+      - 1-to-1 sync: each beat has its own voice synthesis and exact-duration visual.
+      - Mobile-safe subtitles with MarginV=620 (SAFE_SHORTS_ASS_HEADER).
+      - Crisp narration, zero muddy background music.
+    """
+    from longform_engine.assemble_longform import (
+        synthesize_speech,
+        get_audio_duration,
+        EDGE_TTS_VOICE_P1,
+        generate_16x9_visual,
+        check_fooocus_status,
+        FOOOCUS_URL,
+    )
+
+    draft_path = Path(draft_json_path)
+    with open(draft_path, "r", encoding="utf-8") as f:
+        draft_data = json.load(f)
+
+    short_block = draft_data.get("standalone_short_test") or draft_data.get("standalone_short")
+    if not short_block:
+        raise ValueError(f"No 'standalone_short_test' or 'standalone_short' block found in {draft_path.name}")
+
+    title = short_block.get("title", "How a 21-Year-Old Sailed 70 Warships Across a Mountain (1453)")
+    beats = short_block.get("beats", [])
+    if not beats:
+        raise ValueError(f"No beats found in standalone short block of {draft_path.name}")
+
+    out_mp4_path = Path(out_mp4_path)
+    out_mp4_path.parent.mkdir(parents=True, exist_ok=True)
+    temp_dir = out_mp4_path.parent / "temp_standalone_short"
+    temp_dir.mkdir(parents=True, exist_ok=True)
+
+    fooocus_active = check_fooocus_status(FOOOCUS_URL)
+    beat_clips = []
+
+    logger.info(f"Rendering Standalone Causal Short ({len(beats)} beats) -> {out_mp4_path.name}")
+
+    for idx, beat in enumerate(beats, start=1):
+        beat_id = beat.get("beat_id", f"beat_{idx:02d}")
+        narration = beat.get("narration", "").strip()
+        prompt = beat.get("prompt", "")
+        role = beat.get("causal_role", f"Beat {idx}")
+
+        # 1. Synthesize exact voiceover for this beat
+        audio_path = temp_dir / f"{beat_id}.mp3"
+        if not audio_path.exists() or audio_path.stat().st_size < 100:
+            synthesize_speech(narration, EDGE_TTS_VOICE_P1, audio_path)
+        dur = get_audio_duration(audio_path)
+        if dur < 1.0:
+            dur = 1.0
+
+        # 2. Generate mobile-safe ASS subtitles (MarginV=620)
+        ass_path = temp_dir / f"{beat_id}_subtitles.ass"
+        generate_safe_short_ass(narration, dur, ass_path)
+
+        # 3. Visual Keyframe (Fooocus SDXL or vertical canvas proxy)
+        img_path = temp_dir / f"{beat_id}.png"
+        if not img_path.exists() or img_path.stat().st_size < 1000:
+            if fooocus_active and not allow_proxies:
+                try:
+                    generate_16x9_visual(prompt, "lowres, text, watermark", img_path, aspect_ratio="896*1152", allow_proxies=False)
+                except Exception as fe:
+                    logger.warning(f"Fooocus SDXL for {beat_id} failed ({fe}); using vertical proxy.")
+                    _create_vertical_proxy(role, prompt, img_path)
+            else:
+                _create_vertical_proxy(role, prompt, img_path)
+
+        # 4. Render 9:16 vertical clip with burned subtitles & synced audio
+        beat_video = temp_dir / f"{beat_id}_synced.mp4"
+        escaped_ass = str(ass_path).replace("\\", "/").replace(":", "\\:")
+        cmd = [
+            "ffmpeg", "-y",
+            "-loop", "1", "-i", str(img_path),
+            "-i", str(audio_path),
+            "-vf", f"scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,ass='{escaped_ass}'",
+            "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
+            "-c:a", "aac", "-b:a", "192k",
+            "-t", f"{dur:.3f}",
+            "-shortest",
+            str(beat_video)
+        ]
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        if proc.returncode != 0:
+            logger.error(f"FFmpeg error on {beat_id}: {proc.stderr}")
+            raise RuntimeError(f"FFmpeg failed rendering {beat_id}: {proc.stderr[-300:]}")
+
+        beat_clips.append(beat_video)
+        logger.info(f"  Rendered Beat {idx}/5 ({dur:.1f}s): {role}")
+
+    # 5. Concatenate all 5 beats into final Short
+    concat_list = temp_dir / "beats_concat.txt"
+    with open(concat_list, "w", encoding="utf-8") as f:
+        for bp in beat_clips:
+            f.write(f"file '{bp.as_posix()}'\n")
+
+    cmd_concat = [
+        "ffmpeg", "-y",
+        "-f", "concat", "-safe", "0",
+        "-i", str(concat_list),
+        "-c", "copy",
+        str(out_mp4_path)
+    ]
+    subprocess.run(cmd_concat, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+
+    # 6. Export Metadata JSON
+    meta_path = out_mp4_path.parent / f"{out_mp4_path.stem}_meta.json"
+    full_text = " ".join(b.get("narration", "") for b in beats)
+    meta = {
+        "title": title[:100],
+        "description": f"{full_text}\n\nFull Documentary on Chronos Shift.\n\n#History #Shorts #Documentary #Constantinople",
+        "tags": ["history", "shorts", "documentary", "constantinople", "untold history"],
+        "pinned_comment": f"🚨 Watch the full documentary on Chronos Shift: '{draft_data.get('video_title', 'Constantinople 1453')}'. Link in channel description!",
+        "beats_count": len(beats),
+        "output_file": str(out_mp4_path),
+    }
+    with open(meta_path, "w", encoding="utf-8") as f:
+        json.dump(meta, f, indent=2, ensure_ascii=False)
+
+    logger.info(f"[OK] Standalone Causal Short rendered successfully: {out_mp4_path}")
+    return out_mp4_path
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract 9:16 Shorts from 16:9 Master Documentary")
     parser.add_argument("--master-video", required=True, help="Path to 16:9 master video")

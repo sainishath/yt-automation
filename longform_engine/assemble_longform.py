@@ -352,12 +352,19 @@ def format_youtube_description_timestamps(chapters: List[Dict[str, Any]]) -> str
 
 # ── Channel A Assembly Engine ────────────────────────────────────────────────
 
-def assemble_history_documentary(script_path: Path, output_dir: Path, split_shorts: bool = False, allow_proxies: bool = False) -> Path:
+def assemble_history_documentary(
+    script_path: Path,
+    output_dir: Path,
+    split_shorts: bool = False,
+    allow_proxies: bool = False,
+    enable_bgm: bool = False
+) -> Path:
     """
-    Renders and assembles the 10-Minute Historical Documentary: The Fall of Constantinople (1453):
-      1. Synthesizes 7 act voice tracks via edge_tts (authoritative documentary tone).
+    Renders and assembles the 10-Minute Historical Documentary:
+      1. Synthesizes voice tracks via edge_tts (authoritative documentary tone).
+         - Supports 1-to-1 Per-Shot Audio-Visual Sync when shot objects contain 'narration'.
       2. Renders 16:9 SDXL scenes via Fooocus with subpixel Ken-Burns pan/zoom movement.
-      3. Mixes 7% ambient orchestral bed under voiceover.
+      3. Clean voice by default (--no-bgm). Sub-bass low-pass BGM only when --enable-bgm is passed.
       4. Injects FFMETADATA1 chapter markers and exports description timestamps.
     """
     with open(script_path, "r", encoding="utf-8") as f:
@@ -403,25 +410,153 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
         a_title = act["title"]
         print(f"\n--> Processing Act {a_num}: {a_title}...")
 
-        # 1. Synthesize Voiceover
-        audio_path = temp_dir / f"act_{a_num:02d}.mp3"
-        if not audio_path.exists():
-            synthesize_speech(act["script"], EDGE_TTS_VOICE_P1, audio_path)
-        duration = get_audio_duration(audio_path)
-        print(f"    Audio Duration: {duration:.2f}s ({len(act['script'].split())} words)")
-
-        # 2. Record Chapter Marker
-        chapters.append({
-            "title": f"Act {a_num}: {a_title}",
-            "start_sec": current_time,
-            "end_sec": current_time + duration
-        })
-        current_time += duration
-
-        # Check if multi-shot architecture is present
         shots = act.get("shots", [])
-        if shots:
-            # ── Multi-Shot High-Density Assembly ─────────────────────────────
+        has_per_shot_narration = any(bool(s.get("narration")) for s in shots)
+
+        if has_per_shot_narration:
+            # ── 1-to-1 Per-Shot Audio-Visual Sync Assembly ────────────────────
+            logging.info(f"    [1-to-1 Audio-Visual Sync] Act {a_num} uses per-shot narration binding ({len(shots)} shots).")
+            act_clips = []
+            neg_prompt = "low quality, blurry, modern clothing, electricity, cars, distorted anatomy, text watermark, stretched, squished"
+
+            for s_idx, s in enumerate(shots, start=1):
+                shot_id = s.get("shot_id", f"act{a_num:02d}_shot{s_idx:02d}")
+                shot_narration = s.get("narration", "").strip()
+                shot_type = s.get("shot_type", "").strip()
+                img_path = images_cache / f"{shot_id}.png"
+                motion_type = s.get("motion", "push_in")
+                clip_path = temp_dir / f"clip_{shot_id}_synced.mp4"
+
+                # 1. Synthesize exact voiceover for this shot
+                shot_audio_path = temp_dir / f"audio_{shot_id}.mp3"
+                if not shot_audio_path.exists() or shot_audio_path.stat().st_size < 100:
+                    synthesize_speech(shot_narration, EDGE_TTS_VOICE_P1, shot_audio_path)
+                shot_dur = get_audio_duration(shot_audio_path)
+                if shot_dur < 1.0:
+                    shot_dur = 1.0
+
+                if not clip_path.exists():
+                    shot_video_only = temp_dir / f"video_{shot_id}.mp4"
+                    if not shot_video_only.exists():
+                        # Route specialized tactical visual shot types
+                        if shot_type in ["Tactical Map", "Siege Map", "Ballistics Map"]:
+                            logging.info(f"    [Tactical Map] Rendering animated siege vectors ({shot_dur:.1f}s)...")
+                            render_tactical_siege_map(
+                                vectors=s.get("map_vectors"),
+                                output_mp4_path=shot_video_only,
+                                duration_sec=shot_dur,
+                                title=f"ACT {a_num}: {a_title.upper()}"
+                            )
+                        elif shot_type in ["Overland Route", "Overland Fleet", "Fleet Transit", "Overland Transit"]:
+                            logging.info(f"    [Overland Transit] Rendering Galata ridge fleet transit ({shot_dur:.1f}s)...")
+                            render_overland_fleet_transit(
+                                ship_count=70,
+                                output_mp4_path=shot_video_only,
+                                duration_sec=shot_dur
+                            )
+                        elif shot_type in ["Primary Source", "Manuscript Card", "Manuscript Callout"]:
+                            logging.info(f"    [Primary Source] Rendering manuscript overlay callout ({shot_dur:.1f}s)...")
+                            if not img_path.exists() or img_path.stat().st_size < 50000:
+                                generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768", allow_proxies=allow_proxies)
+                            base_clip = temp_dir / f"base_{shot_id}.mp4"
+                            render_cinematic_shot(
+                                image_path=img_path,
+                                output_mp4_path=base_clip,
+                                duration_sec=shot_dur,
+                                motion_type=motion_type,
+                                fps=30
+                            )
+                            source_dict = s.get("primary_source")
+                            if not source_dict:
+                                sources = extract_primary_sources(s.get("event_slug", "fall_of_constantinople_1453"))
+                                source_dict = sources[min(a_num - 1, len(sources) - 1)] if sources else {}
+                            if source_dict:
+                                card_png = temp_dir / f"card_{shot_id}.png"
+                                render_source_card(source_dict, card_png)
+                                burn_source_card(base_clip, shot_video_only, card_png, start_sec=0.5, duration_sec=max(2.0, shot_dur - 1.0))
+                            else:
+                                shot_video_only = base_clip
+                        else:
+                            # Standard Photorealistic Cinematic SDXL Visual Shot
+                            if not img_path.exists() or img_path.stat().st_size < 50000:
+                                generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768", allow_proxies=allow_proxies)
+                            render_cinematic_shot(
+                                image_path=img_path,
+                                output_mp4_path=shot_video_only,
+                                duration_sec=shot_dur,
+                                motion_type=motion_type,
+                                fps=30
+                            )
+
+                    # Mux exact video + exact audio for this shot
+                    cmd_mux_shot = [
+                        "ffmpeg", "-y",
+                        "-i", str(shot_video_only),
+                        "-i", str(shot_audio_path),
+                        "-c:v", "copy",
+                        "-c:a", "aac", "-b:a", "192k",
+                        "-shortest",
+                        str(clip_path)
+                    ]
+                    subprocess.run(cmd_mux_shot, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+
+                act_clips.append(clip_path)
+                logging.info(f"    Shot {s_idx}/{len(shots)} ({shot_dur:.1f}s): {s.get('causal_step', shot_type)}")
+
+            # Concatenate synced shot clips into act video segment
+            act_concat_list = temp_dir / f"concat_act_{a_num:02d}.txt"
+            with open(act_concat_list, "w", encoding="utf-8") as f:
+                for c in act_clips:
+                    f.write(f"file '{c.as_posix()}'\n")
+
+            seg_mp4 = temp_dir / f"seg_act_{a_num:02d}.mp4"
+            cmd_act_concat = [
+                "ffmpeg", "-y",
+                "-f", "concat", "-safe", "0",
+                "-i", str(act_concat_list),
+                "-c", "copy",
+                str(seg_mp4)
+            ]
+            subprocess.run(cmd_act_concat, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+
+            duration = get_audio_duration(seg_mp4)
+
+            # Record Chapter Marker
+            chapters.append({
+                "title": f"Act {a_num}: {a_title}",
+                "start_sec": current_time,
+                "end_sec": current_time + duration
+            })
+            current_time += duration
+
+            # Burn Upper-Right Act Progress Badge (X=1520, Y=60) with 0.5s fade-in/out
+            seg_badged = temp_dir / f"seg_act_{a_num:02d}_badged.mp4"
+            hist_date = act.get("historical_date", "1453 AD")
+            try:
+                burn_act_badge(seg_mp4, seg_badged, a_num, a_title, hist_date, duration=duration)
+                video_segments.append(seg_badged)
+            except Exception as badge_err:
+                logging.warning(f"Failed to burn act badge ({badge_err}); using unbadged segment.")
+                video_segments.append(seg_mp4)
+            print(f"    Rendered 1080p Synced Act Segment with Badges ({len(shots)} shots, {duration:.2f}s)")
+
+        elif shots:
+            # ── Legacy Multi-Shot High-Density Assembly ──────────────────────
+            # 1. Synthesize Act-Level Voiceover
+            audio_path = temp_dir / f"act_{a_num:02d}.mp3"
+            if not audio_path.exists():
+                synthesize_speech(act["script"], EDGE_TTS_VOICE_P1, audio_path)
+            duration = get_audio_duration(audio_path)
+            print(f"    Audio Duration: {duration:.2f}s ({len(act['script'].split())} words)")
+
+            # 2. Record Chapter Marker
+            chapters.append({
+                "title": f"Act {a_num}: {a_title}",
+                "start_sec": current_time,
+                "end_sec": current_time + duration
+            })
+            current_time += duration
+
             num_shots = len(shots)
             shot_dur = duration / num_shots
             act_clips = []
@@ -435,7 +570,6 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
                 motion_type = s.get("motion", "push_in")
 
                 if not clip_path.exists():
-                    # Route specialized tactical visual shot types
                     if shot_type in ["Tactical Map", "Siege Map", "Ballistics Map"]:
                         logging.info(f"    [Tactical Map] Rendering animated siege vectors ({shot_dur:.1f}s)...")
                         render_tactical_siege_map(
@@ -474,7 +608,6 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
                         else:
                             clip_path = base_clip
                     else:
-                        # Standard Photorealistic Cinematic SDXL Visual Shot
                         if not img_path.exists() or img_path.stat().st_size < 50000:
                             generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768", allow_proxies=allow_proxies)
                         render_cinematic_shot(
@@ -487,7 +620,6 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
 
                 act_clips.append(clip_path)
 
-            # Concatenate act clips into act video segment
             act_concat_list = temp_dir / f"concat_act_{a_num:02d}.txt"
             with open(act_concat_list, "w", encoding="utf-8") as f:
                 for c in act_clips:
@@ -503,7 +635,6 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
             ]
             subprocess.run(cmd_act_concat, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
-            # Mux act video with synthesized audio
             seg_mp4 = temp_dir / f"seg_act_{a_num:02d}.mp4"
             cmd_mux = [
                 "ffmpeg", "-y",
@@ -516,7 +647,6 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
             ]
             subprocess.run(cmd_mux, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
-            # Burn Upper-Right Act Progress Badge (X=1520, Y=60) with 0.5s fade-in/out
             seg_badged = temp_dir / f"seg_act_{a_num:02d}_badged.mp4"
             hist_date = act.get("historical_date", "1453 AD")
             try:
@@ -529,6 +659,18 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
 
         else:
             # ── Single-Shot Fallback ──────────────────────────────────────────
+            audio_path = temp_dir / f"act_{a_num:02d}.mp3"
+            if not audio_path.exists():
+                synthesize_speech(act["script"], EDGE_TTS_VOICE_P1, audio_path)
+            duration = get_audio_duration(audio_path)
+
+            chapters.append({
+                "title": f"Act {a_num}: {a_title}",
+                "start_sec": current_time,
+                "end_sec": current_time + duration
+            })
+            current_time += duration
+
             primary_prompt = act["visual_prompts"][0]
             neg_prompt = "low quality, blurry, modern clothing, electricity, cars, distorted anatomy, text watermark"
             img_path = temp_dir / f"visual_act_{a_num:02d}.png"
@@ -543,7 +685,6 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
                 motion_type="push_in",
                 fps=30
             )
-            # Add audio
             seg_with_audio = temp_dir / f"seg_act_{a_num:02d}_audio.mp4"
             cmd_mux = [
                 "ffmpeg", "-y",
@@ -576,13 +717,22 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
 
     # 6. Audio Ducking with Ambient Orchestral BGM (Sidechaincompress)
     master_with_bgm = temp_dir / "master_with_bgm.mp4"
-    if bgm_file.exists():
-        print(f"\n--> Applying FFmpeg sidechaincompress audio ducking (threshold=0.08, ratio=6, release=250ms)...")
+    if enable_bgm and bgm_file.exists():
+        print(f"\n--> Applying FFmpeg sidechaincompress audio ducking with low-pass filter (lowpass=240Hz, volume=0.03)...")
         ducked_audio = temp_dir / "master_ducked_audio.m4a"
+        filtered_bgm = temp_dir / "filtered_bgm.mp3"
         try:
+            # Low-pass filter to remove 300Hz-3500Hz mid-range vocal clashing frequencies
+            cmd_filter_bgm = [
+                "ffmpeg", "-y",
+                "-i", str(bgm_file),
+                "-af", "lowpass=f=240,highpass=f=45,volume=0.03",
+                str(filtered_bgm)
+            ]
+            subprocess.run(cmd_filter_bgm, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
             raw_audio = temp_dir / "raw_master_voice.aac"
             subprocess.run(["ffmpeg", "-y", "-i", str(raw_master), "-vn", "-c:a", "copy", str(raw_audio)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-            apply_sidechain_ducking(raw_audio, bgm_file, ducked_audio, threshold=0.08, ratio=6.0, release_ms=250)
+            apply_sidechain_ducking(raw_audio, filtered_bgm, ducked_audio, threshold=0.08, ratio=6.0, release_ms=250)
             cmd_final_mux = [
                 "ffmpeg", "-y",
                 "-i", str(raw_master),
@@ -602,7 +752,7 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
                 "-i", str(raw_master),
                 "-stream_loop", "-1", "-i", str(bgm_file),
                 "-filter_complex",
-                "[1:a]volume=0.07[bgm];[0:a]volume=1.0[voice];[voice][bgm]amix=inputs=2:duration=first:dropout_transition=3[aout]",
+                "[1:a]lowpass=f=240,highpass=f=45,volume=0.03[bgm];[0:a]volume=1.0[voice];[voice][bgm]amix=inputs=2:duration=first:dropout_transition=3[aout]",
                 "-map", "0:v", "-map", "[aout]",
                 "-c:v", "copy",
                 "-c:a", "aac", "-b:a", "192k",
@@ -610,6 +760,7 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
             ]
             subprocess.run(cmd_duck, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     else:
+        logging.info("[Audio Engine] Clean voice default active (--no-bgm). Zero background music clashing.")
         master_with_bgm = raw_master
 
     # 7. Inject Chapter Markers
@@ -650,12 +801,22 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
 
     if split_shorts:
         print("\n" + "-" * 70)
-        print("  --> AUTO-SPLITTING 16:9 MASTER INTO 5 VIRAL 9:16 SHORTS (--split-shorts)")
+        print("  --> SPLITTING / RENDERING SHORTS (--split-shorts)")
         print("-" * 70)
-        from longform_engine.short_splitter import split_master_into_shorts
         shorts_dir = output_dir / "shorts"
-        split_master_into_shorts(final_master, manifest_path=script_path, output_dir=shorts_dir)
-        print(f"  [OK] 5 Mobile-Safe 9:16 Shorts Generated in: {shorts_dir}")
+        shorts_dir.mkdir(parents=True, exist_ok=True)
+        from longform_engine.short_splitter import split_master_into_shorts, render_standalone_causal_short
+
+        if data.get("standalone_short_test") or data.get("standalone_short"):
+            print("  --> Detected 'standalone_short_test': Rendering 5-beat causal standalone Short...")
+            test_short_path = shorts_dir / "test_short_constantinople_ships.mp4"
+            render_standalone_causal_short(script_path, test_short_path, allow_proxies=allow_proxies)
+            print(f"  [OK] Standalone Causal Short Generated: {test_short_path}")
+
+        if data.get("derived_shorts") or not (data.get("standalone_short_test") or data.get("standalone_short")):
+            print("  --> Auto-splitting 16:9 master into derived vertical Shorts...")
+            split_master_into_shorts(final_master, manifest_path=script_path, output_dir=shorts_dir)
+            print(f"  [OK] Mobile-Safe 9:16 Shorts Generated in: {shorts_dir}")
 
     return final_master
 
@@ -781,6 +942,7 @@ def main():
     parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
     parser.add_argument("--split-shorts", action="store_true", help="Automatically carve 5 vertical 9:16 Shorts from master")
     parser.add_argument("--allow-proxies", action="store_true", help="Allow provisional canvas proxies if Fooocus is not running")
+    parser.add_argument("--enable-bgm", action="store_true", default=False, help="Enable filtered sub-bass background music (default: clean voice without BGM)")
 
     args = parser.parse_args()
     script_path = Path(args.draft)
@@ -802,7 +964,13 @@ def main():
     if pipe_type == "coding":
         assemble_coding_masterclass(script_path, out_dir)
     elif pipe_type == "history":
-        assemble_history_documentary(script_path, out_dir, split_shorts=args.split_shorts, allow_proxies=args.allow_proxies)
+        assemble_history_documentary(
+            script_path,
+            out_dir,
+            split_shorts=args.split_shorts,
+            allow_proxies=args.allow_proxies,
+            enable_bgm=args.enable_bgm
+        )
 
 
 if __name__ == "__main__":
