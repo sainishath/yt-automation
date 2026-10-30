@@ -1,0 +1,1193 @@
+{
+  "channel": "Chronos Shift (@ChronosShiftHistory)",
+  "video_title": "50,000 Men Vanished: The Lost Army of Cambyses (524 BC)",
+  "event_slug": "cambyses_lost_army_524bc",
+  "mode": "factual",
+  "aspect_ratio": "16:9",
+  "target_runtime_seconds": 635.0,
+  "total_word_count": 1036,
+  "target_wpm": 145,
+  "total_visual_shots": 80,
+  "average_shot_duration_sec": 7.94,
+  "acts": [
+    {
+      "act_number": 1,
+      "title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+      "est_start_sec": 0.0,
+      "est_end_sec": 88.0,
+      "rag_query": "Cambyses II lost army 50000 Persian soldiers Siwa Oasis 524 BC Herodotus",
+      "script": "In the spring of 524 BC, fifty thousand elite Persian warriors marched out of the royal city of Thebes on the Nile and stepped into the blistering furnace of the Egyptian Western Desert. They carried bronze-tipped spears, wicker shields, and water skins strapped to thousands of pack camels and donkeys. Their mission was simple and brutal: cross four hundred miles of hyper-arid wasteland to reach the remote Oasis of Siwa, burn the sacred Temple of the Oracle of Amun to the ground, and enslave its priests. Seven days later, they reached the halfway settlement of El Kharga, which the Greeks called the Island of the Blessed. They resupplied, marched west into the towering dunes of the Great Sand Sea—and vanished from the face of the earth. Not a single general, scout, or baggage handler ever walked out of the desert. For two thousand five hundred years, the fate of the Lost Army of Cambyses has remained one of archaeology's greatest unsolved cold cases.",
+      "historical_grounding": {
+        "era": "524 BC (Achaemenid Conquest of Egypt)",
+        "key_figures": [
+          "King Cambyses II of Persia",
+          "Oracle of Amun at Siwa"
+        ],
+        "defensive_specs": "50,000-man expeditionary corps; 400-mile march from Thebes (Luxor) via Kharga to Siwa",
+        "primary_source": "Herodotus, The Histories, Book III (Thalia), Section 26",
+        "primary_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+      },
+      "visual_prompts": [
+        "16:9 epic aerial wide shot of an endless column of fifty thousand Achaemenid Persian soldiers marching across towering golden sand dunes in the Egyptian Western Desert under a scorching sun, 8k",
+        "16:9 manuscript callout of Herodotus Book III (Thalia) Greek papyrus text with glowing English translation of the vanishing army passage",
+        "16:9 medium cinematic shot of Achaemenid Persian Immortals wearing desert headwraps, scale armor tunics, and carrying wicker shields and bronze spears trudging through deep blowing sand, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act01_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 epic aerial wide shot of an endless column of fifty thousand Achaemenid Persian soldiers marching across towering golden sand dunes in the Egyptian Western Desert under a scorching sun, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot02",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 manuscript callout of Herodotus Book III (Thalia) Greek papyrus text with glowing English translation of the vanishing army passage",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot03",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 medium cinematic shot of Achaemenid Persian Immortals wearing desert headwraps, scale armor tunics, and carrying wicker shields and bronze spears trudging through deep blowing sand, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot04",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 top-down topographical desert map showing the Nile at Thebes, Kharga Oasis, Dakhla Oasis, the Great Sand Sea, and Siwa Oasis with a dotted red march line",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 epic aerial wide shot of an endless column of fifty thousand Achaemenid Persian soldiers marching across towering golden sand dunes in the Egyptian Western Desert under a scorching sun, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot06",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 manuscript callout of Herodotus Book III (Thalia) Greek papyrus text with glowing English translation of the vanishing army passage, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot07",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 medium cinematic shot of Achaemenid Persian Immortals wearing desert headwraps, scale armor tunics, and carrying wicker shields and bronze spears trudging through deep blowing sand, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot08",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 top-down topographical desert map showing the Nile at Thebes, Kharga Oasis, Dakhla Oasis, the Great Sand Sea, and Siwa Oasis with a dotted red march line, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 epic aerial wide shot of an endless column of fifty thousand Achaemenid Persian soldiers marching across towering golden sand dunes in the Egyptian Western Desert under a scorching sun, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot10",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 manuscript callout of Herodotus Book III (Thalia) Greek papyrus text with glowing English translation of the vanishing army passage, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot11",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 medium cinematic shot of Achaemenid Persian Immortals wearing desert headwraps, scale armor tunics, and carrying wicker shields and bronze spears trudging through deep blowing sand, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        },
+        {
+          "shot_id": "act01_shot12",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 top-down topographical desert map showing the Nile at Thebes, Kharga Oasis, Dakhla Oasis, the Great Sand Sea, and Siwa Oasis with a dotted red march line, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 1,
+          "act_title": "Cold Open: Fifty Thousand Men Walk Into the Great Sand Sea",
+          "historical_date": "524 BC (Achaemenid Conquest of Egypt)",
+          "primary_source_quote": "Neither did they reach the Ammonians, nor did they return back to Egypt."
+        }
+      ]
+    },
+    {
+      "act_number": 2,
+      "title": "The Wrath of Cambyses II and the Curse of the Oracle",
+      "est_start_sec": 88.0,
+      "est_end_sec": 176.0,
+      "rag_query": "Cambyses II conquest of Pelusium Psamtik III Memphis Oracle of Amun legitimacy",
+      "script": "Why would the ruler of the largest empire on earth send fifty thousand men into a lifeless void? One year earlier, in 525 BC, King Cambyses the Second—son of Cyrus the Great—had shattered the Egyptian army at Pelusium and captured Memphis, toppling the Twenty-Sixth Dynasty of Pharaoh Psamtik the Third. To rule Egypt, foreign conquerors normally sought the divine blessing of the Egyptian priesthood. Two centuries later, Alexander the Great would make the exact same journey to Siwa and be hailed as the divine son of Amun-Ra. But when Cambyses demanded recognition, the priests at the isolated Siwa Oasis refused to legitimize his rule and prophesied his downfall. Enraged, and already reeling from a failed military push south toward Nubia, Cambyses split his forces in Thebes. He ordered a massive army of fifty thousand men to march west and erase the Oracle of Amun forever.",
+      "historical_grounding": {
+        "era": "525–524 BC",
+        "key_figures": [
+          "Cambyses II",
+          "Pharaoh Psamtik III",
+          "Priests of Amun at Siwa"
+        ],
+        "defensive_specs": "Conquest of Memphis (525 BC); dual campaign toward Kush (Nubia) and Siwa Oasis",
+        "primary_source": "Herodotus, Book III, Sections 17–25 & Demotic Chronicle",
+        "primary_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+      },
+      "visual_prompts": [
+        "16:9 dramatic medium shot of Persian King Cambyses II in royal Achaemenid robes and fluted gold crown standing inside a conquered Egyptian temple in Memphis, furious expression, torchlight, 8k",
+        "16:9 wide shot of the lush, palm-ringed limestone citadel of Shali at the Siwa Oasis rising like an island in the middle of the barren Western Desert, 8k",
+        "16:9 macro close-up of an Egyptian bronze ram-headed amulet of the god Amun-Ra resting on carved hieroglyphic temple stone, flickering oil lamp, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act02_shot01",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 dramatic medium shot of Persian King Cambyses II in royal Achaemenid robes and fluted gold crown standing inside a conquered Egyptian temple in Memphis, furious expression, torchlight, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot02",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide shot of the lush, palm-ringed limestone citadel of Shali at the Siwa Oasis rising like an island in the middle of the barren Western Desert, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot03",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 macro close-up of an Egyptian bronze ram-headed amulet of the god Amun-Ra resting on carved hieroglyphic temple stone, flickering oil lamp, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot04",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 strategic campaign map of Achaemenid Egypt in 524 BC showing Cambyses' southern march toward Kush and the western detachment marching from Thebes toward Siwa",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot05",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 dramatic medium shot of Persian King Cambyses II in royal Achaemenid robes and fluted gold crown standing inside a conquered Egyptian temple in Memphis, furious expression, torchlight, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot06",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide shot of the lush, palm-ringed limestone citadel of Shali at the Siwa Oasis rising like an island in the middle of the barren Western Desert, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot07",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 macro close-up of an Egyptian bronze ram-headed amulet of the god Amun-Ra resting on carved hieroglyphic temple stone, flickering oil lamp, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot08",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 strategic campaign map of Achaemenid Egypt in 524 BC showing Cambyses' southern march toward Kush and the western detachment marching from Thebes toward Siwa, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot09",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "prompt": "16:9 dramatic medium shot of Persian King Cambyses II in royal Achaemenid robes and fluted gold crown standing inside a conquered Egyptian temple in Memphis, furious expression, torchlight, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot10",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide shot of the lush, palm-ringed limestone citadel of Shali at the Siwa Oasis rising like an island in the middle of the barren Western Desert, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot11",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "prompt": "16:9 macro close-up of an Egyptian bronze ram-headed amulet of the god Amun-Ra resting on carved hieroglyphic temple stone, flickering oil lamp, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        },
+        {
+          "shot_id": "act02_shot12",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 strategic campaign map of Achaemenid Egypt in 524 BC showing Cambyses' southern march toward Kush and the western detachment marching from Thebes toward Siwa, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 2,
+          "act_title": "The Wrath of Cambyses II and the Curse of the Oracle",
+          "historical_date": "525–524 BC",
+          "primary_source_quote": "Those who went against the Ammonians set forth from Thebes and marched with guides."
+        }
+      ]
+    },
+    {
+      "act_number": 3,
+      "title": "The Island of the Blessed: Seven Days to El Kharga",
+      "est_start_sec": 176.0,
+      "est_end_sec": 265.0,
+      "rag_query": "Kharga Oasis Island of the Blessed Herodotus 7 days march from Thebes",
+      "script": "The first leg of the expedition is documented with pinpoint geographical accuracy. According to Herodotus, who interviewed Egyptian and Greek informants just seventy-five years after the event, the Persian column marched west from Thebes with local desert guides and arrived safely at the city of Oasis—modern El Kharga—after seven days across the limestone plateau. Up to that moment, the logistics held. El Kharga had artesian springs, date palms, and grain stores. Archaeological evidence confirms a strong Persian administrative presence in Kharga, including the Temple of Hibis later expanded under Darius the First. But beyond Kharga and Dakhla lay the Great Sand Sea: an ocean of shifting quartz dunes towering up to four hundred feet high, where summer surface temperatures exceed one hundred and forty degrees Fahrenheit and a single wrong turn means slow death by dehydration.",
+      "historical_grounding": {
+        "era": "Spring 524 BC",
+        "key_figures": [
+          "Persian Expeditionary Commanders",
+          "Bedouin / Oasis Guides"
+        ],
+        "defensive_specs": "200 km plateau crossing from Thebes to Kharga Oasis (7 days); followed by 600 km dune sea",
+        "primary_source": "Herodotus, Book III, Section 26 (The Island of the Blessed)",
+        "primary_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+      },
+      "visual_prompts": [
+        "16:9 cinematic wide shot of the green palm groves and mudbrick walls of Kharga Oasis surrounded by towering hyper-arid desert cliffs, Persian tents pitched by water pools, 8k",
+        "16:9 medium shot of Persian soldiers filling leather water skins and loading amphorae onto baggage camels at an oasis well before dawn, tense solemn faces, 8k",
+        "16:9 elevation and terrain map comparing the flat limestone plateau between Thebes and Kharga with the razor-sharp longitudinal dunes of the Great Sand Sea"
+      ],
+      "shots": [
+        {
+          "shot_id": "act03_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic wide shot of the green palm groves and mudbrick walls of Kharga Oasis surrounded by towering hyper-arid desert cliffs, Persian tents pitched by water pools, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot02",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of Persian soldiers filling leather water skins and loading amphorae onto baggage camels at an oasis well before dawn, tense solemn faces, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot03",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 elevation and terrain map comparing the flat limestone plateau between Thebes and Kharga with the razor-sharp longitudinal dunes of the Great Sand Sea",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot04",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 macro shot of unglazed terracotta water flasks strapped with hemp rope to a camel saddle as hot desert wind blows fine quartz sand across the clay, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic wide shot of the green palm groves and mudbrick walls of Kharga Oasis surrounded by towering hyper-arid desert cliffs, Persian tents pitched by water pools, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot06",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of Persian soldiers filling leather water skins and loading amphorae onto baggage camels at an oasis well before dawn, tense solemn faces, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot07",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 elevation and terrain map comparing the flat limestone plateau between Thebes and Kharga with the razor-sharp longitudinal dunes of the Great Sand Sea, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot08",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 macro shot of unglazed terracotta water flasks strapped with hemp rope to a camel saddle as hot desert wind blows fine quartz sand across the clay, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 cinematic wide shot of the green palm groves and mudbrick walls of Kharga Oasis surrounded by towering hyper-arid desert cliffs, Persian tents pitched by water pools, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot10",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 medium shot of Persian soldiers filling leather water skins and loading amphorae onto baggage camels at an oasis well before dawn, tense solemn faces, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        },
+        {
+          "shot_id": "act03_shot11",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 elevation and terrain map comparing the flat limestone plateau between Thebes and Kharga with the razor-sharp longitudinal dunes of the Great Sand Sea, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 3,
+          "act_title": "The Island of the Blessed: Seven Days to El Kharga",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "And they were seen to arrive at the city of Oasis, which is seven days' journey from Thebes across sand."
+        }
+      ]
+    },
+    {
+      "act_number": 4,
+      "title": "The Khamsin Superstorm: Buried Alive at Midday",
+      "est_start_sec": 265.0,
+      "est_end_sec": 360.0,
+      "rag_query": "Khamsin sandstorm Great Sand Sea Herodotus buried alive midday meal",
+      "script": "What happened after the army left the oasis comes straight from the testimony of the Ammonians themselves, recorded verbatim in Book Three of Herodotus: When the army had marched from the Oasis across the sand and had reached about halfway between that place and their borders, while they were taking their midday meal, a violent and vehement south wind blew upon them, carrying with it swirling heaps of sand, which covered them over, and in this manner they disappeared completely. In Egypt, that south wind has a name: the Khamsin. Triggered by deep low-pressure cyclones moving across North Africa in the spring, a severe Khamsin wall can reach hurricane gusts of seventy miles per hour, dropping visibility to zero in seconds, stripping skin from bone, and raising ambient air temperatures by twenty degrees in minutes. Even if a sandstorm does not bury fifty thousand standing men under fifty feet of sand instantly, it slaughters their pack animals, buries their water jars, blinds their guides, and asphyxiates an exhausted column within hours.",
+      "historical_grounding": {
+        "era": "Spring 524 BC",
+        "key_figures": [
+          "Ammonian Informants",
+          "Herodotus of Halicarnassus"
+        ],
+        "defensive_specs": "Khamsin cyclonic sandstorm: 110+ km/h gusts, 50C+ thermal spike, zero visibility",
+        "primary_source": "Herodotus, Book III (Thalia), Section 26.3",
+        "primary_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+      },
+      "visual_prompts": [
+        "16:9 terrifying wide cinematic shot of a colossal, mile-high wall of dark orange-red Khamsin sandstorm rolling over the Great Sand Sea toward an encamped ancient army, 8k",
+        "16:9 intense medium shot of Persian soldiers shielding their eyes with linen cloaks and bronze shields inside a blinding howling sandstorm, tents tearing apart, zero visibility, 8k",
+        "16:9 archival manuscript card displaying Herodotus Book III Section 26.3 verbatim account of the south wind burying the Persian army at midday"
+      ],
+      "shots": [
+        {
+          "shot_id": "act04_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 terrifying wide cinematic shot of a colossal, mile-high wall of dark orange-red Khamsin sandstorm rolling over the Great Sand Sea toward an encamped ancient army, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot02",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 intense medium shot of Persian soldiers shielding their eyes with linen cloaks and bronze shields inside a blinding howling sandstorm, tents tearing apart, zero visibility, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot03",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archival manuscript card displaying Herodotus Book III Section 26.3 verbatim account of the south wind burying the Persian army at midday",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot04",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 haunting close-up of a bronze Achaemenid helmet and an overturned clay water jug rapidly disappearing beneath drifting ripples of golden desert sand, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 terrifying wide cinematic shot of a colossal, mile-high wall of dark orange-red Khamsin sandstorm rolling over the Great Sand Sea toward an encamped ancient army, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot06",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 intense medium shot of Persian soldiers shielding their eyes with linen cloaks and bronze shields inside a blinding howling sandstorm, tents tearing apart, zero visibility, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot07",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archival manuscript card displaying Herodotus Book III Section 26.3 verbatim account of the south wind burying the Persian army at midday, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot08",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "prompt": "16:9 haunting close-up of a bronze Achaemenid helmet and an overturned clay water jug rapidly disappearing beneath drifting ripples of golden desert sand, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_left_up",
+          "prompt": "16:9 terrifying wide cinematic shot of a colossal, mile-high wall of dark orange-red Khamsin sandstorm rolling over the Great Sand Sea toward an encamped ancient army, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot10",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "prompt": "16:9 intense medium shot of Persian soldiers shielding their eyes with linen cloaks and bronze shields inside a blinding howling sandstorm, tents tearing apart, zero visibility, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        },
+        {
+          "shot_id": "act04_shot11",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archival manuscript card displaying Herodotus Book III Section 26.3 verbatim account of the south wind burying the Persian army at midday, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 4,
+          "act_title": "The Khamsin Superstorm: Buried Alive at Midday",
+          "historical_date": "Spring 524 BC",
+          "primary_source_quote": "While they were taking their midday meal, a violent south wind blew upon them, carrying heaps of sand, which covered them over."
+        }
+      ]
+    },
+    {
+      "act_number": 5,
+      "title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+      "est_start_sec": 360.0,
+      "est_end_sec": 455.0,
+      "rag_query": "Castiglioni brothers 2009 Sitra Lake Bahrain Oasis Achaemenid bronze arrowheads daggers",
+      "script": "For centuries, skeptics dismissed Herodotus's story as Greek propaganda invented to make Cambyses look like a madman. Then, modern desert explorers went looking in the sand. Instead of taking the well-patrolled northern coastal route, an army trying to catch Siwa by surprise would have marched west from Dakhla Oasis through the Abu Ballas trail toward Gilf Kebir, and then turned north through the Sitra and Bahrain oases. In recent decades, archaeological surveys and expeditions—including Italian researchers Alfredo and Angelo Castiglioni near Sitra Lake south of Siwa—uncovered caches of Achaemenid-era terracotta water amphorae (pottery caches known as Abu Ballas), along with corroded fifth-century BC Persian bronze daggers, trilobate socketed arrowheads, a silver ear-ring from the Achaemenid period, and bleached human skeletal remains protruding from wind-scoured rock outcrops.",
+      "historical_grounding": {
+        "era": "1996–2009 AD Archaeological Surveys",
+        "key_figures": [
+          "Alfredo & Angelo Castiglioni",
+          "Abu Ballas Trail Surveyors"
+        ],
+        "defensive_specs": "Achaemenid trilobate bronze arrowheads, short akinakes bronze dagger, water depot amphorae",
+        "primary_source": "Western Desert Archaeological Reports & Sitra Oasis Excavations (2009)",
+        "primary_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+      },
+      "visual_prompts": [
+        "16:9 satellite topographical map of the Western Desert showing the southern bypass route from Dakhla through Gilf Kebir and Sitra Lake toward Siwa Oasis",
+        "16:9 forensic archaeological macro shot of green-patinated Achaemenid trilobate bronze arrowheads and a corroded Persian akinakes bronze dagger half-exposed in desert sand, 8k",
+        "16:9 wide shot of rows of ancient broken terracotta water jars (Abu Ballas depot) half-buried at the base of a lonely sandstone outcrop in the Sahara, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act05_shot01",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 satellite topographical map of the Western Desert showing the southern bypass route from Dakhla through Gilf Kebir and Sitra Lake toward Siwa Oasis",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot02",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 forensic archaeological macro shot of green-patinated Achaemenid trilobate bronze arrowheads and a corroded Persian akinakes bronze dagger half-exposed in desert sand, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot03",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide shot of rows of ancient broken terracotta water jars (Abu Ballas depot) half-buried at the base of a lonely sandstone outcrop in the Sahara, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot04",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 historical flashback shot of exhausted Persian soldiers huddling behind a low limestone rock ridge as howling sand engulfs the desert horizon, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot05",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 satellite topographical map of the Western Desert showing the southern bypass route from Dakhla through Gilf Kebir and Sitra Lake toward Siwa Oasis, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot06",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 forensic archaeological macro shot of green-patinated Achaemenid trilobate bronze arrowheads and a corroded Persian akinakes bronze dagger half-exposed in desert sand, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot07",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide shot of rows of ancient broken terracotta water jars (Abu Ballas depot) half-buried at the base of a lonely sandstone outcrop in the Sahara, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot08",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 historical flashback shot of exhausted Persian soldiers huddling behind a low limestone rock ridge as howling sand engulfs the desert horizon, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot09",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "prompt": "16:9 satellite topographical map of the Western Desert showing the southern bypass route from Dakhla through Gilf Kebir and Sitra Lake toward Siwa Oasis, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot10",
+          "shot_type": "Macro Detail",
+          "motion": "pan_right",
+          "prompt": "16:9 forensic archaeological macro shot of green-patinated Achaemenid trilobate bronze arrowheads and a corroded Persian akinakes bronze dagger half-exposed in desert sand, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot11",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 wide shot of rows of ancient broken terracotta water jars (Abu Ballas depot) half-buried at the base of a lonely sandstone outcrop in the Sahara, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        },
+        {
+          "shot_id": "act05_shot12",
+          "shot_type": "Medium Troop",
+          "motion": "pan_left_up",
+          "prompt": "16:9 historical flashback shot of exhausted Persian soldiers huddling behind a low limestone rock ridge as howling sand engulfs the desert horizon, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 5,
+          "act_title": "Modern Desert Forensics: Bronze Weapons in the Dunes",
+          "historical_date": "1996–2009 AD Archaeological Surveys",
+          "primary_source_quote": "Beneath the wind-eroded limestone shelter lay Achaemenid bronze arrowheads, a short bronze dagger, and scattered human bones."
+        }
+      ]
+    },
+    {
+      "act_number": 6,
+      "title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+      "est_start_sec": 455.0,
+      "est_end_sec": 555.0,
+      "rag_query": "Olaf Kaper Leiden University Petubastis III Amheida Dakhla Oasis ambush Darius I Bisitun",
+      "script": "In 2014, Egyptologist Olaf Kaper of Leiden University uncovered a stunning clue that added a dark political twist to the mystery. While excavating the ancient temple of Amheida inside  the Dakhla Oasis, Kaper decoded astone inscription bearing the royal cartouches of a forgotten Egyptian rebel pharaoh: Petubastis the Third. Using Dakhla Oasis as his secret desert stronghold, Petubastis launched a fierce guerrilla uprising against Persian rule right around 524 BC—eventually crowning himself in Memphis before being crushed by Cambyses's successor, Darius the Great. Kaper proposed a chilling realization: what if Cambyses's army was not merely swallowed by a random sandstorm? What if Petubastis's desert guerrilla forces ambushed the storm-blinded, dehydrated Persian column outside Dakhla Oasis, slaughtered the survivors, and Darius the Great later promoted the sandstorm story to cover up a humiliating military defeat?",
+      "historical_grounding": {
+        "era": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+        "key_figures": [
+          "Pharaoh Petubastis III (Seheruibre)",
+          "Darius I the Great",
+          "Prof. Olaf Kaper (Leiden Univ.)"
+        ],
+        "defensive_specs": "Amheida temple block carvings of Petubastis III; Bisitun Inscription revolt records",
+        "primary_source": "Amheida Temple Inscriptions (Dakhla Oasis Project, 2014) & Bisitun Inscription",
+        "primary_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+      },
+      "visual_prompts": [
+        "16:9 archaeological callout of the carved sandstone blocks at Amheida (Dakhla Oasis) showing the royal hieroglyphic cartouche of rebel Pharaoh Petubastis III",
+        "16:9 dramatic medium shot of Egyptian rebel warriors under Petubastis III emerging from behind rocky desert ridges with bows and bronze khopesh swords during a dust storm, 8k",
+        "16:9 tactical ambush map of Dakhla Oasis (Amheida) showing the Persian column trapped between the sand sea and Petubastis III's rebel stronghold"
+      ],
+      "shots": [
+        {
+          "shot_id": "act06_shot01",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archaeological callout of the carved sandstone blocks at Amheida (Dakhla Oasis) showing the royal hieroglyphic cartouche of rebel Pharaoh Petubastis III",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot02",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 dramatic medium shot of Egyptian rebel warriors under Petubastis III emerging from behind rocky desert ridges with bows and bronze khopesh swords during a dust storm, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot03",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 tactical ambush map of Dakhla Oasis (Amheida) showing the Persian column trapped between the sand sea and Petubastis III's rebel stronghold",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot04",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 wide shot of the monumental rock relief of Darius the Great carved high on the limestone cliff of Mount Bisitun in Persia, dramatic sunlight, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot05",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archaeological callout of the carved sandstone blocks at Amheida (Dakhla Oasis) showing the royal hieroglyphic cartouche of rebel Pharaoh Petubastis III, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot06",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 dramatic medium shot of Egyptian rebel warriors under Petubastis III emerging from behind rocky desert ridges with bows and bronze khopesh swords during a dust storm, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot07",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 tactical ambush map of Dakhla Oasis (Amheida) showing the Persian column trapped between the sand sea and Petubastis III's rebel stronghold, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot08",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "prompt": "16:9 wide shot of the monumental rock relief of Darius the Great carved high on the limestone cliff of Mount Bisitun in Persia, dramatic sunlight, 8k, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot09",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 archaeological callout of the carved sandstone blocks at Amheida (Dakhla Oasis) showing the royal hieroglyphic cartouche of rebel Pharaoh Petubastis III, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot10",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "prompt": "16:9 dramatic medium shot of Egyptian rebel warriors under Petubastis III emerging from behind rocky desert ridges with bows and bronze khopesh swords during a dust storm, 8k, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        },
+        {
+          "shot_id": "act06_shot11",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 tactical ambush map of Dakhla Oasis (Amheida) showing the Persian column trapped between the sand sea and Petubastis III's rebel stronghold, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 6,
+          "act_title": "The Ambush Hypothesis: Did the Rebel Pharaoh Petubastis III Strike?",
+          "historical_date": "524–522 BC (Excavated 2014 at Amheida, Dakhla Oasis)",
+          "primary_source_quote": "The temple blocks at Amheida reveal that Petubastis III maintained his desert power base in Dakhla at the exact moment of Cambyses's campaign."
+        }
+      ]
+    },
+    {
+      "act_number": 7,
+      "title": "What Lies Beneath the Shifting Dunes Today",
+      "est_start_sec": 555.0,
+      "est_end_sec": 635.0,
+      "rag_query": "Great Sand Sea satellite radar SAR geomorphology Cambyses army legacy",
+      "script": "Whether fifty thousand men—or a more realistic Persian division of five thousand to ten thousand troops—perished by the fury of a Khamsin superstorm, by the blades of Petubastis the Third's desert rebels, or by a lethal combination of both, the outcome was absolute. The Oracle of Amun at Siwa remained untouched. Cambyses left Egypt two years later and died of a gangrenous thigh wound in Syria—at the exact spot upon his leg where, according to Egyptian priests, he had once struck the sacred Apis bull. Today, synthetic aperture radar satellites orbiting four hundred miles above the Sahara can peer beneath shallow surface sand to map ancient dry riverbeds and caravan tracks. Yet the deeper dunes of the Great Sand Sea shift by up to fifty feet a year, burying and uncovering secrets on a century-long cycle. Somewhere beneath those silent oceans of quartz, the bronze shields and royal standards of Persia's lost legion are still waiting for the wind to shift.",
+      "historical_grounding": {
+        "era": "522 BC – Present",
+        "key_figures": [
+          "Cambyses II",
+          "Herodotus"
+        ],
+        "defensive_specs": "Longitudinal seif dunes up to 120m high shifting across 72,000 sq km of the Great Sand Sea",
+        "primary_source": "Herodotus Book III, Sections 26 & 64–66",
+        "primary_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+      },
+      "visual_prompts": [
+        "16:9 breathtaking sunset wide shot over the towering longitudinal dunes of the Great Sand Sea in Egypt, wind blowing golden sand off razor-sharp crests, 8k",
+        "16:9 false-color satellite radar (SAR) scan overlay of the Egyptian Western Desert revealing ancient buried paleo-river channels and desert caravan trails beneath the dunes",
+        "16:9 haunting macro shot of a gilded Achaemenid bronze standard eagle half-uncovered by desert wind in deep twilight shadow, 8k"
+      ],
+      "shots": [
+        {
+          "shot_id": "act07_shot01",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 breathtaking sunset wide shot over the towering longitudinal dunes of the Great Sand Sea in Egypt, wind blowing golden sand off razor-sharp crests, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot02",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 false-color satellite radar (SAR) scan overlay of the Egyptian Western Desert revealing ancient buried paleo-river channels and desert caravan trails beneath the dunes",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot03",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 haunting macro shot of a gilded Achaemenid bronze standard eagle half-uncovered by desert wind in deep twilight shadow, 8k",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot04",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 final historiographical summary card comparing Herodotus's Khamsin account with the 2009 Sitra artifacts and 2014 Dakhla Oasis inscriptions",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot05",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 breathtaking sunset wide shot over the towering longitudinal dunes of the Great Sand Sea in Egypt, wind blowing golden sand off razor-sharp crests, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot06",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 false-color satellite radar (SAR) scan overlay of the Egyptian Western Desert revealing ancient buried paleo-river channels and desert caravan trails beneath the dunes, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot07",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 haunting macro shot of a gilded Achaemenid bronze standard eagle half-uncovered by desert wind in deep twilight shadow, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot08",
+          "shot_type": "Primary Source",
+          "motion": "pan_right",
+          "prompt": "16:9 final historiographical summary card comparing Herodotus's Khamsin account with the 2009 Sitra artifacts and 2014 Dakhla Oasis inscriptions, extreme shallow depth-of-field macro focus, weathered textures",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot09",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "prompt": "16:9 breathtaking sunset wide shot over the towering longitudinal dunes of the Great Sand Sea in Egypt, wind blowing golden sand off razor-sharp crests, 8k, dramatic low-angle perspective, volumetric smoke and ash",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot10",
+          "shot_type": "Tactical Map",
+          "motion": "pan_left_up",
+          "prompt": "16:9 false-color satellite radar (SAR) scan overlay of the Egyptian Western Desert revealing ancient buried paleo-river channels and desert caravan trails beneath the dunes, intimate over-the-shoulder framing, flickering torchlight",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        },
+        {
+          "shot_id": "act07_shot11",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "prompt": "16:9 haunting macro shot of a gilded Achaemenid bronze standard eagle half-uncovered by desert wind in deep twilight shadow, 8k, sweeping high-angle establishing view, heavy atmospheric depth",
+          "negative_prompt": "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, mandalorian helmet, star wars, futuristic visor, glowing HUD, gibberish text, random letters, watermark, signature, logo, split screen, multi-panel grid, comic strip panels, collage, cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers",
+          "event_slug": "cambyses_lost_army_524bc",
+          "act_number": 7,
+          "act_title": "What Lies Beneath the Shifting Dunes Today",
+          "historical_date": "522 BC – Present",
+          "primary_source_quote": "Thus fared it with the army that was sent to march against the Ammonians; and no trace of them ever returned."
+        }
+      ]
+    }
+  ],
+  "derived_shorts": [
+    {
+      "short_id": "w3_short_01",
+      "title": "How 50,000 Persian Soldiers Vanished Without a Trace",
+      "source_act": 1,
+      "start_sec": 0.0,
+      "duration_sec": 45.0,
+      "hook_script": "In 524 BC, fifty thousand elite Persian soldiers marched out of Thebes into the Egyptian Western Desert to burn the sacred Oracle of Amun at Siwa. Seven days later, they resupplied at El Kharga oasis, walked into the towering dunes of the Great Sand Sea—and vanished from the face of the earth. Not a single soldier ever walked back out."
+    },
+    {
+      "short_id": "w3_short_02",
+      "title": "Why the King of Persia Declared War on a Desert Oracle",
+      "source_act": 2,
+      "start_sec": 88.0,
+      "duration_sec": 43.0,
+      "hook_script": "When Persian King Cambyses the Second conquered Egypt in 525 BC, the priests at the remote Siwa Oasis refused to recognize him as a legitimate Pharaoh and prophesied his death. Furious, Cambyses dispatched fifty thousand troops across four hundred miles of waterless sand dunes to burn the temple to the ground—triggering the greatest disappearance in ancient military history."
+    },
+    {
+      "short_id": "w3_short_03",
+      "title": "Buried Alive at Midday: The Khamsin Superstorm of 524 BC",
+      "source_act": 4,
+      "start_sec": 265.0,
+      "duration_sec": 44.0,
+      "hook_script": "According to the Greek historian Herodotus, Cambyses's army had reached the halfway mark in the Great Sand Sea and stopped for their midday meal when a violent south wind struck—the Egyptian Khamsin. With seventy-mile-per-hour gusts and temperatures spiking past one hundred and thirty degrees, the storm blinded the guides, buried their water jars, and swallowed the column whole."
+    },
+    {
+      "short_id": "w3_short_04",
+      "title": "What Archaeologists Found in the Sahara Dunes in 2009",
+      "source_act": 5,
+      "start_sec": 360.0,
+      "duration_sec": 44.0,
+      "hook_script": "For centuries, historians thought the Lost Army of Cambyses was a myth. Then explorers searched the southern desert bypass near Sitra Lake south of Siwa—and uncovered shattered water amphorae, fifth-century BC Persian trilobate bronze arrowheads, a corroded Achaemenid bronze dagger, and bleached human bones protruding from a wind-scoured limestone ridge."
+    },
+    {
+      "short_id": "w3_short_05",
+      "title": "Was Cambyses's Lost Army Actually Ambushed? (The 2014 Clue)",
+      "source_act": 6,
+      "start_sec": 455.0,
+      "duration_sec": 45.0,
+      "hook_script": "In 2014, archaeologists excavating Dakhla Oasis decoded inscriptions of a forgotten Egyptian rebel Pharaoh named Petubastis the Third—whose guerrilla base sat directly in the path of Cambyses's marching army. Did Petubastis ambush and slaughter the storm-blinded Persian column, only for Darius the Great to blame a sandstorm to cover up the military disaster?"
+    }
+  ]
+}

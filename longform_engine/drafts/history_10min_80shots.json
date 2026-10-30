@@ -1979,5 +1979,47 @@
         }
       ]
     }
+  ],
+  "derived_shorts": [
+    {
+      "short_id": "w1_short_01",
+      "title": "The Cannon That Broke 1,000-Year-Old Walls (1453)",
+      "source_act": 3,
+      "start_sec": 155.7,
+      "duration_sec": 45.0,
+      "hook_script": "In 1453, a Hungarian engineer named Urban cast a 27-foot bronze monster that hurled 1,200-pound granite boulders across the Bosporus. It took 60 oxen and 200 men just to haul it into position. When it fired, the shockwave shattered windows two miles away and shook the foundations of the 1,000-year-old Theodosian walls. Watch the full documentary on the 53 days that shattered Rome."
+    },
+    {
+      "short_id": "w1_short_02",
+      "title": "How Mehmed II Rolled 70 Warships Across Dry Land Overnight",
+      "source_act": 4,
+      "start_sec": 233.8,
+      "duration_sec": 45.0,
+      "hook_script": "The Golden Horn was blocked by an impenetrable iron chain. So in a single night, Sultan Mehmed II did the unthinkable: he had 70 full-sized warships dragged out of the Bosporus, over a 200-foot ridge on greased logs, and dropped directly behind Byzantine defensive lines. Watch the full documentary to see how this naval masterstroke sealed Constantinople's doom."
+    },
+    {
+      "short_id": "w1_short_03",
+      "title": "Only 7,000 Defenders Against 100,000: The Final Roman Census",
+      "source_act": 1,
+      "start_sec": 0.0,
+      "duration_sec": 45.0,
+      "hook_script": "On the eve of the Ottoman siege in 1453, Emperor Constantine XI ordered a secret census of every citizen capable of holding a spear. Imperial Chancellor George Sphrantzes recorded the terrifying truth: out of 50,000 residents, only 4,983 Greeks and barely 2,000 foreigners volunteered to defend four miles of walls against an army of 100,000. Watch the full documentary on Rome's final stand."
+    },
+    {
+      "short_id": "w1_short_04",
+      "title": "The Final Midnight Service Inside Hagia Sophia (May 28, 1453)",
+      "source_act": 5,
+      "start_sec": 309.9,
+      "duration_sec": 45.0,
+      "hook_script": "On May 28, 1453, knowing the final assault was hours away, Orthodox and Catholic Christians set aside centuries of schism and gathered under the golden dome of Hagia Sophia. Emperor Constantine XI took communion alongside Venetian sailors and Genoese crossbowmen, weeping as the imperial choir sang Rome's last liturgy. Watch the full documentary on the night civilization changed forever."
+    },
+    {
+      "short_id": "w1_short_05",
+      "title": "The Unlocked Gate and the Last Roman Emperor's Final Charge",
+      "source_act": 6,
+      "start_sec": 388.3,
+      "duration_sec": 45.0,
+      "hook_script": "In the chaos of dawn on May 29, 1453, Ottoman Janissaries discovered a tiny postern gate called Kerkoporta left unlocked. As the crescent banner was raised above the battlements, Emperor Constantine XI tore the imperial purple insignia from his armor, drew his sword, and charged into the incoming wave of Janissaries. His body was never found. Watch the full documentary on Rome's final stand."
+    }
   ]
 }
