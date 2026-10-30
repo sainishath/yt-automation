@@ -15,6 +15,12 @@ Adheres to:
 
 import os
 import sys
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 import time
 import json
 import random
@@ -52,7 +58,16 @@ from pipeline.compositor import (
 )
 
 FOOOCUS_URL = os.getenv("FOOOCUS_URL", "http://127.0.0.1:7865")
-FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", str(ROOT_DIR.parent / "Fooocus" / "outputs")))
+FOOOCUS_OUTPUTS_DIR = Path(os.getenv("FOOOCUS_OUTPUTS_DIR", str(ROOT_DIR.parent / "Fooocus" / "Fooocus" / "outputs")))
+FOOOCUS_CANDIDATE_DIRS = [
+    Path(os.getenv("FOOOCUS_OUTPUTS_DIR", "D:/Projects/Fooocus/Fooocus/outputs")),
+    ROOT_DIR.parent / "Fooocus" / "Fooocus" / "outputs",
+    ROOT_DIR.parent / "Fooocus" / "outputs",
+    ROOT_DIR.parent / "Fooocus_win64_2-5-0" / "Fooocus" / "outputs",
+    Path("D:/Projects/Fooocus/Fooocus/outputs"),
+    Path("D:/Projects/Fooocus/outputs"),
+    Path("D:/Projects/Fooocus_win64_2-5-0/Fooocus/outputs"),
+]
 EDGE_TTS_VOICE_P1 = "en-US-ChristopherNeural"
 EDGE_TTS_VOICE_P2 = "en-US-ChristopherNeural"
 
@@ -113,7 +128,8 @@ def generate_16x9_visual(
     output_path: Path,
     aspect_ratio: str = "1344*768",
     style_selections: Optional[List[str]] = None,
-    max_retries: int = 2
+    max_retries: int = 3,
+    allow_proxies: bool = False
 ) -> bool:
     """
     Sends generation request using the strict two-step Gradio API protocol:
@@ -135,10 +151,21 @@ def generate_16x9_visual(
         dep67 = ep67.dependency
         comps = {comp['id']: comp for comp in client.config['components']}
 
+        gradio_temp = Path(tempfile.gettempdir()) / "gradio"
+        search_dirs = [d for d in FOOOCUS_CANDIDATE_DIRS + [gradio_temp] if d.exists()]
+
         for attempt in range(1, max_retries + 1):
             try:
                 job_start = time.time()
                 logging.info(f"[Fooocus 16:9] Generating SDXL 16:9 visual for {output_path.name} (Attempt {attempt}/{max_retries})")
+
+                # Snapshot existing PNG files before submit for robust set difference
+                pre_files = set()
+                for d in search_dirs:
+                    try:
+                        pre_files |= set(d.glob("**/*.png"))
+                    except Exception:
+                        pass
 
                 # Build arguments dynamically
                 args = []
@@ -186,14 +213,12 @@ def generate_16x9_visual(
 
                 filtered_args = [val for val, ctype in zip(args, ep67.input_component_types) if ctype != 'state']
 
-                gradio_temp = Path(tempfile.gettempdir()) / "gradio"
-
                 # Step 1: Parameter setter
                 client.predict(*filtered_args, fn_index=67)
 
                 # Step 2: Asynchronous job submit
                 job = client.submit(fn_index=68)
-                timeout_sec = 180
+                timeout_sec = 240
                 while not job.done():
                     if time.time() - job_start > timeout_sec:
                         try:
@@ -203,7 +228,7 @@ def generate_16x9_visual(
                         raise TimeoutError("Fooocus SDXL generation timed out.")
                     time.sleep(2)
 
-                # Fast Result Extraction: check job.result() directly, avoiding 160 recursive disk globs
+                # Fast Result Extraction: check job.result() directly
                 new_img = None
                 try:
                     res = job.result()
@@ -228,17 +253,30 @@ def generate_16x9_visual(
                 except Exception as res_err:
                     logging.debug(f"[Fooocus 16:9] job.result direct extraction notice: {res_err}")
 
-                # Fast fallback: search only files modified since job_start without recursive full-disk scans
+                # Robust fallback 1: Set difference on all candidate outputs directories
+                if not new_img:
+                    post_files = set()
+                    for d in search_dirs:
+                        try:
+                            post_files |= set(d.glob("**/*.png"))
+                        except Exception:
+                            pass
+                    new_candidate_files = post_files - pre_files
+                    if new_candidate_files:
+                        valid_files = [f for f in new_candidate_files if f.stat().st_size > 50000]
+                        if valid_files:
+                            new_img = max(valid_files, key=lambda p: p.stat().st_mtime)
+
+                # Robust fallback 2: Timestamp search for files modified since job start
                 if not new_img:
                     candidates = []
-                    search_dirs = [d for d in [FOOOCUS_OUTPUTS_DIR, gradio_temp] if d.exists()]
                     for s_dir in search_dirs:
-                        for f in s_dir.glob("*.png"):
-                            try:
-                                if f.stat().st_mtime >= (job_start - 1.0) and f.stat().st_size > 50000:
+                        try:
+                            for f in s_dir.glob("**/*.png"):
+                                if f.stat().st_mtime >= (job_start - 5.0) and f.stat().st_size > 50000:
                                     candidates.append(f)
-                            except Exception:
-                                pass
+                        except Exception:
+                            pass
                     if candidates:
                         new_img = max(candidates, key=lambda p: p.stat().st_mtime)
 
@@ -257,9 +295,14 @@ def generate_16x9_visual(
                 time.sleep(2)
 
     except Exception as outer_e:
-        logging.warning(f"[Fooocus 16:9 Fallback] Fooocus unavailable ({outer_e}). Generating high-contrast proxy canvas.")
+        logging.warning(f"[Fooocus 16:9] Exception connecting to Fooocus: {outer_e}")
 
-    # High-contrast proxy fallback if Fooocus fails
+    if not allow_proxies:
+        raise RuntimeError(
+            f"Rule 2 Fooocus SDXL Invariant Violation: Failed to generate {output_path.name} via Fooocus SDXL, and --allow-proxies is False."
+        )
+
+    # High-contrast proxy fallback if allow_proxies is explicitly permitted
     from PIL import Image, ImageDraw, ImageFont
     img = Image.new("RGB", (1920, 1080), color=(18, 22, 32))
     draw = ImageDraw.Draw(img)
@@ -410,8 +453,8 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
                         )
                     elif shot_type in ["Primary Source", "Manuscript Card", "Manuscript Callout"]:
                         logging.info(f"    [Primary Source] Rendering manuscript overlay callout ({shot_dur:.1f}s)...")
-                        if not img_path.exists():
-                            generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768")
+                        if not img_path.exists() or img_path.stat().st_size < 50000:
+                            generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768", allow_proxies=allow_proxies)
                         base_clip = temp_dir / f"base_{shot_id}.mp4"
                         render_cinematic_shot(
                             image_path=img_path,
@@ -432,8 +475,8 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
                             clip_path = base_clip
                     else:
                         # Standard Photorealistic Cinematic SDXL Visual Shot
-                        if not img_path.exists():
-                            generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768")
+                        if not img_path.exists() or img_path.stat().st_size < 50000:
+                            generate_16x9_visual(s["prompt"], neg_prompt, img_path, aspect_ratio="1344*768", allow_proxies=allow_proxies)
                         render_cinematic_shot(
                             image_path=img_path,
                             output_mp4_path=clip_path,
@@ -489,8 +532,8 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
             primary_prompt = act["visual_prompts"][0]
             neg_prompt = "low quality, blurry, modern clothing, electricity, cars, distorted anatomy, text watermark"
             img_path = temp_dir / f"visual_act_{a_num:02d}.png"
-            if not img_path.exists():
-                generate_16x9_visual(primary_prompt, neg_prompt, img_path, aspect_ratio="1344*768")
+            if not img_path.exists() or img_path.stat().st_size < 50000:
+                generate_16x9_visual(primary_prompt, neg_prompt, img_path, aspect_ratio="1344*768", allow_proxies=allow_proxies)
 
             seg_mp4 = temp_dir / f"seg_act_{a_num:02d}.mp4"
             render_cinematic_shot(
@@ -599,7 +642,7 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
         f.write(desc_content)
 
     print("\n" + "=" * 70)
-    print(f"  ✔ CHANNEL A MASTER ASSEMBLY COMPLETE!")
+    print(f"  [OK] CHANNEL A MASTER ASSEMBLY COMPLETE!")
     print(f"  Master MP4: {final_master}")
     print(f"  Total Duration: {current_time:.1f}s ({current_time/60:.2f} minutes)")
     print(f"  Description: {yt_desc_path}")
@@ -612,7 +655,7 @@ def assemble_history_documentary(script_path: Path, output_dir: Path, split_shor
         from longform_engine.short_splitter import split_master_into_shorts
         shorts_dir = output_dir / "shorts"
         split_master_into_shorts(final_master, manifest_path=script_path, output_dir=shorts_dir)
-        print(f"  ✔ 5 Mobile-Safe 9:16 Shorts Generated in: {shorts_dir}")
+        print(f"  [OK] 5 Mobile-Safe 9:16 Shorts Generated in: {shorts_dir}")
 
     return final_master
 
@@ -720,7 +763,7 @@ def assemble_coding_masterclass(script_path: Path, output_dir: Path) -> Path:
         f.write(desc_content)
 
     print("\n" + "=" * 70)
-    print(f"  ✔ CHANNEL B MASTER ASSEMBLY COMPLETE!")
+    print(f"  [OK] CHANNEL B MASTER ASSEMBLY COMPLETE!")
     print(f"  Master MP4: {final_master}")
     print(f"  Total Duration: {current_time:.1f}s ({current_time/60:.2f} minutes)")
     print(f"  Description: {yt_desc_path}")
