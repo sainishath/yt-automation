@@ -363,6 +363,69 @@ class TestFactualLearningEngine(unittest.TestCase):
         self.assertEqual(total_shots_all_weeks, 320, "Total visual shots across all 4 weeks must be 320")
         self.assertEqual(total_shorts_all_weeks, 20, "Total derived shorts across all 4 weeks must be 20")
 
+    # ── 9. Causal Synced Draft & Standalone Short Tests ───────────────────────
+
+    def test_11_causal_test_draft_schema_and_per_shot_narration(self):
+        """Verifies constantinople_1453_causal_test.json structure, per-shot narration, and standalone short."""
+        causal_draft_path = ROOT_DIR / "longform_engine" / "drafts" / "constantinople_1453_causal_test.json"
+        self.assertTrue(causal_draft_path.exists(), "constantinople_1453_causal_test.json must exist")
+
+        with open(causal_draft_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        self.assertEqual(data.get("sync_mode"), "per_shot_narration")
+        self.assertEqual(data.get("bgm_mode"), "clean_voice_or_subbass_only")
+        acts = data.get("acts", [])
+        self.assertEqual(len(acts), 4, "Causal test draft must contain 4 causal acts")
+
+        total_shots = 0
+        for act in acts:
+            shots = act.get("shots", [])
+            total_shots += len(shots)
+            for s in shots:
+                self.assertIn("shot_id", s)
+                self.assertIn("narration", s)
+                self.assertTrue(len(s["narration"].strip()) > 0, "Shot must have non-empty narration")
+                self.assertIn("prompt", s)
+                self.assertIn("causal_step", s)
+
+        self.assertEqual(total_shots, 16, "Causal test draft must contain exactly 16 shots")
+
+        # Verify standalone_short_test
+        st = data.get("standalone_short_test", {})
+        self.assertIn("title", st)
+        beats = st.get("beats", [])
+        self.assertEqual(len(beats), 5, "Standalone short test must contain exactly 5 causal beats")
+        for b in beats:
+            self.assertIn("beat_id", b)
+            self.assertIn("causal_role", b)
+            self.assertIn("narration", b)
+            self.assertTrue(len(b["narration"].strip()) > 0)
+            self.assertIn("prompt", b)
+
+    def test_12_clean_voice_no_bgm_default_and_filter(self):
+        """Verifies clean voice default and low-pass filter in assemble_longform.py."""
+        assemble_file = ROOT_DIR / "longform_engine" / "assemble_longform.py"
+        content = assemble_file.read_text(encoding="utf-8")
+
+        self.assertIn("--enable-bgm", content)
+        self.assertIn("lowpass=f=240,highpass=f=45,volume=0.03", content)
+        self.assertIn("has_per_shot_narration", content)
+        self.assertIn("clip_{shot_id}_synced.mp4", content)
+
+    def test_13_standalone_causal_short_engine(self):
+        """Verifies render_standalone_causal_short is callable and imports cleanly."""
+        from longform_engine.short_splitter import render_standalone_causal_short, generate_safe_short_ass
+        self.assertTrue(callable(render_standalone_causal_short))
+
+        # Test subtitle generation with MarginV=620
+        test_ass = self.test_dir / "test_margin620.ass"
+        generate_safe_short_ass("In 1453, Mehmed captured Constantinople.", 5.0, test_ass)
+        self.assertTrue(test_ass.exists())
+        content = test_ass.read_text(encoding="utf-8")
+        self.assertIn("MarginV", content)
+        self.assertIn(",80,80,620,", content.replace(" ", ""))
+
 
 if __name__ == "__main__":
     unittest.main()
