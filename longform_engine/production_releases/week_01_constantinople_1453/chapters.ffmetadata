@@ -1,0 +1,45 @@
+;FFMETADATA1
+major_brand=isom
+minor_version=512
+compatible_brands=isomiso2avc1mp41
+[CHAPTER]
+TIMEBASE=1/1000
+START=0
+END=78528
+title=Act 1: The Setting: The Millennium-Old Theodosian Walls and a Dying Empire
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=78528
+END=155712
+title=Act 2: The Challenger: Sultan Mehmed II’s Ambition and the Ottoman War Machine
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=155712
+END=233760
+title=Act 3: The Superweapon: Urban the Engineer and the Massive Basilic Cannons
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=233760
+END=309888
+title=Act 4: The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=309888
+END=388320
+title=Act 5: The Siege Grinds: Sappers, Counter-Mines, and Greek Fire
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=388320
+END=473183
+title=Act 6: The Final Breach: May 29, 1453, and the Fall of the Imperial Gate
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=473183
+END=547271
+title=Act 7: The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance
