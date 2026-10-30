@@ -1,0 +1,122 @@
+{
+  "project": "YouTube Automations",
+  "channel": "Chronos Shift (@sainishath4220)",
+  "series": "Week 1 Flagship Documentary",
+  "title": "The 53 Days That Shattered Rome: The Fall of Constantinople (1453)",
+  "release_id": "week_01_constantinople_1453",
+  "master_video": {
+    "filename": "constantinople_1453_10min_master.mp4",
+    "relative_path": "longform_engine/output/history_10min/constantinople_1453_10min_master.mp4",
+    "duration_seconds": 547.3,
+    "duration_formatted": "9m 07s",
+    "resolution": "1920x1080",
+    "fps": 30,
+    "size_bytes": 172594299,
+    "sha256": "4747cf56828bd6cd6cf9ada843c430b73a0865cc7f1f68624dd7b249fcfe455d",
+    "audio": {
+      "voiceover": "en-US-ChristopherNeural (Edge-TTS)",
+      "bgm": "ambient orchestral bed",
+      "ducking": "sidechaincompress (threshold=0.08, ratio=6.0, release=250ms)"
+    },
+    "visual_density": {
+      "total_shots": 80,
+      "acts_count": 7,
+      "average_cut_duration_sec": 6.84,
+      "engine": "Local Fooocus SDXL (juggernautXL_v8Rundiffusion.safetensors, 1344x768)"
+    }
+  },
+  "chapters": [
+    {
+      "act": 1,
+      "title": "The Setting: The Millennium-Old Theodosian Walls and a Dying Empire",
+      "timestamp": "00:00"
+    },
+    {
+      "act": 2,
+      "title": "The Challenger: Sultan Mehmed II\u2019s Ambition and the Ottoman War Machine",
+      "timestamp": "01:18"
+    },
+    {
+      "act": 3,
+      "title": "The Superweapon: Urban the Engineer and the Massive Basilic Cannons",
+      "timestamp": "02:35"
+    },
+    {
+      "act": 4,
+      "title": "The Naval Feat: Hauling Ottoman Warships Over Land into the Golden Horn",
+      "timestamp": "03:53"
+    },
+    {
+      "act": 5,
+      "title": "The Siege Grinds: Sappers, Counter-Mines, and Greek Fire",
+      "timestamp": "05:09"
+    },
+    {
+      "act": 6,
+      "title": "The Final Breach: May 29, 1453, and the Fall of the Imperial Gate",
+      "timestamp": "06:28"
+    },
+    {
+      "act": 7,
+      "title": "The Legacy: The Exodus of Greek Scholars and the Dawn of the Renaissance",
+      "timestamp": "07:53"
+    }
+  ],
+  "derived_shorts": [
+    {
+      "short_id": "short_01",
+      "filename": "short_01_0s.mp4",
+      "duration_sec": 45.0,
+      "resolution": "1080x1920",
+      "size_bytes": 18294908,
+      "sha256": "d41111361e2f917da494d243799daeb4e275c0661bda9ecc7581d21fc438bdf4",
+      "title": "4,983 Men vs 100,000: The Secret Defense of Constantinople",
+      "hook": "Only 4,983 citizens volunteered to defend four miles of limestone walls.",
+      "primary_source": "Imperial Chancellor George Sphrantzes, Census Record (1453)"
+    },
+    {
+      "short_id": "short_02",
+      "filename": "short_02_86s.mp4",
+      "duration_sec": 45.0,
+      "resolution": "1080x1920",
+      "size_bytes": 18392046,
+      "sha256": "b4840b6c70728872adb42b297f257ad6f3951ff25422fb1524fb4def38875d37",
+      "title": "The 21-Year-Old Sultan Who Built a Fortress in 4 Months",
+      "hook": "Mehmed II threw up Rumelihisar\u0131 in 120 days to choke Constantinople.",
+      "primary_source": "Kritovoulos of Imbros, Life of Mehmed the Conqueror"
+    },
+    {
+      "short_id": "short_03",
+      "filename": "short_03_172s.mp4",
+      "duration_sec": 45.0,
+      "resolution": "1080x1920",
+      "size_bytes": 17477196,
+      "sha256": "768799675d19fc09af8b75236d0f81ae58283f331559b07a013756897b7ed8e8",
+      "title": "Urban's 27-Foot Bronze Cannon That Ended Medieval Warfare",
+      "hook": "Urban's monster hurled 1,200-pound granite balls across the Bosporus.",
+      "primary_source": "Michael Ducas, Historia Byzantina"
+    },
+    {
+      "short_id": "short_04",
+      "filename": "short_04_258s.mp4",
+      "duration_sec": 45.0,
+      "resolution": "1080x1920",
+      "size_bytes": 17677910,
+      "sha256": "9d1180f2d11b42897b0e21169be16247d0030ec2a1700aca2988730e6ca03430",
+      "title": "How the Ottomans Hauled 70 Warships Across Mountains Overnight",
+      "hook": "In a single night, 70 warships rolled across the Galata ridge on greased logs.",
+      "primary_source": "Niccolo Barbaro, Diary of the Siege of Constantinople 1453"
+    },
+    {
+      "short_id": "short_05",
+      "filename": "short_05_344s.mp4",
+      "duration_sec": 45.0,
+      "resolution": "1080x1920",
+      "size_bytes": 18256031,
+      "sha256": "be01ebecd3dff210b6c9820b77a108268270f8cfc2f82489766a54d8253890c8",
+      "title": "Subterranean Hell: Counter-Mining and Greek Fire Beneath the Walls",
+      "hook": "Johannes Grant burned Ottoman miners alive in suffocating underground shafts.",
+      "primary_source": "George Sphrantzes, Chronicon Maius"
+    }
+  ]
+}
