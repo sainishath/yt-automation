@@ -403,6 +403,7 @@ def render_standalone_causal_short(
         check_fooocus_status,
         FOOOCUS_URL,
     )
+    from pipeline.compositor import FOOOCUS_NEGATIVE_PROMPT_LOCK
 
     draft_path = Path(draft_json_path)
     with open(draft_path, "r", encoding="utf-8") as f:
@@ -435,8 +436,9 @@ def render_standalone_causal_short(
 
         # 1. Synthesize exact voiceover for this beat
         audio_path = temp_dir / f"{beat_id}.mp3"
+        rate = beat.get("tts_rate", "+18%")
         if not audio_path.exists() or audio_path.stat().st_size < 100:
-            synthesize_speech(narration, EDGE_TTS_VOICE_P1, audio_path)
+            synthesize_speech(narration, EDGE_TTS_VOICE_P1, audio_path, rate=rate)
         dur = get_audio_duration(audio_path)
         if dur < 1.0:
             dur = 1.0
@@ -447,12 +449,13 @@ def render_standalone_causal_short(
 
         # 3. Visual Keyframe (Fooocus SDXL or vertical canvas proxy)
         img_path = temp_dir / f"{beat_id}.png"
+        neg_prompt = beat.get("negative_prompt") or FOOOCUS_NEGATIVE_PROMPT_LOCK
         if not img_path.exists() or img_path.stat().st_size < 50000:
             if fooocus_active:
                 logger.info(f"  Generating SDXL vertical visual for {beat_id} via Fooocus...")
                 generate_16x9_visual(
                     prompt,
-                    "lowres, blurry, distorted anatomy, text, watermark, signature",
+                    neg_prompt,
                     img_path,
                     aspect_ratio="768*1344",
                     allow_proxies=allow_proxies
@@ -486,7 +489,7 @@ def render_standalone_causal_short(
                 raise RuntimeError(f"FFmpeg failed rendering {beat_id}: {proc.stderr[-300:]}")
 
         beat_clips.append(beat_video)
-        logger.info(f"  Rendered Beat {idx}/5 ({dur:.1f}s): {role}")
+        logger.info(f"  Rendered Beat {idx}/{len(beats)} ({dur:.1f}s): {role}")
 
     # 5. Concatenate all 5 beats into final Short
     concat_list = temp_dir / "beats_concat.txt"

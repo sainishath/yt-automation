@@ -395,7 +395,7 @@ class TestFactualLearningEngine(unittest.TestCase):
         st = data.get("standalone_short_test", {})
         self.assertIn("title", st)
         beats = st.get("beats", [])
-        self.assertEqual(len(beats), 5, "Standalone short test must contain exactly 5 causal beats")
+        self.assertIn(len(beats), [5, 15], "Standalone short test must contain 5 or 15 causal cuts/beats")
         for b in beats:
             self.assertIn("beat_id", b)
             self.assertIn("causal_role", b)
