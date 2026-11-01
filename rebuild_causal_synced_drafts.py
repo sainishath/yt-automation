@@ -32,11 +32,11 @@ else:
     DRAFTS_DIR = Path("/tmp/yt_causal_drafts")
 
 FOOOCUS_NEGATIVE_PROMPT_LOCK = (
-    "modern clothing, wristwatches, eyeglasses, neon, sci-fi armor, "
-    "mandalorian helmet, star wars, futuristic visor, glowing HUD, "
-    "gibberish text, random letters, watermark, signature, logo, "
-    "split screen, multi-panel grid, comic strip panels, collage, "
-    "cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers"
+    "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, "
+    "motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, "
+    "streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, "
+    "cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, "
+    "extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage"
 )
 
 CONSTANTINOPLE_CAUSAL_ACTS = [
@@ -301,65 +301,125 @@ CONSTANTINOPLE_TEST_SHORT = {
     "title": "How a 21-Year-Old Sailed 70 Warships Across a Mountain (1453)",
     "beats": [
         {
-            "beat_id": "short_beat_01",
-            "causal_role": "1. CLEAR SETUP (What is this about?)",
-            "narration": (
-                "In 1453, a twenty-one-year-old Sultan named Mehmed tried to conquer Constantinople—a fortress city "
-                "that twenty-three armies had failed to break for a thousand years."
-            ),
-            "prompt": (
-                "9:16 vertical cinematic close-up of 21-year-old Ottoman Sultan Mehmed II staring at the towering stone walls "
-                "of Constantinople across the water at dawn, photorealistic 8k"
-            ),
+            "beat_id": "cut_01",
+            "causal_role": "Cut 1 (0:00–0:03 • Portrait)",
+            "narration": "In 1453, Sultan Mehmed attacked Constantinople.",
+            "prompt": "9:16 vertical cinematic medium close-up portrait of 21-year-old Ottoman Sultan Mehmed II, intense dark eyes, neatly trimmed dark beard, wearing an elaborate gold-embroidered crimson velvet kaftan and traditional 15th-century Ottoman royal turban with jewel brooch, early morning golden sunlight, soft atmospheric mist, photorealistic 8k, 35mm film still, historical authenticity 1453",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
         },
         {
-            "beat_id": "short_beat_02",
-            "causal_role": "2. CAUSE -> EFFECT (Why the cannon wasn't enough)",
-            "narration": (
-                "Because normal catapults couldn't break the city's forty-foot walls, Mehmed built a giant twenty-seven-foot cannon. "
-                "But the cannon took three hours to reload, so the defenders simply rebuilt the wall every single night."
-            ),
-            "prompt": (
-                "9:16 vertical action shot of a massive 27-foot bronze cannon firing a huge stone boulder at a stone castle wall "
-                "in a cloud of fire and smoke, photorealistic 8k"
-            ),
+            "beat_id": "cut_02",
+            "causal_role": "Cut 2 (0:03–0:07 • The Fortress)",
+            "narration": "Twenty-three armies had failed to take it for a thousand years.",
+            "prompt": "9:16 vertical wide establishing shot of the colossal medieval Theodosian limestone fortress walls of Constantinople rising out of dawn mist, deep stone-lined moat filled with water in foreground, dramatic dark storm clouds, photorealistic 8k, historical authenticity 1453, cinematic depth",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
         },
         {
-            "beat_id": "short_beat_03",
-            "causal_role": "3. THE OBSTACLE (The Giant Iron Chain)",
-            "narration": (
-                "Because attacking from the land wasn't working, Mehmed needed to sail his warships into the city's weak harbor. "
-                "But the Romans had stretched a giant floating iron chain across the water that blocked every ship."
-            ),
-            "prompt": (
-                "9:16 vertical shot of a massive heavy iron chain floating on wooden logs across a blue harbor entrance, "
-                "blocking wooden warships from entering, 8k"
-            ),
+            "beat_id": "cut_03",
+            "causal_role": "Cut 3 (0:07–0:11 • Defenders)",
+            "narration": "Only seven thousand defenders faced eighty thousand Ottoman troops.",
+            "prompt": "9:16 vertical high-angle shot from stone battlements looking down, five Byzantine guards in iron conical helmets and weathered scale armor clutching spears, looking down anxiously at thousands of red Ottoman army tents filling the grassy horizon, dramatic lighting, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
         },
         {
-            "beat_id": "short_beat_04",
-            "causal_role": "4. THE CLEVER SOLUTION (70 Ships Over Dry Land)",
-            "narration": (
-                "So Mehmed did the impossible. In one night, his men greased thousands of wooden logs with animal fat "
-                "and used oxen to drag seventy warships for two miles over a steep mountain right behind the chain."
-            ),
-            "prompt": (
-                "9:16 vertical dramatic night shot of hundreds of soldiers and oxen pulling a giant wooden warship on greased "
-                "wooden logs up a muddy hillside lit by glowing torches, 8k"
-            ),
+            "beat_id": "cut_04",
+            "causal_role": "Cut 4 (0:11–0:14 • Useless Catapult)",
+            "narration": "Catapults shattered against forty-foot walls with zero damage.",
+            "prompt": "9:16 vertical dynamic action shot of a heavy medieval wooden trebuchet catapult arm slamming forward on a muddy battlefield, throwing a boulder that shatters against a colossal 40-foot stone castle wall with zero damage, dust flying, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
         },
         {
-            "beat_id": "short_beat_05",
-            "causal_role": "5. THE ENDING (Why the city fell)",
-            "narration": (
-                "Because seventy enemy ships suddenly appeared inside their safe harbor, the defenders had to split their tiny army in half. "
-                "Days later, the walls were overwhelmed, and the fifteen-hundred-year-old Roman Empire ended forever."
-            ),
-            "prompt": (
-                "9:16 vertical dawn shot from the city walls looking down at seventy Ottoman warships floating inside the Golden Horn "
-                "harbor beneath the dome of Hagia Sophia, 8k"
-            ),
+            "beat_id": "cut_05",
+            "causal_role": "Cut 5 (0:14–0:18 • The Monster Cannon)",
+            "narration": "So Mehmed built a twenty-seven-foot supercannon to blast the stones.",
+            "prompt": "9:16 vertical dramatic low-angle shot of the 27-foot bronze Basilica supercannon resting on heavy oak beam carriages outside the fortress, medieval Ottoman artillerymen using iron levers and hemp ropes to load a giant round 1,200-pound granite boulder into the bronze muzzle, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
         },
+        {
+            "beat_id": "cut_06",
+            "causal_role": "Cut 6 (0:18–0:21 • Blast & Impact)",
+            "narration": "The blast blew huge breaches straight through the outer towers.",
+            "prompt": "9:16 vertical violent explosion shot of a colossal bronze cannon firing toward a stone castle tower, massive orange fireball with thick billowing black smoke, stone masonry exploding into flying rock shards, photorealistic 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_07",
+            "causal_role": "Cut 7 (0:21–0:25 • Nighttime Rebuild)",
+            "narration": "Yet reloading took three hours, so citizens rebuilt the walls every night.",
+            "prompt": "9:16 vertical night scene lit by orange torchlight, Byzantine soldiers and citizens frantically stacking heavy wooden barrels packed with earth and broken stone blocks into a smoking breach in the fortress wall before dawn, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_08",
+            "causal_role": "Cut 8 (0:25–0:28 • The Weak Sea Wall)",
+            "narration": "With the land attack stalled, Mehmed eyed the weaker sea walls.",
+            "prompt": "9:16 vertical panoramic view looking down across the quiet blue water of the Golden Horn harbor toward the thin low medieval stone sea-walls of Constantinople, no modern structures, ancient tiled roofs, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_09",
+            "causal_role": "Cut 9 (0:28–0:32 • The Great Iron Chain)",
+            "narration": "But a colossal iron chain blocked his fleet from the harbor.",
+            "prompt": "9:16 vertical close-up of massive forged iron chain links supported by weathered floating wooden timber logs stretching across blue harbor water, blocking distant 15th-century wooden rowed galleys from entering, water splashing on rust, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_10",
+            "causal_role": "Cut 10 (0:32–0:36 • Tactical Blockade)",
+            "narration": "Trapped outside, his navy could not strike the city's rear.",
+            "prompt": "9:16 vertical top-down illustrated tactical parchment map of the Constantinople peninsula showing the Golden Horn entrance blocked by a heavy red spiked chain barrier, ancient ink calligraphy, compass rose, dramatic candlelight",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_11",
+            "causal_role": "Cut 11 (0:36–0:40 • Greased Log Road)",
+            "narration": "So Mehmed laid greased timber logs across the mountain.",
+            "prompt": "9:16 vertical night shot on a steep muddy wooded ridge lit by torches, Ottoman workers pouring wooden buckets of glistening animal fat over thousands of smoothed timber tree trunks laid side-by-side like a wooden rail road climbing up a hill, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_12",
+            "causal_role": "Cut 12 (0:40–0:44 • The Warship on Land — The Climax)",
+            "narration": "Oxen and soldiers dragged seventy warships over dry land.",
+            "prompt": "9:16 vertical dramatic cinematic night shot of a massive 15th-century wooden Ottoman warship with furled sails sitting upright on heavy greased timber log rollers, being pulled uphill across a muddy forest slope by teams of black oxen and hundreds of straining soldiers pulling thick ropes, glowing torches, photorealistic 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_13",
+            "causal_role": "Cut 13 (0:44–0:48 • Cresting the Mountain)",
+            "narration": "By midnight, the fleet crested the peak and plunged into the bay.",
+            "prompt": "9:16 vertical low-angle silhouette shot of the wooden warship bow cresting the high summit of Galata hill at midnight under a starry crescent moon sky, soldiers cheering with torches, breathtaking scale, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_14",
+            "causal_role": "Cut 14 (0:48–0:54 • Fleet in Harbor — Zero Modern Boats)",
+            "narration": "At dawn, defenders were horrified to see seventy enemy warships inside their harbor.",
+            "prompt": "9:16 vertical dawn shot from atop the medieval stone city walls looking down in shock at seventy 15th-century wooden oared galleys with Ottoman crimson crescent flags floating calmly inside the Golden Horn harbor beneath the dome of Hagia Sophia, completely medieval wooden ships with oars, zero modern boats, zero cruise ships, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        },
+        {
+            "beat_id": "cut_15",
+            "causal_role": "Cut 15 (0:54–1:00 • The Final Breach)",
+            "narration": "Surrounded on two fronts, the line broke, and Rome fell forever.",
+            "prompt": "9:16 vertical emotional cinematic medium shot of Byzantine Emperor Constantine XI throwing his imperial purple cloak into the mud and drawing an iron sword to lead his final guard into the smoky breach, morning sun piercing dust clouds, historical authenticity 1453, 8k",
+            "negative_prompt": FOOOCUS_NEGATIVE_PROMPT_LOCK,
+            "tts_rate": "+15%"
+        }
     ],
 }
 

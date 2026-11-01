@@ -21,10 +21,13 @@ import cv2
 import numpy as np
 
 FOOOCUS_NEGATIVE_PROMPT_LOCK = (
+    "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, "
+    "motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, "
+    "streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, "
+    "sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, "
     "text, letters, typography, watermark, signature, gibberish text, poster text, signage, "
-    "split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, "
-    "frame border, sci-fi armor, mandalorian helmet, T-visor helmet, modern ballpoint pen, modern hardhats, "
-    "wall clocks on exterior tower, medieval castle in 20th century city, blurry, deformed hands, extra limbs"
+    "cartoon, anime, 3d render plastic, lowres, blurry, deformed hands, extra fingers, extra limbs, "
+    "distorted anatomy, split screen, multi-panel, collage, comic strip, 2-panel grid, 3-panel grid, horizontal divider, frame border"
 )
 
 

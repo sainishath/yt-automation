@@ -74,20 +74,20 @@ EDGE_TTS_VOICE_P2 = "en-US-ChristopherNeural"
 
 # ── Audio Synthesis & Duration Helpers ────────────────────────────────────────
 
-async def synthesize_edge_tts_async(text: str, voice: str, out_path: Path) -> Path:
+async def synthesize_edge_tts_async(text: str, voice: str, out_path: Path, rate: str = "+0%") -> Path:
     """Synthesizes high-clarity voiceover track using edge_tts asynchronously."""
     import edge_tts
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    communicate = edge_tts.Communicate(text, voice)
+    communicate = edge_tts.Communicate(text, voice, rate=rate)
     await communicate.save(str(out_path))
     return out_path
 
 
-def synthesize_speech(text: str, voice: str, out_path: Path) -> Path:
+def synthesize_speech(text: str, voice: str, out_path: Path, rate: str = "+0%") -> Path:
     """Synchronous wrapper for edge_tts synthesis."""
     try:
-        asyncio.run(synthesize_edge_tts_async(text, voice, out_path))
-        logging.info(f"[TTS] Synthesized {len(text.split())} words -> {out_path.name}")
+        asyncio.run(synthesize_edge_tts_async(text, voice, out_path, rate=rate))
+        logging.info(f"[TTS] Synthesized {len(text.split())} words (rate={rate}) -> {out_path.name}")
         return out_path
     except Exception as e:
         logging.error(f"[TTS Error] edge-tts failed: {e}. Falling back to silent wav.")
