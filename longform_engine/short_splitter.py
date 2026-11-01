@@ -447,34 +447,43 @@ def render_standalone_causal_short(
 
         # 3. Visual Keyframe (Fooocus SDXL or vertical canvas proxy)
         img_path = temp_dir / f"{beat_id}.png"
-        if not img_path.exists() or img_path.stat().st_size < 1000:
-            if fooocus_active and not allow_proxies:
-                try:
-                    generate_16x9_visual(prompt, "lowres, text, watermark", img_path, aspect_ratio="896*1152", allow_proxies=False)
-                except Exception as fe:
-                    logger.warning(f"Fooocus SDXL for {beat_id} failed ({fe}); using vertical proxy.")
-                    _create_vertical_proxy(role, prompt, img_path)
-            else:
+        if not img_path.exists() or img_path.stat().st_size < 50000:
+            if fooocus_active:
+                logger.info(f"  Generating SDXL vertical visual for {beat_id} via Fooocus...")
+                generate_16x9_visual(
+                    prompt,
+                    "lowres, blurry, distorted anatomy, text, watermark, signature",
+                    img_path,
+                    aspect_ratio="768*1344",
+                    allow_proxies=allow_proxies
+                )
+            elif allow_proxies:
                 _create_vertical_proxy(role, prompt, img_path)
+            else:
+                raise RuntimeError(f"Fooocus SDXL service unavailable on {FOOOCUS_URL} and allow_proxies is False.")
 
         # 4. Render 9:16 vertical clip with burned subtitles & synced audio
         beat_video = temp_dir / f"{beat_id}_synced.mp4"
-        escaped_ass = str(ass_path).replace("\\", "/").replace(":", "\\:")
-        cmd = [
-            "ffmpeg", "-y",
-            "-loop", "1", "-i", str(img_path),
-            "-i", str(audio_path),
-            "-vf", f"scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,ass='{escaped_ass}'",
-            "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
-            "-c:a", "aac", "-b:a", "192k",
-            "-t", f"{dur:.3f}",
-            "-shortest",
-            str(beat_video)
-        ]
-        proc = subprocess.run(cmd, capture_output=True, text=True)
-        if proc.returncode != 0:
-            logger.error(f"FFmpeg error on {beat_id}: {proc.stderr}")
-            raise RuntimeError(f"FFmpeg failed rendering {beat_id}: {proc.stderr[-300:]}")
+        if beat_video.exists() and img_path.exists() and beat_video.stat().st_mtime < img_path.stat().st_mtime:
+            beat_video.unlink(missing_ok=True)
+
+        if not beat_video.exists():
+            escaped_ass = str(ass_path).replace("\\", "/").replace(":", "\\:")
+            cmd = [
+                "ffmpeg", "-y",
+                "-loop", "1", "-i", str(img_path),
+                "-i", str(audio_path),
+                "-vf", f"scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,ass='{escaped_ass}'",
+                "-c:v", "libx264", "-preset", "fast", "-crf", "18", "-pix_fmt", "yuv420p",
+                "-c:a", "aac", "-b:a", "192k",
+                "-t", f"{dur:.3f}",
+                "-shortest",
+                str(beat_video)
+            ]
+            proc = subprocess.run(cmd, capture_output=True, text=True)
+            if proc.returncode != 0:
+                logger.error(f"FFmpeg error on {beat_id}: {proc.stderr}")
+                raise RuntimeError(f"FFmpeg failed rendering {beat_id}: {proc.stderr[-300:]}")
 
         beat_clips.append(beat_video)
         logger.info(f"  Rendered Beat {idx}/5 ({dur:.1f}s): {role}")
@@ -513,16 +522,27 @@ def render_standalone_causal_short(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract 9:16 Shorts from 16:9 Master Documentary")
-    parser.add_argument("--master-video", required=True, help="Path to 16:9 master video")
+    parser = argparse.ArgumentParser(description="Extract 9:16 Shorts from 16:9 Master Documentary or Render Standalone Causal Short")
+    parser.add_argument("--master-video", default=None, help="Path to 16:9 master video")
     parser.add_argument("--manifest", help="Optional path to chapters or script manifest JSON")
     parser.add_argument("--out-dir", help="Output directory for generated Shorts")
     parser.add_argument("--channel-name", default="Chronos Shift", help="Channel name for CTA")
+    parser.add_argument("--standalone-causal", default=None, help="Path to causal draft JSON to render standalone Short directly")
+    parser.add_argument("--out-file", default=None, help="Path to output MP4 file for standalone Short")
+    parser.add_argument("--allow-proxies", action="store_true", help="Allow canvas proxies if Fooocus is not running")
     
     args = parser.parse_args()
-    split_master_into_shorts(
-        master_video_path=Path(args.master_video),
-        manifest_path=Path(args.manifest) if args.manifest else None,
-        output_dir=Path(args.out_dir) if args.out_dir else None,
-        channel_name=args.channel_name,
-    )
+
+    if args.standalone_causal:
+        draft_path = Path(args.standalone_causal)
+        out_file = Path(args.out_file) if args.out_file else (ROOT_DIR / "longform_engine" / "output" / "history_10min" / "shorts" / "test_short_constantinople_ships.mp4")
+        render_standalone_causal_short(draft_path, out_file, allow_proxies=args.allow_proxies)
+    elif args.master_video:
+        split_master_into_shorts(
+            master_video_path=Path(args.master_video),
+            manifest_path=Path(args.manifest) if args.manifest else None,
+            output_dir=Path(args.out_dir) if args.out_dir else None,
+            channel_name=args.channel_name,
+        )
+    else:
+        parser.error("Either --master-video or --standalone-causal is required.")
