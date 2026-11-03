@@ -142,7 +142,7 @@ def get_authenticated_service(force_reauth: bool = False):
 def upload_video(
     video_id: str = None,
     output_dir: str = "output",
-    privacy: str = "public",
+    privacy: str = "private",
     force: bool = False,
     final_mp4: Path = None,
     title: str = None,
@@ -153,6 +153,7 @@ def upload_video(
     """
     Uploads a single video to YouTube with its generated metadata, RAG citations,
     and mandatory synthetic media disclosure (containsSyntheticMedia=True).
+    Default privacy is 'private' unless explicitly reviewed and scheduled.
     """
     from googleapiclient.http import MediaFileUpload
     from googleapiclient.errors import HttpError
@@ -161,17 +162,28 @@ def upload_video(
         video_path = Path(output_dir) / video_id
         if not video_path.exists():
             video_path = Path(__file__).parent.parent / output_dir / video_id
-        final_mp4 = video_path / "final" / f"{video_id}_final.mp4"
+        if (video_path / "master_video.mp4").exists():
+            final_mp4 = video_path / "master_video.mp4"
+        elif (video_path / "final" / f"{video_id}_final.mp4").exists():
+            final_mp4 = video_path / "final" / f"{video_id}_final.mp4"
+        elif (video_path / f"{video_id}.mp4").exists():
+            final_mp4 = video_path / f"{video_id}.mp4"
+        else:
+            final_mp4 = video_path / "final" / f"{video_id}_final.mp4"
         metadata_path = video_path / "metadata.json"
     else:
         final_mp4 = Path(final_mp4)
-        video_path = final_mp4.parent.parent
-        metadata_path = video_path / "metadata.json"
+        if (final_mp4.parent / "metadata.json").exists():
+            video_path = final_mp4.parent
+            metadata_path = final_mp4.parent / "metadata.json"
+        else:
+            video_path = final_mp4.parent.parent
+            metadata_path = video_path / "metadata.json"
 
     if not final_mp4.exists():
         raise FileNotFoundError(
             f"Final video not found: {final_mp4}\n"
-            "Run Stage 4 (assemble_video.py) first."
+            "Run Stage 4 (assemble_video.py) or assemble_longform.py first."
         )
 
     metadata = {}
@@ -190,26 +202,49 @@ def upload_video(
 
     # Rejection & Scrapped Protection Guard
     manifest_path = video_path / "run_manifest.json"
+    status_to_check = metadata.get("status")
     if manifest_path.exists():
         try:
             with open(manifest_path, "r", encoding="utf-8") as mf:
                 m_data = json.load(mf)
             if m_data.get("status") in ("REJECTED", "REJECTED_SCRAPPED", "SCRAPPED"):
-                raise RuntimeError(
-                    f"CANNOT_UPLOAD_SCRAPPED_VIDEO: Video '{video_id}' was rejected by human reviewer and is permanently scrapped. "
-                    "All uploads to YouTube (including private/unlisted) are strictly forbidden."
-                )
+                status_to_check = m_data.get("status")
         except json.JSONDecodeError:
             pass
+
+    if status_to_check in ("REJECTED", "REJECTED_SCRAPPED", "SCRAPPED"):
+        raise RuntimeError(
+            f"CANNOT_UPLOAD_SCRAPPED_VIDEO: Video '{video_id or final_mp4.stem}' was rejected by human reviewer and is permanently scrapped. "
+            "All uploads to YouTube (including private/unlisted) are strictly forbidden."
+        )
+
+    # Human Review Approval Guard for Public Uploads
+    if privacy == "public" and not force:
+        if metadata.get("status") != "APPROVED":
+            raise PermissionError(
+                f"HUMAN_REVIEW_GATE_REQUIRED: Video '{video_id or final_mp4.stem}' has not been approved "
+                f"via the HITL review gate (status: '{metadata.get('status', 'UNREVIEWED')}'). "
+                "Direct public uploads are forbidden without explicit human approval. "
+                "Use review_gate.py to review & approve, or pass force=True to override."
+            )
+
+    # Scheduled Release Handling
+    if privacy == "scheduled":
+        if not publish_at_iso:
+            publish_at_iso = metadata.get("publish_at_iso") or metadata.get("scheduled_publish_slot")
+        if not publish_at_iso:
+            from datetime import datetime, timedelta, timezone
+            tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
+            publish_at_iso = tomorrow.replace(hour=7, minute=30, second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     # Idempotency / Duplicate Protection Check
     existing_yt_id = metadata.get("youtube_video_id")
     if existing_yt_id and not force:
         public_url = metadata.get("youtube_url", f"https://youtu.be/{existing_yt_id}")
         studio_url = f"https://studio.youtube.com/video/{existing_yt_id}/edit"
-        logging.info(f"[IDEMPOTENCY] Video '{video_id}' has already been uploaded (YouTube ID: {existing_yt_id}). Skipping duplicate upload (use --force to re-upload).")
+        logging.info(f"[IDEMPOTENCY] Video '{video_id or final_mp4.stem}' has already been uploaded (YouTube ID: {existing_yt_id}). Skipping duplicate upload (use --force to re-upload).")
         return {
-            "video_id": video_id,
+            "video_id": video_id or str(final_mp4.stem),
             "youtube_video_id": existing_yt_id,
             "studio_url": studio_url,
             "public_url": public_url,
@@ -217,7 +252,7 @@ def upload_video(
         }
 
     if title is None:
-        title = metadata.get("title", f"What If: {video_id}")
+        title = metadata.get("title", f"What If: {video_id or final_mp4.stem}")
     if description is None:
         description = metadata.get("description", "")
     if tags is None:
@@ -375,9 +410,15 @@ if __name__ == "__main__":
     parser.add_argument("--video_id", help="Video folder name to upload")
     parser.add_argument(
         "--privacy",
-        choices=["private", "unlisted", "public"],
-        default="public",
-        help="YouTube privacy status (default: public)"
+        choices=["private", "unlisted", "public", "scheduled"],
+        default="private",
+        help="YouTube privacy status (default: private)"
+    )
+    parser.add_argument(
+        "--publish_at",
+        dest="publish_at_iso",
+        default=None,
+        help="ISO 8601 publish timestamp for scheduled release"
     )
     parser.add_argument(
         "--auth_only",
@@ -415,7 +456,13 @@ if __name__ == "__main__":
         parser.error("--video_id is required when not using --auth_only")
 
     try:
-        result = upload_video(args.video_id, args.output_dir, args.privacy, force=args.force)
+        result = upload_video(
+            args.video_id,
+            args.output_dir,
+            args.privacy,
+            force=args.force,
+            publish_at_iso=args.publish_at_iso
+        )
     except Exception as e:
         logging.error(f"Upload failed: {e}")
         sys.exit(1)

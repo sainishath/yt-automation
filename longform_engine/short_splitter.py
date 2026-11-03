@@ -187,7 +187,7 @@ def split_master_into_shorts(
     if not master_path.exists():
         raise FileNotFoundError(f"Master video not found: {master_path}")
         
-    out_base = output_dir or master_path.parent / "extracted_shorts"
+    out_base = output_dir or master_path.parent / "shorts"
     out_base.mkdir(parents=True, exist_ok=True)
     
     acts = []

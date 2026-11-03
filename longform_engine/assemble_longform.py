@@ -24,10 +24,12 @@ if hasattr(sys.stderr, "reconfigure"):
 import time
 import json
 import random
+import shutil
 import asyncio
 import logging
 import argparse
 import subprocess
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
@@ -348,6 +350,43 @@ def format_youtube_description_timestamps(chapters: List[Dict[str, Any]]) -> str
         seconds = start_s % 60
         lines.append(f"{minutes:02d}:{seconds:02d} - {ch['title']}")
     return "\n".join(lines)
+
+
+def generate_thumbnail(video_path: Path, output_thumbnail: Path, fallback_image: Optional[Path] = None) -> Path:
+    """Generates a high-quality 16:9 thumbnail from video or fallback image."""
+    output_thumbnail = Path(output_thumbnail)
+    output_thumbnail.parent.mkdir(parents=True, exist_ok=True)
+    if output_thumbnail.exists() and output_thumbnail.stat().st_size > 1000:
+        return output_thumbnail
+    video_path = Path(video_path)
+    if video_path.exists():
+        try:
+            cmd = [
+                "ffmpeg", "-y",
+                "-ss", "00:00:01",
+                "-i", str(video_path),
+                "-frames:v", "1",
+                "-q:v", "2",
+                str(output_thumbnail)
+            ]
+            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+            if output_thumbnail.exists() and output_thumbnail.stat().st_size > 1000:
+                return output_thumbnail
+        except Exception as e:
+            logging.debug(f"[Thumbnail] FFmpeg frame extraction notice: {e}")
+    if fallback_image and Path(fallback_image).exists():
+        shutil.copy(fallback_image, output_thumbnail)
+        return output_thumbnail
+    try:
+        from PIL import Image, ImageDraw
+        img = Image.new("RGB", (1920, 1080), color=(15, 23, 42))
+        draw = ImageDraw.Draw(img)
+        draw.rectangle([60, 60, 1860, 1020], outline=(234, 179, 8), width=8)
+        draw.text((120, 120), "HISTORICAL MASTER DOCUMENTARY", fill=(234, 179, 8))
+        img.save(str(output_thumbnail))
+    except Exception as e:
+        logging.debug(f"[Thumbnail] PIL fallback notice: {e}")
+    return output_thumbnail
 
 
 # ── Channel A Assembly Engine ────────────────────────────────────────────────
@@ -767,7 +806,7 @@ def assemble_history_documentary(
     meta_path = temp_dir / "chapters.ffmetadata"
     generate_ffmetadata_file(chapters, meta_path)
 
-    final_master = output_dir / "constantinople_1453_10min_master.mp4"
+    final_master = output_dir / "master_video.mp4"
     cmd_meta = [
         "ffmpeg", "-y",
         "-i", str(master_with_bgm),
@@ -777,6 +816,20 @@ def assemble_history_documentary(
         str(final_master)
     ]
     subprocess.run(cmd_meta, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+
+    # Maintain canonical filename copy for compatibility
+    slug = data.get("event_slug") or data.get("video_id") or "constantinople_1453"
+    legacy_named_master = output_dir / f"{slug}_10min_master.mp4"
+    if legacy_named_master != final_master:
+        try:
+            shutil.copy(final_master, legacy_named_master)
+        except Exception as e:
+            logging.debug(f"Could not copy legacy named master: {e}")
+
+    # Generate 16:9 Thumbnail
+    thumbnail_path = output_dir / "thumbnail.png"
+    first_shot_img = images_cache / "act01_shot01.png"
+    generate_thumbnail(final_master, thumbnail_path, fallback_image=first_shot_img if first_shot_img.exists() else None)
 
     # 8. Export YouTube Description
     yt_desc_path = output_dir / "youtube_description.txt"
@@ -792,19 +845,52 @@ def assemble_history_documentary(
     with open(yt_desc_path, "w", encoding="utf-8") as f:
         f.write(desc_content)
 
+    video_id = data.get("video_id") or data.get("event_slug") or script_path.stem.replace("_80shots", "").replace("_draft", "")
+    tomorrow_slot = (datetime.now(timezone.utc) + timedelta(days=1)).replace(hour=7, minute=30, second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
+    scheduled_slot = data.get("scheduled_publish_slot") or tomorrow_slot
+
+    metadata_path = output_dir / "metadata.json"
+    metadata_content = {
+        "video_id": video_id,
+        "title": data.get("video_title", "Historical Master Documentary"),
+        "runtime": round(current_time, 2),
+        "duration_sec": round(current_time, 2),
+        "word_count": data.get("total_word_count") or sum(len(a.get("script", "").split()) for a in data.get("acts", [])),
+        "scheduled_publish_slot": scheduled_slot,
+        "publish_at_iso": scheduled_slot,
+        "status": "PENDING_REVIEW",
+        "description": desc_content,
+        "tags": [
+            "Fall of Constantinople", "Constantinople 1453", "Byzantine Empire",
+            "Ottoman Empire", "Mehmed II", "Constantine XI", "Theodosian Walls",
+            "Basilic Cannon", "Golden Horn", "Military History", "Chronos Shift"
+        ],
+        "timestamps": chapters,
+        "formatted_timestamps": format_youtube_description_timestamps(chapters),
+        "master_video": "master_video.mp4",
+        "thumbnail": "thumbnail.png",
+        "draft_path": str(script_path.resolve()),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    with open(metadata_path, "w", encoding="utf-8") as f:
+        json.dump(metadata_content, f, indent=2, ensure_ascii=False)
+
     print("\n" + "=" * 70)
     print(f"  [OK] CHANNEL A MASTER ASSEMBLY COMPLETE!")
     print(f"  Master MP4: {final_master}")
+    print(f"  Thumbnail: {thumbnail_path}")
+    print(f"  Metadata: {metadata_path}")
     print(f"  Total Duration: {current_time:.1f}s ({current_time/60:.2f} minutes)")
     print(f"  Description: {yt_desc_path}")
     print("=" * 70)
 
-    if split_shorts:
+    # 9. Shorts Staging
+    shorts_dir = output_dir / "shorts"
+    shorts_dir.mkdir(parents=True, exist_ok=True)
+    if split_shorts or data.get("derived_shorts"):
         print("\n" + "-" * 70)
         print("  --> SPLITTING / RENDERING SHORTS (--split-shorts)")
         print("-" * 70)
-        shorts_dir = output_dir / "shorts"
-        shorts_dir.mkdir(parents=True, exist_ok=True)
         from longform_engine.short_splitter import split_master_into_shorts, render_standalone_causal_short
 
         if data.get("standalone_short_test") or data.get("standalone_short"):
@@ -900,7 +986,7 @@ def assemble_coding_masterclass(script_path: Path, output_dir: Path) -> Path:
     meta_path = temp_dir / "chapters.ffmetadata"
     generate_ffmetadata_file(chapters, meta_path)
 
-    final_master = output_dir / "python_masterclass_10min_master.mp4"
+    final_master = output_dir / "master_video.mp4"
     cmd_meta = [
         "ffmpeg", "-y",
         "-i", str(raw_master),
@@ -910,6 +996,16 @@ def assemble_coding_masterclass(script_path: Path, output_dir: Path) -> Path:
         str(final_master)
     ]
     subprocess.run(cmd_meta, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+
+    legacy_named_master = output_dir / "python_masterclass_10min_master.mp4"
+    if legacy_named_master != final_master:
+        try:
+            shutil.copy(final_master, legacy_named_master)
+        except Exception:
+            pass
+
+    thumbnail_path = output_dir / "thumbnail.png"
+    generate_thumbnail(final_master, thumbnail_path)
 
     yt_desc_path = output_dir / "youtube_description.txt"
     desc_content = (
@@ -923,9 +1019,40 @@ def assemble_coding_masterclass(script_path: Path, output_dir: Path) -> Path:
     with open(yt_desc_path, "w", encoding="utf-8") as f:
         f.write(desc_content)
 
+    video_id = data.get("video_id") or "python_masterclass_10min"
+    tomorrow_slot = (datetime.now(timezone.utc) + timedelta(days=1)).replace(hour=7, minute=30, second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
+    scheduled_slot = data.get("scheduled_publish_slot") or tomorrow_slot
+
+    metadata_path = output_dir / "metadata.json"
+    metadata_content = {
+        "video_id": video_id,
+        "title": data.get("video_title", "Python Masterclass"),
+        "runtime": round(current_time, 2),
+        "duration_sec": round(current_time, 2),
+        "word_count": data.get("total_word_count", 1200),
+        "scheduled_publish_slot": scheduled_slot,
+        "publish_at_iso": scheduled_slot,
+        "status": "PENDING_REVIEW",
+        "description": desc_content,
+        "tags": ["Python", "Coding", "SoftwareEngineering", "Tutorial", "DebateProtocol"],
+        "timestamps": chapters,
+        "formatted_timestamps": format_youtube_description_timestamps(chapters),
+        "master_video": "master_video.mp4",
+        "thumbnail": "thumbnail.png",
+        "draft_path": str(script_path.resolve()),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    with open(metadata_path, "w", encoding="utf-8") as f:
+        json.dump(metadata_content, f, indent=2, ensure_ascii=False)
+
+    shorts_dir = output_dir / "shorts"
+    shorts_dir.mkdir(parents=True, exist_ok=True)
+
     print("\n" + "=" * 70)
     print(f"  [OK] CHANNEL B MASTER ASSEMBLY COMPLETE!")
     print(f"  Master MP4: {final_master}")
+    print(f"  Thumbnail: {thumbnail_path}")
+    print(f"  Metadata: {metadata_path}")
     print(f"  Total Duration: {current_time:.1f}s ({current_time/60:.2f} minutes)")
     print(f"  Description: {yt_desc_path}")
     print("=" * 70)
@@ -958,7 +1085,11 @@ def main():
         else:
             pipe_type = "history"
 
-    out_dir = Path(args.output_dir) if args.output_dir else (ROOT_DIR / "longform_engine" / "output" / f"{pipe_type}_10min")
+    with open(script_path, "r", encoding="utf-8") as f:
+        draft_data = json.load(f)
+    video_id = draft_data.get("video_id") or draft_data.get("event_slug") or script_path.stem.replace("_80shots", "").replace("_draft", "")
+
+    out_dir = Path(args.output_dir) if args.output_dir else (ROOT_DIR / "longform_engine" / "output" / "pending_review" / video_id)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     if pipe_type == "coding":
