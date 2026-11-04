@@ -124,6 +124,32 @@ def upload_single_video(
     if not video_path.exists():
         raise FileNotFoundError(f"Video file not found: {video_path}")
 
+    # Enforce Human Review Gate & Scrapped Protection Guard
+    if not force:
+        if "pending_review" in video_path.parts:
+            raise PermissionError(
+                f"HUMAN_REVIEW_GATE_REQUIRED: Video '{video_path.name}' is inside 'pending_review/' "
+                "and cannot be uploaded until explicitly approved via review_gate.py."
+            )
+        for candidate_meta in [video_path.parent / "metadata.json", video_path.parent.parent / "metadata.json"]:
+            if candidate_meta.exists():
+                try:
+                    with open(candidate_meta, "r", encoding="utf-8") as mf:
+                        m_info = json.load(mf)
+                    st = m_info.get("status")
+                    if st in ("REJECTED", "REJECTED_SCRAPPED", "SCRAPPED"):
+                        raise RuntimeError(
+                            f"CANNOT_UPLOAD_SCRAPPED_VIDEO: Video '{video_path.name}' is permanently scrapped ({st})."
+                        )
+                    if st == "PENDING_REVIEW":
+                        raise PermissionError(
+                            f"HUMAN_REVIEW_GATE_REQUIRED: Video '{video_path.name}' has status 'PENDING_REVIEW'."
+                        )
+                except (PermissionError, RuntimeError):
+                    raise
+                except Exception:
+                    pass
+
     # Check daily quota
     tracker = load_quota_tracker()
     units_remaining = QUOTA_DAILY_LIMIT - tracker["units_used"]

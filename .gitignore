@@ -28,8 +28,12 @@ build/
 *.sqlite
 *.sqlite3
 *.db
+*.db.*
+*.backup*
 growth/growth.db
 growth/*.db
+growth/db/*.db.*
+growth/db/*.backup*
 *.db-journal
 *.db-shm
 *.db-wal

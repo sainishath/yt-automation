@@ -7,7 +7,9 @@ Runs on Port 8010.
 """
 
 import os
+import re
 import sys
+import hmac
 import json
 import logging
 import requests
@@ -26,6 +28,8 @@ from growth.analytics.collector import AnalyticsCollector
 from growth.learning.learning_engine import LearningEngine
 
 PORT = 8010
+MAX_CONTENT_LENGTH = 1_048_576  # 1 MB limit against memory exhaustion DoS
+SAFE_ID_REGEX = re.compile(r"^[a-zA-Z0-9_\-]+$")
 LOG_FILE = Path("growth_server.log")
 
 logging.basicConfig(
@@ -42,14 +46,33 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
     def _send_json(self, status_code: int, data: dict):
         self.send_response(status_code)
         self.send_header("Content-Type", "application/json")
-        self.send_header("Access-Control-Allow-Origin", "*")
+        allowed_origin = os.getenv("CORS_ALLOWED_ORIGIN", "http://127.0.0.1")
+        self.send_header("Access-Control-Allow-Origin", allowed_origin)
         self.end_headers()
         self.wfile.write(json.dumps(data, indent=2).encode("utf-8"))
+
+    def _require_api_key(self) -> bool:
+        """Enforces SERVER_API_KEY via constant-time comparison when configured in environment."""
+        expected_key = os.getenv("SERVER_API_KEY", "").strip()
+        if not expected_key:
+            return True
+        provided_key = (
+            self.headers.get("X-API-Key", "").strip()
+            or self.headers.get("Authorization", "").replace("Bearer ", "").strip()
+        )
+        if not provided_key or not hmac.compare_digest(provided_key, expected_key):
+            self._send_json(401, {"status": "error", "message": "Unauthorized: Invalid or missing API key"})
+            return False
+        return True
 
     def do_GET(self):
         parsed = urlparse(self.path)
         path = parsed.path
         params = parse_qs(parsed.query)
+
+        if path not in ("/api/growth/health", "/health"):
+            if not self._require_api_key():
+                return
 
         repo = GrowthRepository()
 
@@ -219,13 +242,27 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
             self._send_json(404, {"status": "error", "message": "Endpoint not found"})
 
     def do_POST(self):
+        if not self._require_api_key():
+            return
+
         parsed = urlparse(self.path)
         path = parsed.path
 
-        content_len = int(self.headers.get("Content-Length", 0))
-        post_body = self.rfile.read(content_len).decode("utf-8") if content_len > 0 else "{}"
+        try:
+            content_len = int(self.headers.get("Content-Length", 0))
+        except (ValueError, TypeError):
+            self._send_json(400, {"status": "error", "message": "Invalid Content-Length header"})
+            return
+
+        if content_len < 0 or content_len > MAX_CONTENT_LENGTH:
+            self._send_json(413, {"status": "error", "message": f"Payload exceeds {MAX_CONTENT_LENGTH} bytes limit"})
+            return
+
+        post_body = self.rfile.read(content_len).decode("utf-8", errors="replace") if content_len > 0 else "{}"
         try:
             payload = json.loads(post_body)
+            if not isinstance(payload, dict):
+                payload = {}
         except Exception:
             payload = {}
 
@@ -530,11 +567,15 @@ class GrowthRequestHandler(BaseHTTPRequestHandler):
                             WHERE video_id = ?
                         """, (video_id,))
 
-                # 2. File Scrapping & Quarantine on disk
+                # 2. File Scrapping & Quarantine on disk (with strict path traversal guard)
                 scrapped_files = []
+                if video_id and not SAFE_ID_REGEX.match(str(video_id)):
+                    self._send_json(400, {"status": "error", "message": "Invalid video_id format"})
+                    return
                 if channel_id == "channel_a" or pipeline_id == "alternate-history-shorts":
-                    video_folder = ROOT_DIR / "alternate-history-shorts" / "output" / video_id
-                    if video_folder.exists():
+                    video_folder = (ROOT_DIR / "alternate-history-shorts" / "output" / str(video_id)).resolve()
+                    allowed_root = (ROOT_DIR / "alternate-history-shorts" / "output").resolve()
+                    if video_id and str(video_folder).startswith(str(allowed_root)) and video_folder != allowed_root and video_folder.exists():
                         for mp4 in video_folder.rglob("*.mp4"):
                             try:
                                 scrapped_files.append(str(mp4))

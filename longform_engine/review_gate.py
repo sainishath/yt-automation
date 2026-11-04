@@ -28,6 +28,7 @@ Capabilities:
 from __future__ import annotations
 
 import os
+import re
 import sys
 import json
 import shutil
@@ -45,6 +46,16 @@ if str(_ROOT) not in sys.path:
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("review_gate")
+
+SAFE_ID_REGEX = re.compile(r"^[a-zA-Z0-9_\-]+$")
+
+
+def _validate_safe_id(val: str, field_name: str = "job_id") -> str:
+    """Validates job_id or shot_id against path traversal or shell/filename injection."""
+    clean = str(val or "").strip()
+    if not clean or not SAFE_ID_REGEX.match(clean):
+        raise ValueError(f"Invalid {field_name} '{val}': must match ^[a-zA-Z0-9_\\-]+$")
+    return clean
 
 OUTPUT_BASE = _ROOT / "longform_engine" / "output"
 DEFAULT_PENDING_DIR = OUTPUT_BASE / "pending_review"
@@ -122,6 +133,7 @@ def list_pending_jobs(base_dir: Optional[Path] = None) -> List[Dict[str, Any]]:
 
 def get_job_details(job_id: str, base_dir: Optional[Path] = None) -> Dict[str, Any]:
     """Retrieves full details and formatted checklist for a specific job."""
+    job_id = _validate_safe_id(job_id, "job_id")
     pending_dir, _, _ = get_staging_paths(base_dir)
     job_path = pending_dir / job_id
     if not job_path.exists():
@@ -181,6 +193,7 @@ def approve_and_schedule(
     updates metadata status to 'APPROVED', and calls `upload_video.py`
     with `--privacy private` or `--privacy scheduled`.
     """
+    job_id = _validate_safe_id(job_id, "job_id")
     if privacy not in ("private", "scheduled", "unlisted", "public"):
         privacy = "private"
 
@@ -292,9 +305,12 @@ def reroll_single_shot(
         synthesize_speech,
         EDGE_TTS_VOICE_P1,
         generate_thumbnail,
+        burn_act_badge,
     )
     from pipeline.compositor import FOOOCUS_NEGATIVE_PROMPT_LOCK
 
+    job_id = _validate_safe_id(job_id, "job_id")
+    shot_id = _validate_safe_id(shot_id, "shot_id")
     pending_dir, _, _ = get_staging_paths(base_dir)
     job_path = pending_dir / job_id
     if not job_path.exists():
@@ -417,6 +433,7 @@ def reroll_single_shot(
     # Re-assemble the affected act segment
     act_concat_list = temp_dir / f"concat_act_{target_act_num:02d}.txt"
     seg_mp4 = temp_dir / f"seg_act_{target_act_num:02d}.mp4"
+    seg_badged_mp4 = temp_dir / f"seg_act_{target_act_num:02d}_badged.mp4"
     if act_concat_list.exists():
         cmd_act = [
             "ffmpeg", "-y",
@@ -426,6 +443,14 @@ def reroll_single_shot(
             str(seg_mp4)
         ]
         subprocess.run(cmd_act, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        # Update badged act segment referenced by concat_list.txt
+        act_title = f"Act {target_act_num}"
+        if 0 <= target_act_num - 1 < len(acts):
+            act_title = acts[target_act_num - 1].get("title", act_title)
+        try:
+            burn_act_badge(seg_mp4, seg_badged_mp4, act_title, target_act_num)
+        except Exception:
+            shutil.copy(seg_mp4, seg_badged_mp4)
 
     # Re-assemble master_video.mp4 if master concatenation list is present
     master_concat_list = temp_dir / "concat_list.txt"
@@ -500,6 +525,7 @@ def reject_and_scrap(
     sets status to 'REJECTED_SCRAPPED', and writes run_manifest.json
     so any future upload attempts to YouTube are permanently rejected.
     """
+    job_id = _validate_safe_id(job_id, "job_id")
     pending_dir, _, scrapped_dir = get_staging_paths(base_dir)
     src_path = pending_dir / job_id
     if not src_path.exists():

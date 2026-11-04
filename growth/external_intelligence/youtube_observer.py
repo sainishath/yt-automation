@@ -35,9 +35,9 @@ def parse_iso_duration(duration_str: str) -> float:
 class YouTubePublicObserver:
     def __init__(self, token_path: Optional[Path] = None, dry_run: bool = False):
         if token_path is None:
-            # Auto-discover default OAuth tokens if present on disk
+            # Auto-discover default OAuth tokens if present on disk (JSON only; .pickle rejected per CWE-502)
             default_p1 = Path(__file__).parent.parent.parent / "alternate-history-shorts" / "config" / "token.json"
-            default_p2 = Path(__file__).parent.parent.parent / "convo-shorts" / "yt-automation-engine" / "youtube_token.pickle"
+            default_p2 = Path(__file__).parent.parent.parent / "convo-shorts" / "yt-automation-engine" / "config" / "token.json"
             if default_p1.exists():
                 token_path = default_p1
             elif default_p2.exists():
@@ -47,21 +47,20 @@ class YouTubePublicObserver:
         self.dry_run = dry_run
 
     def _get_youtube_service(self) -> Optional[Any]:
-        """Loads YouTube Data API client if credentials are valid."""
+        """Loads YouTube Data API client if JSON OAuth credentials are valid."""
         if self.dry_run or not self.token_path or not self.token_path.exists():
             return None
 
-        import pickle
+        if str(self.token_path).endswith(".pickle"):
+            logging.warning(f"[YouTube Observer] Refusing unsafe .pickle token file (CWE-502): {self.token_path}")
+            return None
+
         from google.oauth2.credentials import Credentials
         from google.auth.transport.requests import Request
         from googleapiclient.discovery import build
 
         try:
-            if str(self.token_path).endswith(".pickle"):
-                with open(self.token_path, "rb") as f:
-                    creds = pickle.load(f)
-            else:
-                creds = Credentials.from_authorized_user_file(str(self.token_path))
+            creds = Credentials.from_authorized_user_file(str(self.token_path))
 
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())

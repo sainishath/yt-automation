@@ -13,6 +13,7 @@ Includes:
 import os
 import sys
 import re
+import hmac
 import json
 import logging
 import threading
@@ -42,7 +43,7 @@ def _require_api_key():
         request.headers.get("X-API-Key", "").strip()
         or request.headers.get("Authorization", "").replace("Bearer ", "").strip()
     )
-    if provided_key != expected_key:
+    if not provided_key or not hmac.compare_digest(provided_key, expected_key):
         return jsonify({"status": "error", "error": "Unauthorized: Invalid or missing API key"}), 401
     return None
 
@@ -137,6 +138,10 @@ def generate_alternate_history():
 
 @app.route('/get-video', methods=['GET'])
 def get_video():
+    auth_err = _require_api_key()
+    if auth_err:
+        return auth_err
+
     video_id = request.args.get('id', '').strip()
     if not video_id or not re.match(r"^[a-zA-Z0-9_\-]+$", video_id):
         return jsonify({"status": "error", "error": "Invalid or missing video id"}), 400
@@ -151,6 +156,10 @@ def get_video():
 
 @app.route('/get-status', methods=['GET'])
 def get_status():
+    auth_err = _require_api_key()
+    if auth_err:
+        return auth_err
+
     video_id = request.args.get('id', '').strip()
     if not video_id or not re.match(r"^[a-zA-Z0-9_\-]+$", video_id):
         return jsonify({"status": "error", "error": "Invalid or missing video id"}), 400
@@ -176,7 +185,7 @@ def upload_youtube_endpoint():
     try:
         data = request.get_json() or {}
         video_id = data.get("video_id", "").strip()
-        privacy = data.get("privacy", "public")
+        privacy = data.get("privacy", "private")
         
         if not video_id or not re.match(r"^[a-zA-Z0-9_\-]+$", video_id):
             return jsonify({"status": "error", "error": "Invalid or missing video_id parameter"}), 400

@@ -9,7 +9,6 @@ Never invents or fabricates metrics when data is unavailable.
 
 import os
 import time
-import pickle
 import logging
 from pathlib import Path
 from typing import Dict, Any, Optional, List
@@ -25,13 +24,13 @@ class YouTubeApiCollector:
         self.dry_run = dry_run
 
     def _get_credentials(self, channel_id: Optional[str] = None) -> Optional[Any]:
-        """Loads and refreshes OAuth credentials from token file or discovered channel paths."""
+        """Loads and refreshes OAuth credentials from JSON token file (CWE-502 safe)."""
         token_to_use = self.token_path
         if not token_to_use or not token_to_use.exists():
             # Auto-discover tokens from verified pipeline paths
             root = Path(__file__).parent.parent.parent
             if channel_id == "channel_b":
-                token_b = root / "convo-shorts" / "yt-automation-engine" / "youtube_token.pickle"
+                token_b = root / "convo-shorts" / "yt-automation-engine" / "config" / "token.json"
                 if token_b.exists():
                     token_to_use = token_b
             else:
@@ -42,25 +41,21 @@ class YouTubeApiCollector:
         if not token_to_use or not token_to_use.exists():
             return None
 
+        if str(token_to_use).endswith(".pickle"):
+            logging.warning(f"[YouTube Collector] Refusing unsafe .pickle token file (CWE-502): {token_to_use}")
+            return None
+
         from google.oauth2.credentials import Credentials
         from google.auth.transport.requests import Request
 
         creds = None
         try:
-            if str(token_to_use).endswith(".pickle"):
-                with open(token_to_use, "rb") as f:
-                    creds = pickle.load(f)
-            else:
-                creds = Credentials.from_authorized_user_file(str(token_to_use))
+            creds = Credentials.from_authorized_user_file(str(token_to_use))
 
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
-                if str(token_to_use).endswith(".pickle"):
-                    with open(token_to_use, "wb") as f:
-                        pickle.dump(creds, f)
-                else:
-                    with open(token_to_use, "w", encoding="utf-8") as f:
-                        f.write(creds.to_json())
+                with open(token_to_use, "w", encoding="utf-8") as f:
+                    f.write(creds.to_json())
         except Exception as e:
             logging.warning(f"[YouTube Collector] Could not load/refresh token at {token_to_use}: {e}")
             return None

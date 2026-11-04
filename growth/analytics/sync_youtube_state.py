@@ -35,18 +35,17 @@ logging.basicConfig(
 
 def get_youtube_service(channel_id: str = "channel_a"):
     """
-    Authenticates with YouTube Data API v3 for the given channel.
+    Authenticates with YouTube Data API v3 for the given channel using JSON OAuth tokens only (CWE-502 safe).
     Channel A: alternate-history-shorts/config/token.json
-    Channel B: convo-shorts/yt-automation-engine/youtube_token.pickle
+    Channel B: convo-shorts/yt-automation-engine/config/token.json
     """
     from google.oauth2.credentials import Credentials
     from google.auth.transport.requests import Request
     from googleapiclient.discovery import build
-    import pickle
 
     token_path = None
     if channel_id == "channel_b":
-        token_path = ROOT_DIR / "convo-shorts" / "yt-automation-engine" / "youtube_token.pickle"
+        token_path = ROOT_DIR / "convo-shorts" / "yt-automation-engine" / "config" / "token.json"
     else:
         token_path = ROOT_DIR / "alternate-history-shorts" / "config" / "token.json"
 
@@ -54,21 +53,17 @@ def get_youtube_service(channel_id: str = "channel_a"):
         logging.warning(f"Token file not found for {channel_id}: {token_path}")
         return None
 
+    if str(token_path).endswith(".pickle"):
+        logging.error(f"Refusing unsafe .pickle token deserialization (CWE-502): {token_path}")
+        return None
+
     try:
-        if str(token_path).endswith(".pickle"):
-            with open(token_path, "rb") as f:
-                creds = pickle.load(f)
-        else:
-            creds = Credentials.from_authorized_user_file(str(token_path))
+        creds = Credentials.from_authorized_user_file(str(token_path))
 
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
-            if str(token_path).endswith(".pickle"):
-                with open(token_path, "wb") as f:
-                    pickle.dump(creds, f)
-            else:
-                with open(token_path, "w", encoding="utf-8") as f:
-                    f.write(creds.to_json())
+            with open(token_path, "w", encoding="utf-8") as f:
+                f.write(creds.to_json())
 
         return build("youtube", "v3", credentials=creds)
     except Exception as e:
