@@ -352,18 +352,29 @@ def format_youtube_description_timestamps(chapters: List[Dict[str, Any]]) -> str
     return "\n".join(lines)
 
 
+def _is_proxy_image(img_path: Path) -> bool:
+    """Returns True if img_path is a small/flat procedural proxy placeholder rather than an SDXL render."""
+    if not img_path.exists():
+        return True
+    # Procedural PIL proxies of solid dark blue (18, 22, 32) compress to < 35 KB in PNG
+    return img_path.stat().st_size < 50_000
+
+
 def generate_thumbnail(video_path: Path, output_thumbnail: Path, fallback_image: Optional[Path] = None) -> Path:
-    """Generates a high-quality 16:9 thumbnail from video or fallback image."""
+    """Generates a high-quality 16:9 thumbnail from fallback SDXL keyframe or video."""
     output_thumbnail = Path(output_thumbnail)
     output_thumbnail.parent.mkdir(parents=True, exist_ok=True)
-    if output_thumbnail.exists() and output_thumbnail.stat().st_size > 1000:
+    if output_thumbnail.exists() and not _is_proxy_image(output_thumbnail):
+        return output_thumbnail
+    if fallback_image and Path(fallback_image).exists() and not _is_proxy_image(Path(fallback_image)):
+        shutil.copy(fallback_image, output_thumbnail)
         return output_thumbnail
     video_path = Path(video_path)
     if video_path.exists():
         try:
             cmd = [
                 "ffmpeg", "-y",
-                "-ss", "00:00:01",
+                "-ss", "00:00:02",
                 "-i", str(video_path),
                 "-frames:v", "1",
                 "-q:v", "2",

@@ -274,16 +274,23 @@ def main():
         proxy_mb = proxy_mp4.stat().st_size / (1024 * 1024)
         print(f"    [Proxy] Rendered 540x960 review proxy: {proxy_mb:.2f} MB -> {proxy_mp4.name}")
 
-        # 6. Save Synced Metadata
+        # 6. Save Synced Metadata with Attached Long-Form Documentary Link
+        master_yt_id = meta_data.get("youtube_video_id")
+        master_url = f"https://youtu.be/{master_yt_id}" if master_yt_id else "https://www.youtube.com/@sainishath4220"
+        master_title = draft.get("video_title", "1177 BC: The Year 8 Empires Collapsed at Once")
+
         description = (
             f"{script}\n\n"
-            f"Watch the full 9-minute investigative master documentary on Chronos Shift: "
-            f"'{draft.get('video_title', '1177 BC: The Year 8 Empires Collapsed at Once')}'.\n\n"
+            f"▶ Watch the Full Video on the Channel:\n"
+            f"\"{master_title}\"\n"
+            f"🔗 Full Video Link: {master_url}\n"
+            f"📺 Channel: https://www.youtube.com/@sainishath4220\n\n"
             f"#History #Shorts #Documentary #BronzeAgeCollapse #UntoldHistory #ChronosShift"
         )
         pinned_comment = (
-            f"🚨 Watch the complete 9-minute master documentary:\n"
-            f"\"{draft.get('video_title', '1177 BC: The Year 8 Empires Collapsed at Once')}\" on Chronos Shift!\n"
+            f"🚨 Watch the full video on the channel:\n"
+            f"▶ \"{master_title}\"\n"
+            f"🔗 {master_url}\n"
             f"Full forensic breakdown from the unbaked clay letter to the Nile Delta ambush."
         )
         meta = {
@@ -291,6 +298,11 @@ def main():
             "title": title[:100],
             "description": description,
             "script": script,
+            "cta_ending": "Watch the full video on the channel.",
+            "related_longform_job_id": job_id,
+            "related_longform_title": master_title,
+            "related_longform_url": master_url,
+            "channel_url": "https://www.youtube.com/@sainishath4220",
             "pinned_comment": pinned_comment,
             "tags": ["history", "documentary", "untold history", "shorts", "bronze age collapse", "ancient egypt", "chronos shift"],
             "source_act": source_act,
