@@ -831,28 +831,36 @@ def assemble_history_documentary(
     first_shot_img = images_cache / "act01_shot01.png"
     generate_thumbnail(final_master, thumbnail_path, fallback_image=first_shot_img if first_shot_img.exists() else None)
 
-    # 8. Export YouTube Description
+    # 8. Export YouTube Description & Packaging
     yt_desc_path = output_dir / "youtube_description.txt"
-    desc_content = (
-        f"{data['video_title']}\n\n"
-        f"In 1453, fifty-three days of brutal siege ended a millennium of Roman imperial civilization. "
-        f"From the 26-foot Basilic supercannons of master founder Urban to the overland transport of 70 warships "
-        f"into the Golden Horn, this documentary traces the collapse of the Theodosian Walls and the dawn of the modern world.\n\n"
-        f"CHAPTERS & TIMESTAMPS:\n"
-        f"{format_youtube_description_timestamps(chapters)}\n\n"
-        f"#History #Constantinople #ByzantineEmpire #OttomanEmpire #Documentary"
-    )
+    yt_meta = data.get("youtube_metadata", {})
+    if yt_meta.get("description"):
+        desc_content = yt_meta["description"]
+        if "CHAPTERS:" not in desc_content and "CHAPTERS & TIMESTAMPS:" not in desc_content:
+            desc_content += f"\n\nCHAPTERS & TIMESTAMPS:\n{format_youtube_description_timestamps(chapters)}"
+    else:
+        desc_content = (
+            f"{data.get('video_title')}\n\n"
+            f"Forensic historical documentary breakdown.\n\n"
+            f"CHAPTERS & TIMESTAMPS:\n"
+            f"{format_youtube_description_timestamps(chapters)}\n\n"
+            f"#History #Documentary #ChronosShift"
+        )
     with open(yt_desc_path, "w", encoding="utf-8") as f:
         f.write(desc_content)
 
-    video_id = data.get("video_id") or data.get("event_slug") or script_path.stem.replace("_80shots", "").replace("_draft", "")
+    video_id = data.get("video_id") or data.get("event_slug") or script_path.stem.replace("_80shots", "").replace("_causal_5part", "").replace("_draft", "")
     tomorrow_slot = (datetime.now(timezone.utc) + timedelta(days=1)).replace(hour=7, minute=30, second=0, microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
-    scheduled_slot = data.get("scheduled_publish_slot") or tomorrow_slot
+    scheduled_slot = yt_meta.get("scheduled_slot_longform") or data.get("scheduled_publish_slot") or tomorrow_slot
+    title = yt_meta.get("title_option_a") or data.get("video_title", "Historical Master Documentary")
+    tags = yt_meta.get("tags") or data.get("tags") or [
+        "Historical Documentary", "Military History", "Chronos Shift"
+    ]
 
     metadata_path = output_dir / "metadata.json"
     metadata_content = {
         "video_id": video_id,
-        "title": data.get("video_title", "Historical Master Documentary"),
+        "title": title,
         "runtime": round(current_time, 2),
         "duration_sec": round(current_time, 2),
         "word_count": data.get("total_word_count") or sum(len(a.get("script", "").split()) for a in data.get("acts", [])),
@@ -860,11 +868,7 @@ def assemble_history_documentary(
         "publish_at_iso": scheduled_slot,
         "status": "PENDING_REVIEW",
         "description": desc_content,
-        "tags": [
-            "Fall of Constantinople", "Constantinople 1453", "Byzantine Empire",
-            "Ottoman Empire", "Mehmed II", "Constantine XI", "Theodosian Walls",
-            "Basilic Cannon", "Golden Horn", "Military History", "Chronos Shift"
-        ],
+        "tags": tags,
         "timestamps": chapters,
         "formatted_timestamps": format_youtube_description_timestamps(chapters),
         "master_video": "master_video.mp4",
@@ -901,7 +905,8 @@ def assemble_history_documentary(
 
         if data.get("derived_shorts") or not (data.get("standalone_short_test") or data.get("standalone_short")):
             print("  --> Auto-splitting 16:9 master into derived vertical Shorts...")
-            split_master_into_shorts(final_master, manifest_path=script_path, output_dir=shorts_dir)
+            split_master_into_shorts(final_master, manifest_path=script_path, output_dir=shorts_dir, chapters=chapters)
+            print(f"  [OK] Mobile-Safe 9:16 Shorts Generated in: {shorts_dir}")
             print(f"  [OK] Mobile-Safe 9:16 Shorts Generated in: {shorts_dir}")
 
     return final_master

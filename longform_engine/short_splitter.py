@@ -179,6 +179,7 @@ def split_master_into_shorts(
     manifest_path: Optional[Path] = None,
     output_dir: Optional[Path] = None,
     channel_name: str = "Chronos Shift",
+    chapters: Optional[List[Dict[str, Any]]] = None,
 ) -> List[Dict[str, Any]]:
     """
     Parses a master 16:9 documentary and generates all candidate 9:16 Shorts.
@@ -198,9 +199,33 @@ def split_master_into_shorts(
     if manifest_path and Path(manifest_path).exists():
         with open(manifest_path, "r", encoding="utf-8") as f:
             manifest_data = json.load(f)
-            longform_title = manifest_data.get("title", longform_title)
+            longform_title = manifest_data.get("video_title") or manifest_data.get("title", longform_title)
             acts = manifest_data.get("acts", [])
             derived_shorts = manifest_data.get("derived_shorts", [])
+
+    # Load chapters from metadata.json or chapters.ffmetadata if not provided
+    if not chapters:
+        meta_candidates = [
+            out_base.parent / "metadata.json",
+            master_path.parent / "metadata.json",
+            out_base / "metadata.json"
+        ]
+        for mc in meta_candidates:
+            if mc.exists():
+                try:
+                    with open(mc, "r", encoding="utf-8") as mf:
+                        m_data = json.load(mf)
+                    if m_data.get("timestamps"):
+                        chapters = m_data.get("timestamps")
+                        break
+                except Exception:
+                    pass
+
+    act_chapter_map: Dict[int, Dict[str, Any]] = {}
+    if chapters:
+        for idx, ch in enumerate(chapters, start=1):
+            a_idx = ch.get("act_index") or ch.get("act_number") or idx
+            act_chapter_map[int(a_idx)] = ch
 
     results = []
 
@@ -212,10 +237,24 @@ def split_master_into_shorts(
         for s_idx, s in enumerate(derived_shorts, start=1):
             short_id = s.get("short_id", f"short_{s_idx:02d}")
             title = s.get("title", f"Short {s_idx}")
-            source_act = s.get("source_act", 1)
-            start = float(s.get("start_sec", 0.0))
-            dur = float(s.get("duration_sec", 45.0))
-            hook_script = s.get("hook_script", "")
+            source_act = int(s.get("source_act") or s.get("part_number") or s_idx)
+            
+            # Resolve start and duration from explicit fields or chapters
+            ch_info = act_chapter_map.get(source_act)
+            start_val = s.get("start_sec")
+            dur_val = s.get("duration_sec")
+
+            if start_val is None and ch_info:
+                start_val = ch_info.get("start_sec", 0.0)
+            if dur_val is None and ch_info:
+                act_len = float(ch_info.get("end_sec", start_val + 52.0)) - float(start_val)
+                dur_val = min(56.0, max(30.0, act_len))
+
+            start = float(start_val if start_val is not None else (s_idx - 1) * 50.0)
+            dur = float(dur_val if dur_val is not None else 50.0)
+
+            hook_script = s.get("hook_sentence") or s.get("hook_script") or s.get("hook") or title
+            short_script = s.get("script") or hook_script
 
             # Schedule slot at 07:30 UTC (13:00 IST) for consecutive days
             slot_dt = datetime(base_dt.year, base_dt.month, base_dt.day, 7, 30, 0, tzinfo=timezone.utc) + timedelta(days=s_idx - 1)
@@ -238,22 +277,22 @@ def split_master_into_shorts(
                 )
 
                 pinned_comment = (
-                    f"🚨 This is just one chapter of the story.\n\n"
-                    f"Watch the full documentary on our channel: '{longform_title}'.\n"
-                    f"Link pinned on channel page or search '{longform_title}' on YouTube!"
+                    f"🚨 Watch the complete 9-minute master documentary:\n"
+                    f"\"{longform_title}\" on {channel_name}!\n"
+                    f"Full forensic breakdown from the unbaked clay letter to the Nile Delta ambush."
                 )
                 description = (
-                    f"{hook_script}\n\n"
+                    f"{short_script}\n\n"
                     f"Full Documentary: '{longform_title}'\n"
                     f"Watch on {channel_name}.\n\n"
-                    f"#History #Shorts #Documentary #UntoldHistory #FactualStories"
+                    f"#History #Shorts #Documentary #UntoldHistory #BronzeAgeCollapse"
                 )
                 meta = {
                     "short_id": short_id,
                     "title": title[:100],
                     "description": description,
                     "pinned_comment": pinned_comment,
-                    "tags": ["history", "documentary", "untold history", "shorts", "factual history"],
+                    "tags": ["history", "documentary", "untold history", "shorts", "bronze age collapse", "ancient egypt"],
                     "source_act": source_act,
                     "start_sec": start,
                     "duration_sec": dur,

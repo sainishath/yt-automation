@@ -552,46 +552,48 @@ def reject_and_scrap(
     }
 
 
-def interactive_cli():
+def interactive_cli(target_job_id: Optional[str] = None):
     """Interactive Command-Line Interface for Human Review Staging Gate."""
     print("\n" + "=" * 70)
     print("      HUMAN-IN-THE-LOOP (HITL) VIDEO REVIEW STAGING GATE")
     print("=" * 70)
 
-    jobs = list_pending_jobs()
-    if not jobs:
-        print("\n  [INFO] No pending review jobs found in:")
-        print(f"         {DEFAULT_PENDING_DIR}")
-        print("\n  Render a video first via assemble_longform.py.")
-        print("=" * 70 + "\n")
-        return
+    job_id = target_job_id
+    if not job_id:
+        jobs = list_pending_jobs()
+        if not jobs:
+            print("\n  [INFO] No pending review jobs found in:")
+            print(f"         {DEFAULT_PENDING_DIR}")
+            print("\n  Render a video first via assemble_longform.py.")
+            print("=" * 70 + "\n")
+            return
 
-    print(f"\n  Found {len(jobs)} job(s) pending review:\n")
-    for idx, j in enumerate(jobs, start=1):
-        dur_min = j['runtime'] / 60 if j['runtime'] else 0
-        print(f"  [{idx}] {j['job_id']}")
-        print(f"      Title: {j['title']}")
-        print(f"      Runtime: {dur_min:.1f}m | Word count: {j['word_count']} | Shorts: {j['shorts_count']}")
-        print(f"      Scheduled Slot: {j['scheduled_publish_slot']}")
-        print()
+        print(f"\n  Found {len(jobs)} job(s) pending review:\n")
+        for idx, j in enumerate(jobs, start=1):
+            dur_min = j['runtime'] / 60 if j['runtime'] else 0
+            print(f"  [{idx}] {j['job_id']}")
+            print(f"      Title: {j['title']}")
+            print(f"      Runtime: {dur_min:.1f}m | Word count: {j['word_count']} | Shorts: {j['shorts_count']}")
+            print(f"      Scheduled Slot: {j['scheduled_publish_slot']}")
+            print()
 
-    try:
-        selection = input("  Select job number to review (or 'q' to quit): ").strip()
-    except (EOFError, KeyboardInterrupt):
-        print("\nExiting.")
-        return
+        try:
+            selection = input("  Select job number to review (or 'q' to quit): ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting.")
+            return
 
-    if selection.lower() in ("q", "quit", "exit", ""):
-        return
+        if selection.lower() in ("q", "quit", "exit", ""):
+            return
 
-    try:
-        sel_idx = int(selection) - 1
-        selected_job = jobs[sel_idx]
-    except Exception:
-        print("Invalid selection.")
-        return
+        try:
+            sel_idx = int(selection) - 1
+            selected_job = jobs[sel_idx]
+            job_id = selected_job["job_id"]
+        except Exception:
+            print("Invalid selection.")
+            return
 
-    job_id = selected_job["job_id"]
     details = get_job_details(job_id)
 
     print("\n" + "-" * 70)
@@ -699,7 +701,7 @@ def main():
         return
 
     # Default to interactive CLI if no action specified
-    interactive_cli()
+    interactive_cli(target_job_id=args.job_id)
 
 
 if __name__ == "__main__":

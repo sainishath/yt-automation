@@ -1,0 +1,659 @@
+{
+  "channel": "Chronos Shift (@ChronosShiftHistory)",
+  "video_title": "1177 BC: The Year 8 Empires Collapsed at Once (The Bronze Age Reset)",
+  "event_slug": "bronze_age_collapse_1177bc",
+  "mode": "factual_modular_5part",
+  "sync_mode": "per_shot_narration",
+  "target_runtime_seconds": 540.0,
+  "total_word_count": 963,
+  "total_visual_shots": 58,
+  "youtube_metadata": {
+    "title_option_a": "1177 BC: The Year 8 Empires Collapsed at Once (The Bronze Age Reset)",
+    "title_option_b": "How Civilization Ended in 1177 BC: The Mystery of the Sea Peoples",
+    "description": "In 1177 BC, eight of the greatest superpowers in history—including Egypt, Mycenae, Troy, and the Hittite Empire—collapsed almost simultaneously. Discover the forensic archaeology behind the 300-year mega-drought, the Uluburun tin lifeline, and the deadly Nile Delta ambush that gave birth to the Iron Age.\n\nCHAPTERS:\n0:00 - The Unsent Clay Letter of Ugarit\n1:45 - The 9-to-1 Metal Lifeline\n3:35 - The 300-Year Drought and Earthquake Storm\n5:20 - Who Were the Mysterious Sea Peoples?\n7:10 - The Nile Delta Ambush and the Iron Age\n\n#history #ancientegypt #bronzeage #documentary #chronosshift",
+    "tags": [
+      "bronze age collapse",
+      "1177 bc",
+      "sea peoples",
+      "ancient egypt",
+      "ramesses iii",
+      "archaeology",
+      "history documentary",
+      "chronos shift"
+    ],
+    "scheduled_slot_longform": "Friday 18:00 IST",
+    "scheduled_slots_shorts": [
+      {
+        "part": 1,
+        "slot": "Monday 13:00 IST"
+      },
+      {
+        "part": 2,
+        "slot": "Tuesday 13:00 IST"
+      },
+      {
+        "part": 3,
+        "slot": "Wednesday 13:00 IST"
+      },
+      {
+        "part": 4,
+        "slot": "Thursday 13:00 IST"
+      },
+      {
+        "part": 5,
+        "slot": "Friday 13:00 IST"
+      }
+    ]
+  },
+  "acts": [
+    {
+      "act_number": 1,
+      "title": "The Unsent Clay Letter of Ugarit",
+      "short_title": "The Unsent Clay Letter Baked by a Burning Empire (1177 BC)",
+      "hook": "In the ruins of a burned Syrian palace, archaeologists found a clay letter that was never delivered.",
+      "shots": [
+        {
+          "shot_id": "act01_shot01",
+          "narration": "In the ruins of a burned Syrian palace, archaeologists found a clay letter that was never delivered.",
+          "prompt": "16:9 cinematic macro close-up of a cracked ancient clay cuneiform tablet resting in black char and embers on a ruined palace stone floor, flickering torchlight, photorealistic 8k, historical authenticity 1177 BC",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot02",
+          "narration": "It was never baked in a kiln. Instead, it was baked rock-hard by the flames of the burning palace itself.",
+          "prompt": "16:9 dramatic close-up of ancient cuneiform clay tablet surrounded by glowing orange fire and collapsing wooden beams, intense heat ripples, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot03",
+          "narration": "The message was from King Ammurapi of Ugarit, desperately begging the island of Cyprus for help.",
+          "prompt": "16:9 medium shot of Bronze Age King Ammurapi in gold-fringed linen robes and bronze crown frantically dictating to a scribe in a stone throne room at night, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot04",
+          "narration": "He wrote: 'My father, behold, the enemy ships came. My cities were burned, and they did evil things in my country.'",
+          "prompt": "16:9 archival primary source parchment callout of Ugarit tablet RS 20.238 with glowing amber cuneiform translation highlights, warm candlelight",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot05",
+          "narration": "Because his entire army was away fighting in Anatolia, his kingdom was completely defenseless.",
+          "prompt": "16:9 top-down illustrated tactical parchment map of Syria, Anatolia, and Cyprus showing Ugarit's army marching far north while enemy naval fleets approach the empty coast",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot06",
+          "narration": "Within forty-eight hours of those words being pressed into the clay, enemy warriors stormed the harbor.",
+          "prompt": "16:9 action shot of Bronze Age warriors with round shields and bronze slashing swords leaping from beached wooden warships onto a stone harbor quay under dark clouds, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot07",
+          "narration": "They put the royal palace and the great temples to the torch.",
+          "prompt": "16:9 wide shot of the monumental limestone palace of Ugarit engulfed in roaring orange flames at midnight, smoke billowing over the sea, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot08",
+          "narration": "Ugarit was burned so violently that a six-foot layer of ash buried the city for three thousand years.",
+          "prompt": "16:9 cinematic cross-section shot of modern archaeological excavation trench showing a thick two-meter black ash layer filled with bronze arrowheads and broken pottery, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "pan_left_up",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot09",
+          "narration": "And Ugarit was not alone. In that exact same generation, eight of the greatest empires on Earth vanished.",
+          "prompt": "16:9 panoramic view of ancient ruins stretching along the Mediterranean coast at sunset, toppled stone pillars, dark ominous sky, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot010",
+          "narration": "The mighty Hittites in Turkey, the citadel-kings of Mycenae in Greece, the kingdoms of Canaan—all collapsed in fire.",
+          "prompt": "16:9 wide tactical map of the Eastern Mediterranean in 1177 BC showing red flame markers simultaneously consuming Mycenae, Troy, Hattusa, Ugarit, and Megiddo",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot011",
+          "narration": "Why did the entire civilized world end in 1177 BC? Because every king depended on one single metal: bronze.",
+          "prompt": "16:9 glowing macro close-up of molten golden bronze pouring from an ancient clay crucible into stone sword molds, sparks illuminating dark stone walls, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act01_shot012",
+          "narration": "Watch how a single broken trade ship caused the greatest reset in human history.",
+          "prompt": "16:9 dramatic cinematic shot of a single Bronze Age wooden merchant galley sailing into gathering black storm clouds on the open Mediterranean, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        }
+      ],
+      "script": "In the ruins of a burned Syrian palace, archaeologists found a clay letter that was never delivered. It was never baked in a kiln. Instead, it was baked rock-hard by the flames of the burning palace itself. The message was from King Ammurapi of Ugarit, desperately begging the island of Cyprus for help. He wrote: 'My father, behold, the enemy ships came. My cities were burned, and they did evil things in my country.' Because his entire army was away fighting in Anatolia, his kingdom was completely defenseless. Within forty-eight hours of those words being pressed into the clay, enemy warriors stormed the harbor. They put the royal palace and the great temples to the torch. Ugarit was burned so violently that a six-foot layer of ash buried the city for three thousand years. And Ugarit was not alone. In that exact same generation, eight of the greatest empires on Earth vanished. The mighty Hittites in Turkey, the citadel-kings of Mycenae in Greece, the kingdoms of Canaan—all collapsed in fire. Why did the entire civilized world end in 1177 BC? Because every king depended on one single metal: bronze. Watch how a single broken trade ship caused the greatest reset in human history."
+    },
+    {
+      "act_number": 2,
+      "title": "The 9-to-1 Metal Lifeline: Why 8 Empires Depended on One Ship",
+      "short_title": "Why 8 Ancient Superpowers Depended on One Single Ship",
+      "hook": "In 1200 BC, eight rival superpowers were connected by one single military metal: bronze.",
+      "shots": [
+        {
+          "shot_id": "act02_shot01",
+          "narration": "In 1200 BC, eight rival empires were connected by the first globalized trade network in history.",
+          "prompt": "16:9 epic wide establishing shot of a bustling Bronze Age stone harbor with merchant galleys, stone quays stacked with pottery amphorae, and traders in linen robes, photorealistic 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot02",
+          "narration": "Egypt, Babylon, the Hittites, and Greece didn't just trade silk and gold—they traded military survival.",
+          "prompt": "16:9 high-contrast illustrated map of the Mediterranean connecting Mycenae, Hattusa, Babylon, and Egyptian Thebes with golden glowing trade routes",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot03",
+          "narration": "Every sword, spear, chariot axle, and shield in the ancient world was forged from bronze.",
+          "prompt": "16:9 macro close-up of a bronze Mycenaean spearhead and Naue II sword gleaming in the sun, fine hammered metal texture, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot04",
+          "narration": "To make bronze, you need nine parts copper and one part tin. And there was a fatal catch.",
+          "prompt": "16:9 laboratory macro shot of raw green malachite copper ore next to dull grey cassiterite tin stones resting on a leather merchant scale, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot05",
+          "narration": "Copper was easy—it was mined on the island of Cyprus. But tin was almost impossible to find.",
+          "prompt": "16:9 wide aerial landscape shot of the ancient open-cast copper mines of Cyprus with miners hauling baskets of green ore under a blazing sun, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot06",
+          "narration": "The only major tin mines were in the mountains of Afghanistan, over three thousand miles away.",
+          "prompt": "16:9 rugged cinematic landscape of a donkey caravan trudging along a narrow mountain pass in the Hindu Kush mountains of Afghanistan, laden with raw tin sacks, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot07",
+          "narration": "Donkey caravans had to haul the tin across deserts and mountains for months just to reach Mediterranean ports.",
+          "prompt": "16:9 medium shot of Bronze Age merchants in dusty wool cloaks leading heavily laden pack animals across dry desert riverbeds at dusk, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot08",
+          "narration": "When divers excavated the sunken Uluburun shipwreck off Turkey, they found the entire world on a single hull.",
+          "prompt": "16:9 underwater archaeology cinematic shot of a 3,300-year-old wooden ship hull resting on sandy Mediterranean seabed with divers inspecting stacks of oxhide copper ingots, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot09",
+          "narration": "The ship carried ten tons of Cypriot copper ingots and one ton of Afghan tin—the exact 9-to-1 ratio to equip an entire army.",
+          "prompt": "16:9 macro close-up of stacked four-handled oxhide bronze and copper ingots stamped with ancient maker marks, barnacles, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot010",
+          "narration": "Alongside the metals were Egyptian gold scarabs, Baltic amber, and Mesopotamian glass.",
+          "prompt": "16:9 macro flat-lay shot of golden Egyptian royal scarab amulet, blue glass discs, and golden Baltic amber beads on aged vellum, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot011",
+          "narration": "Because every empire was locked into this single supply chain, if the tin ships stopped, the entire world would go unarmed.",
+          "prompt": "16:9 animated trade route lifeline map showing trade lanes blinking and snapping one by one across the Mediterranean basin",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act02_shot012",
+          "narration": "And then, nature struck the first devastating blow.",
+          "prompt": "16:9 ominous wide shot of a blood-red sun setting behind cracked desert earth as hot wind whips dust across dying farmland, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        }
+      ],
+      "script": "In 1200 BC, eight rival empires were connected by the first globalized trade network in history. Egypt, Babylon, the Hittites, and Greece didn't just trade silk and gold—they traded military survival. Every sword, spear, chariot axle, and shield in the ancient world was forged from bronze. To make bronze, you need nine parts copper and one part tin. And there was a fatal catch. Copper was easy—it was mined on the island of Cyprus. But tin was almost impossible to find. The only major tin mines were in the mountains of Afghanistan, over three thousand miles away. Donkey caravans had to haul the tin across deserts and mountains for months just to reach Mediterranean ports. When divers excavated the sunken Uluburun shipwreck off Turkey, they found the entire world on a single hull. The ship carried ten tons of Cypriot copper ingots and one ton of Afghan tin—the exact 9-to-1 ratio to equip an entire army. Alongside the metals were Egyptian gold scarabs, Baltic amber, and Mesopotamian glass. Because every empire was locked into this single supply chain, if the tin ships stopped, the entire world would go unarmed. And then, nature struck the first devastating blow."
+    },
+    {
+      "act_number": 3,
+      "title": "The Four Horsemen: 300-Year Drought and Earthquake Storm",
+      "short_title": "The 300-Year Drought That Toppled Bronze Age Fortresses",
+      "hook": "The Bronze Age collapse didn't start with enemy armies—it started from the sky.",
+      "shots": [
+        {
+          "shot_id": "act03_shot01",
+          "narration": "The collapse didn't start with enemy armies. It started from the sky.",
+          "prompt": "16:9 dramatic cinematic shot of a vast dry Anatolian plain with deep fissure cracks in the soil under a blazing white sun, heat haze, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot02",
+          "narration": "Fossil pollen cores drilled from the Dead Sea prove that around 1200 BC, a 300-year mega-drought hit the Mediterranean.",
+          "prompt": "16:9 scientific documentary shot showing an archaeological sediment pollen core tube held by researchers with fossilized micro-layers labeled, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot03",
+          "narration": "Winter rains completely vanished from Greece to Anatolia, turning lush wheat fields into dust bowls.",
+          "prompt": "16:9 wide shot of withered, dead wheat stalks on parched farmland, cattle skeletons half-buried in dry dirt, ruined farmhouses, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot04",
+          "narration": "In the royal archives of the Hittite capital, clay tablets show kings panicking over empty grain silos.",
+          "prompt": "16:9 medium shot of Hittite royal scribes inspecting empty clay storage jars in a cavernous stone palace cellar, dust and cobwebs, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot05",
+          "narration": "A royal letter from the Hittite king pleaded: 'Do you not know that there is famine in my land? It is a matter of life and death!'",
+          "prompt": "16:9 archival primary source callout of Hittite royal tablet RS 20.212 with highlighted translation text of the famine plea, 8k",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot06",
+          "narration": "Pharaoh Merneptah of Egypt sent emergency grain ships across the sea to keep his starving allies alive.",
+          "prompt": "16:9 wide shot of Egyptian reed-and-wood cargo ships loaded high with grain sacks sailing across the Nile river toward the Mediterranean coast, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot07",
+          "narration": "Then, the ground itself broke.",
+          "prompt": "16:9 terrifying low-angle shot of a massive cyclopean stone fortress wall at Mycenae violently shaking and splitting open with stone dust spraying out, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot08",
+          "narration": "Geologists discovered an 'earthquake storm'—a series of massive tremors that struck along fault lines for fifty years.",
+          "prompt": "16:9 seismic fault map of the Aegean and Levant showing active red fault lines unzipping through Mycenae, Tiryns, Troy, and Ugarit",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot09",
+          "narration": "The fortress walls of Mycenae, Tiryns, and Troy VI were cracked and toppled by nature before any enemy arrived.",
+          "prompt": "16:9 wide shot of the collapsed stone Lion Gate of Mycenae with massive limestone lintels shattered on the ground amid smoke and dust, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot010",
+          "narration": "With their cities broken and their grain stores empty, millions of starving people were pushed to the edge.",
+          "prompt": "16:9 atmospheric medium shot of desperate Bronze Age families in rough woolen tunics huddled outside crumbling city gates holding empty bowls, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot011",
+          "narration": "And when a civilization starves, it does not die quietly—it takes its weapons and moves.",
+          "prompt": "16:9 dramatic silhouette shot of hundreds of warriors carrying round shields and spears marching in long lines along coastal cliffs at sunset, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act03_shot012",
+          "narration": "Out of the sea came an armada the world had never seen.",
+          "prompt": "16:9 ominous dawn shot looking out from a rocky Mediterranean promontory at hundreds of wooden war galleys with bird-head prows emerging from thick fog, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        }
+      ],
+      "script": "The collapse didn't start with enemy armies. It started from the sky. Fossil pollen cores drilled from the Dead Sea prove that around 1200 BC, a 300-year mega-drought hit the Mediterranean. Winter rains completely vanished from Greece to Anatolia, turning lush wheat fields into dust bowls. In the royal archives of the Hittite capital, clay tablets show kings panicking over empty grain silos. A royal letter from the Hittite king pleaded: 'Do you not know that there is famine in my land? It is a matter of life and death!' Pharaoh Merneptah of Egypt sent emergency grain ships across the sea to keep his starving allies alive. Then, the ground itself broke. Geologists discovered an 'earthquake storm'—a series of massive tremors that struck along fault lines for fifty years. The fortress walls of Mycenae, Tiryns, and Troy VI were cracked and toppled by nature before any enemy arrived. With their cities broken and their grain stores empty, millions of starving people were pushed to the edge. And when a civilization starves, it does not die quietly—it takes its weapons and moves. Out of the sea came an armada the world had never seen."
+    },
+    {
+      "act_number": 4,
+      "title": "The Armed Migration: Who Were the Sea Peoples?",
+      "short_title": "Who Were the Mysterious Sea Peoples of 1177 BC?",
+      "hook": "They toppled the Hittites, burned Mycenae, and erased Ugarit—yet the temple walls reveal a chilling truth.",
+      "shots": [
+        {
+          "shot_id": "act04_shot01",
+          "narration": "Egyptian temple walls call them the 'Nine Bows of the Sea'—known to history as the Sea Peoples.",
+          "prompt": "16:9 high-contrast macro shot of ancient carved limestone hieroglyphic reliefs at Medinet Habu temple showing foreign warriors with feathered crowns and horned helmets, 8k",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot02",
+          "narration": "For centuries, historians thought they were just ruthless pirate raiders. But the temple carvings show a darker truth.",
+          "prompt": "16:9 close-up relief carving of a heavy two-wheeled wooden ox-cart carrying women, children, and woven baskets guarded by warriors with round shields, 8k",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot03",
+          "narration": "Behind the warriors in horned helmets roll wooden ox-carts carrying women, children, and livestock. This was an armed migration.",
+          "prompt": "16:9 cinematic medium shot of a gritty Bronze Age migrant convoy on a dusty Mediterranean coastal track: warriors marching alongside wooden carts carrying families and supplies, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot04",
+          "narration": "They were armed with long, straight bronze slashing swords that shattered traditional Bronze Age chariot warfare.",
+          "prompt": "16:9 macro close-up of a fearsome bronze Naue Type II flange-hilted slashing sword in the grip of a battle-hardened warrior wearing a horned bronze helmet, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot05",
+          "narration": "Every city they conquered was stripped for food, and desperate survivors were forced into their ranks.",
+          "prompt": "16:9 action shot of Sea Peoples warriors breaking through wooden gates of a burning coastal walled town, carrying grain sacks and weapons, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot06",
+          "narration": "At Pylos in Greece, royal scribes frantically etched clay tablets ordering temple bronze to be melted down for spearheads.",
+          "prompt": "16:9 macro shot of a Pylos Linear B clay tablet being hurriedly incised with a bone stylus, bronze vessels piled on a table beside it, 8k",
+          "shot_type": "Primary Source",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot07",
+          "narration": "Days later, Pylos was burned so hot that its clay walls turned into glass.",
+          "prompt": "16:9 wide shot of the palace of Pylos in flames at night, fiery sparks raining down on stone courtyards, smoke rising into the starry sky, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot08",
+          "narration": "Pharaoh Ramesses the Third recorded the terrifying domino collapse: 'No land could stand before their arms.'",
+          "prompt": "16:9 archival stone callout of Medinet Habu Year 8 inscription with translated hieroglyphic text declaring the destruction of Hatti, Carchemish, and Alashiya",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot09",
+          "narration": "The Hittite Empire in Turkey, the cities of Cyprus, and the ports of Canaan were wiped out one by one.",
+          "prompt": "16:9 tactical campaign map showing rapid red assault arrows converging from the sea into Anatolia, the Levant, and Cyprus, crushing defensive capitals",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot010",
+          "narration": "By 1177 BC, only one superpower was left standing: Egypt.",
+          "prompt": "16:9 grand wide shot of the monumental stone pylons of Karnak Temple in Luxor under an intense golden sun, Egyptian standards fluttering in the wind, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act04_shot011",
+          "narration": "And the invaders were coming straight for the Nile.",
+          "prompt": "16:9 dramatic sunset view looking down the wide blue Nile river toward the sea as distant war fleets appear on the horizon, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        }
+      ],
+      "script": "Egyptian temple walls call them the 'Nine Bows of the Sea'—known to history as the Sea Peoples. For centuries, historians thought they were just ruthless pirate raiders. But the temple carvings show a darker truth. Behind the warriors in horned helmets roll wooden ox-carts carrying women, children, and livestock. This was an armed migration. They were armed with long, straight bronze slashing swords that shattered traditional Bronze Age chariot warfare. Every city they conquered was stripped for food, and desperate survivors were forced into their ranks. At Pylos in Greece, royal scribes frantically etched clay tablets ordering temple bronze to be melted down for spearheads. Days later, Pylos was burned so hot that its clay walls turned into glass. Pharaoh Ramesses the Third recorded the terrifying domino collapse: 'No land could stand before their arms.' The Hittite Empire in Turkey, the cities of Cyprus, and the ports of Canaan were wiped out one by one. By 1177 BC, only one superpower was left standing: Egypt. And the invaders were coming straight for the Nile."
+    },
+    {
+      "act_number": 5,
+      "title": "The Nile Delta Ambush and the Birth of the Iron Age",
+      "short_title": "How Egypt Trapped the Sea Peoples and Ignited the Iron Age",
+      "hook": "By 1177 BC, every empire had fallen except Egypt. So Pharaoh Ramesses III set a deadly trap in the Nile.",
+      "shots": [
+        {
+          "shot_id": "act05_shot01",
+          "narration": "Pharaoh Ramesses the Third knew his army could never defeat the Sea Peoples on the open Mediterranean Sea.",
+          "prompt": "16:9 cinematic medium close-up of Pharaoh Ramesses III wearing the blue Khepresh war crown and gold jewelry, studying a papyrus map with his generals by torchlight, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot02",
+          "narration": "So he set a brilliant, deadly trap inside the narrow mouths of the Nile Delta.",
+          "prompt": "16:9 top-down tactical battle map of the Nile Delta marshlands showing narrow river mouths, Egyptian ambush positions, and approaching enemy fleet",
+          "shot_type": "Tactical Map",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot03",
+          "narration": "He allowed the enemy fleet to row deep into the shallow, reed-choked river channels.",
+          "prompt": "16:9 wide shot of Sea Peoples wooden war galleys rowing into a narrow muddy Nile channel surrounded by dense tall papyrus reeds, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot04",
+          "narration": "Then, Egyptian warships blocked the river exit behind them like a giant net.",
+          "prompt": "16:9 dynamic action shot of heavy Egyptian warships with lion-headed prows ramming into the rear of the enemy fleet, cutting off their escape to the sea, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot05",
+          "narration": "Thousands of elite Egyptian archers rose from the muddy banks, raining composite arrows onto the trapped wooden decks.",
+          "prompt": "16:9 cinematic medium shot of rows of Egyptian archers drawing golden composite bows in unison on the riverbank, thousands of arrows flying through the air, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot06",
+          "narration": "Grappling hooks were thrown from the shore, capsizing the enemy galleys into the water.",
+          "prompt": "16:9 dramatic action shot of Egyptian soldiers hauling thick ropes with iron grappling hooks, pulling a foreign warship onto its side in the river mud, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot07",
+          "narration": "As Ramesses carved on the temple walls: 'Their ships and their goods were as if fallen into the water; their seed is no more.'",
+          "prompt": "16:9 archival stone relief from Medinet Habu showing capsized enemy boats, drowning warriors, and Egyptian victory hieroglyphs highlighted, 8k",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot08",
+          "narration": "Egypt won, but it was a hollow victory. The great world trade network was shattered forever.",
+          "prompt": "16:9 wide shot of smoke rising over the ruined, silent Nile battlefield at sunset, floating wooden wreckage in the muddy water, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot09",
+          "narration": "In Greece, seventy-five percent of the population disappeared, and people completely forgot how to read and write for four hundred years.",
+          "prompt": "16:9 poignant shot of overgrown stone ruins of an ancient Greek palace with a lone shepherd walking past fallen limestone columns at dusk, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot010",
+          "narration": "Because the tin trade routes were severed forever, blacksmiths turned to a stubborn metal buried under their own feet: iron.",
+          "prompt": "16:9 macro close-up of an ancient blacksmith striking a glowing red-hot iron sword blade on a stone anvil, white-hot sparks flying in a dark forge, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        },
+        {
+          "shot_id": "act05_shot011",
+          "narration": "Out of the ashes of the Bronze Age collapse, the Iron Age was born, giving rise to Greece, Rome, and the modern world.",
+          "prompt": "16:9 majestic panoramic landscape showing an early Iron Age hill citadel rising against a brilliant golden dawn sky, photorealistic 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern boats, modern ships, cruise ship, ferry boat, motorboat, steamship, yacht, cargo container, modern buildings, skyscrapers, asphalt roads, streetlights, cars, electricity, power lines, contemporary clothing, wristwatch, eyeglasses, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "bronze_age_collapse_1177bc"
+        }
+      ],
+      "script": "Pharaoh Ramesses the Third knew his army could never defeat the Sea Peoples on the open Mediterranean Sea. So he set a brilliant, deadly trap inside the narrow mouths of the Nile Delta. He allowed the enemy fleet to row deep into the shallow, reed-choked river channels. Then, Egyptian warships blocked the river exit behind them like a giant net. Thousands of elite Egyptian archers rose from the muddy banks, raining composite arrows onto the trapped wooden decks. Grappling hooks were thrown from the shore, capsizing the enemy galleys into the water. As Ramesses carved on the temple walls: 'Their ships and their goods were as if fallen into the water; their seed is no more.' Egypt won, but it was a hollow victory. The great world trade network was shattered forever. In Greece, seventy-five percent of the population disappeared, and people completely forgot how to read and write for four hundred years. Because the tin trade routes were severed forever, blacksmiths turned to a stubborn metal buried under their own feet: iron. Out of the ashes of the Bronze Age collapse, the Iron Age was born, giving rise to Greece, Rome, and the modern world."
+    }
+  ],
+  "derived_shorts": [
+    {
+      "short_id": "w2_short_01",
+      "part_number": 1,
+      "title": "The Unsent Clay Letter Baked by a Burning Empire (1177 BC)",
+      "hook_sentence": "In the ashes of a destroyed palace, archaeologists found a clay letter that was never delivered—it was baked hard by the palace flames.",
+      "scheduled_slot": "Monday 13:00 IST",
+      "script": "In the ashes of a destroyed Syrian palace, archaeologists found a clay letter that was never delivered—it was baked hard by the flames of the burning palace itself. King Ammurapi of Ugarit wrote: 'My father, behold, the enemy ships came. My cities were burned, and they did evil things in my country.' Because his entire army was fighting far away, the city was defenseless. Forty-eight hours later, the palace fell, and a six-foot layer of ash buried the city for three thousand years. Watch the full documentary on Chronos Shift to see why eight empires collapsed at once."
+    },
+    {
+      "short_id": "w2_short_02",
+      "part_number": 2,
+      "title": "Why 8 Ancient Superpowers Depended on One Single Ship",
+      "hook_sentence": "In 1200 BC, eight rival empires were connected by one single military metal: bronze. And there was a fatal catch.",
+      "scheduled_slot": "Tuesday 13:00 IST",
+      "script": "In 1200 BC, eight rival superpowers—including Egypt, Greece, and Troy—depended on a single military metal: bronze. To make bronze, kings needed nine parts copper and one part tin. Copper came from Cyprus, but the only tin mines were three thousand miles away in the mountains of Afghanistan. When divers found the sunken Uluburun shipwreck off Turkey, it carried ten tons of copper and one ton of tin—the exact ratio to equip an entire army. Because every empire was locked into this single trade lifeline, if the ships stopped, the entire ancient world went unarmed. Watch the full documentary on Chronos Shift."
+    },
+    {
+      "short_id": "w2_short_03",
+      "part_number": 3,
+      "title": "The 300-Year Drought That Toppled Bronze Age Fortresses",
+      "hook_sentence": "The Bronze Age collapse didn't start with enemy armies—it started from the sky.",
+      "scheduled_slot": "Wednesday 13:00 IST",
+      "script": "The Bronze Age collapse didn't start with enemy armies—it started from the sky. Fossil pollen cores drilled from the Dead Sea prove that around 1200 BC, a 300-year mega-drought hit the Mediterranean. Winter rains vanished, rivers dried up, and kings begged each other for grain. Then, the ground broke: geologists found an earthquake storm that cracked the fortress walls of Mycenae and Troy before any enemy arrived. With empty grain silos and shattered walls, starving populations took their weapons and took to the sea. Watch the full story on Chronos Shift."
+    },
+    {
+      "short_id": "w2_short_04",
+      "part_number": 4,
+      "title": "Who Were the Mysterious Sea Peoples of 1177 BC?",
+      "hook_sentence": "They toppled the Hittites, burned Mycenae, and erased Ugarit—yet the temple walls reveal a chilling truth.",
+      "scheduled_slot": "Thursday 13:00 IST",
+      "script": "They toppled the Hittite Empire, burned Mycenae, and erased Ugarit—yet the temple walls at Medinet Habu reveal a chilling truth. Look closely at the Egyptian carvings: behind the warriors in horned helmets and bronze slashing swords roll wooden ox-carts carrying women, children, and livestock. This wasn't a pirate raid—it was an armed migration of starving nations. No land could stand before them, and by 1177 BC, only one empire was left standing: Egypt. Watch the full documentary on Chronos Shift."
+    },
+    {
+      "short_id": "w2_short_05",
+      "part_number": 5,
+      "title": "How Egypt Trapped the Sea Peoples and Ignited the Iron Age",
+      "hook_sentence": "By 1177 BC, every empire had fallen except Egypt. So Pharaoh Ramesses III set a deadly trap in the Nile.",
+      "scheduled_slot": "Friday 13:00 IST",
+      "script": "By 1177 BC, every empire in the Mediterranean had fallen except Egypt. Knowing he couldn't defeat the Sea Peoples on the open sea, Pharaoh Ramesses the Third lured their armada into the narrow mud channels of the Nile Delta. Egyptian warships sealed the river mouth behind them, while thousands of archers opened fire from both banks, crushing the invasion. But the bronze trade was gone forever, forcing blacksmiths to forge a metal under their feet: iron. Watch the full documentary on Chronos Shift to see how the modern world was born."
+    }
+  ]
+}
