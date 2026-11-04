@@ -115,6 +115,7 @@ def upload_single_video(
     publish_at_iso: Optional[str] = None,
     is_short: bool = False,
     force: bool = False,
+    thumbnail_path: Optional[Path] = None,
 ) -> Dict[str, Any]:
     """Uploads a video to YouTube with resumable chunking and quota protection."""
     from googleapiclient.http import MediaFileUpload
@@ -249,6 +250,16 @@ def upload_single_video(
     yt_video_id = response.get("id", "")
     public_url = f"https://youtu.be/{yt_video_id}"
     studio_url = f"https://studio.youtube.com/video/{yt_video_id}/edit"
+
+    # Set custom thumbnail if provided and supported
+    if thumbnail_path and Path(thumbnail_path).exists():
+        try:
+            logging.info(f"Setting custom thumbnail for video {yt_video_id}: {thumbnail_path}")
+            media_thumb = MediaFileUpload(str(thumbnail_path), mimetype="image/png")
+            youtube.thumbnails().set(videoId=yt_video_id, media_body=media_thumb).execute()
+            logging.info("Custom thumbnail applied successfully.")
+        except Exception as te:
+            logging.warning(f"Could not set custom thumbnail (may require phone verified channel): {te}")
 
     # Update quota tracker
     tracker["units_used"] += QUOTA_UNITS_PER_UPLOAD
@@ -510,9 +521,9 @@ def execute_week_1_upload_queue(dry_run: bool = False) -> Dict[str, Any]:
 
 def build_week_2_manifest() -> Dict[str, Any]:
     """Builds the comprehensive scheduling manifest structure for Week 2 (Monday to Saturday)."""
-    output_dir = _ROOT / "longform_engine" / "output" / "pending_review" / "bronze_age_collapse_1177bc"
+    output_dir = _ROOT / "longform_engine" / "output" / "approved" / "bronze_age_collapse_1177bc"
     if not output_dir.exists():
-        output_dir = _ROOT / "longform_engine" / "output" / "approved" / "bronze_age_collapse_1177bc"
+        output_dir = _ROOT / "longform_engine" / "output" / "pending_review" / "bronze_age_collapse_1177bc"
 
     master_path = output_dir / "master_video.mp4"
     thumb_path = output_dir / "thumbnail.png"
@@ -673,7 +684,8 @@ def execute_week_2_upload_queue(dry_run: bool = False) -> Dict[str, Any]:
             tags=master["tags"],
             privacy=master["privacy_target"],
             publish_at_iso=master.get("publish_at_iso"),
-            is_short=False
+            is_short=False,
+            thumbnail_path=_ROOT / master["thumbnail_path"] if master.get("thumbnail_path") else None
         )
         master["youtube_video_id"] = res["youtube_video_id"]
         master["public_url"] = res["public_url"]

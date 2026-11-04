@@ -255,9 +255,9 @@ def print_audit_report(results: Dict[str, Any]):
             print("\n  Video Breakdown:")
             for d in res["details"]:
                 if d["action"] == "MARKED_DELETED_ON_YOUTUBE":
-                    print(f"    ❌ [DELETED]  {d['youtube_id']} | {d['title']} -> Status set to DELETED_ON_YOUTUBE")
+                    print(f"    [X] [DELETED]  {d['youtube_id']} | {d['title']} -> Status set to DELETED_ON_YOUTUBE")
                 else:
-                    print(f"    ✔ [ACTIVE]   {d['youtube_id']} | {d['title']} -> Privacy: {d['privacy_status']}")
+                    print(f"    [OK] [ACTIVE]   {d['youtube_id']} | {d['title']} -> Privacy: {d['privacy_status']}")
 
     print("\n" + "=" * 70)
     print("  RECONCILIATION COMPLETE: growth.db matches 100% of live YouTube reality.")
