@@ -48,6 +48,132 @@ from pipeline.compositor import (
 )
 
 
+def format_ass_timestamp(seconds: float) -> str:
+    """Formats seconds into ASS timestamp format H:MM:SS.cs"""
+    cs = int(round(seconds * 100))
+    h, cs = divmod(cs, 360000)
+    m, cs = divmod(cs, 6000)
+    s, cs = divmod(cs, 100)
+    return f"{h}:{m:02d}:{s:02d}.{cs:02d}"
+
+
+def map_color_to_ass(color_name: str) -> str:
+    color_map = {
+        "white": "&H00FFFFFF",
+        "black": "&H00000000",
+        "yellow": "&H0000FFFF",
+        "cyan": "&H00FFFF00",
+        "magenta": "&H00FF00FF"
+    }
+    cleaned = color_name.lower().strip()
+    return color_map.get(cleaned, cleaned if cleaned.startswith("&H") else "&H0000FFFF")
+
+
+def align_and_generate_ass(
+    whisper_words: list,
+    original_text: str,
+    style_cfg: dict,
+    max_words: int = 3,
+    max_chars: int = 16
+) -> str:
+    """
+    Aligns Whisper's word timestamps with exact script words, grouping into 2-3 word
+    active-word karaoke chunks in the mobile-safe zone (MarginV=620).
+    """
+    orig_words = original_text.split()
+    aligned = []
+    orig_idx = 0
+
+    for w_word in whisper_words:
+        w_text = w_word["word"].strip().lower()
+        if orig_idx < len(orig_words):
+            orig_word = orig_words[orig_idx]
+            aligned.append({
+                "word": orig_word,
+                "start": w_word["start"],
+                "end": w_word["end"]
+            })
+            orig_idx += 1
+        else:
+            aligned.append({
+                "word": w_word["word"],
+                "start": w_word["start"],
+                "end": w_word["end"]
+            })
+
+    while orig_idx < len(orig_words) and aligned:
+        aligned.append({
+            "word": orig_words[orig_idx],
+            "start": aligned[-1]["end"],
+            "end": aligned[-1]["end"] + 0.25
+        })
+        orig_idx += 1
+
+    chunks = []
+    chunk = []
+    chunk_chars = 0
+
+    for word_info in aligned:
+        w_text = word_info["word"].strip()
+        if not chunk:
+            chunk.append(word_info)
+            chunk_chars = len(w_text)
+        elif len(chunk) >= max_words or chunk_chars + len(w_text) + 1 > max_chars:
+            chunks.append(chunk)
+            chunk = [word_info]
+            chunk_chars = len(w_text)
+        else:
+            chunk.append(word_info)
+            chunk_chars += len(w_text) + 1
+
+    if chunk:
+        chunks.append(chunk)
+
+    font = style_cfg.get("font", "DejaVu Sans")
+    size = int(style_cfg.get("font_size", 72))
+    primary_color = map_color_to_ass(style_cfg.get("color", "yellow"))
+    secondary_color = map_color_to_ass(style_cfg.get("secondary_color", "white"))
+    out_color = map_color_to_ass(style_cfg.get("outline_color", "black"))
+    out_width = int(style_cfg.get("outline_width", 5))
+    shadow_depth = int(style_cfg.get("shadow", 2))
+    margin_v = int(style_cfg.get("margin_v", 620))
+    margin_l = int(style_cfg.get("margin_l", 80))
+    margin_r = int(style_cfg.get("margin_r", 80))
+
+    header = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,{font},{size},{primary_color},{secondary_color},{out_color},&H80000000,-1,0,0,0,100,100,1,0,1,{out_width},{shadow_depth},2,{margin_l},{margin_r},{margin_v},1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+"""
+
+    events = []
+    for chunk in chunks:
+        for active_idx, active_word in enumerate(chunk):
+            w_start = format_ass_timestamp(active_word["start"])
+            w_end = format_ass_timestamp(
+                chunk[active_idx + 1]["start"] if active_idx + 1 < len(chunk) else active_word["end"]
+            )
+            styled_tokens = []
+            for tok_idx, tok in enumerate(chunk):
+                raw_tok = tok["word"].strip()
+                if tok_idx == active_idx:
+                    styled_tokens.append(f"{{\\c{primary_color}&}}{raw_tok}{{\\c{secondary_color}&}}")
+                else:
+                    styled_tokens.append(f"{{\\c{secondary_color}&}}{raw_tok}")
+            text_line = " ".join(styled_tokens)
+            events.append(f"Dialogue: 0,{w_start},{w_end},Default,,0,0,0,,{text_line}")
+
+    return header + "\n".join(events) + "\n"
+
+
 def generate_safe_short_ass(
     text: str,
     duration_sec: float,
@@ -91,10 +217,11 @@ def extract_act_slice(
     target_width: int = 1080,
     target_height: int = 1920,
     ass_subtitles_path: Optional[Path] = None,
+    audio_path: Optional[Path] = None,
 ) -> Path:
     """
     Extracts a time segment from master 16:9 video, reframes it into 9:16 vertical,
-    and optionally burns in mobile-safe MarginV=620 subtitles.
+    and optionally burns in mobile-safe MarginV=620 subtitles and muxes dedicated audio.
     """
     output_path.parent.mkdir(parents=True, exist_ok=True)
     
@@ -104,25 +231,44 @@ def extract_act_slice(
         "setsar=1"
     ]
     if ass_subtitles_path and Path(ass_subtitles_path).exists():
-        escaped_ass = str(ass_subtitles_path).replace("\\", "/").replace(":", "\\:")
+        escaped_ass = str(Path(ass_subtitles_path).resolve()).replace("\\", "/").replace(":", "\\:")
         filter_parts.append(f"ass='{escaped_ass}'")
 
     vf_filter = ",".join(filter_parts)
     
-    cmd = [
-        "ffmpeg", "-y",
-        "-ss", str(start_sec),
-        "-i", str(master_video_path),
-        "-t", str(duration_sec),
-        "-vf", vf_filter,
-        "-c:v", "libx264",
-        "-preset", "medium",
-        "-crf", "18",
-        "-c:a", "aac",
-        "-b:a", "192k",
-        "-ar", "48000",
-        str(output_path)
-    ]
+    if audio_path and Path(audio_path).exists():
+        cmd = [
+            "ffmpeg", "-y",
+            "-ss", str(start_sec), "-t", str(duration_sec),
+            "-i", str(master_video_path),
+            "-i", str(audio_path),
+            "-filter_complex", f"[0:v]{vf_filter}[v]",
+            "-map", "[v]",
+            "-map", "1:a",
+            "-c:v", "libx264",
+            "-preset", "faster",
+            "-crf", "18",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-ar", "48000",
+            "-t", str(duration_sec),
+            str(output_path)
+        ]
+    else:
+        cmd = [
+            "ffmpeg", "-y",
+            "-ss", str(start_sec),
+            "-i", str(master_video_path),
+            "-t", str(duration_sec),
+            "-vf", vf_filter,
+            "-c:v", "libx264",
+            "-preset", "medium",
+            "-crf", "18",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-ar", "48000",
+            str(output_path)
+        ]
     
     logger.info(f"Extracting 9:16 Short: {start_sec:.1f}s -> {start_sec + duration_sec:.1f}s ({duration_sec:.1f}s)")
     proc = subprocess.run(cmd, capture_output=True, text=True)
@@ -261,20 +407,70 @@ def split_master_into_shorts(
             publish_at_iso = slot_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
             short_file = out_base / f"{short_id}.mp4"
+            proxy_file = out_base / f"{short_id}_proxy.mp4"
             ass_file = out_base / f"{short_id}_subtitles.ass"
             meta_file = out_base / f"{short_id}_meta.json"
             meta_compat_file = out_base / f"{short_id}_metadata.json"
+            voice_file = out_base / f"{short_id}_voice.mp3"
 
-            generate_safe_short_ass(hook_script or title, dur, ass_file)
+            # 1. Synthesize Exact Voiceover Track for the Short Script
+            try:
+                import asyncio
+                import edge_tts
+                async def _syn():
+                    comm = edge_tts.Communicate(short_script, "en-US-ChristopherNeural")
+                    await comm.save(str(voice_file))
+                asyncio.run(_syn())
+
+                probe_cmd = ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", str(voice_file)]
+                dur = float(subprocess.check_output(probe_cmd, text=True).strip())
+                logger.info(f"Synthesized Short voiceover ({dur:.1f}s): {voice_file.name}")
+            except Exception as tts_err:
+                logger.warning(f"Shorts TTS fallback ({tts_err}); using sliced audio duration.")
+                dur = float(dur_val if dur_val is not None else 50.0)
+
+            # 2. Whisper Word-Level Acoustic Alignment for Exact Subtitles
+            try:
+                import whisper
+                model = whisper.load_model("base.en")
+                w_res = model.transcribe(str(voice_file), word_timestamps=True, initial_prompt=short_script, language="en")
+                words = []
+                for seg in w_res.get("segments", []):
+                    for w in seg.get("words", []):
+                        words.append({"word": w["word"], "start": w["start"], "end": w["end"]})
+                style_cfg = {"font": "DejaVu Sans", "font_size": 72, "margin_v": 620, "color": "yellow", "secondary_color": "white"}
+                ass_content = align_and_generate_ass(words, short_script, style_cfg, max_words=3, max_chars=16)
+                ass_file.write_text(ass_content, encoding="utf-8")
+                logger.info(f"Generated {len(words)} aligned word captions in safe-zone (MarginV=620)")
+            except Exception as wh_err:
+                logger.warning(f"Whisper alignment fallback ({wh_err}); using safe chunk generator.")
+                generate_safe_short_ass(short_script, dur, ass_file)
 
             try:
+                escaped_ass = str(ass_file.resolve()).replace("\\", "/").replace(":", "\\:")
                 rendered_short = extract_act_slice(
                     master_video_path=master_path,
                     start_sec=start,
                     duration_sec=dur,
                     output_path=short_file,
                     ass_subtitles_path=ass_file,
+                    audio_path=voice_file if voice_file.exists() else None,
                 )
+
+                # Generate 540x960 review proxy if output file exists
+                if short_file.exists():
+                    try:
+                        cmd_proxy = [
+                            "ffmpeg", "-y",
+                            "-i", str(short_file),
+                            "-vf", "scale=540:960",
+                            "-c:v", "libx264", "-preset", "faster", "-crf", "24",
+                            "-c:a", "aac", "-b:a", "128k",
+                            str(proxy_file)
+                        ]
+                        subprocess.run(cmd_proxy, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+                    except Exception as prx_err:
+                        logger.warning(f"Review proxy generation notice: {prx_err}")
 
                 pinned_comment = (
                     f"🚨 Watch the complete 9-minute master documentary:\n"
