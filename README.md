@@ -60,7 +60,7 @@ flowchart TD
     %% ==========================================
     subgraph REVIEW["3. Human Gate & Discord Review"]
         PROXY["540x960 Mobile Proxy Render"]
-        DISCORD["Discord Review Webhook #REDACTED_WEBHOOK_ID"]
+        DISCORD["Discord Review Gate (DISCORD_REVIEW_WEBHOOK_URL)"]
         APPROVE["Human Approval Gate (/approve <job_id>)"]
         YT["Official YouTube Data API v3\n(Chunked Resumable Upload)"]
         
@@ -159,5 +159,5 @@ python -m unittest discover -s growth/tests -p "test_*.py"
 
 1. **Pipeline 1 Isolation**: Zero reliance on gameplay footage or secondary code cards. 100% cinematic visual compositions.
 2. **Local Fooocus SDXL Invariant**: All image generation uses local Fooocus on `http://127.0.0.1:7865`. Zero external cloud image APIs.
-3. **Human Gate Requirement**: Every video must pass the 17-point QA gate and dispatch a proxy to Discord `#REDACTED_WEBHOOK_ID` before upload.
+3. **Human Gate Requirement**: Every video must pass the 17-point QA gate and dispatch a proxy to the configured Discord review webhook before upload.
 4. **Empirical Evidence Dominance**: Strategy promotions require mature 7-day performance data with $N \ge 4$ samples per arm and $\Delta \ge +15.0\%$ APV.

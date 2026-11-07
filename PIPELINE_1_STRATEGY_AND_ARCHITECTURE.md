@@ -176,7 +176,7 @@ Every video produced by Pipeline 1 must satisfy the **17-Point Production QA Gat
 | | Visual Density | 12/12 beats (Shorts) / 80/80 shots (Long-Form) generated on Fooocus SDXL |
 | | Fact Verification | 100% of claims verified against the historical Evidence Packet |
 | **Human Governance**| Review Proxy | Compact `< 8MB` 540×960 MP4 proxy generated |
-| | Discord Gate | Dispatched to Discord Webhook `REDACTED_WEBHOOK_ID` |
+| | Discord Gate | Dispatched to Discord Review Webhook |
 | | Upload Rule | Zero automated uploads without explicit human review approval |
 
 ---

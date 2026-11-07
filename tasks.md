@@ -9,7 +9,7 @@
 - [x] Verify `generate_script.py` produces an 8.5/10 passed script with RAG claim verification
 - [x] Execute `alternate-history-shorts/scripts/pipeline_runner.py` for "What if the Roman Empire never fell?" with `--no_fallback`
 - [x] Verify 17/17 QA Gate passing and artifact generation in `alternate-history-shorts/output/`
-- [x] Confirm proxy video generation (0.83 MB) and successful dispatch to Channel A Discord review webhook (`REDACTED_WEBHOOK_ID`)
+- [x] Confirm proxy video generation (0.83 MB) and successful dispatch to Channel A Discord review webhook
 - [x] Confirm `growth.db` status updated to `AWAITING_REVIEW`
 
 ## Week 1 Flagship Documentary: The Fall of Constantinople (1453)

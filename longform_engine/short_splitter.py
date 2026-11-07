@@ -472,23 +472,27 @@ def split_master_into_shorts(
                     except Exception as prx_err:
                         logger.warning(f"Review proxy generation notice: {prx_err}")
 
-                pinned_comment = (
-                    f"🚨 Watch the complete 9-minute master documentary:\n"
-                    f"\"{longform_title}\" on {channel_name}!\n"
-                    f"Full forensic breakdown from the unbaked clay letter to the Nile Delta ambush."
+                pinned_comment = s.get("pinned_comment") or (
+                    f"🚨 Watch the complete master documentary:\n"
+                    f"▶ \"{longform_title}\" on {channel_name}!\n"
+                    f"Full forensic breakdown and historical analysis on the channel.\n"
+                    f"🔗 Watch the full video on the channel."
                 )
-                description = (
+                description = s.get("description") or (
                     f"{short_script}\n\n"
-                    f"Full Documentary: '{longform_title}'\n"
+                    f"▶ Full Documentary: '{longform_title}'\n"
                     f"Watch on {channel_name}.\n\n"
-                    f"#History #Shorts #Documentary #UntoldHistory #BronzeAgeCollapse"
+                    f"#History #Shorts #Documentary #UntoldHistory #ChronosShift"
                 )
+                tags = s.get("tags") or [
+                    "history", "documentary", "untold history", "shorts", "chronos shift"
+                ]
                 meta = {
                     "short_id": short_id,
                     "title": title[:100],
                     "description": description,
                     "pinned_comment": pinned_comment,
-                    "tags": ["history", "documentary", "untold history", "shorts", "bronze age collapse", "ancient egypt"],
+                    "tags": tags,
                     "source_act": source_act,
                     "start_sec": start,
                     "duration_sec": dur,

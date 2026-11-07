@@ -2,13 +2,14 @@
 """
 longform_engine/dispatch_discord_review.py
 -------------------------------------------
-Dispatches all 5 Week 2 modular Shorts to the Discord Review Webhook for creator approval.
+Dispatches all 5 modular Shorts for a target job to the Discord Review Webhook for creator approval.
 """
 
 import os
 import sys
 import json
 import time
+import argparse
 import subprocess
 import requests
 from pathlib import Path
@@ -16,6 +17,10 @@ from dotenv import load_dotenv
 
 _ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(_ROOT / ".env")
+
+parser = argparse.ArgumentParser(description="Dispatch review proxies to Discord webhook")
+parser.add_argument("--job", type=str, default="siege_of_vienna_1683", help="Target job ID in pending_review")
+args = parser.parse_args()
 
 webhook_url = (
     os.getenv("DISCORD_REVIEW_WEBHOOK_URL")
@@ -27,48 +32,47 @@ if not webhook_url:
     print("ERROR: Discord webhook URL not found in environment.")
     sys.exit(1)
 
-shorts_dir = _ROOT / "longform_engine" / "output" / "pending_review" / "bronze_age_collapse_1177bc" / "shorts"
-short_items = [
-    ("w2_short_01", "Part 1: The Unsent Clay Letter Baked by a Burning Empire (1177 BC)", "Monday 13:00 IST"),
-    ("w2_short_02", "Part 2: Why 8 Ancient Superpowers Depended on One Single Ship", "Tuesday 13:00 IST"),
-    ("w2_short_03", "Part 3: The 300-Year Drought That Toppled Bronze Age Fortresses", "Wednesday 13:00 IST"),
-    ("w2_short_04", "Part 4: Who Were the Mysterious Sea Peoples of 1177 BC?", "Thursday 13:00 IST"),
-    ("w2_short_05", "Part 5: How Egypt Trapped the Sea Peoples and Ignited the Iron Age", "Friday 13:00 IST"),
-]
+shorts_dir = _ROOT / "longform_engine" / "output" / "pending_review" / args.job / "shorts"
+if not shorts_dir.exists():
+    print(f"ERROR: Shorts directory not found: {shorts_dir}")
+    sys.exit(1)
 
-print(f"--> Found {len(short_items)} Shorts to dispatch from {shorts_dir.name}")
+meta_files = sorted(shorts_dir.glob("*_meta.json"))
+print(f"--> Found {len(meta_files)} Shorts to dispatch from {shorts_dir.name}")
 
 dispatched = []
-for sid, title, slot in short_items:
-    mp4_path = shorts_dir / f"{sid}.mp4"
-    meta_path = shorts_dir / f"{sid}_meta.json"
-    meta = {}
-    if meta_path.exists():
-        with open(meta_path, "r", encoding="utf-8") as mf:
-            meta = json.load(mf)
+for mf in meta_files:
+    with open(mf, "r", encoding="utf-8") as f:
+        meta = json.load(f)
 
-    desc = meta.get("description", "")
-    first_line = desc.split("\n")[0] if desc else title
+    sid = meta.get("short_id", mf.stem.replace("_meta", ""))
+    title = meta.get("title", sid)
+    slot = meta.get("scheduled_publish_slot") or meta.get("scheduled_slot") or "Upcoming Slot"
+    hook = meta.get("hook_script") or meta.get("description", "").split("\n")[0]
+    dur = meta.get("duration_sec", 35.0)
+
+    mp4_path = shorts_dir / f"{sid}.mp4"
+    proxy_path = shorts_dir / f"{sid}_proxy.mp4"
 
     message_content = (
-        f"🎬 **[CHRONOS SHIFT (PIPELINE 1) - SHORT REVIEW GATE]**\n"
+        f"🚨 **[CHRONOS SHIFT (PIPELINE 1) - SHORT REVIEW GATE]**\n"
+        f"**Job**: `{args.job}`\n"
         f"**Short ID**: `{sid}`\n"
         f"**Title**: **{title}**\n"
         f"**Target Release Slot**: `{slot}`\n"
-        f"**Hook**: *\"{first_line[:130]}...\"*\n"
-        f"**Specs**: 9:16 Vertical (1080x1920) | Duration: {meta.get('duration_sec', 56.0):.1f}s | Subtitles: `MarginV=620`\n"
+        f"**Hook**: *\"{hook[:130]}...\"*\n"
+        f"**Specs**: 9:16 Vertical (1080x1920) | Duration: {dur:.1f}s | Subtitles: `MarginV=620`\n"
         f"**Status**: `AWAITING_REVIEW`\n\n"
         f"**Review Checklist:**\n"
         f"  [ ] Visuals: No modern artifacts or deformed anatomy?\n"
         f"  [ ] Voice: Clear pacing and pronunciation?\n"
         f"  [ ] Subtitles: Centered in safe-zone (MarginV=620) with no typos?\n"
         f"  [ ] Packaging: Hook and thumbnail verified?\n\n"
-        f"👉 **To Approve:** `approve {sid}`\n"
-        f"👉 **To Reject/Reroll:** `reroll {sid} <notes>`"
+        f"🔘 **To Approve:** `approve {sid}`\n"
+        f"🔘 **To Reject/Reroll:** `reroll {sid} <notes>`"
     )
 
-    proxy_path = shorts_dir / f"{sid}_proxy.mp4"
-    if not proxy_path.exists() or proxy_path.stat().st_mtime < mp4_path.stat().st_mtime:
+    if not proxy_path.exists() or (mp4_path.exists() and proxy_path.stat().st_mtime < mp4_path.stat().st_mtime):
         print(f"Generating 540x960 review proxy for {sid}...")
         cmd_proxy = [
             "ffmpeg", "-y",
@@ -100,4 +104,4 @@ for sid, title, slot in short_items:
 
     time.sleep(1.5)
 
-print(f"\n--> All {len(dispatched)}/{len(short_items)} Shorts successfully posted to Discord.")
+print(f"\n--> All {len(dispatched)}/{len(meta_files)} Shorts successfully posted to Discord.")

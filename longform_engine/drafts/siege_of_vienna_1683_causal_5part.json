@@ -1,0 +1,596 @@
+{
+  "channel": "Chronos Shift (@ChronosShiftHistory)",
+  "video_title": "15,000 Against 150,000: The Siege of Vienna & The Largest Cavalry Charge in History (1683)",
+  "event_slug": "siege_of_vienna_1683",
+  "mode": "factual_modular_5part",
+  "sync_mode": "per_shot_narration",
+  "target_runtime_seconds": 540.0,
+  "total_word_count": 894,
+  "total_visual_shots": 51,
+  "youtube_metadata": {
+    "title_option_a": "15,000 Against 150,000: The Siege of Vienna & The Largest Cavalry Charge in History (1683)",
+    "title_option_b": "How 18,000 Winged Hussars Saved Europe in Just 2 Hours (Vienna 1683)",
+    "description": "In July 1683, 150,000 Ottoman troops laid siege to Vienna, defended by barely 15,000 starving soldiers. For sixty days, defenders fought a brutal subterranean gunpowder war beneath the walls—until King Jan Sobieski of Poland unleashed 18,000 horsemen in the largest cavalry charge in human history.\n\nCHAPTERS:\n0:00 - 15,000 Against 150,000: The Ring of Steel\n1:50 - The Subterranean Gunpowder War\n3:45 - The Croissant Legend and the Final Bastion Breach\n5:30 - Wings of Thunder: The Polish Winged Hussars on the Ridge\n7:15 - Avalanche of Steel: The Charge That Saved Europe\n\n#history #siegeofvienna #wingedhussars #documentary #chronosshift",
+    "tags": [
+      "siege of vienna",
+      "1683",
+      "winged hussars",
+      "jan sobieski",
+      "ottoman empire",
+      "military history",
+      "cavalry charge",
+      "chronos shift"
+    ],
+    "scheduled_slot_longform": "Saturday 18:00 IST",
+    "scheduled_slots_shorts": [
+      {
+        "part": 1,
+        "slot": "Monday 13:00 IST"
+      },
+      {
+        "part": 2,
+        "slot": "Tuesday 13:00 IST"
+      },
+      {
+        "part": 3,
+        "slot": "Wednesday 13:00 IST"
+      },
+      {
+        "part": 4,
+        "slot": "Thursday 13:00 IST"
+      },
+      {
+        "part": 5,
+        "slot": "Friday 13:00 IST"
+      }
+    ]
+  },
+  "acts": [
+    {
+      "act_number": 1,
+      "title": "15,000 Against 150,000: The Ring of Steel Around Vienna",
+      "short_title": "15,000 Starving Defenders Against 150,000 Ottomans (Vienna 1683)",
+      "hook": "In July 1683, an Ottoman army of one hundred and fifty thousand men surrounded the city of Vienna.",
+      "shots": [
+        {
+          "shot_id": "act01_shot01",
+          "narration": "In July 1683, an Ottoman army of one hundred and fifty thousand men surrounded the city of Vienna.",
+          "prompt": "16:9 epic wide establishing shot of an ocean of hundreds of thousands of green and red Ottoman army tents surrounding the fortified medieval stone walls of Vienna under a smoky dawn sky, photorealistic 8k, historical authenticity 1683",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot02",
+          "narration": "Vienna was the golden gate to Central Europe. If it fell, the road to Germany and Italy was wide open.",
+          "prompt": "16:9 top-down illustrated tactical map of Central Europe in 1683, showing Vienna on the Danube river as the red barrier blocking Ottoman advance toward Prague and Munich",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot03",
+          "narration": "The Austrian Emperor had fled the capital in panic, leaving Count Ernst von Starhemberg with only eleven thousand soldiers and five thousand armed citizens.",
+          "prompt": "16:9 cinematic medium shot of Austrian military commander Count Ernst von Starhemberg in steel breastplate and lace collar, looking sternly over the city parapet as royal carriages flee in the distance, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot04",
+          "narration": "That meant fifteen thousand starving defenders had to hold off a force ten times their size.",
+          "prompt": "16:9 low-angle shot from the city ramparts looking down at a small group of haggard Austrian city militia in leather coats and iron helmets holding matchlock muskets, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot05",
+          "narration": "Because Vienna's walls were built of solid stone, the Ottoman Grand Vizier Kara Mustafa knew normal cannons wouldn't break them quickly.",
+          "prompt": "16:9 medium shot of Ottoman Grand Vizier Kara Mustafa in gold-embroidered silk robes and massive jeweled turban, pointing toward the colossal brick and limestone bastions of Vienna, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot06",
+          "narration": "So he ordered thousands of specialized miners to dig trenches right up to the city moat.",
+          "prompt": "16:9 dramatic action shot of thousands of Ottoman sappers and laborers in turbans digging deep zig-zag siege trenches toward the city moat under heavy artillery fire, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot07",
+          "narration": "Every single tree, house, and church outside the walls was demolished by the defenders to deny the enemy cover.",
+          "prompt": "16:9 wide shot of the barren, smoking glacis outside Vienna's walls, burning suburbs, bare scorched earth stretching to the enemy trench lines, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot08",
+          "narration": "Food ran out in weeks. The citizens were reduced to eating horses, dogs, and rats.",
+          "prompt": "16:9 somber street scene inside 1683 Vienna, desperate citizens in 17th-century garments huddled around a small soup kettle in cobblestone alley under falling mortar dust, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot09",
+          "narration": "Dysentery and fever swept through the barracks, cutting the garrison down to barely four thousand fighting men.",
+          "prompt": "16:9 atmospheric dimly lit shot inside a vaulted stone cellar hospital in Vienna, wounded soldiers bandaged in linen lying on straw mattresses by lantern light, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot010",
+          "narration": "Yet Count Starhemberg sent a one-line reply to the Ottoman surrender demand: 'I will fight to the last drop of blood.'",
+          "prompt": "16:9 archival primary source parchment callout displaying Count Starhemberg's 1683 refusal letter with Austrian imperial wax seal, glowing candlelight",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act01_shot011",
+          "narration": "Because they couldn't breach the walls from above, the Ottomans began digging underneath them.",
+          "prompt": "16:9 dark claustrophobic underground shot of Ottoman sappers tunneling into damp earth by oil lamp light, wooden pit props supporting the dirt roof, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        }
+      ],
+      "script": "In July 1683, an Ottoman army of one hundred and fifty thousand men surrounded the city of Vienna. Vienna was the golden gate to Central Europe. If it fell, the road to Germany and Italy was wide open. The Austrian Emperor had fled the capital in panic, leaving Count Ernst von Starhemberg with only eleven thousand soldiers and five thousand armed citizens. That meant fifteen thousand starving defenders had to hold off a force ten times their size. Because Vienna's walls were built of solid stone, the Ottoman Grand Vizier Kara Mustafa knew normal cannons wouldn't break them quickly. So he ordered thousands of specialized miners to dig trenches right up to the city moat. Every single tree, house, and church outside the walls was demolished by the defenders to deny the enemy cover. Food ran out in weeks. The citizens were reduced to eating horses, dogs, and rats. Dysentery and fever swept through the barracks, cutting the garrison down to barely four thousand fighting men. Yet Count Starhemberg sent a one-line reply to the Ottoman surrender demand: 'I will fight to the last drop of blood.' Because they couldn't breach the walls from above, the Ottomans began digging underneath them."
+    },
+    {
+      "act_number": 2,
+      "title": "The Gunpowder War Beneath the Ground: Vibrating Peas and Tunnel Battles",
+      "short_title": "The Gunpowder War Fought 50 Feet Underground (Vienna 1683)",
+      "hook": "By August, the siege of Vienna moved into complete darkness: beneath the ground.",
+      "shots": [
+        {
+          "shot_id": "act02_shot01",
+          "narration": "By August, the siege of Vienna moved into complete darkness: beneath the ground.",
+          "prompt": "16:9 subterranean cinematic shot of a narrow dirt tunnel lit by a single flickering candle, pickaxes digging into limestone foundations, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot02",
+          "narration": "Ottoman sappers were the finest tunnel engineers in the world. They dug fifty feet deep to pack barrels of black powder directly under the city bastions.",
+          "prompt": "16:9 medium shot of Ottoman mine engineers carefully stacking heavy wooden barrels of black gunpowder beneath wooden timber ceiling props in a subterranean chamber, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot03",
+          "narration": "How did the defenders know where the tunnels were? They placed brass bowls of water and drums covered in dried peas along the cellar floors.",
+          "prompt": "16:9 extreme close-up macro shot of dried green peas bouncing on a stretched leather drumhead inside a stone basement, water ripples in a brass bowl nearby, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot04",
+          "narration": "Whenever the peas vibrated, Austrian counter-miners dug frantically downward to intercept them.",
+          "prompt": "16:9 intense action shot of Austrian soldiers with pickaxes breaking through a subterranean dirt wall into an Ottoman tunnel, sparks flying from striking iron, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot05",
+          "narration": "Men fought savage, silent battles thirty feet underground with daggers, shovels, and short swords in pitch darkness.",
+          "prompt": "16:9 visceral hand-to-hand combat inside a cramped, suffocating dirt tunnel illuminated only by dropped torches, dust and smoke swirling, 8k",
+          "shot_type": "Action",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot06",
+          "narration": "Defenders pumped suffocating sulfur smoke into Ottoman tunnels to choke the enemy sappers in their shafts.",
+          "prompt": "16:9 dramatic shot of Austrian defenders pumping a bronze bellows device, forcing thick yellow sulfur smoke into a wooden tunnel opening, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot07",
+          "narration": "On September fourth, a massive Ottoman mine detonated beneath the Burg bastion.",
+          "prompt": "16:9 catastrophic wide explosion shot of the massive stone Burg bastion of Vienna blowing skyward in a violent eruption of dirt, fire, and stone slabs, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot08",
+          "narration": "A thirty-foot gap opened in the wall. The explosion threw defenders fifty feet into the air.",
+          "prompt": "16:9 chaotic smoke-filled shot of a massive smoking breach in the castle wall, rubble tumbled into the dry moat, Ottoman shock troops charging through dust, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot09",
+          "narration": "For two desperate hours, Count Starhemberg himself led citizens with pikes to block the rubble before the enemy could pour through.",
+          "prompt": "16:9 heroic action shot of Austrian pikemen standing shoulder-to-shoulder in the smoking rubble breach, lowering long steel pikes against charging Janissaries, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act02_shot010",
+          "narration": "They held, but only barely. Starhemberg fired distress rockets from St. Stephen's cathedral tower: Vienna had only days left.",
+          "prompt": "16:9 night shot looking up at the towering Gothic spire of St. Stephen's Cathedral in Vienna firing bright red distress signal rockets into the black sky, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        }
+      ],
+      "script": "By August, the siege of Vienna moved into complete darkness: beneath the ground. Ottoman sappers were the finest tunnel engineers in the world. They dug fifty feet deep to pack barrels of black powder directly under the city bastions. How did the defenders know where the tunnels were? They placed brass bowls of water and drums covered in dried peas along the cellar floors. Whenever the peas vibrated, Austrian counter-miners dug frantically downward to intercept them. Men fought savage, silent battles thirty feet underground with daggers, shovels, and short swords in pitch darkness. Defenders pumped suffocating sulfur smoke into Ottoman tunnels to choke the enemy sappers in their shafts. On September fourth, a massive Ottoman mine detonated beneath the Burg bastion. A thirty-foot gap opened in the wall. The explosion threw defenders fifty feet into the air. For two desperate hours, Count Starhemberg himself led citizens with pikes to block the rubble before the enemy could pour through. They held, but only barely. Starhemberg fired distress rockets from St. Stephen's cathedral tower: Vienna had only days left."
+    },
+    {
+      "act_number": 3,
+      "title": "The Baker's Tunnel, the Invention of the Croissant, and the Final Distress Rocket",
+      "short_title": "How a Baker in a Tunnel Invented the Croissant (1683)",
+      "hook": "Did you know the croissant was invented in a dark basement during a 1683 siege?",
+      "shots": [
+        {
+          "shot_id": "act03_shot01",
+          "narration": "During the underground war, an Austrian baker working in his basement before dawn heard faint tapping underneath his oven floor.",
+          "prompt": "16:9 atmospheric medium shot of an 17th-century Austrian baker in flour-dusted apron pausing with his wooden peel in a stone cellar, ear pressed to the floor, lantern light, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot02",
+          "narration": "He alerted the city guard just in time. Troops broke into the tunnel and defused a massive gunpowder mine directly beneath the town center.",
+          "prompt": "16:9 action shot of Austrian musketeers flooding down cellar stairs into a newly broken hole, cutting smoking gunpowder fuses with daggers, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot03",
+          "narration": "Legend says that to celebrate, Vienna's bakers created a new pastry shaped like the Ottoman crescent moon: the croissant.",
+          "prompt": "16:9 macro close-up of freshly baked golden-brown flaky crescent-shaped pastries resting on a wooden bakery peel, warm bakery oven firelight, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot04",
+          "narration": "The idea was that the citizens could literally bite into and devour the symbol of their enemy every morning.",
+          "prompt": "16:9 medium shot of cheerful Vienna townspeople in 1683 market square sharing crescent bread rolls, castle walls smoking in the far background, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot05",
+          "narration": "Alongside the crescent bread came coffee. When the Ottoman camp was later abandoned, sacks of dark beans were captured.",
+          "prompt": "16:9 macro shot of rich dark roasted whole coffee beans spilling from a burlap sack stamped with Ottoman calligraphy onto a wooden table, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot06",
+          "narration": "A spy named Jerzy Kulczycki used them to open Vienna's first coffeehouse, adding milk and honey to create modern café culture.",
+          "prompt": "16:9 cozy interior shot of an early 1680s European coffeehouse with patrons in wigs and tricorn hats drinking coffee from porcelain cups by candlelight, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot07",
+          "narration": "Yet while bakers baked and spies plotted, the reality on the walls was grim.",
+          "prompt": "16:9 somber shot of broken stone battlements littered with spent matchlock lead balls and smoking cannon fragments under a grey sky, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot08",
+          "narration": "By September eighth, the Ottomans captured the outer moat and were preparing a final five-mine detonation.",
+          "prompt": "16:9 wide shot showing Ottoman trenches filling the moat right beneath the shattered Löbl bastion, red standards planted in the ditch, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot09",
+          "narration": "Vienna had less than forty-eight hours of ammunition left.",
+          "prompt": "16:9 macro close-up of an open wooden ammunition crate containing only three round lead musket balls and a nearly empty powder horn, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act03_shot010",
+          "narration": "And then, on the evening of September eleventh, fires were spotted atop the mountain.",
+          "prompt": "16:9 breathtaking twilight wide shot looking from the roofs of Vienna toward the dark forested ridge of the Kahlenberg mountain, where hundreds of signal bonfires suddenly ignite, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        }
+      ],
+      "script": "During the underground war, an Austrian baker working in his basement before dawn heard faint tapping underneath his oven floor. He alerted the city guard just in time. Troops broke into the tunnel and defused a massive gunpowder mine directly beneath the town center. Legend says that to celebrate, Vienna's bakers created a new pastry shaped like the Ottoman crescent moon: the croissant. The idea was that the citizens could literally bite into and devour the symbol of their enemy every morning. Alongside the crescent bread came coffee. When the Ottoman camp was later abandoned, sacks of dark beans were captured. A spy named Jerzy Kulczycki used them to open Vienna's first coffeehouse, adding milk and honey to create modern café culture. Yet while bakers baked and spies plotted, the reality on the walls was grim. By September eighth, the Ottomans captured the outer moat and were preparing a final five-mine detonation. Vienna had less than forty-eight hours of ammunition left. And then, on the evening of September eleventh, fires were spotted atop the mountain."
+    },
+    {
+      "act_number": 4,
+      "title": "Wings of Thunder: King Jan Sobieski and the 18,000 Horsemen on the Ridge",
+      "short_title": "When 18,000 Winged Hussars Charged Down the Mountain (1683)",
+      "hook": "They wore massive wooden wings of eagle feathers that roared like thunder at full gallop.",
+      "shots": [
+        {
+          "shot_id": "act04_shot01",
+          "narration": "King Jan Sobieski the Third of Poland had answered the call.",
+          "prompt": "16:9 majestic cinematic medium shot of Polish King Jan III Sobieski on a powerful black stallion, wearing gilded plate armor, leopard skin cloak, and carrying a gem-encrusted mace, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot02",
+          "narration": "He marched thirty thousand Polish troops over three hundred miles to unite with German and Austrian armies at the Danube.",
+          "prompt": "16:9 wide aerial landscape shot of a massive allied European relief army with thousands of fluttering standards crossing wooden pontoon bridges over the Danube river, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot03",
+          "narration": "At the front rode the most feared heavy cavalry on earth: the Polish Winged Hussars.",
+          "prompt": "16:9 dramatic close-up of a Polish Winged Hussar in polished steel cuirass, wearing massive curved wooden wings mounted to his back holding white and black eagle feathers, 8k",
+          "shot_type": "Macro Detail",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot04",
+          "narration": "They wore massive arched wooden wings lined with eagle feathers that made a terrifying whistling roar when galloping at full charge.",
+          "prompt": "16:9 dynamic low-angle shot of a squadron of Winged Hussars galloping in formation, wings vibrating in the wind, long horsehair crests, 8k",
+          "shot_type": "Action",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot05",
+          "narration": "They carried hollow nineteen-foot lances, designed to out-reach any infantry spear and pierce multiple armored men in a single strike.",
+          "prompt": "16:9 dramatic shot of a row of Polish Hussars lowering their 19-foot red-and-white pennon lances into horizontal charge position, tips gleaming, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot06",
+          "narration": "Grand Vizier Kara Mustafa refused to believe a massive relief army had arrived and kept his best troops attacking the city walls instead of securing the hill.",
+          "prompt": "16:9 medium shot of Kara Mustafa arguing with his pashas inside his grand silk tent, waving his hand dismissively toward mountain maps, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot07",
+          "narration": "At four in the afternoon on September twelfth, Sobieski's army cleared the dense forests atop the Kahlenberg ridge.",
+          "prompt": "16:9 panoramic shot from the crest of the Kahlenberg mountain looking down over the vast valley of Vienna, allied infantry deploying into battle lines on the slopes, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot08",
+          "narration": "At five-thirty, Sobieski ordered the trumpets to sound. Eighteen thousand horsemen gathered in one colossal line.",
+          "prompt": "16:9 epic wide shot of eighteen thousand allied European cavalrymen lined up shoulder-to-shoulder along the mountain ridge at sunset, brass trumpets sounding, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot09",
+          "narration": "It was the largest cavalry charge in human history.",
+          "prompt": "16:9 breathtaking, awe-inspiring wide shot of eighteen thousand armored cavalrymen led by three thousand Winged Hussars charging downhill in a thundering avalanche, dust rising, 8k",
+          "shot_type": "Action",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act04_shot010",
+          "narration": "The earth literally shook as the cavalry descended upon the Ottoman camp.",
+          "prompt": "16:9 ground-level dynamic shot of hundreds of warhorse hooves tearing through dry soil and mud, vibrations rippling, lances pointed forward, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        }
+      ],
+      "script": "King Jan Sobieski the Third of Poland had answered the call. He marched thirty thousand Polish troops over three hundred miles to unite with German and Austrian armies at the Danube. At the front rode the most feared heavy cavalry on earth: the Polish Winged Hussars. They wore massive arched wooden wings lined with eagle feathers that made a terrifying whistling roar when galloping at full charge. They carried hollow nineteen-foot lances, designed to out-reach any infantry spear and pierce multiple armored men in a single strike. Grand Vizier Kara Mustafa refused to believe a massive relief army had arrived and kept his best troops attacking the city walls instead of securing the hill. At four in the afternoon on September twelfth, Sobieski's army cleared the dense forests atop the Kahlenberg ridge. At five-thirty, Sobieski ordered the trumpets to sound. Eighteen thousand horsemen gathered in one colossal line. It was the largest cavalry charge in human history. The earth literally shook as the cavalry descended upon the Ottoman camp."
+    },
+    {
+      "act_number": 5,
+      "title": "Avalanche of Steel: How Two Hours of Cavalry Saved Central Europe",
+      "short_title": "How One Cavalry Charge Saved Europe in Just Two Hours",
+      "hook": "By five o'clock, Vienna had forty-eight hours left. Two hours later, the largest army was shattered.",
+      "shots": [
+        {
+          "shot_id": "act05_shot01",
+          "narration": "The impact of the Winged Hussars charge hit the Ottoman flank like a tidal wave of steel.",
+          "prompt": "16:9 chaotic violent battle shot of Polish Winged Hussars crashing through Ottoman defensive barricades, 19-foot lances splintering against enemy lines, 8k",
+          "shot_type": "Action",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot02",
+          "narration": "Their nineteen-foot lances shattered through front lines of infantry before the Ottoman soldiers could even draw their scimitars.",
+          "prompt": "16:9 cinematic medium action shot of a Polish Hussar lance shattering an enemy shield line, soldiers thrown backward by the kinetic shockwave, 8k",
+          "shot_type": "Action",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot03",
+          "narration": "Within thirty minutes, the Ottoman lines disintegrated into complete panic.",
+          "prompt": "16:9 wide shot of Ottoman soldiers in green and red coats retreating in disorder through their sprawling camp, abandoned cannons, dust and smoke everywhere, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot04",
+          "narration": "Kara Mustafa fled on horseback, abandoning his royal tents, treasury, artillery, and the holy green standard of the Prophet.",
+          "prompt": "16:9 dramatic action shot of Kara Mustafa on a galloping horse fleeing into the dusk with a handful of guards, leaving behind grand silk pavilions in flames, 8k",
+          "shot_type": "Action",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot05",
+          "narration": "By seven in the evening—just two hours after the charge began—the battle was over.",
+          "prompt": "16:9 wide panoramic sunset shot over the liberated plains of Vienna, victorious Polish and Austrian troops planting standards amidst captured Ottoman siege artillery, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot06",
+          "narration": "King Sobieski wrote to Pope Innocent the Eleventh with a famous twist on Caesar: 'Venimus, vidimus, Deus vicit'—We came, we saw, God conquered.",
+          "prompt": "16:9 archival manuscript callout of King Jan Sobieski's victory letter to the Pope written from Kara Mustafa's silk tent on September 13 1683, Latin calligraphy",
+          "shot_type": "Primary Source",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot07",
+          "narration": "Inside the city, Count Starhemberg and his four thousand surviving defenders opened the gates in tears.",
+          "prompt": "16:9 emotional medium shot of gaunt, bandaged Austrian defenders and weeping citizens opening the massive iron-studded gates of Vienna to embrace arriving Polish cavalrymen, 8k",
+          "shot_type": "Medium Troop",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot08",
+          "narration": "For sixty days, fifteen thousand men had held against one hundred and fifty thousand.",
+          "prompt": "16:9 wide establishing shot looking at the battered, smoking bastions of Vienna illuminated by the morning sun, Austrian double-headed eagle banner flying tall, 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "push_in",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot09",
+          "narration": "The Siege of Vienna in 1683 was the high-water mark of the Ottoman Empire in Europe. It would never advance that far west again.",
+          "prompt": "16:9 historical map showing the permanent border retreat of the Ottoman Empire after 1683 across Hungary and the Balkans, glowing frontier line",
+          "shot_type": "Tactical Map",
+          "motion": "pan_right",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        },
+        {
+          "shot_id": "act05_shot010",
+          "narration": "And that is how the largest cavalry charge in history saved Central Europe in just two hours.",
+          "prompt": "16:9 majestic cinematic hero shot of a lone Polish Winged Hussar on horseback at sunrise on a hill overlooking Vienna, eagle feathers catching the light, photorealistic 8k",
+          "shot_type": "Wide Establishing",
+          "motion": "pull_out",
+          "negative_prompt": "modern, 20th century, 21st century, modern soldiers, rifles, machine guns, tanks, airplanes, cars, electricity, power lines, asphalt, modern buildings, wristwatches, eyeglasses, sunglasses, contemporary clothing, cartoon, anime, 3d render plastic, watermark, text, signature, lowres, blurry, deformed hands, extra fingers, distorted anatomy, split screen, multi-panel grid, comic strip panels, collage",
+          "event_slug": "siege_of_vienna_1683"
+        }
+      ],
+      "script": "The impact of the Winged Hussars charge hit the Ottoman flank like a tidal wave of steel. Their nineteen-foot lances shattered through front lines of infantry before the Ottoman soldiers could even draw their scimitars. Within thirty minutes, the Ottoman lines disintegrated into complete panic. Kara Mustafa fled on horseback, abandoning his royal tents, treasury, artillery, and the holy green standard of the Prophet. By seven in the evening—just two hours after the charge began—the battle was over. King Sobieski wrote to Pope Innocent the Eleventh with a famous twist on Caesar: 'Venimus, vidimus, Deus vicit'—We came, we saw, God conquered. Inside the city, Count Starhemberg and his four thousand surviving defenders opened the gates in tears. For sixty days, fifteen thousand men had held against one hundred and fifty thousand. The Siege of Vienna in 1683 was the high-water mark of the Ottoman Empire in Europe. It would never advance that far west again. And that is how the largest cavalry charge in history saved Central Europe in just two hours."
+    }
+  ],
+  "derived_shorts": [
+    {
+      "short_id": "w3_short_01",
+      "part_number": 1,
+      "title": "15,000 Starving Defenders Against 150,000 Ottomans (Vienna 1683)",
+      "hook_sentence": "In 1683, fifteen thousand starving defenders were surrounded by an army ten times their size.",
+      "scheduled_slot": "Monday 13:00 IST",
+      "script": "In July 1683, an Ottoman army of one hundred and fifty thousand men surrounded Vienna—the golden gate to Central Europe. Because the Emperor fled in panic, Count Ernst von Starhemberg was left with only fifteen thousand men, including armed citizens. Surrounded by a force ten times their size, food ran out in weeks and the garrison was forced to eat horses and rats. When the Grand Vizier demanded unconditional surrender, Starhemberg sent back a single line: 'I will fight to the last drop of blood.' Watch the full video on the channel."
+    },
+    {
+      "short_id": "w3_short_02",
+      "part_number": 2,
+      "title": "The Gunpowder War Fought 50 Feet Underground (Vienna 1683)",
+      "hook_sentence": "Because they couldn't break Vienna's walls from above, the siege moved fifty feet underground.",
+      "scheduled_slot": "Tuesday 13:00 IST",
+      "script": "Because they couldn't break Vienna's stone walls from above, the Ottomans began digging fifty feet underground to plant barrels of gunpowder. To detect the enemy tunnels, defenders placed drums covered in dried peas on cellar floors. Whenever the peas vibrated, Austrian miners dug frantically downward to intercept them. Men fought savage, silent battles in suffocating dirt tunnels with daggers, shovels, and sulfur smoke. On September fourth, a massive mine detonated, blowing a thirty-foot gap in the wall—yet the defenders held the breach with pikes. Watch the full video on the channel."
+    },
+    {
+      "short_id": "w3_short_03",
+      "part_number": 3,
+      "title": "How a Baker in a Tunnel Invented the Croissant (1683)",
+      "hook_sentence": "Did you know the croissant was invented in a dark basement during a 1683 siege?",
+      "scheduled_slot": "Wednesday 13:00 IST",
+      "script": "Did you know the croissant was invented during the 1683 Siege of Vienna? While working in his basement before dawn, an Austrian baker heard faint tapping beneath his floor. He alerted guards just in time, defusing a massive gunpowder mine directly under the town center. To celebrate, Vienna's bakers created a new pastry shaped like the Ottoman crescent moon—so citizens could literally devour the symbol of their enemy! And when the Ottoman camp was later captured, abandoned sacks of dark beans were used to create modern European café culture. Watch the full video on the channel."
+    },
+    {
+      "short_id": "w3_short_04",
+      "part_number": 4,
+      "title": "When 18,000 Winged Hussars Charged Down the Mountain (1683)",
+      "hook_sentence": "They wore massive wooden wings of eagle feathers that roared like thunder at full gallop.",
+      "scheduled_slot": "Thursday 13:00 IST",
+      "script": "They wore massive wooden wings lined with eagle feathers that made a terrifying roaring whistle when galloping at full charge. On September 12, 1683, Polish King Jan Sobieski arrived at Vienna with the most feared heavy cavalry on earth: the Winged Hussars. Carrying hollow nineteen-foot lances designed to out-reach any infantry spear, eighteen thousand horsemen lined up along the crest of the Kahlenberg mountain at sunset. When the trumpets sounded, they unleashed the largest cavalry charge in human history, tearing down the mountain like an avalanche of steel. Watch the full video on the channel."
+    },
+    {
+      "short_id": "w3_short_05",
+      "part_number": 5,
+      "title": "How One Cavalry Charge Saved Europe in Just Two Hours",
+      "hook_sentence": "By five o'clock, Vienna had forty-eight hours left. Two hours later, the largest army in the world was shattered.",
+      "scheduled_slot": "Friday 13:00 IST",
+      "script": "By September 12, 1683, Vienna's defenders were down to four thousand men with only days of ammunition left. At five-thirty, eighteen thousand allied cavalrymen led by King Jan Sobieski crashed into the Ottoman flank like a tidal wave. Their nineteen-foot lances shattered enemy lines before soldiers could draw their swords. Within thirty minutes, panic swept the Ottoman camp. Grand Vizier Kara Mustafa fled on horseback, abandoning his treasury and royal pavilions. In just two hours, sixty days of siege were broken. Watch the full video on the channel."
+    }
+  ]
+}

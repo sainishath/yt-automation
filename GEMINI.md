@@ -6,12 +6,12 @@
   - 100% full-screen 9:16 cinematic SDXL visuals with Ken-Burns pan/zoom movement.
   - Zero Minecraft or gameplay footage.
   - Narrator: Single authoritative documentary voice (`en-US-ChristopherNeural`, Edge-TTS) with orchestral BGM.
-  - Discord Review Webhook: `REDACTED_WEBHOOK_ID`.
+  - Discord Review Webhook: `DISCORD_WEBHOOK_CHANNEL_A` (`1568493130557169684`).
 - **Pipeline 2 (`convo-shorts` / Channel B / Debate Protocol):**
   - Must always be invoked via `convo-shorts/yt-automation-engine/main.py`.
   - Full-screen retentive gameplay background (Minecraft/Subway Surfers) with centered upper-zone 896x896 Fooocus image overlays & syntax-highlighted code cards.
   - Senior Technical Narrator voice (`en_US-ryan-medium.onnx` / Piper TTS) with multi-angle concept generation (`growth/brain/p2_multi_angle.py`).
-  - Discord Review Webhook: `REDACTED_WEBHOOK_ID`.
+  - Discord Review Webhook: `DISCORD_WEBHOOK_CHANNEL_B` (`1568493130557169684`).
 - **Strict Invariant:** Neither pipeline shall ever import, call, or share video assembly wrappers from the other.
 
 ## 2. Image Generation & Fooocus SDXL Invariant

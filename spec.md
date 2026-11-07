@@ -8,7 +8,7 @@
 - **Narration Engine:** Authoritative documentary voice (`en-US-ChristopherNeural`, Edge-TTS).
 - **Audio Alignment:** Word-level acoustic alignment via `faster-whisper`.
 - **Quality Assurance:** Strict 17/17 QA gate execution (`alternate-history-shorts/scripts/qa_gate.py`).
-- **Review & Approval Gate:** Automated < 8MB 540x960 review proxy delivery to Discord webhook `REDACTED_WEBHOOK_ID`. Status transitions to `AWAITING_REVIEW`. Zero automatic uploads without human approval.
+- **Review & Approval Gate:** Automated < 8MB 540x960 review proxy delivery to Discord review webhook. Status transitions to `AWAITING_REVIEW`. Zero automatic uploads without human approval.
 
 ## 2. Topic Selection
 - **Selected Topic:** "What if the Roman Empire never fell?" (Rank #1 in Channel A topic candidate pool, score 0.801, category: Empire, cluster: Classical).
